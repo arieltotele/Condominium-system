@@ -9,4 +9,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Context\" />
+    <Folder Include="Data\Entities\" />
+    <Folder Include="Data\Repositories\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Business\" />
+    <Folder Include="Tests\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Presentation\Views\" />
+  </ItemGroup>
+
 </Project>
