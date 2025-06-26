@@ -64,6 +64,7 @@ namespace Condominium_System.Presentation.Views
 
                 case "HomeScreenPNLHouseBlocks":
                     HomeScreenLBLTitle.Text = "Bloque";
+                    LoadFormInPanel(new HousingBlocksScreen());
                     break;
 
                 case "HomeScreenPNLHousing":
