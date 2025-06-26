@@ -124,13 +124,55 @@
   <data name="back-white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\back-white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="blocks_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\blocks_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="clean_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\clean_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="condominium_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\condominium_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="create_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\create_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="furniture_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\furniture_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="house_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\house_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="incidence_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\incidence_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="invoice_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\invoice_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="maintenance_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\maintenance_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="power_off_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\power_off_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="save_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\save_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="search_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\search_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tenant_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tenant_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="trash_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\trash_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="update_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\update_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="user" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\user.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="users_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\users_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

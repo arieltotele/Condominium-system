@@ -34,7 +34,6 @@
     <Folder Include="Data\Context\" />
     <Folder Include="Data\Entities\" />
     <Folder Include="Data\Repositories\" />
-    <Folder Include="Helpers\" />
     <Folder Include="Business\" />
     <Folder Include="Tests\" />
   </ItemGroup>

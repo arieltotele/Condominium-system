@@ -55,13 +55,13 @@
             label10 = new Label();
             SignUpComboBxCondominium = new ComboBox();
             SignUpComboBxType = new ComboBox();
-            panel6 = new Panel();
+            SignUpPNLBTNBack = new Panel();
             label11 = new Label();
             pictureBox2 = new PictureBox();
-            panel7 = new Panel();
+            SignUpPNLBTNClean = new Panel();
             label12 = new Label();
             pictureBox3 = new PictureBox();
-            panel8 = new Panel();
+            SignUpPNLBTNSave = new Panel();
             label13 = new Label();
             pictureBox4 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -72,11 +72,11 @@
             panel3.SuspendLayout();
             panel4.SuspendLayout();
             panel5.SuspendLayout();
-            panel6.SuspendLayout();
+            SignUpPNLBTNBack.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            panel7.SuspendLayout();
+            SignUpPNLBTNClean.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
-            panel8.SuspendLayout();
+            SignUpPNLBTNSave.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             SuspendLayout();
             // 
@@ -329,15 +329,15 @@
             SignUpComboBxType.TabIndex = 24;
             SignUpComboBxType.Text = "Seleccione";
             // 
-            // panel6
+            // SignUpPNLBTNBack
             // 
-            panel6.BackColor = Color.MidnightBlue;
-            panel6.Controls.Add(label11);
-            panel6.Controls.Add(pictureBox2);
-            panel6.Location = new Point(21, 853);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(102, 41);
-            panel6.TabIndex = 29;
+            SignUpPNLBTNBack.BackColor = Color.MidnightBlue;
+            SignUpPNLBTNBack.Controls.Add(label11);
+            SignUpPNLBTNBack.Controls.Add(pictureBox2);
+            SignUpPNLBTNBack.Location = new Point(21, 853);
+            SignUpPNLBTNBack.Name = "SignUpPNLBTNBack";
+            SignUpPNLBTNBack.Size = new Size(102, 41);
+            SignUpPNLBTNBack.TabIndex = 29;
             // 
             // label11
             // 
@@ -360,15 +360,15 @@
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
             // 
-            // panel7
+            // SignUpPNLBTNClean
             // 
-            panel7.BackColor = Color.MidnightBlue;
-            panel7.Controls.Add(label12);
-            panel7.Controls.Add(pictureBox3);
-            panel7.Location = new Point(295, 853);
-            panel7.Name = "panel7";
-            panel7.Size = new Size(109, 41);
-            panel7.TabIndex = 30;
+            SignUpPNLBTNClean.BackColor = Color.MidnightBlue;
+            SignUpPNLBTNClean.Controls.Add(label12);
+            SignUpPNLBTNClean.Controls.Add(pictureBox3);
+            SignUpPNLBTNClean.Location = new Point(295, 853);
+            SignUpPNLBTNClean.Name = "SignUpPNLBTNClean";
+            SignUpPNLBTNClean.Size = new Size(109, 41);
+            SignUpPNLBTNClean.TabIndex = 30;
             // 
             // label12
             // 
@@ -391,15 +391,15 @@
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
             // 
-            // panel8
+            // SignUpPNLBTNSave
             // 
-            panel8.BackColor = Color.MidnightBlue;
-            panel8.Controls.Add(label13);
-            panel8.Controls.Add(pictureBox4);
-            panel8.Location = new Point(526, 853);
-            panel8.Name = "panel8";
-            panel8.Size = new Size(109, 41);
-            panel8.TabIndex = 31;
+            SignUpPNLBTNSave.BackColor = Color.MidnightBlue;
+            SignUpPNLBTNSave.Controls.Add(label13);
+            SignUpPNLBTNSave.Controls.Add(pictureBox4);
+            SignUpPNLBTNSave.Location = new Point(526, 853);
+            SignUpPNLBTNSave.Name = "SignUpPNLBTNSave";
+            SignUpPNLBTNSave.Size = new Size(109, 41);
+            SignUpPNLBTNSave.TabIndex = 31;
             // 
             // label13
             // 
@@ -427,9 +427,9 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(667, 906);
-            Controls.Add(panel8);
-            Controls.Add(panel7);
-            Controls.Add(panel6);
+            Controls.Add(SignUpPNLBTNSave);
+            Controls.Add(SignUpPNLBTNClean);
+            Controls.Add(SignUpPNLBTNBack);
             Controls.Add(SignUpComboBxType);
             Controls.Add(SignUpComboBxCondominium);
             Controls.Add(label10);
@@ -468,14 +468,14 @@
             panel4.PerformLayout();
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
-            panel6.ResumeLayout(false);
-            panel6.PerformLayout();
+            SignUpPNLBTNBack.ResumeLayout(false);
+            SignUpPNLBTNBack.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            panel7.ResumeLayout(false);
-            panel7.PerformLayout();
+            SignUpPNLBTNClean.ResumeLayout(false);
+            SignUpPNLBTNClean.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
-            panel8.ResumeLayout(false);
-            panel8.PerformLayout();
+            SignUpPNLBTNSave.ResumeLayout(false);
+            SignUpPNLBTNSave.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -510,13 +510,13 @@
         private Label label10;
         private ComboBox SignUpComboBxCondominium;
         private ComboBox SignUpComboBxType;
-        private Panel panel6;
+        private Panel SignUpPNLBTNBack;
         private Label label11;
         private PictureBox pictureBox2;
-        private Panel panel7;
+        private Panel SignUpPNLBTNClean;
         private Label label12;
         private PictureBox pictureBox3;
-        private Panel panel8;
+        private Panel SignUpPNLBTNSave;
         private Label label13;
         private PictureBox pictureBox4;
     }

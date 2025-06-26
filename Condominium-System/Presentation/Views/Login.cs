@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Condominium_System.Helpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,22 +21,8 @@ namespace Condominium_System.Presentation.Views
 
         private void Login_Load(object sender, EventArgs e)
         {
-            RedondearPanel(LoginPNLUsername);
-            RedondearPanel(LoginPNLPassword);
-        }
-
-        private void RedondearPanel(Panel panel)
-        {
-            GraphicsPath path = new GraphicsPath();
-            int radio = 10; // radio de las esquinas
-
-            path.AddArc(0, 0, radio, radio, 180, 90);
-            path.AddArc(panel.Width - radio, 0, radio, radio, 270, 90);
-            path.AddArc(panel.Width - radio, panel.Height - radio, radio, radio, 0, 90);
-            path.AddArc(0, panel.Height - radio, radio, radio, 90, 90);
-            path.CloseAllFigures();
-
-            panel.Region = new Region(path);
+            UIUtils.RoundPanelCorners(LoginPNLUsername, 10);
+            UIUtils.RoundPanelCorners(LoginPNLPassword, 10);
         }
     }
 }
