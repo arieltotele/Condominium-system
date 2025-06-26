@@ -79,10 +79,12 @@ namespace Condominium_System.Presentation.Views
 
                 case "HomeScreenPNLIncidence":
                     HomeScreenLBLTitle.Text = "Incidencia";
+                    LoadFormInPanel(new IncidenceScreen());
                     break;
 
                 case "HomeScreenPNLInvoice":
                     HomeScreenLBLTitle.Text = "Factura";
+                    LoadFormInPanel(new InvoiceScreen());
                     break;
 
                 case "HomeScreenPNLFurniture":
