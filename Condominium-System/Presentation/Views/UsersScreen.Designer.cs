@@ -298,7 +298,7 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 12F);
-            label9.Location = new Point(15, 182);
+            label9.Location = new Point(11, 178);
             label9.Name = "label9";
             label9.Size = new Size(96, 21);
             label9.TabIndex = 150;
@@ -308,7 +308,7 @@
             // 
             panel7.BackColor = SystemColors.Window;
             panel7.Controls.Add(comboBox2);
-            panel7.Location = new Point(15, 215);
+            panel7.Location = new Point(11, 211);
             panel7.Name = "panel7";
             panel7.Size = new Size(188, 30);
             panel7.TabIndex = 151;
