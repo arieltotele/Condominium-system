@@ -188,7 +188,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(197, 98);
+            label5.Location = new Point(197, 95);
             label5.Name = "label5";
             label5.Size = new Size(60, 21);
             label5.TabIndex = 47;
@@ -198,7 +198,7 @@
             // 
             panel4.BackColor = SystemColors.Window;
             panel4.Controls.Add(textBox4);
-            panel4.Location = new Point(197, 131);
+            panel4.Location = new Point(197, 128);
             panel4.Name = "panel4";
             panel4.Size = new Size(215, 24);
             panel4.TabIndex = 48;
@@ -215,7 +215,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F);
-            label6.Location = new Point(610, 98);
+            label6.Location = new Point(610, 95);
             label6.Name = "label6";
             label6.Size = new Size(58, 21);
             label6.TabIndex = 49;
@@ -225,15 +225,15 @@
             // 
             panel5.BackColor = SystemColors.Window;
             panel5.Controls.Add(comboBox1);
-            panel5.Location = new Point(610, 131);
+            panel5.Location = new Point(610, 128);
             panel5.Name = "panel5";
-            panel5.Size = new Size(187, 24);
+            panel5.Size = new Size(187, 30);
             panel5.TabIndex = 50;
             // 
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(3, 1);
+            comboBox1.Location = new Point(3, 4);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(181, 23);
             comboBox1.TabIndex = 0;
@@ -244,7 +244,7 @@
             CondominiumPNLBTNCreate.BackColor = Color.MidnightBlue;
             CondominiumPNLBTNCreate.Controls.Add(label8);
             CondominiumPNLBTNCreate.Controls.Add(pictureBox3);
-            CondominiumPNLBTNCreate.Location = new Point(193, 213);
+            CondominiumPNLBTNCreate.Location = new Point(193, 210);
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 57;
@@ -275,7 +275,7 @@
             CondominiumPNLBTNSearch.BackColor = Color.MidnightBlue;
             CondominiumPNLBTNSearch.Controls.Add(label7);
             CondominiumPNLBTNSearch.Controls.Add(pictureBox2);
-            CondominiumPNLBTNSearch.Location = new Point(350, 213);
+            CondominiumPNLBTNSearch.Location = new Point(350, 210);
             CondominiumPNLBTNSearch.Name = "CondominiumPNLBTNSearch";
             CondominiumPNLBTNSearch.Size = new Size(109, 41);
             CondominiumPNLBTNSearch.TabIndex = 56;
@@ -306,7 +306,7 @@
             CondominiumPNLBTNUpdate.BackColor = Color.MidnightBlue;
             CondominiumPNLBTNUpdate.Controls.Add(label9);
             CondominiumPNLBTNUpdate.Controls.Add(pictureBox1);
-            CondominiumPNLBTNUpdate.Location = new Point(520, 213);
+            CondominiumPNLBTNUpdate.Location = new Point(520, 210);
             CondominiumPNLBTNUpdate.Name = "CondominiumPNLBTNUpdate";
             CondominiumPNLBTNUpdate.Size = new Size(119, 41);
             CondominiumPNLBTNUpdate.TabIndex = 55;
@@ -337,7 +337,7 @@
             CondominiumPNLBTNDelete.BackColor = Color.FromArgb(199, 0, 0);
             CondominiumPNLBTNDelete.Controls.Add(label13);
             CondominiumPNLBTNDelete.Controls.Add(pictureBox4);
-            CondominiumPNLBTNDelete.Location = new Point(688, 213);
+            CondominiumPNLBTNDelete.Location = new Point(688, 210);
             CondominiumPNLBTNDelete.Name = "CondominiumPNLBTNDelete";
             CondominiumPNLBTNDelete.Size = new Size(109, 41);
             CondominiumPNLBTNDelete.TabIndex = 54;
@@ -366,9 +366,9 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(4, 293);
+            dataGridView1.Location = new Point(12, 293);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(1010, 293);
+            dataGridView1.Size = new Size(993, 293);
             dataGridView1.TabIndex = 58;
             // 
             // HousingScreen

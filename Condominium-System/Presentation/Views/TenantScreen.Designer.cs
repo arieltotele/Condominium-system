@@ -278,7 +278,7 @@
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(277, 12);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(737, 470);
+            dataGridView1.Size = new Size(728, 470);
             dataGridView1.TabIndex = 57;
             // 
             // CondominiumPNLBTNCreate
@@ -286,7 +286,7 @@
             CondominiumPNLBTNCreate.BackColor = Color.MidnightBlue;
             CondominiumPNLBTNCreate.Controls.Add(label8);
             CondominiumPNLBTNCreate.Controls.Add(pictureBox3);
-            CondominiumPNLBTNCreate.Location = new Point(340, 515);
+            CondominiumPNLBTNCreate.Location = new Point(361, 527);
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 61;
@@ -317,7 +317,7 @@
             CondominiumPNLBTNSearch.BackColor = Color.MidnightBlue;
             CondominiumPNLBTNSearch.Controls.Add(label9);
             CondominiumPNLBTNSearch.Controls.Add(pictureBox2);
-            CondominiumPNLBTNSearch.Location = new Point(497, 515);
+            CondominiumPNLBTNSearch.Location = new Point(518, 527);
             CondominiumPNLBTNSearch.Name = "CondominiumPNLBTNSearch";
             CondominiumPNLBTNSearch.Size = new Size(109, 41);
             CondominiumPNLBTNSearch.TabIndex = 60;
@@ -348,7 +348,7 @@
             CondominiumPNLBTNUpdate.BackColor = Color.MidnightBlue;
             CondominiumPNLBTNUpdate.Controls.Add(label10);
             CondominiumPNLBTNUpdate.Controls.Add(pictureBox1);
-            CondominiumPNLBTNUpdate.Location = new Point(667, 515);
+            CondominiumPNLBTNUpdate.Location = new Point(688, 527);
             CondominiumPNLBTNUpdate.Name = "CondominiumPNLBTNUpdate";
             CondominiumPNLBTNUpdate.Size = new Size(119, 41);
             CondominiumPNLBTNUpdate.TabIndex = 59;
@@ -379,7 +379,7 @@
             CondominiumPNLBTNDelete.BackColor = Color.FromArgb(199, 0, 0);
             CondominiumPNLBTNDelete.Controls.Add(label13);
             CondominiumPNLBTNDelete.Controls.Add(pictureBox4);
-            CondominiumPNLBTNDelete.Location = new Point(837, 515);
+            CondominiumPNLBTNDelete.Location = new Point(858, 527);
             CondominiumPNLBTNDelete.Name = "CondominiumPNLBTNDelete";
             CondominiumPNLBTNDelete.Size = new Size(109, 41);
             CondominiumPNLBTNDelete.TabIndex = 58;
