@@ -32,7 +32,6 @@
 
   <ItemGroup>
     <Folder Include="Data\Context\" />
-    <Folder Include="Business\" />
     <Folder Include="Tests\" />
   </ItemGroup>
 
