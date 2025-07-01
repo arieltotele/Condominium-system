@@ -55,7 +55,17 @@
             checkBox19 = new CheckBox();
             checkBox20 = new CheckBox();
             label5 = new Label();
+            SignUpPNLBTNClean = new Panel();
+            label12 = new Label();
+            pictureBox3 = new PictureBox();
+            panel1 = new Panel();
+            label6 = new Label();
+            pictureBox1 = new PictureBox();
             panel3.SuspendLayout();
+            SignUpPNLBTNClean.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // HomeScreenLBLTitle
@@ -245,9 +255,9 @@
             checkBox13.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             checkBox13.Location = new Point(1118, 257);
             checkBox13.Name = "checkBox13";
-            checkBox13.Size = new Size(93, 25);
+            checkBox13.Size = new Size(72, 25);
             checkBox13.TabIndex = 28;
-            checkBox13.Text = "Cómoda";
+            checkBox13.Text = "Toldo";
             checkBox13.UseVisualStyleBackColor = true;
             // 
             // checkBox14
@@ -256,9 +266,9 @@
             checkBox14.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             checkBox14.Location = new Point(1118, 212);
             checkBox14.Name = "checkBox14";
-            checkBox14.Size = new Size(91, 25);
+            checkBox14.Size = new Size(121, 25);
             checkBox14.TabIndex = 27;
-            checkBox14.Text = "Armario";
+            checkBox14.Text = "Iluminación";
             checkBox14.UseVisualStyleBackColor = true;
             // 
             // checkBox15
@@ -267,9 +277,9 @@
             checkBox15.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             checkBox15.Location = new Point(1118, 165);
             checkBox15.Name = "checkBox15";
-            checkBox15.Size = new Size(88, 25);
+            checkBox15.Size = new Size(101, 25);
             checkBox15.TabIndex = 26;
-            checkBox15.Text = "Velador";
+            checkBox15.Text = "Alfombra";
             checkBox15.UseVisualStyleBackColor = true;
             // 
             // checkBox16
@@ -278,9 +288,9 @@
             checkBox16.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             checkBox16.Location = new Point(1118, 120);
             checkBox16.Name = "checkBox16";
-            checkBox16.Size = new Size(72, 25);
+            checkBox16.Size = new Size(120, 25);
             checkBox16.TabIndex = 25;
-            checkBox16.Text = "Cama";
+            checkBox16.Text = "Parrilla BBQ";
             checkBox16.UseVisualStyleBackColor = true;
             // 
             // label4
@@ -301,7 +311,7 @@
             checkBox17.Name = "checkBox17";
             checkBox17.Size = new Size(105, 25);
             checkBox17.TabIndex = 23;
-            checkBox17.Text = "Estanteria";
+            checkBox17.Text = "Estantería";
             checkBox17.UseVisualStyleBackColor = true;
             // 
             // checkBox18
@@ -347,11 +357,76 @@
             label5.TabIndex = 19;
             label5.Text = "Cocina";
             // 
+            // SignUpPNLBTNClean
+            // 
+            SignUpPNLBTNClean.BackColor = Color.MidnightBlue;
+            SignUpPNLBTNClean.Controls.Add(label12);
+            SignUpPNLBTNClean.Controls.Add(pictureBox3);
+            SignUpPNLBTNClean.Location = new Point(311, 362);
+            SignUpPNLBTNClean.Name = "SignUpPNLBTNClean";
+            SignUpPNLBTNClean.Size = new Size(109, 41);
+            SignUpPNLBTNClean.TabIndex = 31;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label12.ForeColor = Color.White;
+            label12.Location = new Point(39, 12);
+            label12.Name = "label12";
+            label12.Size = new Size(63, 21);
+            label12.TabIndex = 1;
+            label12.Text = "Limpiar";
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.Image = Properties.Resources.clean_white;
+            pictureBox3.Location = new Point(3, 12);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(30, 19);
+            pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox3.TabIndex = 0;
+            pictureBox3.TabStop = false;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.MidnightBlue;
+            panel1.Controls.Add(label6);
+            panel1.Controls.Add(pictureBox1);
+            panel1.Location = new Point(862, 362);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(109, 41);
+            panel1.TabIndex = 32;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.ForeColor = Color.White;
+            label6.Location = new Point(10, 12);
+            label6.Name = "label6";
+            label6.Size = new Size(75, 21);
+            label6.TabIndex = 1;
+            label6.Text = "Siguiente";
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.next_white;
+            pictureBox1.Location = new Point(73, 14);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(30, 19);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
+            // 
             // AddFurnitureScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1253, 415);
+            Controls.Add(panel1);
+            Controls.Add(SignUpPNLBTNClean);
             Controls.Add(checkBox13);
             Controls.Add(checkBox14);
             Controls.Add(checkBox15);
@@ -383,6 +458,12 @@
             Load += AddFurnitureScreen_Load;
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
+            SignUpPNLBTNClean.ResumeLayout(false);
+            SignUpPNLBTNClean.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -416,5 +497,11 @@
         private CheckBox checkBox19;
         private CheckBox checkBox20;
         private Label label5;
+        private Panel SignUpPNLBTNClean;
+        private Label label12;
+        private PictureBox pictureBox3;
+        private Panel panel1;
+        private Label label6;
+        private PictureBox pictureBox1;
     }
 }

@@ -123,6 +123,16 @@ namespace Condominium_System.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap finished_white {
+            get {
+                object obj = ResourceManager.GetObject("finished_white", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap furniture_white {
             get {
                 object obj = ResourceManager.GetObject("furniture_white", resourceCulture);
@@ -166,6 +176,16 @@ namespace Condominium_System.Properties {
         internal static System.Drawing.Bitmap maintenance_white {
             get {
                 object obj = ResourceManager.GetObject("maintenance_white", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap next_white {
+            get {
+                object obj = ResourceManager.GetObject("next_white", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

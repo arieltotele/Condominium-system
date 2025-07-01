@@ -42,7 +42,17 @@
             checkBox5 = new CheckBox();
             checkBox9 = new CheckBox();
             label3 = new Label();
+            panel2 = new Panel();
+            label6 = new Label();
+            pictureBox1 = new PictureBox();
+            SignUpPNLBTNClean = new Panel();
+            label12 = new Label();
+            pictureBox3 = new PictureBox();
             panel1.SuspendLayout();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            SignUpPNLBTNClean.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -70,9 +80,9 @@
             checkBox6.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             checkBox6.Location = new Point(22, 212);
             checkBox6.Name = "checkBox6";
-            checkBox6.Size = new Size(148, 25);
+            checkBox6.Size = new Size(146, 25);
             checkBox6.TabIndex = 17;
-            checkBox6.Text = "Mantenimiento";
+            checkBox6.Text = "Administracion";
             checkBox6.UseVisualStyleBackColor = true;
             // 
             // checkBox7
@@ -193,11 +203,75 @@
             label3.TabIndex = 22;
             label3.Text = "Convivencia";
             // 
+            // panel2
+            // 
+            panel2.BackColor = Color.MidnightBlue;
+            panel2.Controls.Add(label6);
+            panel2.Controls.Add(pictureBox1);
+            panel2.Location = new Point(437, 309);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(109, 41);
+            panel2.TabIndex = 34;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.ForeColor = Color.White;
+            label6.Location = new Point(10, 12);
+            label6.Name = "label6";
+            label6.Size = new Size(68, 21);
+            label6.TabIndex = 1;
+            label6.Text = "Finalizar";
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.finished_white;
+            pictureBox1.Location = new Point(73, 14);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(30, 19);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
+            // 
+            // SignUpPNLBTNClean
+            // 
+            SignUpPNLBTNClean.BackColor = Color.MidnightBlue;
+            SignUpPNLBTNClean.Controls.Add(label12);
+            SignUpPNLBTNClean.Controls.Add(pictureBox3);
+            SignUpPNLBTNClean.Location = new Point(152, 309);
+            SignUpPNLBTNClean.Name = "SignUpPNLBTNClean";
+            SignUpPNLBTNClean.Size = new Size(109, 41);
+            SignUpPNLBTNClean.TabIndex = 33;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label12.ForeColor = Color.White;
+            label12.Location = new Point(39, 12);
+            label12.Name = "label12";
+            label12.Size = new Size(63, 21);
+            label12.TabIndex = 1;
+            label12.Text = "Limpiar";
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.Image = Properties.Resources.clean_white;
+            pictureBox3.Location = new Point(3, 12);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(30, 19);
+            pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox3.TabIndex = 0;
+            pictureBox3.TabStop = false;
+            // 
             // AddServiceScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(772, 362);
+            Controls.Add(panel2);
+            Controls.Add(SignUpPNLBTNClean);
             Controls.Add(checkBox4);
             Controls.Add(checkBox5);
             Controls.Add(checkBox9);
@@ -215,6 +289,12 @@
             Text = "AddServiceScreen";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            SignUpPNLBTNClean.ResumeLayout(false);
+            SignUpPNLBTNClean.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -235,5 +315,11 @@
         private CheckBox checkBox5;
         private CheckBox checkBox9;
         private Label label3;
+        private Panel panel2;
+        private Label label6;
+        private PictureBox pictureBox1;
+        private Panel SignUpPNLBTNClean;
+        private Label label12;
+        private PictureBox pictureBox3;
     }
 }
