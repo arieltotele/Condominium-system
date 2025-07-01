@@ -13,6 +13,6 @@ namespace Condominium_System.Data.Entities
         public int Cost { get; set; }
         public string Type { get; set; }
 
-        public ICollection<HousingService> Housings { get; set; }
+        public virtual ICollection<HousingService> Housings { get; set; }
     }
 }

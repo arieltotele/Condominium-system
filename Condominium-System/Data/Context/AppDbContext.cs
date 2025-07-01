@@ -6,11 +6,15 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace Condominium_System.Data.Context
 {
     public class AppDbContext : DbContext
     {
+        private readonly string _connectionString;
+
         public DbSet<Condominium> Condominiums { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Block> Blocks { get; set; }
@@ -23,9 +27,20 @@ namespace Condominium_System.Data.Context
         public DbSet<Incident> Incidents { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options)
-            : base(options)
+        public AppDbContext()
         {
+            var configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json")
+            .Build();
+
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder
+                .UseSqlServer(_connectionString)
+                .UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

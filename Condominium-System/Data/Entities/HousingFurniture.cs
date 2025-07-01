@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Condominium_System.Data.Entities
 {
-    public class HousingFurniture : AuditableEntity
+    public class HousingFurniture : AuditableModel
     {
         public int HousingId { get; set; }
-        public Housing Housing { get; set; }
+        public virtual Housing Housing { get; set; }
 
         public int FurnitureId { get; set; }
-        public Furniture Furniture { get; set; }
+        public virtual Furniture Furniture { get; set; }
     }
 }

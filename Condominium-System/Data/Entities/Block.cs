@@ -15,8 +15,8 @@ namespace Condominium_System.Data.Entities
         public string Address { get; set; }
 
         public int CondominiumId { get; set; }
-        public Condominium Condominium { get; set; }
+        public virtual Condominium Condominium { get; set; }
 
-        public ICollection<Housing> Housings { get; set; }
+        public virtual ICollection<Housing> Housings { get; set; }
     }
 }

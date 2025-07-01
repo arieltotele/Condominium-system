@@ -17,9 +17,9 @@ namespace Condominium_System.Data.Entities
         public DateTime EntryDate { get; set; }
 
         public int HousingId { get; set; }
-        public Housing Housing { get; set; }
+        public virtual Housing Housing { get; set; }
 
-        public ICollection<Incident> Incidents { get; set; }
-        public ICollection<Invoice> Invoices { get; set; }
+        public virtual ICollection<Incident> Incidents { get; set; }
+        public virtual ICollection<Invoice> Invoices { get; set; }
     }
 }

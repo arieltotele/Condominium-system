@@ -13,6 +13,6 @@ namespace Condominium_System.Data.Entities
         public string TotalAmount { get; set; }
 
         public int TenantId { get; set; }
-        public Tenant Tenant { get; set; }
+        public virtual Tenant Tenant { get; set; }
     }
 }

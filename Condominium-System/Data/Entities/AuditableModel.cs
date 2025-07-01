@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Condominium_System.Data.Entities
 {
-    public abstract class AuditableEntity
+    public abstract class AuditableModel
     {
         public string Author { get; set; }
         public bool IsActive { get; set; }

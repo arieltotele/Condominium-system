@@ -14,7 +14,7 @@ namespace Condominium_System.Data.Entities
         public string ReceptionContactNumber { get; set; }
         public string BlockCount { get; set; }
 
-        public ICollection<User> Users { get; set; }
-        public ICollection<Block> Blocks { get; set; }
+        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Block> Blocks { get; set; }
     }
 }

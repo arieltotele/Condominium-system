@@ -12,6 +12,6 @@ namespace Condominium_System.Data.Entities
         public string Detail { get; set; }
         public string Type { get; set; }
 
-        public ICollection<HousingFurniture> Housings { get; set; }
+        public virtual ICollection<HousingFurniture> Housings { get; set; }
     }
 }
