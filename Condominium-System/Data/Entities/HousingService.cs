@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Condominium_System.Data.Entities
 {
-    public class HousingService : BaseModel
+    public class HousingService : AuditableEntity
     {
         public int HousingId { get; set; }
         public Housing Housing { get; set; }
