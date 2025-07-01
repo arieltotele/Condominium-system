@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Condominium_System.Data.Entities
 {
-    public abstract class BaseModel
+    public abstract class BaseModel:AuditableModel
     {
         [Key]
         public int Id { get; set; }
