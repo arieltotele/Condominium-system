@@ -38,19 +38,19 @@
             SignUpTxtBxLastname = new TextBox();
             label4 = new Label();
             panel1 = new Panel();
-            textBox1 = new TextBox();
+            SignUpTxtBxUsername = new TextBox();
             label5 = new Label();
             panel2 = new Panel();
-            textBox2 = new TextBox();
+            SignUpTxtBxConfirmPassword = new TextBox();
             label6 = new Label();
             panel3 = new Panel();
-            textBox3 = new TextBox();
+            SignUpTxtBxPassword = new TextBox();
             label7 = new Label();
             panel4 = new Panel();
-            maskedTextBox2 = new MaskedTextBox();
+            SignUpMskTBDocumentNumber = new MaskedTextBox();
             label8 = new Label();
             panel5 = new Panel();
-            maskedTextBox1 = new MaskedTextBox();
+            SignUpMskTBTelephoneNumber = new MaskedTextBox();
             label9 = new Label();
             label10 = new Label();
             SignUpComboBxCondominium = new ComboBox();
@@ -126,6 +126,7 @@
             SignUpTxtBxName.Name = "SignUpTxtBxName";
             SignUpTxtBxName.Size = new Size(288, 16);
             SignUpTxtBxName.TabIndex = 2;
+            SignUpTxtBxName.KeyPress += SignUpTxtBxName_KeyPress;
             // 
             // label3
             // 
@@ -153,6 +154,7 @@
             SignUpTxtBxLastname.Name = "SignUpTxtBxLastname";
             SignUpTxtBxLastname.Size = new Size(288, 16);
             SignUpTxtBxLastname.TabIndex = 2;
+            SignUpTxtBxLastname.KeyPress += SignUpTxtBxLastname_KeyPress;
             // 
             // label4
             // 
@@ -167,19 +169,19 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.Window;
-            panel1.Controls.Add(textBox1);
+            panel1.Controls.Add(SignUpTxtBxUsername);
             panel1.Location = new Point(337, 238);
             panel1.Name = "panel1";
             panel1.Size = new Size(295, 24);
             panel1.TabIndex = 14;
             // 
-            // textBox1
+            // SignUpTxtBxUsername
             // 
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Location = new Point(4, 3);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(288, 16);
-            textBox1.TabIndex = 2;
+            SignUpTxtBxUsername.BorderStyle = BorderStyle.None;
+            SignUpTxtBxUsername.Location = new Point(4, 3);
+            SignUpTxtBxUsername.Name = "SignUpTxtBxUsername";
+            SignUpTxtBxUsername.Size = new Size(288, 16);
+            SignUpTxtBxUsername.TabIndex = 2;
             // 
             // label5
             // 
@@ -194,20 +196,20 @@
             // panel2
             // 
             panel2.BackColor = SystemColors.Window;
-            panel2.Controls.Add(textBox2);
+            panel2.Controls.Add(SignUpTxtBxConfirmPassword);
             panel2.Location = new Point(337, 476);
             panel2.Name = "panel2";
             panel2.Size = new Size(295, 24);
             panel2.TabIndex = 20;
             // 
-            // textBox2
+            // SignUpTxtBxConfirmPassword
             // 
-            textBox2.BorderStyle = BorderStyle.None;
-            textBox2.Location = new Point(4, 3);
-            textBox2.Name = "textBox2";
-            textBox2.PasswordChar = '*';
-            textBox2.Size = new Size(288, 16);
-            textBox2.TabIndex = 2;
+            SignUpTxtBxConfirmPassword.BorderStyle = BorderStyle.None;
+            SignUpTxtBxConfirmPassword.Location = new Point(4, 3);
+            SignUpTxtBxConfirmPassword.Name = "SignUpTxtBxConfirmPassword";
+            SignUpTxtBxConfirmPassword.PasswordChar = '*';
+            SignUpTxtBxConfirmPassword.Size = new Size(288, 16);
+            SignUpTxtBxConfirmPassword.TabIndex = 2;
             // 
             // label6
             // 
@@ -222,20 +224,20 @@
             // panel3
             // 
             panel3.BackColor = SystemColors.Window;
-            panel3.Controls.Add(textBox3);
+            panel3.Controls.Add(SignUpTxtBxPassword);
             panel3.Location = new Point(337, 393);
             panel3.Name = "panel3";
             panel3.Size = new Size(295, 24);
             panel3.TabIndex = 18;
             // 
-            // textBox3
+            // SignUpTxtBxPassword
             // 
-            textBox3.BorderStyle = BorderStyle.None;
-            textBox3.Location = new Point(4, 3);
-            textBox3.Name = "textBox3";
-            textBox3.PasswordChar = '*';
-            textBox3.Size = new Size(288, 16);
-            textBox3.TabIndex = 2;
+            SignUpTxtBxPassword.BorderStyle = BorderStyle.None;
+            SignUpTxtBxPassword.Location = new Point(4, 3);
+            SignUpTxtBxPassword.Name = "SignUpTxtBxPassword";
+            SignUpTxtBxPassword.PasswordChar = '*';
+            SignUpTxtBxPassword.Size = new Size(288, 16);
+            SignUpTxtBxPassword.TabIndex = 2;
             // 
             // label7
             // 
@@ -250,19 +252,19 @@
             // panel4
             // 
             panel4.BackColor = SystemColors.Window;
-            panel4.Controls.Add(maskedTextBox2);
+            panel4.Controls.Add(SignUpMskTBDocumentNumber);
             panel4.Location = new Point(336, 315);
             panel4.Name = "panel4";
             panel4.Size = new Size(295, 24);
             panel4.TabIndex = 16;
             // 
-            // maskedTextBox2
+            // SignUpMskTBDocumentNumber
             // 
-            maskedTextBox2.Location = new Point(0, 0);
-            maskedTextBox2.Mask = "000-0000000-0";
-            maskedTextBox2.Name = "maskedTextBox2";
-            maskedTextBox2.Size = new Size(295, 23);
-            maskedTextBox2.TabIndex = 0;
+            SignUpMskTBDocumentNumber.Location = new Point(0, 0);
+            SignUpMskTBDocumentNumber.Mask = "000-0000000-0";
+            SignUpMskTBDocumentNumber.Name = "SignUpMskTBDocumentNumber";
+            SignUpMskTBDocumentNumber.Size = new Size(295, 23);
+            SignUpMskTBDocumentNumber.TabIndex = 0;
             // 
             // label8
             // 
@@ -277,19 +279,19 @@
             // panel5
             // 
             panel5.BackColor = SystemColors.Window;
-            panel5.Controls.Add(maskedTextBox1);
+            panel5.Controls.Add(SignUpMskTBTelephoneNumber);
             panel5.Location = new Point(337, 560);
             panel5.Name = "panel5";
             panel5.Size = new Size(295, 24);
             panel5.TabIndex = 22;
             // 
-            // maskedTextBox1
+            // SignUpMskTBTelephoneNumber
             // 
-            maskedTextBox1.Location = new Point(0, 0);
-            maskedTextBox1.Mask = "(999)000-0000";
-            maskedTextBox1.Name = "maskedTextBox1";
-            maskedTextBox1.Size = new Size(295, 23);
-            maskedTextBox1.TabIndex = 23;
+            SignUpMskTBTelephoneNumber.Location = new Point(0, 0);
+            SignUpMskTBTelephoneNumber.Mask = "(999)000-0000";
+            SignUpMskTBTelephoneNumber.Name = "SignUpMskTBTelephoneNumber";
+            SignUpMskTBTelephoneNumber.Size = new Size(295, 23);
+            SignUpMskTBTelephoneNumber.TabIndex = 23;
             // 
             // label9
             // 
@@ -313,21 +315,21 @@
             // 
             // SignUpComboBxCondominium
             // 
+            SignUpComboBxCondominium.DropDownStyle = ComboBoxStyle.DropDownList;
             SignUpComboBxCondominium.FormattingEnabled = true;
             SignUpComboBxCondominium.Location = new Point(340, 732);
             SignUpComboBxCondominium.Name = "SignUpComboBxCondominium";
             SignUpComboBxCondominium.Size = new Size(293, 23);
             SignUpComboBxCondominium.TabIndex = 24;
-            SignUpComboBxCondominium.Text = "Seleccione";
             // 
             // SignUpComboBxType
             // 
+            SignUpComboBxType.DropDownStyle = ComboBoxStyle.DropDownList;
             SignUpComboBxType.FormattingEnabled = true;
             SignUpComboBxType.Location = new Point(342, 646);
             SignUpComboBxType.Name = "SignUpComboBxType";
             SignUpComboBxType.Size = new Size(293, 23);
             SignUpComboBxType.TabIndex = 24;
-            SignUpComboBxType.Text = "Seleccione";
             // 
             // SignUpPNLBTNBack
             // 
@@ -338,6 +340,7 @@
             SignUpPNLBTNBack.Name = "SignUpPNLBTNBack";
             SignUpPNLBTNBack.Size = new Size(102, 41);
             SignUpPNLBTNBack.TabIndex = 29;
+            SignUpPNLBTNBack.Click += SignUpPNLBTNBack_Click;
             // 
             // label11
             // 
@@ -349,6 +352,7 @@
             label11.Size = new Size(46, 21);
             label11.TabIndex = 1;
             label11.Text = "Atras";
+            label11.Click += SignUpPNLBTNBack_Click;
             // 
             // pictureBox2
             // 
@@ -359,6 +363,7 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
+            pictureBox2.Click += SignUpPNLBTNBack_Click;
             // 
             // SignUpPNLBTNClean
             // 
@@ -369,6 +374,7 @@
             SignUpPNLBTNClean.Name = "SignUpPNLBTNClean";
             SignUpPNLBTNClean.Size = new Size(109, 41);
             SignUpPNLBTNClean.TabIndex = 30;
+            SignUpPNLBTNClean.Click += SignUpPNLBTNBack_Click;
             // 
             // label12
             // 
@@ -380,6 +386,7 @@
             label12.Size = new Size(63, 21);
             label12.TabIndex = 1;
             label12.Text = "Limpiar";
+            label12.Click += SignUpPNLBTNBack_Click;
             // 
             // pictureBox3
             // 
@@ -390,6 +397,7 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
+            pictureBox3.Click += SignUpPNLBTNBack_Click;
             // 
             // SignUpPNLBTNSave
             // 
@@ -400,6 +408,7 @@
             SignUpPNLBTNSave.Name = "SignUpPNLBTNSave";
             SignUpPNLBTNSave.Size = new Size(109, 41);
             SignUpPNLBTNSave.TabIndex = 31;
+            SignUpPNLBTNSave.Click += SignUpPNLBTNSave_Click;
             // 
             // label13
             // 
@@ -411,6 +420,7 @@
             label13.Size = new Size(67, 21);
             label13.TabIndex = 1;
             label13.Text = "Guardar";
+            label13.Click += SignUpPNLBTNSave_Click;
             // 
             // pictureBox4
             // 
@@ -421,8 +431,9 @@
             pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox4.TabIndex = 0;
             pictureBox4.TabStop = false;
+            pictureBox4.Click += SignUpPNLBTNSave_Click;
             // 
-            // SignUp
+            // SignUpScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -450,7 +461,7 @@
             Controls.Add(SignUpPNLName);
             Controls.Add(label1);
             Controls.Add(pictureBox1);
-            Name = "SignUp";
+            Name = "SignUpScreen";
             Text = "Registrar";
             Load += SignUp_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -493,19 +504,19 @@
         private TextBox SignUpTxtBxLastname;
         private Label label4;
         private Panel panel1;
-        private TextBox textBox1;
+        private TextBox SignUpTxtBxUsername;
         private Label label5;
         private Panel panel2;
-        private TextBox textBox2;
+        private TextBox SignUpTxtBxConfirmPassword;
         private Label label6;
         private Panel panel3;
-        private TextBox textBox3;
+        private TextBox SignUpTxtBxPassword;
         private Label label7;
         private Panel panel4;
         private Label label8;
         private Panel panel5;
-        private MaskedTextBox maskedTextBox1;
-        private MaskedTextBox maskedTextBox2;
+        private MaskedTextBox SignUpMskTBTelephoneNumber;
+        private MaskedTextBox SignUpMskTBDocumentNumber;
         private Label label9;
         private Label label10;
         private ComboBox SignUpComboBxCondominium;

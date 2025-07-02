@@ -147,7 +147,6 @@ namespace Condominium_System.Presentation.Views
             CondominiumDTGData.AllowUserToResizeColumns = false;
             CondominiumDTGData.AllowUserToResizeRows = false;
             CondominiumDTGData.AllowUserToOrderColumns = false;
-            //CondominiumDTGData.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             CondominiumDTGData.MultiSelect = false;
             CondominiumDTGData.ScrollBars = ScrollBars.Both;
         }

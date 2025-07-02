@@ -40,6 +40,7 @@ namespace Condominium_System
             services.AddScoped<ICondominiumService, CondominiumService>();
             services.AddScoped<IRepositoryWithId<Condominium>, RepositoryWithId<Condominium>>();
 
+
             // Registration for formularies
             services.AddScoped<Login>();
             services.AddScoped<HomeScreen>();

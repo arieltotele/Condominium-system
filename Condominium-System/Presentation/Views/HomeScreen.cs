@@ -119,7 +119,8 @@ namespace Condominium_System.Presentation.Views
 
                 case "HomeScreenPNLUsers":
                     HomeScreenLBLTitle.Text = "Usuarios";
-                    LoadFormInPanel(new UsersScreen());
+                    var userScreen = _serviceProvider.GetRequiredService<UsersScreen>();
+                    LoadFormInPanel(userScreen);
                     break;
 
                 default:

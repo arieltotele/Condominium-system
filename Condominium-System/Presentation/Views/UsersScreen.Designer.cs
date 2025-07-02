@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             label1 = new Label();
             LoginPNLUsername = new Panel();
             LoginTxtBxPUsername = new TextBox();
@@ -66,7 +67,8 @@
             CondominiumPNLBTNDelete = new Panel();
             label13 = new Label();
             pictureBox4 = new PictureBox();
-            dataGridView1 = new DataGridView();
+            UserDTGData = new DataGridView();
+            toolTip1 = new ToolTip(components);
             LoginPNLUsername.SuspendLayout();
             panel2.SuspendLayout();
             panel1.SuspendLayout();
@@ -83,7 +85,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             CondominiumPNLBTNDelete.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)UserDTGData).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -331,7 +333,8 @@
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 155;
-            CondominiumPNLBTNCreate.Click += label10_Click;
+            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Abrir ventana emergente para crear un nuevo usuario.");
+            CondominiumPNLBTNCreate.Click += UserBTNCreate_Click;
             // 
             // label10
             // 
@@ -343,7 +346,8 @@
             label10.Size = new Size(48, 21);
             label10.TabIndex = 1;
             label10.Text = "Crear";
-            label10.Click += label10_Click;
+            toolTip1.SetToolTip(label10, "Abrir ventana emergente para crear un nuevo usuario.");
+            label10.Click += UserBTNCreate_Click;
             // 
             // pictureBox3
             // 
@@ -354,7 +358,8 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
-            pictureBox3.Click += label10_Click;
+            toolTip1.SetToolTip(pictureBox3, "Abrir ventana emergente para crear un nuevo usuario.");
+            pictureBox3.Click += UserBTNCreate_Click;
             // 
             // CondominiumPNLBTNSearch
             // 
@@ -365,6 +370,7 @@
             CondominiumPNLBTNSearch.Name = "CondominiumPNLBTNSearch";
             CondominiumPNLBTNSearch.Size = new Size(109, 41);
             CondominiumPNLBTNSearch.TabIndex = 154;
+            toolTip1.SetToolTip(CondominiumPNLBTNSearch, "Buscar un usuario.");
             // 
             // label11
             // 
@@ -376,6 +382,7 @@
             label11.Size = new Size(56, 21);
             label11.TabIndex = 1;
             label11.Text = "Buscar";
+            toolTip1.SetToolTip(label11, "Buscar un usuario.");
             // 
             // pictureBox2
             // 
@@ -386,6 +393,7 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
+            toolTip1.SetToolTip(pictureBox2, "Buscar un usuario.");
             // 
             // CondominiumPNLBTNUpdate
             // 
@@ -396,6 +404,7 @@
             CondominiumPNLBTNUpdate.Name = "CondominiumPNLBTNUpdate";
             CondominiumPNLBTNUpdate.Size = new Size(119, 41);
             CondominiumPNLBTNUpdate.TabIndex = 153;
+            toolTip1.SetToolTip(CondominiumPNLBTNUpdate, "Actualizar un usuario.");
             // 
             // label12
             // 
@@ -407,6 +416,7 @@
             label12.Size = new Size(78, 21);
             label12.TabIndex = 1;
             label12.Text = "Actualizar";
+            toolTip1.SetToolTip(label12, "Actualizar un usuario.");
             // 
             // pictureBox1
             // 
@@ -417,6 +427,7 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Actualizar un usuario.");
             // 
             // CondominiumPNLBTNDelete
             // 
@@ -427,6 +438,7 @@
             CondominiumPNLBTNDelete.Name = "CondominiumPNLBTNDelete";
             CondominiumPNLBTNDelete.Size = new Size(109, 41);
             CondominiumPNLBTNDelete.TabIndex = 152;
+            toolTip1.SetToolTip(CondominiumPNLBTNDelete, "Borrar un usuario.");
             // 
             // label13
             // 
@@ -438,6 +450,7 @@
             label13.Size = new Size(54, 21);
             label13.TabIndex = 1;
             label13.Text = "Borrar";
+            toolTip1.SetToolTip(label13, "Borrar un usuario.");
             // 
             // pictureBox4
             // 
@@ -448,21 +461,22 @@
             pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox4.TabIndex = 0;
             pictureBox4.TabStop = false;
+            toolTip1.SetToolTip(pictureBox4, "Borrar un usuario.");
             // 
-            // dataGridView1
+            // UserDTGData
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(11, 332);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(994, 247);
-            dataGridView1.TabIndex = 156;
+            UserDTGData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            UserDTGData.Location = new Point(11, 332);
+            UserDTGData.Name = "UserDTGData";
+            UserDTGData.Size = new Size(994, 247);
+            UserDTGData.TabIndex = 156;
             // 
             // UsersScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1017, 591);
-            Controls.Add(dataGridView1);
+            Controls.Add(UserDTGData);
             Controls.Add(CondominiumPNLBTNCreate);
             Controls.Add(CondominiumPNLBTNSearch);
             Controls.Add(CondominiumPNLBTNUpdate);
@@ -487,6 +501,7 @@
             Controls.Add(LoginPNLUsername);
             Name = "UsersScreen";
             Text = "UsersScreen";
+            Load += UsersScreen_Load;
             LoginPNLUsername.ResumeLayout(false);
             LoginPNLUsername.PerformLayout();
             panel2.ResumeLayout(false);
@@ -513,7 +528,7 @@
             CondominiumPNLBTNDelete.ResumeLayout(false);
             CondominiumPNLBTNDelete.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)UserDTGData).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -558,6 +573,7 @@
         private Panel CondominiumPNLBTNDelete;
         private Label label13;
         private PictureBox pictureBox4;
-        private DataGridView dataGridView1;
+        private DataGridView UserDTGData;
+        private ToolTip toolTip1;
     }
 }
