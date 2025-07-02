@@ -331,6 +331,7 @@
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 155;
+            CondominiumPNLBTNCreate.Click += label10_Click;
             // 
             // label10
             // 
@@ -342,6 +343,7 @@
             label10.Size = new Size(48, 21);
             label10.TabIndex = 1;
             label10.Text = "Crear";
+            label10.Click += label10_Click;
             // 
             // pictureBox3
             // 
@@ -352,6 +354,7 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
+            pictureBox3.Click += label10_Click;
             // 
             // CondominiumPNLBTNSearch
             // 

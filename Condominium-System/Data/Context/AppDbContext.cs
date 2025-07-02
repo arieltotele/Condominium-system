@@ -1,20 +1,19 @@
 ﻿using Condominium_System.Data.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.IO;
 
 namespace Condominium_System.Data.Context
 {
     public class AppDbContext : DbContext
     {
-        private readonly string _connectionString;
-
         public DbSet<Condominium> Condominiums { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Block> Blocks { get; set; }
@@ -27,20 +26,9 @@ namespace Condominium_System.Data.Context
         public DbSet<Incident> Incidents { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
 
-        public AppDbContext()
-        {
-            var configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
-            .Build();
-
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
-        }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder
-                .UseSqlServer(_connectionString)
-                .UseLazyLoadingProxies();
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+            : base(options)
+        {            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -138,6 +126,51 @@ namespace Condominium_System.Data.Context
                 .WithMany(f => f.Housings)
                 .HasForeignKey(hf => hf.FurnitureId)
                 .OnDelete(DeleteBehavior.Cascade);
+        }
+
+
+
+        public void SeedInitialSuperUser()
+        {
+            if (!Users.Any(u => u.Type == "SuperUsuario"))
+            {
+                Users.Add(new User
+                {
+                    FirstName = "Admin",
+                    LastName = "General",
+                    DocumentNumber = "000000000",
+                    PhoneNumber = "0000000000",
+                    Username = "admin",
+                    Password = "admin123",
+                    Type = "SuperUsuario",
+                    IsActive = true,
+                    Author = "System",
+                    CreatedAt = DateTime.Now
+                });
+
+                SaveChanges();
+            }
+        }
+    }
+
+    public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
+    {
+        public AppDbContext CreateDbContext(string[] args)
+        {
+            // Cargar configuración desde appsettings.json
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json") // Asegúrate que el archivo exista en la ruta
+                .Build();
+
+            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+            optionsBuilder
+                .UseSqlServer(connectionString)
+                .UseLazyLoadingProxies(); // si usas proxies
+
+            return new AppDbContext(optionsBuilder.Options);
         }
     }
 }

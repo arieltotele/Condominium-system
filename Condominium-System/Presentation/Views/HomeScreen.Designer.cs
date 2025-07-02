@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             panel1 = new Panel();
-            pictureBox1 = new PictureBox();
-            label2 = new Label();
+            HomeScreenBTNLogOut = new PictureBox();
+            HomeScreenLBLTitleName = new Label();
             label1 = new Label();
             HomeScreenPNLMenu = new Panel();
             HomeScreenPNLUsers = new Panel();
@@ -63,8 +64,9 @@
             panel3 = new Panel();
             HomeScreenLBLTitle = new Label();
             HomeScreenPNLMain = new Panel();
+            toolTip1 = new ToolTip(components);
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)HomeScreenBTNLogOut).BeginInit();
             HomeScreenPNLMenu.SuspendLayout();
             HomeScreenPNLUsers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
@@ -90,34 +92,36 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(0, 65, 194);
-            panel1.Controls.Add(pictureBox1);
-            panel1.Controls.Add(label2);
+            panel1.Controls.Add(HomeScreenBTNLogOut);
+            panel1.Controls.Add(HomeScreenLBLTitleName);
             panel1.Controls.Add(label1);
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(1202, 70);
             panel1.TabIndex = 0;
             // 
-            // pictureBox1
+            // HomeScreenBTNLogOut
             // 
-            pictureBox1.Image = Properties.Resources.power_off_white;
-            pictureBox1.Location = new Point(1126, 12);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(64, 50);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 2;
-            pictureBox1.TabStop = false;
+            HomeScreenBTNLogOut.Image = Properties.Resources.power_off_white;
+            HomeScreenBTNLogOut.Location = new Point(1126, 12);
+            HomeScreenBTNLogOut.Name = "HomeScreenBTNLogOut";
+            HomeScreenBTNLogOut.Size = new Size(64, 50);
+            HomeScreenBTNLogOut.SizeMode = PictureBoxSizeMode.Zoom;
+            HomeScreenBTNLogOut.TabIndex = 2;
+            HomeScreenBTNLogOut.TabStop = false;
+            toolTip1.SetToolTip(HomeScreenBTNLogOut, "Cerrar sesión");
+            HomeScreenBTNLogOut.Click += HomeScreenBTNLogOut_Click;
             // 
-            // label2
+            // HomeScreenLBLTitleName
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.ForeColor = Color.White;
-            label2.Location = new Point(933, 18);
-            label2.Name = "label2";
-            label2.Size = new Size(166, 30);
-            label2.TabIndex = 1;
-            label2.Text = "Hola, Juan Perez";
+            HomeScreenLBLTitleName.AutoSize = true;
+            HomeScreenLBLTitleName.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            HomeScreenLBLTitleName.ForeColor = Color.White;
+            HomeScreenLBLTitleName.Location = new Point(910, 18);
+            HomeScreenLBLTitleName.Name = "HomeScreenLBLTitleName";
+            HomeScreenLBLTitleName.Size = new Size(166, 30);
+            HomeScreenLBLTitleName.TabIndex = 1;
+            HomeScreenLBLTitleName.Text = "Hola, Juan Perez";
             // 
             // label1
             // 
@@ -129,6 +133,7 @@
             label1.Size = new Size(256, 30);
             label1.TabIndex = 0;
             label1.Text = "Sistema de Condominios";
+            toolTip1.SetToolTip(label1, "Nombre de la aplicación");
             // 
             // HomeScreenPNLMenu
             // 
@@ -155,6 +160,7 @@
             HomeScreenPNLUsers.Name = "HomeScreenPNLUsers";
             HomeScreenPNLUsers.Size = new Size(164, 44);
             HomeScreenPNLUsers.TabIndex = 9;
+            toolTip1.SetToolTip(HomeScreenPNLUsers, "Ir al módulo de Usuario");
             // 
             // HomeScreenLBLUsers
             // 
@@ -166,6 +172,7 @@
             HomeScreenLBLUsers.Size = new Size(71, 21);
             HomeScreenLBLUsers.TabIndex = 1;
             HomeScreenLBLUsers.Text = "Usuarios";
+            toolTip1.SetToolTip(HomeScreenLBLUsers, "Ir al módulo de Usuario");
             // 
             // pictureBox10
             // 
@@ -176,6 +183,7 @@
             pictureBox10.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox10.TabIndex = 0;
             pictureBox10.TabStop = false;
+            toolTip1.SetToolTip(pictureBox10, "Ir al módulo de Usuario");
             // 
             // HomeScreenPNLMaintenance
             // 
@@ -185,6 +193,7 @@
             HomeScreenPNLMaintenance.Name = "HomeScreenPNLMaintenance";
             HomeScreenPNLMaintenance.Size = new Size(164, 44);
             HomeScreenPNLMaintenance.TabIndex = 8;
+            toolTip1.SetToolTip(HomeScreenPNLMaintenance, "Ir al módulo de Servicio");
             // 
             // HomeScreenLBLMaintenance
             // 
@@ -196,6 +205,7 @@
             HomeScreenLBLMaintenance.Size = new Size(72, 21);
             HomeScreenLBLMaintenance.TabIndex = 1;
             HomeScreenLBLMaintenance.Text = "Servicios";
+            toolTip1.SetToolTip(HomeScreenLBLMaintenance, "Ir al módulo de Servicio");
             // 
             // pictureBox9
             // 
@@ -206,6 +216,7 @@
             pictureBox9.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox9.TabIndex = 0;
             pictureBox9.TabStop = false;
+            toolTip1.SetToolTip(pictureBox9, "Ir al módulo de Servicio");
             // 
             // HomeScreenPNLFurniture
             // 
@@ -215,6 +226,7 @@
             HomeScreenPNLFurniture.Name = "HomeScreenPNLFurniture";
             HomeScreenPNLFurniture.Size = new Size(164, 44);
             HomeScreenPNLFurniture.TabIndex = 7;
+            toolTip1.SetToolTip(HomeScreenPNLFurniture, "Ir al módulo de Mobiliario");
             // 
             // HomeScreenLBLFurniture
             // 
@@ -226,6 +238,7 @@
             HomeScreenLBLFurniture.Size = new Size(81, 21);
             HomeScreenLBLFurniture.TabIndex = 1;
             HomeScreenLBLFurniture.Text = "Mobiliario";
+            toolTip1.SetToolTip(HomeScreenLBLFurniture, "Ir al módulo de Mobiliario");
             // 
             // pictureBox8
             // 
@@ -236,6 +249,7 @@
             pictureBox8.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox8.TabIndex = 0;
             pictureBox8.TabStop = false;
+            toolTip1.SetToolTip(pictureBox8, "Ir al módulo de Mobiliario");
             // 
             // HomeScreenPNLInvoice
             // 
@@ -245,6 +259,7 @@
             HomeScreenPNLInvoice.Name = "HomeScreenPNLInvoice";
             HomeScreenPNLInvoice.Size = new Size(164, 44);
             HomeScreenPNLInvoice.TabIndex = 6;
+            toolTip1.SetToolTip(HomeScreenPNLInvoice, "Ir al módulo de Factura");
             // 
             // HomeScreenLBLInvoice
             // 
@@ -256,6 +271,7 @@
             HomeScreenLBLInvoice.Size = new Size(60, 21);
             HomeScreenLBLInvoice.TabIndex = 1;
             HomeScreenLBLInvoice.Text = "Factura";
+            toolTip1.SetToolTip(HomeScreenLBLInvoice, "Ir al módulo de Factura");
             // 
             // pictureBox7
             // 
@@ -266,6 +282,7 @@
             pictureBox7.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox7.TabIndex = 0;
             pictureBox7.TabStop = false;
+            toolTip1.SetToolTip(pictureBox7, "Ir al módulo de Factura");
             // 
             // HomeScreenPNLIncidence
             // 
@@ -275,6 +292,7 @@
             HomeScreenPNLIncidence.Name = "HomeScreenPNLIncidence";
             HomeScreenPNLIncidence.Size = new Size(164, 44);
             HomeScreenPNLIncidence.TabIndex = 5;
+            toolTip1.SetToolTip(HomeScreenPNLIncidence, "Ir al módulo de Incidencia");
             // 
             // HomeScreenLBLIncidence
             // 
@@ -286,6 +304,7 @@
             HomeScreenLBLIncidence.Size = new Size(79, 21);
             HomeScreenLBLIncidence.TabIndex = 1;
             HomeScreenLBLIncidence.Text = "Incidencia";
+            toolTip1.SetToolTip(HomeScreenLBLIncidence, "Ir al módulo de Incidencia");
             // 
             // pictureBox6
             // 
@@ -296,6 +315,7 @@
             pictureBox6.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox6.TabIndex = 0;
             pictureBox6.TabStop = false;
+            toolTip1.SetToolTip(pictureBox6, "Ir al módulo de Incidencia");
             // 
             // HomeScreenPNLTenant
             // 
@@ -305,6 +325,7 @@
             HomeScreenPNLTenant.Name = "HomeScreenPNLTenant";
             HomeScreenPNLTenant.Size = new Size(164, 44);
             HomeScreenPNLTenant.TabIndex = 4;
+            toolTip1.SetToolTip(HomeScreenPNLTenant, "Ir al módulo de Inquilino");
             // 
             // HomeScreenLBLTenant
             // 
@@ -316,6 +337,7 @@
             HomeScreenLBLTenant.Size = new Size(71, 21);
             HomeScreenLBLTenant.TabIndex = 1;
             HomeScreenLBLTenant.Text = "Inquilino";
+            toolTip1.SetToolTip(HomeScreenLBLTenant, "Ir al módulo de Inquilino");
             // 
             // pictureBox5
             // 
@@ -326,6 +348,7 @@
             pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox5.TabIndex = 0;
             pictureBox5.TabStop = false;
+            toolTip1.SetToolTip(pictureBox5, "Ir al módulo de Inquilino");
             // 
             // HomeScreenPNLHousing
             // 
@@ -335,6 +358,7 @@
             HomeScreenPNLHousing.Name = "HomeScreenPNLHousing";
             HomeScreenPNLHousing.Size = new Size(164, 44);
             HomeScreenPNLHousing.TabIndex = 3;
+            toolTip1.SetToolTip(HomeScreenPNLHousing, "Ir al módulo de Vivienda");
             // 
             // HomeScreenLBLHousing
             // 
@@ -346,6 +370,7 @@
             HomeScreenLBLHousing.Size = new Size(70, 21);
             HomeScreenLBLHousing.TabIndex = 1;
             HomeScreenLBLHousing.Text = "Vivienda";
+            toolTip1.SetToolTip(HomeScreenLBLHousing, "Ir al módulo de Vivienda");
             // 
             // pictureBox4
             // 
@@ -356,6 +381,7 @@
             pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox4.TabIndex = 0;
             pictureBox4.TabStop = false;
+            toolTip1.SetToolTip(pictureBox4, "Ir al módulo de Vivienda");
             // 
             // HomeScreenPNLHouseBlocks
             // 
@@ -365,6 +391,7 @@
             HomeScreenPNLHouseBlocks.Name = "HomeScreenPNLHouseBlocks";
             HomeScreenPNLHouseBlocks.Size = new Size(164, 44);
             HomeScreenPNLHouseBlocks.TabIndex = 2;
+            toolTip1.SetToolTip(HomeScreenPNLHouseBlocks, "Ir al módulo de Bloque");
             // 
             // HomeScreenLBLHouseBlocks
             // 
@@ -376,6 +403,7 @@
             HomeScreenLBLHouseBlocks.Size = new Size(58, 21);
             HomeScreenLBLHouseBlocks.TabIndex = 1;
             HomeScreenLBLHouseBlocks.Text = "Bloque";
+            toolTip1.SetToolTip(HomeScreenLBLHouseBlocks, "Ir al módulo de Bloque");
             // 
             // pictureBox3
             // 
@@ -386,6 +414,7 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
+            toolTip1.SetToolTip(pictureBox3, "Ir al módulo de Bloque");
             // 
             // HomeScreenPNLCondominium
             // 
@@ -395,6 +424,7 @@
             HomeScreenPNLCondominium.Name = "HomeScreenPNLCondominium";
             HomeScreenPNLCondominium.Size = new Size(164, 44);
             HomeScreenPNLCondominium.TabIndex = 0;
+            toolTip1.SetToolTip(HomeScreenPNLCondominium, "Ir al módulo de Condominio");
             // 
             // HomeScreenLBLCondominium
             // 
@@ -406,6 +436,7 @@
             HomeScreenLBLCondominium.Size = new Size(96, 21);
             HomeScreenLBLCondominium.TabIndex = 1;
             HomeScreenLBLCondominium.Text = "Condominio";
+            toolTip1.SetToolTip(HomeScreenLBLCondominium, "Ir al módulo de Condominio");
             // 
             // pictureBox2
             // 
@@ -416,6 +447,7 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
+            toolTip1.SetToolTip(pictureBox2, "Ir al módulo de Condominio");
             // 
             // panel3
             // 
@@ -458,7 +490,7 @@
             Load += HomeScreen_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)HomeScreenBTNLogOut).EndInit();
             HomeScreenPNLMenu.ResumeLayout(false);
             HomeScreenPNLUsers.ResumeLayout(false);
             HomeScreenPNLUsers.PerformLayout();
@@ -497,8 +529,8 @@
         private Panel panel1;
         private Panel HomeScreenPNLMenu;
         private Label label1;
-        private Label label2;
-        private PictureBox pictureBox1;
+        private Label HomeScreenLBLTitleName;
+        private PictureBox HomeScreenBTNLogOut;
         private Panel HomeScreenPNLCondominium;
         private PictureBox pictureBox2;
         private Label HomeScreenLBLCondominium;
@@ -529,5 +561,6 @@
         private Label HomeScreenLBLUsers;
         private PictureBox pictureBox10;
         private Panel HomeScreenPNLMain;
+        private ToolTip toolTip1;
     }
 }

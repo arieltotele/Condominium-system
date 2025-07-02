@@ -1,6 +1,6 @@
 ﻿namespace Condominium_System.Presentation.Views
 {
-    partial class SignUp
+    partial class SignUpScreen
     {
         /// <summary>
         /// Required designer variable.

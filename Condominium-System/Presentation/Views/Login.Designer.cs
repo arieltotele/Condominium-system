@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             pictureBox1 = new PictureBox();
             label1 = new Label();
             LoginTxtBxPUsername = new TextBox();
@@ -36,6 +37,7 @@
             label2 = new Label();
             LoginPNLPassword = new Panel();
             LoginTxtBxPassword = new TextBox();
+            toolTip1 = new ToolTip(components);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             LoginPNLUsername.SuspendLayout();
             LoginPNLPassword.SuspendLayout();
@@ -86,8 +88,10 @@
             LoginBTNLogIn.Name = "LoginBTNLogIn";
             LoginBTNLogIn.Size = new Size(118, 48);
             LoginBTNLogIn.TabIndex = 6;
-            LoginBTNLogIn.Text = "Iniciar Sesion";
+            LoginBTNLogIn.Text = "Iniciar Sesión";
+            toolTip1.SetToolTip(LoginBTNLogIn, "Inicia Sesión");
             LoginBTNLogIn.UseVisualStyleBackColor = false;
+            LoginBTNLogIn.Click += LoginBTNLogIn_Click;
             // 
             // label2
             // 
@@ -150,5 +154,6 @@
         private Label label2;
         private Panel LoginPNLPassword;
         private TextBox LoginTxtBxPassword;
+        private ToolTip toolTip1;
     }
 }

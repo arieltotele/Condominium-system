@@ -1,6 +1,6 @@
 ﻿namespace Condominium_System.Presentation.Views
 {
-    partial class CondominuiumScreen
+    partial class CondominiumScreen
     {
         /// <summary>
         /// Required designer variable.
@@ -28,21 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             label1 = new Label();
             LoginPNLUsername = new Panel();
-            LoginTxtBxPUsername = new TextBox();
+            CondominiumTIId = new TextBox();
             label2 = new Label();
             panel1 = new Panel();
-            textBox1 = new TextBox();
+            CondominiumTIName = new TextBox();
             label3 = new Label();
             panel2 = new Panel();
-            textBox2 = new TextBox();
+            CondominiumTIBlocksQuantity = new TextBox();
             label4 = new Label();
             panel3 = new Panel();
-            textBox3 = new TextBox();
+            CondominiumTIAddress = new TextBox();
             label5 = new Label();
-            maskedTextBox1 = new MaskedTextBox();
-            dataGridView1 = new DataGridView();
+            CondominiumMskTBContactNumber = new MaskedTextBox();
+            CondominiumDTGData = new DataGridView();
             CondominiumPNLBTNDelete = new Panel();
             label13 = new Label();
             pictureBox4 = new PictureBox();
@@ -55,11 +56,12 @@
             CondominiumPNLBTNCreate = new Panel();
             label8 = new Label();
             pictureBox3 = new PictureBox();
+            toolTip1 = new ToolTip(components);
             LoginPNLUsername.SuspendLayout();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)CondominiumDTGData).BeginInit();
             CondominiumPNLBTNDelete.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             CondominiumPNLBTNUpdate.SuspendLayout();
@@ -83,19 +85,20 @@
             // LoginPNLUsername
             // 
             LoginPNLUsername.BackColor = SystemColors.Window;
-            LoginPNLUsername.Controls.Add(LoginTxtBxPUsername);
+            LoginPNLUsername.Controls.Add(CondominiumTIId);
             LoginPNLUsername.Location = new Point(12, 42);
             LoginPNLUsername.Name = "LoginPNLUsername";
             LoginPNLUsername.Size = new Size(334, 24);
             LoginPNLUsername.TabIndex = 10;
             // 
-            // LoginTxtBxPUsername
+            // CondominiumTIId
             // 
-            LoginTxtBxPUsername.BorderStyle = BorderStyle.None;
-            LoginTxtBxPUsername.Location = new Point(4, 3);
-            LoginTxtBxPUsername.Name = "LoginTxtBxPUsername";
-            LoginTxtBxPUsername.Size = new Size(360, 16);
-            LoginTxtBxPUsername.TabIndex = 2;
+            CondominiumTIId.BorderStyle = BorderStyle.None;
+            CondominiumTIId.Location = new Point(4, 3);
+            CondominiumTIId.Name = "CondominiumTIId";
+            CondominiumTIId.Size = new Size(327, 16);
+            CondominiumTIId.TabIndex = 2;
+            CondominiumTIId.KeyPress += CondominiumTIId_KeyPress;
             // 
             // label2
             // 
@@ -110,19 +113,19 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.Window;
-            panel1.Controls.Add(textBox1);
+            panel1.Controls.Add(CondominiumTIName);
             panel1.Location = new Point(12, 130);
             panel1.Name = "panel1";
             panel1.Size = new Size(334, 24);
             panel1.TabIndex = 12;
             // 
-            // textBox1
+            // CondominiumTIName
             // 
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Location = new Point(4, 3);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(360, 16);
-            textBox1.TabIndex = 2;
+            CondominiumTIName.BorderStyle = BorderStyle.None;
+            CondominiumTIName.Location = new Point(4, 3);
+            CondominiumTIName.Name = "CondominiumTIName";
+            CondominiumTIName.Size = new Size(327, 16);
+            CondominiumTIName.TabIndex = 2;
             // 
             // label3
             // 
@@ -137,19 +140,20 @@
             // panel2
             // 
             panel2.BackColor = SystemColors.Window;
-            panel2.Controls.Add(textBox2);
+            panel2.Controls.Add(CondominiumTIBlocksQuantity);
             panel2.Location = new Point(12, 305);
             panel2.Name = "panel2";
             panel2.Size = new Size(334, 24);
             panel2.TabIndex = 16;
             // 
-            // textBox2
+            // CondominiumTIBlocksQuantity
             // 
-            textBox2.BorderStyle = BorderStyle.None;
-            textBox2.Location = new Point(4, 3);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(360, 16);
-            textBox2.TabIndex = 2;
+            CondominiumTIBlocksQuantity.BorderStyle = BorderStyle.None;
+            CondominiumTIBlocksQuantity.Location = new Point(4, 3);
+            CondominiumTIBlocksQuantity.Name = "CondominiumTIBlocksQuantity";
+            CondominiumTIBlocksQuantity.Size = new Size(327, 16);
+            CondominiumTIBlocksQuantity.TabIndex = 2;
+            CondominiumTIBlocksQuantity.KeyPress += CondominiumTIId_KeyPress;
             // 
             // label4
             // 
@@ -164,19 +168,19 @@
             // panel3
             // 
             panel3.BackColor = SystemColors.Window;
-            panel3.Controls.Add(textBox3);
+            panel3.Controls.Add(CondominiumTIAddress);
             panel3.Location = new Point(12, 215);
             panel3.Name = "panel3";
             panel3.Size = new Size(334, 24);
             panel3.TabIndex = 14;
             // 
-            // textBox3
+            // CondominiumTIAddress
             // 
-            textBox3.BorderStyle = BorderStyle.None;
-            textBox3.Location = new Point(4, 3);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(360, 16);
-            textBox3.TabIndex = 2;
+            CondominiumTIAddress.BorderStyle = BorderStyle.None;
+            CondominiumTIAddress.Location = new Point(4, 3);
+            CondominiumTIAddress.Name = "CondominiumTIAddress";
+            CondominiumTIAddress.Size = new Size(327, 16);
+            CondominiumTIAddress.TabIndex = 2;
             // 
             // label5
             // 
@@ -188,22 +192,23 @@
             label5.TabIndex = 17;
             label5.Text = "Número de contacto";
             // 
-            // maskedTextBox1
+            // CondominiumMskTBContactNumber
             // 
-            maskedTextBox1.Location = new Point(12, 401);
-            maskedTextBox1.Mask = "(999)000-0000";
-            maskedTextBox1.Name = "maskedTextBox1";
-            maskedTextBox1.Size = new Size(334, 23);
-            maskedTextBox1.TabIndex = 36;
-            maskedTextBox1.MaskInputRejected += maskedTextBox1_MaskInputRejected;
+            CondominiumMskTBContactNumber.Location = new Point(12, 401);
+            CondominiumMskTBContactNumber.Mask = "(999)000-0000";
+            CondominiumMskTBContactNumber.Name = "CondominiumMskTBContactNumber";
+            CondominiumMskTBContactNumber.Size = new Size(334, 23);
+            CondominiumMskTBContactNumber.TabIndex = 36;
+            CondominiumMskTBContactNumber.TextMaskFormat = MaskFormat.ExcludePromptAndLiterals;
             // 
-            // dataGridView1
+            // CondominiumDTGData
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(373, 12);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(641, 470);
-            dataGridView1.TabIndex = 19;
+            CondominiumDTGData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            CondominiumDTGData.Location = new Point(373, 12);
+            CondominiumDTGData.Name = "CondominiumDTGData";
+            CondominiumDTGData.Size = new Size(641, 470);
+            CondominiumDTGData.TabIndex = 19;
+            toolTip1.SetToolTip(CondominiumDTGData, "Condominios almacenados en la Base de Datos.");
             // 
             // CondominiumPNLBTNDelete
             // 
@@ -214,6 +219,8 @@
             CondominiumPNLBTNDelete.Name = "CondominiumPNLBTNDelete";
             CondominiumPNLBTNDelete.Size = new Size(109, 41);
             CondominiumPNLBTNDelete.TabIndex = 32;
+            toolTip1.SetToolTip(CondominiumPNLBTNDelete, "Botón para borrar un condominio.");
+            CondominiumPNLBTNDelete.Click += CondominiumBTNDelete_Click;
             // 
             // label13
             // 
@@ -225,6 +232,8 @@
             label13.Size = new Size(54, 21);
             label13.TabIndex = 1;
             label13.Text = "Borrar";
+            toolTip1.SetToolTip(label13, "Botón para borrar un condominio.");
+            label13.Click += CondominiumBTNDelete_Click;
             // 
             // pictureBox4
             // 
@@ -235,6 +244,8 @@
             pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox4.TabIndex = 0;
             pictureBox4.TabStop = false;
+            toolTip1.SetToolTip(pictureBox4, "Botón para borrar un condominio.");
+            pictureBox4.Click += CondominiumBTNDelete_Click;
             // 
             // CondominiumPNLBTNUpdate
             // 
@@ -245,6 +256,8 @@
             CondominiumPNLBTNUpdate.Name = "CondominiumPNLBTNUpdate";
             CondominiumPNLBTNUpdate.Size = new Size(119, 41);
             CondominiumPNLBTNUpdate.TabIndex = 33;
+            toolTip1.SetToolTip(CondominiumPNLBTNUpdate, "Botón para actualizar los datos de un condominio.");
+            CondominiumPNLBTNUpdate.Click += CondominiumBTNUpdate_Click;
             // 
             // label6
             // 
@@ -256,6 +269,8 @@
             label6.Size = new Size(78, 21);
             label6.TabIndex = 1;
             label6.Text = "Actualizar";
+            toolTip1.SetToolTip(label6, "Botón para actualizar los datos de un condominio.");
+            label6.Click += CondominiumBTNUpdate_Click;
             // 
             // pictureBox1
             // 
@@ -266,6 +281,8 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Botón para actualizar los datos de un condominio.");
+            pictureBox1.Click += CondominiumBTNUpdate_Click;
             // 
             // CondominiumPNLBTNSearch
             // 
@@ -276,6 +293,8 @@
             CondominiumPNLBTNSearch.Name = "CondominiumPNLBTNSearch";
             CondominiumPNLBTNSearch.Size = new Size(109, 41);
             CondominiumPNLBTNSearch.TabIndex = 34;
+            toolTip1.SetToolTip(CondominiumPNLBTNSearch, "Boton para buscar un condominio.");
+            CondominiumPNLBTNSearch.Click += CondominiumBTNSearch_Click;
             // 
             // label7
             // 
@@ -287,6 +306,8 @@
             label7.Size = new Size(56, 21);
             label7.TabIndex = 1;
             label7.Text = "Buscar";
+            toolTip1.SetToolTip(label7, "Boton para buscar un condominio.");
+            label7.Click += CondominiumBTNSearch_Click;
             // 
             // pictureBox2
             // 
@@ -297,6 +318,8 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
+            toolTip1.SetToolTip(pictureBox2, "Boton para buscar un condominio.");
+            pictureBox2.Click += CondominiumBTNSearch_Click;
             // 
             // CondominiumPNLBTNCreate
             // 
@@ -307,6 +330,8 @@
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 35;
+            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Crear un nuevo condominio.");
+            CondominiumPNLBTNCreate.Click += CondominiumBTNCreate_Click;
             // 
             // label8
             // 
@@ -318,6 +343,8 @@
             label8.Size = new Size(48, 21);
             label8.TabIndex = 1;
             label8.Text = "Crear";
+            toolTip1.SetToolTip(label8, "Crear un nuevo condominio.");
+            label8.Click += CondominiumBTNCreate_Click;
             // 
             // pictureBox3
             // 
@@ -328,18 +355,20 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
+            toolTip1.SetToolTip(pictureBox3, "Crear un nuevo condominio.");
+            pictureBox3.Click += CondominiumBTNCreate_Click;
             // 
-            // CondominuiumScreen
+            // CondominiumScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1017, 591);
-            Controls.Add(maskedTextBox1);
+            Controls.Add(CondominiumMskTBContactNumber);
             Controls.Add(CondominiumPNLBTNCreate);
             Controls.Add(CondominiumPNLBTNSearch);
             Controls.Add(CondominiumPNLBTNUpdate);
             Controls.Add(CondominiumPNLBTNDelete);
-            Controls.Add(dataGridView1);
+            Controls.Add(CondominiumDTGData);
             Controls.Add(label5);
             Controls.Add(label3);
             Controls.Add(panel2);
@@ -349,9 +378,10 @@
             Controls.Add(panel1);
             Controls.Add(label1);
             Controls.Add(LoginPNLUsername);
-            Name = "CondominuiumScreen";
+            Name = "CondominiumScreen";
             Text = "CondominuiumScreen";
             Load += CondominuiumScreen_Load;
+            Click += CondominiumBTNDelete_Click;
             LoginPNLUsername.ResumeLayout(false);
             LoginPNLUsername.PerformLayout();
             panel1.ResumeLayout(false);
@@ -360,7 +390,7 @@
             panel2.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)CondominiumDTGData).EndInit();
             CondominiumPNLBTNDelete.ResumeLayout(false);
             CondominiumPNLBTNDelete.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
@@ -381,18 +411,18 @@
 
         private Label label1;
         private Panel LoginPNLUsername;
-        private TextBox LoginTxtBxPUsername;
+        private TextBox CondominiumTIId;
         private Label label2;
         private Panel panel1;
-        private TextBox textBox1;
+        private TextBox CondominiumTIName;
         private Label label3;
         private Panel panel2;
-        private TextBox textBox2;
+        private TextBox CondominiumTIBlocksQuantity;
         private Label label4;
         private Panel panel3;
-        private TextBox textBox3;
+        private TextBox CondominiumTIAddress;
         private Label label5;
-        private DataGridView dataGridView1;
+        private DataGridView CondominiumDTGData;
         private Panel CondominiumPNLBTNDelete;
         private Label label13;
         private PictureBox pictureBox4;
@@ -405,6 +435,7 @@
         private Panel CondominiumPNLBTNCreate;
         private Label label8;
         private PictureBox pictureBox3;
-        private MaskedTextBox maskedTextBox1;
+        private MaskedTextBox CondominiumMskTBContactNumber;
+        private ToolTip toolTip1;
     }
 }

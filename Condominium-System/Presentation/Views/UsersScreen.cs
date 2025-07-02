@@ -16,5 +16,12 @@ namespace Condominium_System.Presentation.Views
         {
             InitializeComponent();
         }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+            var SignUpScreen = new SignUpScreen();
+            SignUpScreen.Closed += (s, args) => this.Close();
+            SignUpScreen.Show();
+        }
     }
 }

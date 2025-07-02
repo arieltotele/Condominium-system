@@ -12,7 +12,7 @@ namespace Condominium_System.Data.Entities
         public string Name { get; set; }
         public string Address { get; set; }
         public string ReceptionContactNumber { get; set; }
-        public string BlockCount { get; set; }
+        public int BlockCount { get; set; }
 
         public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<Block> Blocks { get; set; }

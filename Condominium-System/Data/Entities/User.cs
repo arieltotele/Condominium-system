@@ -16,7 +16,7 @@ namespace Condominium_System.Data.Entities
         public string Password { get; set; }
         public string Type { get; set; }
 
-        public int CondominiumId { get; set; }
+        public int? CondominiumId { get; set; }
         public virtual Condominium Condominium { get; set; }
     }
 }

@@ -12,9 +12,9 @@ using System.Windows.Forms;
 
 namespace Condominium_System.Presentation.Views
 {
-    public partial class SignUp : Form
+    public partial class SignUpScreen : Form
     {
-        public SignUp()
+        public SignUpScreen()
         {
             InitializeComponent();
         }
