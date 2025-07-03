@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             pictureBox1 = new PictureBox();
             label1 = new Label();
             label2 = new Label();
@@ -64,6 +65,7 @@
             SignUpPNLBTNSave = new Panel();
             label13 = new Label();
             pictureBox4 = new PictureBox();
+            toolTip1 = new ToolTip(components);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SignUpPNLName.SuspendLayout();
             SignUpPNLLastname.SuspendLayout();
@@ -342,6 +344,7 @@
             SignUpPNLBTNBack.Name = "SignUpPNLBTNBack";
             SignUpPNLBTNBack.Size = new Size(102, 41);
             SignUpPNLBTNBack.TabIndex = 29;
+            toolTip1.SetToolTip(SignUpPNLBTNBack, "Ir atras.");
             SignUpPNLBTNBack.Click += SignUpPNLBTNBack_Click;
             // 
             // label11
@@ -354,6 +357,7 @@
             label11.Size = new Size(46, 21);
             label11.TabIndex = 1;
             label11.Text = "Atras";
+            toolTip1.SetToolTip(label11, "Ir atras.");
             label11.Click += SignUpPNLBTNBack_Click;
             // 
             // pictureBox2
@@ -365,6 +369,7 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
+            toolTip1.SetToolTip(pictureBox2, "Ir atras.");
             pictureBox2.Click += SignUpPNLBTNBack_Click;
             // 
             // SignUpPNLBTNClean
@@ -376,6 +381,7 @@
             SignUpPNLBTNClean.Name = "SignUpPNLBTNClean";
             SignUpPNLBTNClean.Size = new Size(109, 41);
             SignUpPNLBTNClean.TabIndex = 30;
+            toolTip1.SetToolTip(SignUpPNLBTNClean, "Limpiar los campos del formulario.+");
             SignUpPNLBTNClean.Click += SignUpPNLBTNClear_Click;
             // 
             // label12
@@ -388,6 +394,7 @@
             label12.Size = new Size(63, 21);
             label12.TabIndex = 1;
             label12.Text = "Limpiar";
+            toolTip1.SetToolTip(label12, "Limpiar los campos del formulario.+");
             label12.Click += SignUpPNLBTNClear_Click;
             // 
             // pictureBox3
@@ -399,6 +406,7 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
+            toolTip1.SetToolTip(pictureBox3, "Limpiar los campos del formulario.+");
             pictureBox3.Click += SignUpPNLBTNClear_Click;
             // 
             // SignUpPNLBTNSave
@@ -410,6 +418,7 @@
             SignUpPNLBTNSave.Name = "SignUpPNLBTNSave";
             SignUpPNLBTNSave.Size = new Size(109, 41);
             SignUpPNLBTNSave.TabIndex = 31;
+            toolTip1.SetToolTip(SignUpPNLBTNSave, "Guardar usuario.");
             SignUpPNLBTNSave.Click += SignUpPNLBTNSave_Click;
             // 
             // label13
@@ -422,6 +431,7 @@
             label13.Size = new Size(67, 21);
             label13.TabIndex = 1;
             label13.Text = "Guardar";
+            toolTip1.SetToolTip(label13, "Guardar usuario.");
             label13.Click += SignUpPNLBTNSave_Click;
             // 
             // pictureBox4
@@ -433,6 +443,7 @@
             pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox4.TabIndex = 0;
             pictureBox4.TabStop = false;
+            toolTip1.SetToolTip(pictureBox4, "Guardar usuario.");
             pictureBox4.Click += SignUpPNLBTNSave_Click;
             // 
             // SignUpScreen
@@ -465,6 +476,7 @@
             Controls.Add(pictureBox1);
             Name = "SignUpScreen";
             Text = "Registrar";
+            toolTip1.SetToolTip(this, "Limpiar los campos del formulario.+");
             Load += SignUp_Load;
             Click += SignUpPNLBTNClear_Click;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -533,5 +545,6 @@
         private Panel SignUpPNLBTNSave;
         private Label label13;
         private PictureBox pictureBox4;
+        private ToolTip toolTip1;
     }
 }

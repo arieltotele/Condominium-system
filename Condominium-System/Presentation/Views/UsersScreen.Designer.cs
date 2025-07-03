@@ -227,7 +227,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(307, 91);
+            label5.Location = new Point(303, 91);
             label5.Name = "label5";
             label5.Size = new Size(40, 21);
             label5.TabIndex = 144;
@@ -237,9 +237,9 @@
             // 
             panel5.BackColor = SystemColors.Window;
             panel5.Controls.Add(UserCbType);
-            panel5.Location = new Point(307, 124);
+            panel5.Location = new Point(303, 124);
             panel5.Name = "panel5";
-            panel5.Size = new Size(188, 30);
+            panel5.Size = new Size(200, 30);
             panel5.TabIndex = 145;
             // 
             // UserCbType

@@ -23,12 +23,29 @@ namespace Condominium_System.Data.Repositories
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await _entities.ToListAsync();
+            return await _entities
+                .Where(e => e.IsActive)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
         {
-            return await _entities.Where(predicate).ToListAsync();
+            if (typeof(AuditableModel).IsAssignableFrom(typeof(T)))
+            {
+                var parameter = Expression.Parameter(typeof(T), "x");
+                var isActiveProperty = Expression.Property(parameter, nameof(AuditableModel.IsActive));
+                var isActiveTrue = Expression.Equal(isActiveProperty, Expression.Constant(true));
+
+                var combined = Expression.Lambda<Func<T, bool>>(
+                    Expression.AndAlso(isActiveTrue, Expression.Invoke(predicate, parameter)), parameter
+                );
+
+                return await _entities.Where(combined).ToListAsync();
+            }
+            else
+            {
+                return await _entities.Where(predicate).ToListAsync();
+            }
         }
 
         public async Task AddAsync(T entity)
@@ -43,7 +60,16 @@ namespace Condominium_System.Data.Repositories
 
         public void Remove(T entity)
         {
-            _entities.Remove(entity);
+            if (entity is AuditableModel auditableEntity)
+            {
+                auditableEntity.IsActive = false;
+                auditableEntity.DeletedAt = DateTime.Now;
+                _entities.Update(entity);
+            }
+            else
+            {
+                _entities.Remove(entity);
+            }
         }
 
         public async Task SaveChangesAsync()
