@@ -132,6 +132,11 @@ namespace Condominium_System.Presentation.Views
                 var bindingList = new BindingList<Condominium>((List<Condominium>)(IEnumerable<Condominium>)listCondominium);
                 var source = new BindingSource(bindingList, null);
                 CondominiumDTGData.DataSource = source;
+
+                CondominiumDTGData.EnableHeadersVisualStyles = false;
+                CondominiumDTGData.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(0, 65, 194);
+                CondominiumDTGData.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+                CondominiumDTGData.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
             }
             catch (Exception ex)
             {

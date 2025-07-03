@@ -84,6 +84,11 @@ namespace Condominium_System.Presentation.Views
                 var bindingList = new BindingList<User>((List<User>)(IEnumerable<User>)listUser);
                 var source = new BindingSource(bindingList, null);
                 UserDTGData.DataSource = source;
+
+                UserDTGData.EnableHeadersVisualStyles = false;
+                UserDTGData.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(0, 65, 194);
+                UserDTGData.ColumnHeadersDefaultCellStyle.ForeColor = Color.White; 
+                UserDTGData.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
             }
             catch (Exception ex)
             {
