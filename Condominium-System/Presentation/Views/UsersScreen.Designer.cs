@@ -31,30 +31,30 @@
             components = new System.ComponentModel.Container();
             label1 = new Label();
             LoginPNLUsername = new Panel();
-            LoginTxtBxPUsername = new TextBox();
+            UserTxtBxPId = new TextBox();
             label4 = new Label();
             panel2 = new Panel();
-            textBox2 = new TextBox();
+            UserTxtBxPName = new TextBox();
             label2 = new Label();
             panel1 = new Panel();
-            textBox1 = new TextBox();
+            UserTxtBxPLastname = new TextBox();
             label3 = new Label();
             panel3 = new Panel();
-            textBox3 = new TextBox();
+            UserTxtBxPUsername = new TextBox();
             label6 = new Label();
             panel6 = new Panel();
-            maskedTextBox1 = new MaskedTextBox();
+            UserMskTbDocumentation = new MaskedTextBox();
             label5 = new Label();
             panel5 = new Panel();
-            comboBox1 = new ComboBox();
+            UserCbType = new ComboBox();
             label7 = new Label();
             panel4 = new Panel();
-            textBox4 = new TextBox();
-            maskedTextBox2 = new MaskedTextBox();
+            UserTbPassword = new TextBox();
+            UserMskTbContactNumber = new MaskedTextBox();
             label8 = new Label();
             label9 = new Label();
             panel7 = new Panel();
-            comboBox2 = new ComboBox();
+            UserTBCondominium = new ComboBox();
             CondominiumPNLBTNCreate = new Panel();
             label10 = new Label();
             pictureBox3 = new PictureBox();
@@ -101,19 +101,19 @@
             // LoginPNLUsername
             // 
             LoginPNLUsername.BackColor = SystemColors.Window;
-            LoginPNLUsername.Controls.Add(LoginTxtBxPUsername);
+            LoginPNLUsername.Controls.Add(UserTxtBxPId);
             LoginPNLUsername.Location = new Point(12, 42);
             LoginPNLUsername.Name = "LoginPNLUsername";
             LoginPNLUsername.Size = new Size(119, 24);
             LoginPNLUsername.TabIndex = 124;
             // 
-            // LoginTxtBxPUsername
+            // UserTxtBxPId
             // 
-            LoginTxtBxPUsername.BorderStyle = BorderStyle.None;
-            LoginTxtBxPUsername.Location = new Point(4, 4);
-            LoginTxtBxPUsername.Name = "LoginTxtBxPUsername";
-            LoginTxtBxPUsername.Size = new Size(112, 16);
-            LoginTxtBxPUsername.TabIndex = 2;
+            UserTxtBxPId.BorderStyle = BorderStyle.None;
+            UserTxtBxPId.Location = new Point(4, 4);
+            UserTxtBxPId.Name = "UserTxtBxPId";
+            UserTxtBxPId.Size = new Size(112, 16);
+            UserTxtBxPId.TabIndex = 2;
             // 
             // label4
             // 
@@ -128,19 +128,19 @@
             // panel2
             // 
             panel2.BackColor = SystemColors.Window;
-            panel2.Controls.Add(textBox2);
+            panel2.Controls.Add(UserTxtBxPName);
             panel2.Location = new Point(213, 42);
             panel2.Name = "panel2";
             panel2.Size = new Size(215, 24);
             panel2.TabIndex = 137;
             // 
-            // textBox2
+            // UserTxtBxPName
             // 
-            textBox2.BorderStyle = BorderStyle.None;
-            textBox2.Location = new Point(4, 4);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(208, 16);
-            textBox2.TabIndex = 2;
+            UserTxtBxPName.BorderStyle = BorderStyle.None;
+            UserTxtBxPName.Location = new Point(4, 4);
+            UserTxtBxPName.Name = "UserTxtBxPName";
+            UserTxtBxPName.Size = new Size(208, 16);
+            UserTxtBxPName.TabIndex = 2;
             // 
             // label2
             // 
@@ -155,19 +155,19 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.Window;
-            panel1.Controls.Add(textBox1);
+            panel1.Controls.Add(UserTxtBxPLastname);
             panel1.Location = new Point(486, 42);
             panel1.Name = "panel1";
             panel1.Size = new Size(215, 24);
             panel1.TabIndex = 139;
             // 
-            // textBox1
+            // UserTxtBxPLastname
             // 
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Location = new Point(4, 4);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(208, 16);
-            textBox1.TabIndex = 2;
+            UserTxtBxPLastname.BorderStyle = BorderStyle.None;
+            UserTxtBxPLastname.Location = new Point(4, 4);
+            UserTxtBxPLastname.Name = "UserTxtBxPLastname";
+            UserTxtBxPLastname.Size = new Size(208, 16);
+            UserTxtBxPLastname.TabIndex = 2;
             // 
             // label3
             // 
@@ -182,19 +182,19 @@
             // panel3
             // 
             panel3.BackColor = SystemColors.Window;
-            panel3.Controls.Add(textBox3);
+            panel3.Controls.Add(UserTxtBxPUsername);
             panel3.Location = new Point(774, 42);
             panel3.Name = "panel3";
             panel3.Size = new Size(215, 24);
             panel3.TabIndex = 141;
             // 
-            // textBox3
+            // UserTxtBxPUsername
             // 
-            textBox3.BorderStyle = BorderStyle.None;
-            textBox3.Location = new Point(4, 4);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(208, 16);
-            textBox3.TabIndex = 2;
+            UserTxtBxPUsername.BorderStyle = BorderStyle.None;
+            UserTxtBxPUsername.Location = new Point(4, 4);
+            UserTxtBxPUsername.Name = "UserTxtBxPUsername";
+            UserTxtBxPUsername.Size = new Size(208, 16);
+            UserTxtBxPUsername.TabIndex = 2;
             // 
             // label6
             // 
@@ -209,19 +209,19 @@
             // panel6
             // 
             panel6.BackColor = SystemColors.Window;
-            panel6.Controls.Add(maskedTextBox1);
+            panel6.Controls.Add(UserMskTbDocumentation);
             panel6.Location = new Point(11, 124);
             panel6.Name = "panel6";
             panel6.Size = new Size(225, 33);
             panel6.TabIndex = 143;
             // 
-            // maskedTextBox1
+            // UserMskTbDocumentation
             // 
-            maskedTextBox1.Location = new Point(4, 5);
-            maskedTextBox1.Mask = "000-0000000-0";
-            maskedTextBox1.Name = "maskedTextBox1";
-            maskedTextBox1.Size = new Size(218, 23);
-            maskedTextBox1.TabIndex = 0;
+            UserMskTbDocumentation.Location = new Point(4, 5);
+            UserMskTbDocumentation.Mask = "000-0000000-0";
+            UserMskTbDocumentation.Name = "UserMskTbDocumentation";
+            UserMskTbDocumentation.Size = new Size(218, 23);
+            UserMskTbDocumentation.TabIndex = 0;
             // 
             // label5
             // 
@@ -236,20 +236,21 @@
             // panel5
             // 
             panel5.BackColor = SystemColors.Window;
-            panel5.Controls.Add(comboBox1);
+            panel5.Controls.Add(UserCbType);
             panel5.Location = new Point(307, 124);
             panel5.Name = "panel5";
             panel5.Size = new Size(188, 30);
             panel5.TabIndex = 145;
             // 
-            // comboBox1
+            // UserCbType
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(3, 4);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(181, 23);
-            comboBox1.TabIndex = 0;
-            comboBox1.Text = "Seleccione";
+            UserCbType.DropDownStyle = ComboBoxStyle.DropDownList;
+            UserCbType.FlatStyle = FlatStyle.Flat;
+            UserCbType.FormattingEnabled = true;
+            UserCbType.Location = new Point(3, 4);
+            UserCbType.Name = "UserCbType";
+            UserCbType.Size = new Size(181, 23);
+            UserCbType.TabIndex = 0;
             // 
             // label7
             // 
@@ -264,27 +265,27 @@
             // panel4
             // 
             panel4.BackColor = SystemColors.Window;
-            panel4.Controls.Add(textBox4);
+            panel4.Controls.Add(UserTbPassword);
             panel4.Location = new Point(556, 124);
             panel4.Name = "panel4";
             panel4.Size = new Size(178, 24);
             panel4.TabIndex = 147;
             // 
-            // textBox4
+            // UserTbPassword
             // 
-            textBox4.BorderStyle = BorderStyle.None;
-            textBox4.Location = new Point(4, 4);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(171, 16);
-            textBox4.TabIndex = 2;
+            UserTbPassword.BorderStyle = BorderStyle.None;
+            UserTbPassword.Location = new Point(4, 4);
+            UserTbPassword.Name = "UserTbPassword";
+            UserTbPassword.Size = new Size(171, 16);
+            UserTbPassword.TabIndex = 2;
             // 
-            // maskedTextBox2
+            // UserMskTbContactNumber
             // 
-            maskedTextBox2.Location = new Point(773, 128);
-            maskedTextBox2.Mask = "(999)000-0000";
-            maskedTextBox2.Name = "maskedTextBox2";
-            maskedTextBox2.Size = new Size(212, 23);
-            maskedTextBox2.TabIndex = 149;
+            UserMskTbContactNumber.Location = new Point(773, 128);
+            UserMskTbContactNumber.Mask = "(999)000-0000";
+            UserMskTbContactNumber.Name = "UserMskTbContactNumber";
+            UserMskTbContactNumber.Size = new Size(212, 23);
+            UserMskTbContactNumber.TabIndex = 149;
             // 
             // label8
             // 
@@ -309,20 +310,20 @@
             // panel7
             // 
             panel7.BackColor = SystemColors.Window;
-            panel7.Controls.Add(comboBox2);
+            panel7.Controls.Add(UserTBCondominium);
             panel7.Location = new Point(11, 211);
             panel7.Name = "panel7";
             panel7.Size = new Size(188, 30);
             panel7.TabIndex = 151;
             // 
-            // comboBox2
+            // UserTBCondominium
             // 
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(3, 4);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(181, 23);
-            comboBox2.TabIndex = 0;
-            comboBox2.Text = "Seleccione";
+            UserTBCondominium.DropDownStyle = ComboBoxStyle.DropDownList;
+            UserTBCondominium.FormattingEnabled = true;
+            UserTBCondominium.Location = new Point(3, 4);
+            UserTBCondominium.Name = "UserTBCondominium";
+            UserTBCondominium.Size = new Size(181, 23);
+            UserTBCondominium.TabIndex = 0;
             // 
             // CondominiumPNLBTNCreate
             // 
@@ -371,6 +372,7 @@
             CondominiumPNLBTNSearch.Size = new Size(109, 41);
             CondominiumPNLBTNSearch.TabIndex = 154;
             toolTip1.SetToolTip(CondominiumPNLBTNSearch, "Buscar un usuario.");
+            CondominiumPNLBTNSearch.Click += UserBTNSearch_Click;
             // 
             // label11
             // 
@@ -383,6 +385,7 @@
             label11.TabIndex = 1;
             label11.Text = "Buscar";
             toolTip1.SetToolTip(label11, "Buscar un usuario.");
+            label11.Click += UserBTNSearch_Click;
             // 
             // pictureBox2
             // 
@@ -394,6 +397,7 @@
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
             toolTip1.SetToolTip(pictureBox2, "Buscar un usuario.");
+            pictureBox2.Click += UserBTNSearch_Click;
             // 
             // CondominiumPNLBTNUpdate
             // 
@@ -483,7 +487,7 @@
             Controls.Add(CondominiumPNLBTNDelete);
             Controls.Add(label9);
             Controls.Add(panel7);
-            Controls.Add(maskedTextBox2);
+            Controls.Add(UserMskTbContactNumber);
             Controls.Add(label8);
             Controls.Add(label7);
             Controls.Add(panel4);
@@ -537,30 +541,30 @@
 
         private Label label1;
         private Panel LoginPNLUsername;
-        private TextBox LoginTxtBxPUsername;
+        private TextBox UserTxtBxPId;
         private Label label4;
         private Panel panel2;
-        private TextBox textBox2;
+        private TextBox UserTxtBxPName;
         private Label label2;
         private Panel panel1;
-        private TextBox textBox1;
+        private TextBox UserTxtBxPLastname;
         private Label label3;
         private Panel panel3;
-        private TextBox textBox3;
+        private TextBox UserTxtBxPUsername;
         private Label label6;
         private Panel panel6;
-        private MaskedTextBox maskedTextBox1;
+        private MaskedTextBox UserMskTbDocumentation;
         private Label label5;
         private Panel panel5;
-        private ComboBox comboBox1;
+        private ComboBox UserCbType;
         private Label label7;
         private Panel panel4;
-        private TextBox textBox4;
-        private MaskedTextBox maskedTextBox2;
+        private TextBox UserTbPassword;
+        private MaskedTextBox UserMskTbContactNumber;
         private Label label8;
         private Label label9;
         private Panel panel7;
-        private ComboBox comboBox2;
+        private ComboBox UserTBCondominium;
         private Panel CondominiumPNLBTNCreate;
         private Label label10;
         private PictureBox pictureBox3;

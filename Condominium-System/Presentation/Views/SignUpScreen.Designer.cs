@@ -265,6 +265,7 @@
             SignUpMskTBDocumentNumber.Name = "SignUpMskTBDocumentNumber";
             SignUpMskTBDocumentNumber.Size = new Size(295, 23);
             SignUpMskTBDocumentNumber.TabIndex = 0;
+            SignUpMskTBDocumentNumber.TextMaskFormat = MaskFormat.ExcludePromptAndLiterals;
             // 
             // label8
             // 
@@ -292,6 +293,7 @@
             SignUpMskTBTelephoneNumber.Name = "SignUpMskTBTelephoneNumber";
             SignUpMskTBTelephoneNumber.Size = new Size(295, 23);
             SignUpMskTBTelephoneNumber.TabIndex = 23;
+            SignUpMskTBTelephoneNumber.TextMaskFormat = MaskFormat.ExcludePromptAndLiterals;
             // 
             // label9
             // 
@@ -374,7 +376,7 @@
             SignUpPNLBTNClean.Name = "SignUpPNLBTNClean";
             SignUpPNLBTNClean.Size = new Size(109, 41);
             SignUpPNLBTNClean.TabIndex = 30;
-            SignUpPNLBTNClean.Click += SignUpPNLBTNBack_Click;
+            SignUpPNLBTNClean.Click += SignUpPNLBTNClear_Click;
             // 
             // label12
             // 
@@ -386,7 +388,7 @@
             label12.Size = new Size(63, 21);
             label12.TabIndex = 1;
             label12.Text = "Limpiar";
-            label12.Click += SignUpPNLBTNBack_Click;
+            label12.Click += SignUpPNLBTNClear_Click;
             // 
             // pictureBox3
             // 
@@ -397,7 +399,7 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
-            pictureBox3.Click += SignUpPNLBTNBack_Click;
+            pictureBox3.Click += SignUpPNLBTNClear_Click;
             // 
             // SignUpPNLBTNSave
             // 
@@ -464,6 +466,7 @@
             Name = "SignUpScreen";
             Text = "Registrar";
             Load += SignUp_Load;
+            Click += SignUpPNLBTNClear_Click;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             SignUpPNLName.ResumeLayout(false);
             SignUpPNLName.PerformLayout();

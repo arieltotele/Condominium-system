@@ -103,18 +103,19 @@ namespace Condominium_System.Presentation.Views
                     break;
 
                 case "HomeScreenPNLInvoice":
-                    HomeScreenLBLTitle.Text = "Factura";
-                    LoadFormInPanel(new InvoiceScreen());
+                    var invoiceScreen = _serviceProvider.GetRequiredService<InvoiceScreen>();
+                    LoadFormInPanel(invoiceScreen);
                     break;
 
                 case "HomeScreenPNLFurniture":
                     HomeScreenLBLTitle.Text = "Mobiliario";
-                    LoadFormInPanel(new FurnitureScreen());
+                    var furnitureScreen = _serviceProvider.GetRequiredService<FurnitureScreen>();
+                    LoadFormInPanel(furnitureScreen);
                     break;
 
                 case "HomeScreenPNLMaintenance":
                     HomeScreenLBLTitle.Text = "Servicios";
-                    LoadFormInPanel(new ServiceScreen());
+                    OpenServiceScreen();
                     break;
 
                 case "HomeScreenPNLUsers":
@@ -128,21 +129,29 @@ namespace Condominium_System.Presentation.Views
             }
         }
 
+        private void OpenServiceScreen()
+        {
+            var screen = _serviceProvider.GetRequiredService<ServiceScreen>();
+            LoadFormInPanel(screen); // Asegúrate de usar una nueva instancia cada vez
+        }
+
         private void LoadFormInPanel(Form childForm)
         {
-            // Limpia cualquier formulario anterior
             if (HomeScreenPNLMain.Controls.Count > 0)
             {
-                HomeScreenPNLMain.Controls[0].Dispose();
+                var oldForm = HomeScreenPNLMain.Controls[0] as Form;
+                if (oldForm != null)
+                {
+                    oldForm.Hide(); // en vez de .Close()
+                    oldForm.Dispose(); // opcional si no vas a reutilizarlo
+                }
+
                 HomeScreenPNLMain.Controls.Clear();
             }
 
-            // Preparar el nuevo formulario para estar "embebido"
             childForm.TopLevel = false;
             childForm.FormBorderStyle = FormBorderStyle.None;
             childForm.Dock = DockStyle.Fill;
-
-            // Agregarlo al panel y mostrarlo
             HomeScreenPNLMain.Controls.Add(childForm);
             HomeScreenPNLMain.Tag = childForm;
             childForm.Show();

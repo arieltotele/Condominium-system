@@ -40,13 +40,49 @@ namespace Condominium_System
             services.AddScoped<ICondominiumService, CondominiumService>();
             services.AddScoped<IRepositoryWithId<Condominium>, RepositoryWithId<Condominium>>();
 
+            services.AddScoped<IBlockService, BlockService>();
+            services.AddScoped<IRepositoryWithId<Block>, RepositoryWithId<Block>>();
+
+            services.AddScoped<IFurnitureService, FurnitureService>();
+            services.AddScoped<IRepositoryWithId<Furniture>, RepositoryWithId<Furniture>>();
+
+            services.AddScoped<IHousingEntityService, HousingEntityService>();
+            services.AddScoped<IRepositoryWithId<Housing>, RepositoryWithId<Housing>>();
+
+            services.AddScoped<IHousingFurnitureService, HousingFurnitureService>();
+            services.AddScoped<IRepositoryNoId<HousingFurniture>, RepositoryNoId<HousingFurniture>>();
+
+            services.AddScoped<IHousingServiceRelationService, HousingServiceRelationService>();
+            services.AddScoped<IRepositoryNoId<HousingService>, RepositoryNoId<HousingService>>();
+
+            services.AddScoped<IIncidentService, IncidentService>();
+            services.AddScoped<IRepositoryWithId<Incident>, RepositoryWithId<Incident>>();
+
+            services.AddScoped<IInvoiceService, InvoiceService>();
+            services.AddScoped<IRepositoryWithId<Invoice>, RepositoryWithId<Invoice>>();
+
+            services.AddScoped<IServiceService, ServiceService>();
+            services.AddScoped<IRepositoryWithId<Service>, RepositoryWithId<Service>>();
+
+            services.AddScoped<ITenantService, TenantService>();
+            services.AddScoped<IRepositoryWithId<Tenant>, RepositoryWithId<Tenant>>();
+
 
             // Registration for formularies
-            services.AddScoped<Login>();
-            services.AddScoped<HomeScreen>();
-            services.AddScoped<UsersScreen>();
-            services.AddScoped<SignUpScreen>();
-            services.AddScoped<CondominiumScreen>();
+            services.AddTransient<HomeScreen>();
+            services.AddTransient<Login>();
+            services.AddTransient<SignUpScreen>();
+            services.AddTransient<UsersScreen>();
+            services.AddTransient<ServiceScreen>();
+            services.AddTransient<HousingScreen>();
+            services.AddTransient<HousingBlocksScreen>();
+            services.AddTransient<CondominiumScreen>();
+            services.AddTransient<TenantScreen>();
+            services.AddTransient<IncidenceScreen>();
+            services.AddTransient<InvoiceScreen>();
+            services.AddTransient<FurnitureScreen>();
+            services.AddTransient<AddFurnitureScreen>();
+            services.AddTransient<AddServiceScreen>();
 
             var serviceProvider = services.BuildServiceProvider();
 
