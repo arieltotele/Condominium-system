@@ -134,15 +134,6 @@ namespace Condominium_System.Presentation.Views
 
         private async void SignUpPNLBTNSave_Click(object sender, EventArgs e)
         {
-            var passportlenght = SignUpMskTBDocumentNumber.Text.Trim().Length;
-            var telephonelenght = SignUpMskTBTelephoneNumber.Text.Trim().Length;
-            var contrasena1 = SignUpTxtBxPassword.Text.Trim();
-            var contransena2 = SignUpTxtBxConfirmPassword.Text.Trim();
-
-            int userTypeId = (int)SignUpComboBxType.SelectedValue;
-            string userTypeText = SignUpComboBxType.Text;
-
-
             if (FormIsCorrect())
             {
                 try

@@ -217,11 +217,13 @@
             // 
             // UserMskTbDocumentation
             // 
+            UserMskTbDocumentation.CutCopyMaskFormat = MaskFormat.ExcludePromptAndLiterals;
             UserMskTbDocumentation.Location = new Point(4, 5);
             UserMskTbDocumentation.Mask = "000-0000000-0";
             UserMskTbDocumentation.Name = "UserMskTbDocumentation";
             UserMskTbDocumentation.Size = new Size(218, 23);
             UserMskTbDocumentation.TabIndex = 0;
+            UserMskTbDocumentation.TextMaskFormat = MaskFormat.ExcludePromptAndLiterals;
             // 
             // label5
             // 
@@ -281,11 +283,13 @@
             // 
             // UserMskTbContactNumber
             // 
+            UserMskTbContactNumber.CutCopyMaskFormat = MaskFormat.ExcludePromptAndLiterals;
             UserMskTbContactNumber.Location = new Point(773, 128);
             UserMskTbContactNumber.Mask = "(999)000-0000";
             UserMskTbContactNumber.Name = "UserMskTbContactNumber";
             UserMskTbContactNumber.Size = new Size(212, 23);
             UserMskTbContactNumber.TabIndex = 149;
+            UserMskTbContactNumber.TextMaskFormat = MaskFormat.ExcludePromptAndLiterals;
             // 
             // label8
             // 
@@ -409,6 +413,7 @@
             CondominiumPNLBTNUpdate.Size = new Size(119, 41);
             CondominiumPNLBTNUpdate.TabIndex = 153;
             toolTip1.SetToolTip(CondominiumPNLBTNUpdate, "Actualizar un usuario.");
+            CondominiumPNLBTNUpdate.Click += UserBTNUpdate_Click;
             // 
             // label12
             // 
@@ -421,6 +426,7 @@
             label12.TabIndex = 1;
             label12.Text = "Actualizar";
             toolTip1.SetToolTip(label12, "Actualizar un usuario.");
+            label12.Click += UserBTNUpdate_Click;
             // 
             // pictureBox1
             // 
@@ -432,6 +438,7 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             toolTip1.SetToolTip(pictureBox1, "Actualizar un usuario.");
+            pictureBox1.Click += UserBTNUpdate_Click;
             // 
             // CondominiumPNLBTNDelete
             // 

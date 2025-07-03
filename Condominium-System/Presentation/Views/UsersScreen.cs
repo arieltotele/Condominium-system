@@ -36,7 +36,6 @@ namespace Condominium_System.Presentation.Views
             LoadDataToDataGrid();
             DisableDataGrid();
             SetComboBoxForTypeOfUsers();
-            LoadUserTypeIntoComboBox();
         }
 
         private void SetComboBoxForTypeOfUsers()
@@ -51,23 +50,7 @@ namespace Condominium_System.Presentation.Views
             UserCbType.DataSource = userTypes;
             UserCbType.DisplayMember = "Value";
             UserCbType.ValueMember = "Key";
-            UserCbType.SelectedIndex = 0;
-        }
-
-        private void LoadUserTypeIntoComboBox()
-        {
             UserCbType.DropDownStyle = ComboBoxStyle.DropDownList;
-
-            List<ComboBoxItem> userTypes = new List<ComboBoxItem>
-            {
-                new ComboBoxItem { Text = "-- Seleccione un tipo de usuario --", Value = "0" },
-                new ComboBoxItem { Text = "Administrador", Value = "Administrador" },
-                new ComboBoxItem { Text = "Operario", Value = "Operario" }
-            };
-
-            UserCbType.DataSource = userTypes;
-            UserCbType.DisplayMember = "Text";
-            UserCbType.ValueMember = "Value";
             UserCbType.SelectedIndex = 0;
         }
 
@@ -75,11 +58,10 @@ namespace Condominium_System.Presentation.Views
         {
             var condominiums = await _condominiumService.GetAllCondominiumsAsync();
 
-            UserTBCondominium.DisplayMember = "Name";     // lo que se muestra
-            UserTBCondominium.ValueMember = "Id";         // lo que se guarda/usa
+            UserTBCondominium.DisplayMember = "Name";
+            UserTBCondominium.ValueMember = "Id";
             UserTBCondominium.DataSource = condominiums;
 
-            // Opcional: insertar opción inicial
             var placeholder = new Condominium { Id = 0, Name = "-- Seleccione un condominio --" };
             var listWithPlaceholder = new List<Condominium> { placeholder };
             listWithPlaceholder.AddRange(condominiums);
@@ -89,7 +71,7 @@ namespace Condominium_System.Presentation.Views
         private void UserBTNCreate_Click(object sender, EventArgs e)
         {
             var signUpScreen = _serviceProvider.GetRequiredService<SignUpScreen>();
-            signUpScreen.UserCreated += (s, ev) => LoadDataToDataGrid(); // ✅ RECARGA DATOS
+            signUpScreen.UserCreated += (s, ev) => LoadDataToDataGrid();
 
             signUpScreen.Show();
         }
@@ -120,7 +102,7 @@ namespace Condominium_System.Presentation.Views
             UserDTGData.MultiSelect = false;
             UserDTGData.ScrollBars = ScrollBars.Both;
         }
-        
+
         private async void UserBTNSearch_Click(object sender, EventArgs e)
         {
             if (!String.IsNullOrEmpty(UserTxtBxPId.Text))
@@ -137,14 +119,18 @@ namespace Condominium_System.Presentation.Views
                         UserTbPassword.Text = UserFound.Password;
                         UserTxtBxPUsername.Text = UserFound.Username;
                         UserMskTbContactNumber.Text = UserFound.PhoneNumber;
-
-                        // Cargar condominios si no están cargados ya
+                                                
                         await LoadCondominiumsIntoComboBox();
 
-                        // Establecer el seleccionado según el ID
                         UserTBCondominium.SelectedValue = UserFound.CondominiumId;
 
-                        UserCbType.SelectedValue = UserFound.Type;
+                        // Establece el tipo de usuario en el combo
+                        if (UserFound.Type == "Administrador")
+                            UserCbType.SelectedValue = 1;
+                        else if (UserFound.Type == "Operario")
+                            UserCbType.SelectedValue = 2;
+                        else
+                            UserCbType.SelectedValue = 0;
 
                     }
                     else
@@ -162,6 +148,87 @@ namespace Condominium_System.Presentation.Views
             {
                 MessageBox.Show("El campo Id debe de estar lleno correctamente.");
             }
+        }
+
+        private async void UserBTNUpdate_Click(object sender, EventArgs e)
+        {
+            if (FormIsCorrectToUpdate())
+            {
+                try
+                {
+                    var UserToUpdate = await _userService.GetByIdAsync(Int32.Parse(UserTxtBxPId.Text));
+
+                    if (UserToUpdate != null)
+                    {
+                        UserToUpdate.Id = int.Parse(UserTxtBxPId.Text);
+                        UserToUpdate.FirstName = UserTxtBxPName.Text;
+                        UserToUpdate.LastName = UserTxtBxPLastname.Text;
+                        UserToUpdate.DocumentNumber = UserMskTbDocumentation.Text;
+                        UserToUpdate.Password = UserTbPassword.Text;
+                        UserToUpdate.Username = UserTxtBxPUsername.Text;
+                        UserToUpdate.PhoneNumber = UserMskTbContactNumber.Text;
+                        UserToUpdate.CondominiumId = (int)UserTBCondominium.SelectedValue;
+                        UserToUpdate.Type = UserCbType.Text;
+
+                        _userService.UpdateAsync(UserToUpdate);
+
+                        MessageBox.Show("El usuario ha sido actualizado con exito");
+                        LoadDataToDataGrid();
+                        CleanForm();
+                    }
+                    else
+                    {
+                        MessageBox.Show("usuario no encontrado.");
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error saving user: {ex.Message}");
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Todos los campos deben ser completados correctamente.");
+            }
+        }
+
+        private void CleanForm()
+        {
+            UserTxtBxPId.Clear();
+            UserTxtBxPName.Clear();
+            UserTxtBxPLastname.Clear();
+            UserTxtBxPUsername.Clear();
+            UserMskTbDocumentation.Clear();
+            UserTbPassword.Clear();
+            UserMskTbContactNumber.Clear();
+
+            if (UserCbType.Items.Count > 0)
+                UserCbType.SelectedIndex = 0;
+
+            if (UserTBCondominium.Items.Count > 0)
+                UserTBCondominium.SelectedIndex = 0;
+        }
+
+        public bool FormIsCorrectToUpdate()
+        {
+            bool isTypeValid = int.TryParse(UserCbType.SelectedValue?.ToString(), out int typeId) && typeId != 0;
+            bool isCondoValid = int.TryParse(UserTBCondominium.SelectedValue?.ToString(), out int condoId) && condoId != 0;
+
+             return !(
+                string.IsNullOrEmpty(UserTxtBxPId.Text) ||
+                string.IsNullOrEmpty(UserTxtBxPName.Text) ||
+                string.IsNullOrEmpty(UserTxtBxPLastname.Text) ||
+                string.IsNullOrEmpty(UserTxtBxPUsername.Text) ||
+                string.IsNullOrEmpty(UserMskTbDocumentation.Text) ||
+                string.IsNullOrEmpty(UserTbPassword.Text) ||
+                string.IsNullOrEmpty(UserMskTbContactNumber.Text) ||
+                !isTypeValid ||
+                !isCondoValid ||
+                UserMskTbContactNumber.Text.Trim().Length != 10 ||
+                UserMskTbDocumentation.Text.Trim().Length != 11
+            );
         }
     }
 }
