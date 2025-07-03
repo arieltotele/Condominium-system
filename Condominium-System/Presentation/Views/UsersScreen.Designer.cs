@@ -241,7 +241,7 @@
             panel5.Controls.Add(UserCbType);
             panel5.Location = new Point(303, 124);
             panel5.Name = "panel5";
-            panel5.Size = new Size(200, 30);
+            panel5.Size = new Size(207, 30);
             panel5.TabIndex = 145;
             // 
             // UserCbType
@@ -251,7 +251,7 @@
             UserCbType.FormattingEnabled = true;
             UserCbType.Location = new Point(3, 4);
             UserCbType.Name = "UserCbType";
-            UserCbType.Size = new Size(181, 23);
+            UserCbType.Size = new Size(201, 23);
             UserCbType.TabIndex = 0;
             // 
             // label7
@@ -450,6 +450,7 @@
             CondominiumPNLBTNDelete.Size = new Size(109, 41);
             CondominiumPNLBTNDelete.TabIndex = 152;
             toolTip1.SetToolTip(CondominiumPNLBTNDelete, "Borrar un usuario.");
+            CondominiumPNLBTNDelete.Click += UserBTNDelete_Click;
             // 
             // label13
             // 
@@ -462,6 +463,7 @@
             label13.TabIndex = 1;
             label13.Text = "Borrar";
             toolTip1.SetToolTip(label13, "Borrar un usuario.");
+            label13.Click += UserBTNDelete_Click;
             // 
             // pictureBox4
             // 
@@ -473,6 +475,7 @@
             pictureBox4.TabIndex = 0;
             pictureBox4.TabStop = false;
             toolTip1.SetToolTip(pictureBox4, "Borrar un usuario.");
+            pictureBox4.Click += UserBTNDelete_Click;
             // 
             // UserDTGData
             // 

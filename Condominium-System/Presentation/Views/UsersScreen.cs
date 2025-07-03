@@ -119,12 +119,11 @@ namespace Condominium_System.Presentation.Views
                         UserTbPassword.Text = UserFound.Password;
                         UserTxtBxPUsername.Text = UserFound.Username;
                         UserMskTbContactNumber.Text = UserFound.PhoneNumber;
-                                                
+
                         await LoadCondominiumsIntoComboBox();
 
                         UserTBCondominium.SelectedValue = UserFound.CondominiumId;
 
-                        // Establece el tipo de usuario en el combo
                         if (UserFound.Type == "Administrador")
                             UserCbType.SelectedValue = 1;
                         else if (UserFound.Type == "Operario")
@@ -216,19 +215,52 @@ namespace Condominium_System.Presentation.Views
             bool isTypeValid = int.TryParse(UserCbType.SelectedValue?.ToString(), out int typeId) && typeId != 0;
             bool isCondoValid = int.TryParse(UserTBCondominium.SelectedValue?.ToString(), out int condoId) && condoId != 0;
 
-             return !(
-                string.IsNullOrEmpty(UserTxtBxPId.Text) ||
-                string.IsNullOrEmpty(UserTxtBxPName.Text) ||
-                string.IsNullOrEmpty(UserTxtBxPLastname.Text) ||
-                string.IsNullOrEmpty(UserTxtBxPUsername.Text) ||
-                string.IsNullOrEmpty(UserMskTbDocumentation.Text) ||
-                string.IsNullOrEmpty(UserTbPassword.Text) ||
-                string.IsNullOrEmpty(UserMskTbContactNumber.Text) ||
-                !isTypeValid ||
-                !isCondoValid ||
-                UserMskTbContactNumber.Text.Trim().Length != 10 ||
-                UserMskTbDocumentation.Text.Trim().Length != 11
-            );
+            return !(
+               string.IsNullOrEmpty(UserTxtBxPId.Text) ||
+               string.IsNullOrEmpty(UserTxtBxPName.Text) ||
+               string.IsNullOrEmpty(UserTxtBxPLastname.Text) ||
+               string.IsNullOrEmpty(UserTxtBxPUsername.Text) ||
+               string.IsNullOrEmpty(UserMskTbDocumentation.Text) ||
+               string.IsNullOrEmpty(UserTbPassword.Text) ||
+               string.IsNullOrEmpty(UserMskTbContactNumber.Text) ||
+               !isTypeValid ||
+               !isCondoValid ||
+               UserMskTbContactNumber.Text.Trim().Length != 10 ||
+               UserMskTbDocumentation.Text.Trim().Length != 11
+           );
+        }
+
+        private async void UserBTNDelete_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(UserTxtBxPId.Text))
+            {
+
+                if (currentUser.Id == Int32.Parse(UserTxtBxPId.Text))
+                {
+                    MessageBox.Show("No puede elimiarse a sí mismo del sistema.");
+                    CleanForm();
+                    return;
+                }
+
+                var UserToDelete = await _userService.GetByIdAsync(Int32.Parse(UserTxtBxPId.Text));
+
+                if (UserToDelete != null)
+                {
+                    await _userService.DeleteAsync(Int32.Parse(UserTxtBxPId.Text));
+                    MessageBox.Show("El usuario ha sido borrado con exitosamente.");
+                    LoadDataToDataGrid();
+                    CleanForm();
+
+                }
+                else
+                {
+                    MessageBox.Show("Usuario no encontrado.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("El campo de Id debe de estar lleno.");
+            }
         }
     }
 }

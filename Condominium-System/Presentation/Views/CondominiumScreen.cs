@@ -182,7 +182,7 @@ namespace Condominium_System.Presentation.Views
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error saving user: {ex.Message}");
+                    MessageBox.Show($"Error guardando el condominio: {ex.Message}");
                 }
 
             }
@@ -194,8 +194,10 @@ namespace Condominium_System.Presentation.Views
 
         private async void CondominiumBTNDelete_Click(object sender, EventArgs e)
         {
+
             if (!String.IsNullOrEmpty(CondominiumTIId.Text))
             {
+                
                 var CondominiumToDelete = await _condominiumService.GetCondominiumByIdAsync(Int32.Parse(CondominiumTIId.Text));
 
                 if (CondominiumToDelete != null)
@@ -208,12 +210,12 @@ namespace Condominium_System.Presentation.Views
                 }
                 else
                 {
-                    MessageBox.Show("Incidence not found");
+                    MessageBox.Show("Condominio no encontrado.");
                 }
             }
             else
             {
-                MessageBox.Show("The ID field must be filled in.");
+                MessageBox.Show("El campo de Id debe de estar lleno.");
             }
         }
 
