@@ -1,15 +1,7 @@
 ﻿using Condominium_System.Business.Services;
 using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Condominium_System.Presentation.Views
 {
@@ -89,7 +81,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "Code",
                 HeaderText = "Codigo",
                 Name = "CodeColumn",
-                Width = 130
+                Width = 150
             });
 
             HousingDTGData.Columns.Add(new DataGridViewTextBoxColumn
@@ -97,7 +89,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "PeopleCount",
                 HeaderText = "Cantidad de personas",
                 Name = "PeopleCountColumn",
-                Width = 150
+                Width = 180
             });
 
             HousingDTGData.Columns.Add(new DataGridViewTextBoxColumn
@@ -105,7 +97,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "RoomCount",
                 HeaderText = "Cantidad de habitaciones",
                 Name = "RoomCountColumn",
-                Width = 150
+                Width = 200
             });
 
             HousingDTGData.Columns.Add(new DataGridViewTextBoxColumn
@@ -113,7 +105,15 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "BathroomCount",
                 HeaderText = "Numero de baños",
                 Name = "BathroomCountColumn",
-                Width = 130
+                Width = 160
+            });
+
+            HousingDTGData.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "BlockID",
+                HeaderText = "Identificacion del bloque",
+                Name = "BlockIDColumn",
+                Width = 155
             });
         }
 
@@ -122,8 +122,113 @@ namespace Condominium_System.Presentation.Views
             UIUtils.SetDataGridStyle(HousingDTGData);
         }
 
-        private void CondominiumPNLBTNCreate_Click(object sender, EventArgs e)
+        private async void HousingPNLBTNCreate_Click(object sender, EventArgs e)
         {
+            if (FormIsCorrect())
+            {
+                try
+                {
+                    var NewHouse = new Housing()
+                    {
+                        Code = HousingTBCode.Text,
+                        PeopleCount = Int32.Parse(HousingTBPeopleQuantity.Text),
+                        RoomCount = Int32.Parse(HousingTBRoomQuantity.Text),
+                        BathroomCount = Int32.Parse(HousingTBBathroomQuantity.Text),
+                        BlockId = (int)HousingCBBlock.SelectedValue,
+                        Author = currentUser.Username
+                    };
+
+                    await _housingEntityService.CreateHousingAsync(NewHouse);
+
+                    MessageBox.Show("La vivienda ha sido creada con exito.");
+                    CleanFormHousing();
+                    LoadDataToDataGrid();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error guardando la vivienda: {ex.Message}");
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Todos los campos deben ser completados correctamente.");
+            }
+        }
+
+        public bool FormIsCorrect()
+        {
+            bool isBlockValid = int.TryParse(HousingCBBlock.SelectedValue?.ToString(), out int condoId) && condoId != 0;
+
+            return !(
+               string.IsNullOrEmpty(HousingTBPeopleQuantity.Text) ||
+               string.IsNullOrEmpty(HousingTBRoomQuantity.Text) ||
+               string.IsNullOrEmpty(HousingTBBathroomQuantity.Text) ||
+               string.IsNullOrEmpty(HousingTBCode.Text) ||
+               !isBlockValid
+           );
+        }
+
+        public bool FormIsCorrectToUpdate()
+        {
+            bool isBlockValid = int.TryParse(HousingCBBlock.SelectedValue?.ToString(), out int condoId) && condoId != 0;
+
+            return !(
+               string.IsNullOrEmpty(HousingTBID.Text) ||
+               string.IsNullOrEmpty(HousingTBPeopleQuantity.Text) ||
+               string.IsNullOrEmpty(HousingTBRoomQuantity.Text) ||
+               string.IsNullOrEmpty(HousingTBBathroomQuantity.Text) ||
+               string.IsNullOrEmpty(HousingTBCode.Text) ||
+               !isBlockValid
+           );
+        }
+
+        private void CleanFormHousing()
+        {
+            HousingTBID.Clear();
+            HousingTBCode.Clear();
+            HousingTBPeopleQuantity.Clear();
+            HousingTBRoomQuantity.Clear();
+            HousingTBBathroomQuantity.Clear();
+
+            if (HousingCBBlock.Items.Count > 0)
+                HousingCBBlock.SelectedIndex = 0;
+        }
+
+        private async void HousingPNLBTNSearch_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(HousingTBID.Text))
+            {
+                try
+                {
+                    var HousingFound = await _housingEntityService.GetHousingByIdAsync(Int32.Parse(HousingTBID.Text));
+                    if (HousingFound != null)
+                    {
+                        HousingTBID.Text = HousingFound.Id.ToString();
+                        HousingTBPeopleQuantity.Text = HousingFound.PeopleCount.ToString();
+                        HousingTBRoomQuantity.Text = HousingFound.PeopleCount.ToString();
+                        HousingTBBathroomQuantity.Text = HousingFound.BathroomCount.ToString();
+                        HousingTBCode.Text = HousingFound.Code;
+
+                        await LoadBlocksIntoComboBox();
+
+                        HousingCBBlock.SelectedValue = HousingFound.BlockId;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Bloque de casa no encontrado.");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error buscando el bloque de casa: {ex.Message}");
+                }
+            }
+            else
+            {
+                MessageBox.Show("El campo Id debe de estar lleno correctamente.");
+            }
 
         }
     }

@@ -171,6 +171,7 @@
             // 
             // BlockCBTypeHousing
             // 
+            BlockCBTypeHousing.DropDownStyle = ComboBoxStyle.DropDownList;
             BlockCBTypeHousing.FormattingEnabled = true;
             BlockCBTypeHousing.Location = new Point(12, 273);
             BlockCBTypeHousing.Name = "BlockCBTypeHousing";
@@ -192,6 +193,7 @@
             BlockTBHouseQuantity.Name = "BlockTBHouseQuantity";
             BlockTBHouseQuantity.Size = new Size(327, 23);
             BlockTBHouseQuantity.TabIndex = 50;
+            BlockTBHouseQuantity.Text = " ";
             BlockTBHouseQuantity.KeyPress += BlockTBHouseQuantity_KeyPress;
             // 
             // BlockDTGData
@@ -259,7 +261,7 @@
             CondominiumPNLBTNSearch.Size = new Size(109, 41);
             CondominiumPNLBTNSearch.TabIndex = 52;
             toolTip1.SetToolTip(CondominiumPNLBTNSearch, "Buscar un bloque de casas.");
-            CondominiumPNLBTNSearch.Click += CondominiumPNLBTNSearch_Click;
+            CondominiumPNLBTNSearch.Click += BlockPNLBTNSearch_Click;
             // 
             // label7
             // 
@@ -272,7 +274,7 @@
             label7.TabIndex = 1;
             label7.Text = "Buscar";
             toolTip1.SetToolTip(label7, "Buscar un bloque de casas.");
-            label7.Click += CondominiumPNLBTNSearch_Click;
+            label7.Click += BlockPNLBTNSearch_Click;
             // 
             // pictureBox2
             // 
@@ -284,7 +286,7 @@
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
             toolTip1.SetToolTip(pictureBox2, "Buscar un bloque de casas.");
-            pictureBox2.Click += CondominiumPNLBTNSearch_Click;
+            pictureBox2.Click += BlockPNLBTNSearch_Click;
             // 
             // CondominiumPNLBTNUpdate
             // 
@@ -362,6 +364,7 @@
             // 
             // BlockCBCondominium
             // 
+            BlockCBCondominium.DropDownStyle = ComboBoxStyle.DropDownList;
             BlockCBCondominium.FormattingEnabled = true;
             BlockCBCondominium.Location = new Point(19, 521);
             BlockCBCondominium.Name = "BlockCBCondominium";

@@ -34,7 +34,7 @@ namespace Condominium_System.Presentation.Views
             ConfigureBlockColumns();
             LoadDataToDataGrid();
             SetComboBoxForTypeOfHousing();
-            await LoadCondominiumsIntoComboBox();
+            LoadCondominiumsIntoComboBox();
         }
 
         private void SetComboBoxForTypeOfHousing()
@@ -213,7 +213,7 @@ namespace Condominium_System.Presentation.Views
            );
         }
 
-        private async void CondominiumPNLBTNSearch_Click(object sender, EventArgs e)
+        private async void BlockPNLBTNSearch_Click(object sender, EventArgs e)
         {
             if (!String.IsNullOrEmpty(BlockTBID.Text))
             {

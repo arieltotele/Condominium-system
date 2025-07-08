@@ -31,19 +31,19 @@
             components = new System.ComponentModel.Container();
             label1 = new Label();
             LoginPNLUsername = new Panel();
-            LoginTxtBxPUsername = new TextBox();
+            HousingTBID = new TextBox();
             label2 = new Label();
             panel1 = new Panel();
-            textBox1 = new TextBox();
+            HousingTBPeopleQuantity = new TextBox();
             label3 = new Label();
             panel2 = new Panel();
-            textBox2 = new TextBox();
+            HousingTBRoomQuantity = new TextBox();
             label4 = new Label();
             panel3 = new Panel();
-            textBox3 = new TextBox();
+            HousingTBBathroomQuantity = new TextBox();
             label5 = new Label();
             panel4 = new Panel();
-            textBox4 = new TextBox();
+            HousingTBCode = new TextBox();
             label6 = new Label();
             panel5 = new Panel();
             HousingCBBlock = new ComboBox();
@@ -91,19 +91,19 @@
             // LoginPNLUsername
             // 
             LoginPNLUsername.BackColor = SystemColors.Window;
-            LoginPNLUsername.Controls.Add(LoginTxtBxPUsername);
+            LoginPNLUsername.Controls.Add(HousingTBID);
             LoginPNLUsername.Location = new Point(12, 42);
             LoginPNLUsername.Name = "LoginPNLUsername";
             LoginPNLUsername.Size = new Size(119, 24);
             LoginPNLUsername.TabIndex = 40;
             // 
-            // LoginTxtBxPUsername
+            // HousingTBID
             // 
-            LoginTxtBxPUsername.BorderStyle = BorderStyle.None;
-            LoginTxtBxPUsername.Location = new Point(4, 4);
-            LoginTxtBxPUsername.Name = "LoginTxtBxPUsername";
-            LoginTxtBxPUsername.Size = new Size(112, 16);
-            LoginTxtBxPUsername.TabIndex = 2;
+            HousingTBID.BorderStyle = BorderStyle.None;
+            HousingTBID.Location = new Point(4, 4);
+            HousingTBID.Name = "HousingTBID";
+            HousingTBID.Size = new Size(112, 16);
+            HousingTBID.TabIndex = 2;
             // 
             // label2
             // 
@@ -118,19 +118,19 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.Window;
-            panel1.Controls.Add(textBox1);
+            panel1.Controls.Add(HousingTBPeopleQuantity);
             panel1.Location = new Point(183, 42);
             panel1.Name = "panel1";
             panel1.Size = new Size(232, 24);
             panel1.TabIndex = 42;
             // 
-            // textBox1
+            // HousingTBPeopleQuantity
             // 
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Location = new Point(4, 4);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(225, 16);
-            textBox1.TabIndex = 2;
+            HousingTBPeopleQuantity.BorderStyle = BorderStyle.None;
+            HousingTBPeopleQuantity.Location = new Point(4, 4);
+            HousingTBPeopleQuantity.Name = "HousingTBPeopleQuantity";
+            HousingTBPeopleQuantity.Size = new Size(225, 16);
+            HousingTBPeopleQuantity.TabIndex = 2;
             // 
             // label3
             // 
@@ -145,19 +145,19 @@
             // panel2
             // 
             panel2.BackColor = SystemColors.Window;
-            panel2.Controls.Add(textBox2);
+            panel2.Controls.Add(HousingTBRoomQuantity);
             panel2.Location = new Point(486, 42);
             panel2.Name = "panel2";
             panel2.Size = new Size(232, 24);
             panel2.TabIndex = 44;
             // 
-            // textBox2
+            // HousingTBRoomQuantity
             // 
-            textBox2.BorderStyle = BorderStyle.None;
-            textBox2.Location = new Point(4, 4);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(225, 16);
-            textBox2.TabIndex = 2;
+            HousingTBRoomQuantity.BorderStyle = BorderStyle.None;
+            HousingTBRoomQuantity.Location = new Point(4, 4);
+            HousingTBRoomQuantity.Name = "HousingTBRoomQuantity";
+            HousingTBRoomQuantity.Size = new Size(225, 16);
+            HousingTBRoomQuantity.TabIndex = 2;
             // 
             // label4
             // 
@@ -172,19 +172,19 @@
             // panel3
             // 
             panel3.BackColor = SystemColors.Window;
-            panel3.Controls.Add(textBox3);
+            panel3.Controls.Add(HousingTBBathroomQuantity);
             panel3.Location = new Point(767, 42);
             panel3.Name = "panel3";
             panel3.Size = new Size(232, 24);
             panel3.TabIndex = 46;
             // 
-            // textBox3
+            // HousingTBBathroomQuantity
             // 
-            textBox3.BorderStyle = BorderStyle.None;
-            textBox3.Location = new Point(4, 4);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(225, 16);
-            textBox3.TabIndex = 2;
+            HousingTBBathroomQuantity.BorderStyle = BorderStyle.None;
+            HousingTBBathroomQuantity.Location = new Point(4, 4);
+            HousingTBBathroomQuantity.Name = "HousingTBBathroomQuantity";
+            HousingTBBathroomQuantity.Size = new Size(225, 16);
+            HousingTBBathroomQuantity.TabIndex = 2;
             // 
             // label5
             // 
@@ -199,19 +199,19 @@
             // panel4
             // 
             panel4.BackColor = SystemColors.Window;
-            panel4.Controls.Add(textBox4);
+            panel4.Controls.Add(HousingTBCode);
             panel4.Location = new Point(197, 128);
             panel4.Name = "panel4";
             panel4.Size = new Size(215, 24);
             panel4.TabIndex = 48;
             // 
-            // textBox4
+            // HousingTBCode
             // 
-            textBox4.BorderStyle = BorderStyle.None;
-            textBox4.Location = new Point(4, 4);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(208, 16);
-            textBox4.TabIndex = 2;
+            HousingTBCode.BorderStyle = BorderStyle.None;
+            HousingTBCode.Location = new Point(4, 4);
+            HousingTBCode.Name = "HousingTBCode";
+            HousingTBCode.Size = new Size(208, 16);
+            HousingTBCode.TabIndex = 2;
             // 
             // label6
             // 
@@ -234,6 +234,7 @@
             // 
             // HousingCBBlock
             // 
+            HousingCBBlock.DropDownStyle = ComboBoxStyle.DropDownList;
             HousingCBBlock.FormattingEnabled = true;
             HousingCBBlock.Location = new Point(3, 4);
             HousingCBBlock.Name = "HousingCBBlock";
@@ -250,7 +251,7 @@
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 57;
             toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Crear una casa.");
-            CondominiumPNLBTNCreate.Click += CondominiumPNLBTNCreate_Click;
+            CondominiumPNLBTNCreate.Click += HousingPNLBTNCreate_Click;
             // 
             // label8
             // 
@@ -263,7 +264,7 @@
             label8.TabIndex = 1;
             label8.Text = "Crear";
             toolTip1.SetToolTip(label8, "Crear una casa.");
-            label8.Click += CondominiumPNLBTNCreate_Click;
+            label8.Click += HousingPNLBTNCreate_Click;
             // 
             // pictureBox3
             // 
@@ -275,7 +276,7 @@
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
             toolTip1.SetToolTip(pictureBox3, "Crear una casa.");
-            pictureBox3.Click += CondominiumPNLBTNCreate_Click;
+            pictureBox3.Click += HousingPNLBTNCreate_Click;
             // 
             // CondominiumPNLBTNSearch
             // 
@@ -287,6 +288,7 @@
             CondominiumPNLBTNSearch.Size = new Size(109, 41);
             CondominiumPNLBTNSearch.TabIndex = 56;
             toolTip1.SetToolTip(CondominiumPNLBTNSearch, "Buscar una casa.");
+            CondominiumPNLBTNSearch.Click += HousingPNLBTNSearch_Click;
             // 
             // label7
             // 
@@ -299,6 +301,7 @@
             label7.TabIndex = 1;
             label7.Text = "Buscar";
             toolTip1.SetToolTip(label7, "Buscar una casa.");
+            label7.Click += HousingPNLBTNSearch_Click;
             // 
             // pictureBox2
             // 
@@ -310,6 +313,7 @@
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
             toolTip1.SetToolTip(pictureBox2, "Buscar una casa.");
+            pictureBox2.Click += HousingPNLBTNSearch_Click;
             // 
             // CondominiumPNLBTNUpdate
             // 
@@ -444,19 +448,19 @@
 
         private Label label1;
         private Panel LoginPNLUsername;
-        private TextBox LoginTxtBxPUsername;
+        private TextBox HousingTBID;
         private Label label2;
         private Panel panel1;
-        private TextBox textBox1;
+        private TextBox HousingTBPeopleQuantity;
         private Label label3;
         private Panel panel2;
-        private TextBox textBox2;
+        private TextBox HousingTBRoomQuantity;
         private Label label4;
         private Panel panel3;
-        private TextBox textBox3;
+        private TextBox HousingTBBathroomQuantity;
         private Label label5;
         private Panel panel4;
-        private TextBox textBox4;
+        private TextBox HousingTBCode;
         private Label label6;
         private Panel panel5;
         private ComboBox HousingCBBlock;
