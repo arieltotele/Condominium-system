@@ -25,7 +25,7 @@ namespace Condominium_System.Presentation.Views
             SetDataGridStyle();
             ConfigureHousingColumns();
             await LoadDataToDataGrid();
-            await LoadBlocksIntoComboBox();
+            await LoadBlocksIntoComboBox();            
         }
 
         private async Task LoadBlocksIntoComboBox()
@@ -61,7 +61,7 @@ namespace Condominium_System.Presentation.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error cargando condominios: {ex.Message}");
+                MessageBox.Show($"Error cargando viviendas: {ex.Message}");
             }
         }
 

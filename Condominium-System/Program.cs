@@ -93,7 +93,7 @@ namespace Condominium_System
                 context.Database.Migrate();
                 context.SeedInitialSuperUser();
 
-                var loginForm = scope.ServiceProvider.GetRequiredService<Login>();
+                var loginForm = scope.ServiceProvider.GetRequiredService<HomeScreen>();
                 Application.Run(loginForm);
             }
         }

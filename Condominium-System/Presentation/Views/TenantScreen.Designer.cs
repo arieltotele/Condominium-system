@@ -39,7 +39,7 @@
             panel4 = new Panel();
             textBox4 = new TextBox();
             panel3 = new Panel();
-            comboBox1 = new ComboBox();
+            TenantCBSexs = new ComboBox();
             label5 = new Label();
             panel5 = new Panel();
             dateTimePicker1 = new DateTimePicker();
@@ -49,7 +49,7 @@
             label7 = new Label();
             panel7 = new Panel();
             maskedTextBox2 = new MaskedTextBox();
-            dataGridView1 = new DataGridView();
+            TenantDTGData = new DataGridView();
             CondominiumPNLBTNCreate = new Panel();
             label8 = new Label();
             pictureBox3 = new PictureBox();
@@ -64,7 +64,7 @@
             pictureBox4 = new PictureBox();
             label11 = new Label();
             panel8 = new Panel();
-            comboBox2 = new ComboBox();
+            TenantCBHouses = new ComboBox();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel4.SuspendLayout();
@@ -72,7 +72,7 @@
             panel5.SuspendLayout();
             panel6.SuspendLayout();
             panel7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)TenantDTGData).BeginInit();
             CondominiumPNLBTNCreate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             CondominiumPNLBTNSearch.SuspendLayout();
@@ -178,20 +178,20 @@
             // panel3
             // 
             panel3.BackColor = SystemColors.Window;
-            panel3.Controls.Add(comboBox1);
+            panel3.Controls.Add(TenantCBSexs);
             panel3.Location = new Point(12, 243);
             panel3.Name = "panel3";
             panel3.Size = new Size(232, 31);
             panel3.TabIndex = 50;
             // 
-            // comboBox1
+            // TenantCBSexs
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(4, 4);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(225, 23);
-            comboBox1.TabIndex = 0;
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            TenantCBSexs.DropDownStyle = ComboBoxStyle.DropDownList;
+            TenantCBSexs.FormattingEnabled = true;
+            TenantCBSexs.Location = new Point(4, 4);
+            TenantCBSexs.Name = "TenantCBSexs";
+            TenantCBSexs.Size = new Size(225, 23);
+            TenantCBSexs.TabIndex = 0;
             // 
             // label5
             // 
@@ -273,13 +273,13 @@
             maskedTextBox2.Size = new Size(225, 23);
             maskedTextBox2.TabIndex = 0;
             // 
-            // dataGridView1
+            // TenantDTGData
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(277, 12);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(728, 470);
-            dataGridView1.TabIndex = 57;
+            TenantDTGData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            TenantDTGData.Location = new Point(277, 12);
+            TenantDTGData.Name = "TenantDTGData";
+            TenantDTGData.Size = new Size(728, 470);
+            TenantDTGData.TabIndex = 57;
             // 
             // CondominiumPNLBTNCreate
             // 
@@ -418,19 +418,19 @@
             // panel8
             // 
             panel8.BackColor = SystemColors.Window;
-            panel8.Controls.Add(comboBox2);
+            panel8.Controls.Add(TenantCBHouses);
             panel8.Location = new Point(12, 545);
             panel8.Name = "panel8";
             panel8.Size = new Size(232, 31);
             panel8.TabIndex = 63;
             // 
-            // comboBox2
+            // TenantCBHouses
             // 
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(4, 4);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(225, 23);
-            comboBox2.TabIndex = 0;
+            TenantCBHouses.FormattingEnabled = true;
+            TenantCBHouses.Location = new Point(4, 4);
+            TenantCBHouses.Name = "TenantCBHouses";
+            TenantCBHouses.Size = new Size(225, 23);
+            TenantCBHouses.TabIndex = 0;
             // 
             // TenantScreen
             // 
@@ -443,7 +443,7 @@
             Controls.Add(CondominiumPNLBTNSearch);
             Controls.Add(CondominiumPNLBTNUpdate);
             Controls.Add(CondominiumPNLBTNDelete);
-            Controls.Add(dataGridView1);
+            Controls.Add(TenantDTGData);
             Controls.Add(label7);
             Controls.Add(panel7);
             Controls.Add(label6);
@@ -473,7 +473,7 @@
             panel6.PerformLayout();
             panel7.ResumeLayout(false);
             panel7.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)TenantDTGData).EndInit();
             CondominiumPNLBTNCreate.ResumeLayout(false);
             CondominiumPNLBTNCreate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
@@ -504,7 +504,7 @@
         private Panel panel4;
         private TextBox textBox4;
         private Panel panel3;
-        private ComboBox comboBox1;
+        private ComboBox TenantCBSexs;
         private Label label5;
         private Panel panel5;
         private DateTimePicker dateTimePicker1;
@@ -514,7 +514,7 @@
         private Label label7;
         private Panel panel7;
         private MaskedTextBox maskedTextBox2;
-        private DataGridView dataGridView1;
+        private DataGridView TenantDTGData;
         private Panel CondominiumPNLBTNCreate;
         private Label label8;
         private PictureBox pictureBox3;
@@ -529,6 +529,6 @@
         private PictureBox pictureBox4;
         private Label label11;
         private Panel panel8;
-        private ComboBox comboBox2;
+        private ComboBox TenantCBHouses;
     }
 }
