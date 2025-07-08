@@ -27,8 +27,8 @@ namespace Condominium_System.Presentation.Views
             InitializeComponent();
             _userService = userService;
             _serviceProvider = serviceProvider;
-            currentUser = Session.CurrentUser;
             _condominiumService = condominiumService;
+            currentUser = Session.CurrentUser;            
         }
 
         private void UsersScreen_Load(object sender, EventArgs e)
