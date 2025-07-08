@@ -325,6 +325,7 @@
             CondominiumPNLBTNUpdate.Size = new Size(119, 41);
             CondominiumPNLBTNUpdate.TabIndex = 55;
             toolTip1.SetToolTip(CondominiumPNLBTNUpdate, "Actualizar una casa.");
+            CondominiumPNLBTNUpdate.Click += HousingPNLBTNUpdate_Click;
             // 
             // label9
             // 
@@ -337,6 +338,7 @@
             label9.TabIndex = 1;
             label9.Text = "Actualizar";
             toolTip1.SetToolTip(label9, "Actualizar una casa.");
+            label9.Click += HousingPNLBTNUpdate_Click;
             // 
             // pictureBox1
             // 
@@ -348,6 +350,7 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             toolTip1.SetToolTip(pictureBox1, "Actualizar una casa.");
+            pictureBox1.Click += HousingPNLBTNUpdate_Click;
             // 
             // CondominiumPNLBTNDelete
             // 
@@ -359,6 +362,7 @@
             CondominiumPNLBTNDelete.Size = new Size(109, 41);
             CondominiumPNLBTNDelete.TabIndex = 54;
             toolTip1.SetToolTip(CondominiumPNLBTNDelete, "Borrar una casa.");
+            CondominiumPNLBTNDelete.Click += HousingPNLBTNDelete_Click;
             // 
             // label13
             // 
@@ -371,6 +375,7 @@
             label13.TabIndex = 1;
             label13.Text = "Borrar";
             toolTip1.SetToolTip(label13, "Borrar una casa.");
+            label13.Click += HousingPNLBTNDelete_Click;
             // 
             // pictureBox4
             // 
@@ -382,6 +387,7 @@
             pictureBox4.TabIndex = 0;
             pictureBox4.TabStop = false;
             toolTip1.SetToolTip(pictureBox4, "Borrar una casa.");
+            pictureBox4.Click += HousingPNLBTNDelete_Click;
             // 
             // HousingDTGData
             // 

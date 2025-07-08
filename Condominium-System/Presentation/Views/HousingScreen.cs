@@ -183,6 +183,79 @@ namespace Condominium_System.Presentation.Views
            );
         }
 
+        private async void HousingPNLBTNSearch_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(HousingTBID.Text))
+            {
+                try
+                {
+                    var HousingFound = await _housingEntityService.GetHousingByIdAsync(Int32.Parse(HousingTBID.Text));
+                    if (HousingFound != null)
+                    {
+                        HousingTBID.Text = HousingFound.Id.ToString();
+                        HousingTBPeopleQuantity.Text = HousingFound.PeopleCount.ToString();
+                        HousingTBRoomQuantity.Text = HousingFound.RoomCount.ToString();
+                        HousingTBBathroomQuantity.Text = HousingFound.BathroomCount.ToString();
+                        HousingTBCode.Text = HousingFound.Code;
+
+                        HousingCBBlock.SelectedValue = HousingFound.BlockId;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Vivienda no encontrada.");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error buscando la vivienda: {ex.Message}");
+                }
+            }
+            else
+            {
+                MessageBox.Show("El campo Id debe de estar lleno correctamente.");
+            }
+
+        }
+
+        private async void HousingPNLBTNUpdate_Click(object sender, EventArgs e)
+        {
+            if (FormIsCorrectToUpdate())
+            {
+                try
+                {
+                    var HousingToUpdate = await _housingEntityService.GetHousingByIdAsync(Int32.Parse(HousingTBID.Text));
+
+                    if (HousingToUpdate != null)
+                    {
+                        HousingToUpdate.Id = int.Parse(HousingTBID.Text);
+                        HousingToUpdate.PeopleCount = Int32.Parse(HousingTBPeopleQuantity.Text);
+                        HousingToUpdate.RoomCount = Int32.Parse(HousingTBRoomQuantity.Text);
+                        HousingToUpdate.BathroomCount = Int32.Parse(HousingTBBathroomQuantity.Text);
+                        HousingToUpdate.Code = HousingTBCode.Text;
+                        HousingToUpdate.BlockId = (int)HousingCBBlock.SelectedValue;
+
+                        HousingToUpdate.UpdatedAt = DateTime.Now;
+
+                        await _housingEntityService.UpdateHousingAsync(HousingToUpdate);
+
+                        MessageBox.Show("La vivienda ha sido actualizada con exito.");
+                        LoadDataToDataGrid();
+                        CleanFormHousing();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Vivienda no encontrada.");
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error actualizando la vivienda: {ex.Message}");
+                }
+            }
+        }
+
         private void CleanFormHousing()
         {
             HousingTBID.Clear();
@@ -195,41 +268,32 @@ namespace Condominium_System.Presentation.Views
                 HousingCBBlock.SelectedIndex = 0;
         }
 
-        private async void HousingPNLBTNSearch_Click(object sender, EventArgs e)
+        private async void HousingPNLBTNDelete_Click(object sender, EventArgs e)
         {
             if (!String.IsNullOrEmpty(HousingTBID.Text))
             {
-                try
+                var BlockToDelete = await _housingEntityService.GetHousingByIdAsync(Int32.Parse(HousingTBID.Text));
+
+                if (BlockToDelete != null)
                 {
-                    var HousingFound = await _housingEntityService.GetHousingByIdAsync(Int32.Parse(HousingTBID.Text));
-                    if (HousingFound != null)
-                    {
-                        HousingTBID.Text = HousingFound.Id.ToString();
-                        HousingTBPeopleQuantity.Text = HousingFound.PeopleCount.ToString();
-                        HousingTBRoomQuantity.Text = HousingFound.PeopleCount.ToString();
-                        HousingTBBathroomQuantity.Text = HousingFound.BathroomCount.ToString();
-                        HousingTBCode.Text = HousingFound.Code;
+                    BlockToDelete.DeletedAt = DateTime.Now;
 
-                        await LoadBlocksIntoComboBox();
+                    await _housingEntityService.DeleteHousingAsync(Int32.Parse(HousingTBID.Text));
 
-                        HousingCBBlock.SelectedValue = HousingFound.BlockId;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Bloque de casa no encontrado.");
-                    }
+                    MessageBox.Show("La vivienda ha sido borrada exitosamente.");
 
+                    LoadDataToDataGrid();
+                    CleanFormHousing();
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show($"Error buscando el bloque de casa: {ex.Message}");
+                    MessageBox.Show("Vivienda no encontrada.");
                 }
             }
             else
             {
-                MessageBox.Show("El campo Id debe de estar lleno correctamente.");
+                MessageBox.Show("El campo de Id debe de estar lleno.");
             }
-
         }
     }
 }
