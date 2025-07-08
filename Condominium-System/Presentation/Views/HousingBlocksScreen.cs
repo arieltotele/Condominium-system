@@ -61,18 +61,12 @@ namespace Condominium_System.Presentation.Views
                 var bindingList = new BindingList<Block>((List<Block>)(IEnumerable<Block>)listBlock);
                 var source = new BindingSource(bindingList, null);
                 BlockDTGData.DataSource = source;
-
-                BlockDTGData.EnableHeadersVisualStyles = false;
-                BlockDTGData.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(0, 65, 194);
-                BlockDTGData.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-                BlockDTGData.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error cargando condominios: {ex.Message}");
             }
         }
-
 
         private void SetDataGridStyle()
         {

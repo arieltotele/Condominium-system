@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             label1 = new Label();
             LoginPNLUsername = new Panel();
             LoginTxtBxPUsername = new TextBox();
@@ -45,7 +46,7 @@
             textBox4 = new TextBox();
             label6 = new Label();
             panel5 = new Panel();
-            comboBox1 = new ComboBox();
+            HousingCBBlock = new ComboBox();
             CondominiumPNLBTNCreate = new Panel();
             label8 = new Label();
             pictureBox3 = new PictureBox();
@@ -58,7 +59,8 @@
             CondominiumPNLBTNDelete = new Panel();
             label13 = new Label();
             pictureBox4 = new PictureBox();
-            dataGridView1 = new DataGridView();
+            HousingDTGData = new DataGridView();
+            toolTip1 = new ToolTip(components);
             LoginPNLUsername.SuspendLayout();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -73,7 +75,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             CondominiumPNLBTNDelete.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)HousingDTGData).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -100,7 +102,7 @@
             LoginTxtBxPUsername.BorderStyle = BorderStyle.None;
             LoginTxtBxPUsername.Location = new Point(4, 4);
             LoginTxtBxPUsername.Name = "LoginTxtBxPUsername";
-            LoginTxtBxPUsername.Size = new Size(327, 16);
+            LoginTxtBxPUsername.Size = new Size(112, 16);
             LoginTxtBxPUsername.TabIndex = 2;
             // 
             // label2
@@ -127,7 +129,7 @@
             textBox1.BorderStyle = BorderStyle.None;
             textBox1.Location = new Point(4, 4);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(112, 16);
+            textBox1.Size = new Size(225, 16);
             textBox1.TabIndex = 2;
             // 
             // label3
@@ -154,7 +156,7 @@
             textBox2.BorderStyle = BorderStyle.None;
             textBox2.Location = new Point(4, 4);
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(112, 16);
+            textBox2.Size = new Size(225, 16);
             textBox2.TabIndex = 2;
             // 
             // label4
@@ -181,7 +183,7 @@
             textBox3.BorderStyle = BorderStyle.None;
             textBox3.Location = new Point(4, 4);
             textBox3.Name = "textBox3";
-            textBox3.Size = new Size(112, 16);
+            textBox3.Size = new Size(225, 16);
             textBox3.TabIndex = 2;
             // 
             // label5
@@ -208,7 +210,7 @@
             textBox4.BorderStyle = BorderStyle.None;
             textBox4.Location = new Point(4, 4);
             textBox4.Name = "textBox4";
-            textBox4.Size = new Size(112, 16);
+            textBox4.Size = new Size(208, 16);
             textBox4.TabIndex = 2;
             // 
             // label6
@@ -224,20 +226,19 @@
             // panel5
             // 
             panel5.BackColor = SystemColors.Window;
-            panel5.Controls.Add(comboBox1);
+            panel5.Controls.Add(HousingCBBlock);
             panel5.Location = new Point(610, 128);
             panel5.Name = "panel5";
             panel5.Size = new Size(187, 30);
             panel5.TabIndex = 50;
             // 
-            // comboBox1
+            // HousingCBBlock
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(3, 4);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(181, 23);
-            comboBox1.TabIndex = 0;
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            HousingCBBlock.FormattingEnabled = true;
+            HousingCBBlock.Location = new Point(3, 4);
+            HousingCBBlock.Name = "HousingCBBlock";
+            HousingCBBlock.Size = new Size(181, 23);
+            HousingCBBlock.TabIndex = 0;
             // 
             // CondominiumPNLBTNCreate
             // 
@@ -248,6 +249,8 @@
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 57;
+            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Crear una casa.");
+            CondominiumPNLBTNCreate.Click += CondominiumPNLBTNCreate_Click;
             // 
             // label8
             // 
@@ -259,6 +262,8 @@
             label8.Size = new Size(48, 21);
             label8.TabIndex = 1;
             label8.Text = "Crear";
+            toolTip1.SetToolTip(label8, "Crear una casa.");
+            label8.Click += CondominiumPNLBTNCreate_Click;
             // 
             // pictureBox3
             // 
@@ -269,6 +274,8 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
+            toolTip1.SetToolTip(pictureBox3, "Crear una casa.");
+            pictureBox3.Click += CondominiumPNLBTNCreate_Click;
             // 
             // CondominiumPNLBTNSearch
             // 
@@ -279,6 +286,7 @@
             CondominiumPNLBTNSearch.Name = "CondominiumPNLBTNSearch";
             CondominiumPNLBTNSearch.Size = new Size(109, 41);
             CondominiumPNLBTNSearch.TabIndex = 56;
+            toolTip1.SetToolTip(CondominiumPNLBTNSearch, "Buscar una casa.");
             // 
             // label7
             // 
@@ -290,6 +298,7 @@
             label7.Size = new Size(56, 21);
             label7.TabIndex = 1;
             label7.Text = "Buscar";
+            toolTip1.SetToolTip(label7, "Buscar una casa.");
             // 
             // pictureBox2
             // 
@@ -300,6 +309,7 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
+            toolTip1.SetToolTip(pictureBox2, "Buscar una casa.");
             // 
             // CondominiumPNLBTNUpdate
             // 
@@ -310,6 +320,7 @@
             CondominiumPNLBTNUpdate.Name = "CondominiumPNLBTNUpdate";
             CondominiumPNLBTNUpdate.Size = new Size(119, 41);
             CondominiumPNLBTNUpdate.TabIndex = 55;
+            toolTip1.SetToolTip(CondominiumPNLBTNUpdate, "Actualizar una casa.");
             // 
             // label9
             // 
@@ -321,6 +332,7 @@
             label9.Size = new Size(78, 21);
             label9.TabIndex = 1;
             label9.Text = "Actualizar";
+            toolTip1.SetToolTip(label9, "Actualizar una casa.");
             // 
             // pictureBox1
             // 
@@ -331,6 +343,7 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Actualizar una casa.");
             // 
             // CondominiumPNLBTNDelete
             // 
@@ -341,6 +354,7 @@
             CondominiumPNLBTNDelete.Name = "CondominiumPNLBTNDelete";
             CondominiumPNLBTNDelete.Size = new Size(109, 41);
             CondominiumPNLBTNDelete.TabIndex = 54;
+            toolTip1.SetToolTip(CondominiumPNLBTNDelete, "Borrar una casa.");
             // 
             // label13
             // 
@@ -352,6 +366,7 @@
             label13.Size = new Size(54, 21);
             label13.TabIndex = 1;
             label13.Text = "Borrar";
+            toolTip1.SetToolTip(label13, "Borrar una casa.");
             // 
             // pictureBox4
             // 
@@ -362,21 +377,22 @@
             pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox4.TabIndex = 0;
             pictureBox4.TabStop = false;
+            toolTip1.SetToolTip(pictureBox4, "Borrar una casa.");
             // 
-            // dataGridView1
+            // HousingDTGData
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(12, 293);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(993, 293);
-            dataGridView1.TabIndex = 58;
+            HousingDTGData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            HousingDTGData.Location = new Point(12, 293);
+            HousingDTGData.Name = "HousingDTGData";
+            HousingDTGData.Size = new Size(993, 293);
+            HousingDTGData.TabIndex = 58;
             // 
             // HousingScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1017, 591);
-            Controls.Add(dataGridView1);
+            Controls.Add(HousingDTGData);
             Controls.Add(CondominiumPNLBTNCreate);
             Controls.Add(CondominiumPNLBTNSearch);
             Controls.Add(CondominiumPNLBTNUpdate);
@@ -395,6 +411,7 @@
             Controls.Add(LoginPNLUsername);
             Name = "HousingScreen";
             Text = "HousingScreen";
+            Load += HousingScreen_Load;
             LoginPNLUsername.ResumeLayout(false);
             LoginPNLUsername.PerformLayout();
             panel1.ResumeLayout(false);
@@ -418,7 +435,7 @@
             CondominiumPNLBTNDelete.ResumeLayout(false);
             CondominiumPNLBTNDelete.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)HousingDTGData).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -442,7 +459,7 @@
         private TextBox textBox4;
         private Label label6;
         private Panel panel5;
-        private ComboBox comboBox1;
+        private ComboBox HousingCBBlock;
         private Panel CondominiumPNLBTNCreate;
         private Label label8;
         private PictureBox pictureBox3;
@@ -455,6 +472,7 @@
         private Panel CondominiumPNLBTNDelete;
         private Label label13;
         private PictureBox pictureBox4;
-        private DataGridView dataGridView1;
+        private DataGridView HousingDTGData;
+        private ToolTip toolTip1;
     }
 }
