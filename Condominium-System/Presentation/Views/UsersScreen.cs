@@ -239,7 +239,7 @@ namespace Condominium_System.Presentation.Views
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error saving user: {ex.Message}");
+                    MessageBox.Show($"Error guardando usuario: {ex.Message}");
                 }
 
             }

@@ -296,6 +296,7 @@
             CondominiumPNLBTNUpdate.Size = new Size(119, 41);
             CondominiumPNLBTNUpdate.TabIndex = 51;
             toolTip1.SetToolTip(CondominiumPNLBTNUpdate, "Actualizar un bloque de casas.");
+            CondominiumPNLBTNUpdate.Click += BlockPNLBTNUpdate_Click;
             // 
             // label6
             // 
@@ -308,6 +309,7 @@
             label6.TabIndex = 1;
             label6.Text = "Actualizar";
             toolTip1.SetToolTip(label6, "Actualizar un bloque de casas.");
+            label6.Click += BlockPNLBTNUpdate_Click;
             // 
             // pictureBox1
             // 
@@ -319,6 +321,7 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             toolTip1.SetToolTip(pictureBox1, "Actualizar un bloque de casas.");
+            pictureBox1.Click += BlockPNLBTNUpdate_Click;
             // 
             // CondominiumPNLBTNDelete
             // 
@@ -330,6 +333,7 @@
             CondominiumPNLBTNDelete.Size = new Size(109, 41);
             CondominiumPNLBTNDelete.TabIndex = 50;
             toolTip1.SetToolTip(CondominiumPNLBTNDelete, "Borrar un bloque de casas.");
+            CondominiumPNLBTNDelete.Click += BlockPNLBTNDelete_Click;
             // 
             // label13
             // 
@@ -342,6 +346,7 @@
             label13.TabIndex = 1;
             label13.Text = "Borrar";
             toolTip1.SetToolTip(label13, "Borrar un bloque de casas.");
+            label13.Click += BlockPNLBTNDelete_Click;
             // 
             // pictureBox4
             // 
@@ -353,6 +358,7 @@
             pictureBox4.TabIndex = 0;
             pictureBox4.TabStop = false;
             toolTip1.SetToolTip(pictureBox4, "Borrar un bloque de casas.");
+            pictureBox4.Click += BlockPNLBTNDelete_Click;
             // 
             // BlockCBCondominium
             // 

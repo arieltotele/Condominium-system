@@ -212,7 +212,9 @@ namespace Condominium_System.Presentation.Views
                         CondominiumToUpdate.BlockCount = Int32.Parse(CondominiumTIBlocksQuantity.Text);
                         CondominiumToUpdate.UpdatedAt = DateTime.Now;
 
-                        _condominiumService.UpdateCondominiumAsync(CondominiumToUpdate);
+                        CondominiumToUpdate.UpdatedAt = DateTime.Now;
+
+                        await _condominiumService.UpdateCondominiumAsync(CondominiumToUpdate);
 
                         MessageBox.Show("El condominio ha sido actualizado con exito");
                         LoadDataToDataGrid();
@@ -246,11 +248,11 @@ namespace Condominium_System.Presentation.Views
 
                 if (CondominiumToDelete != null)
                 {
+                    CondominiumToDelete.DeletedAt = DateTime.Now;
                     await _condominiumService.DeleteCondominiumAsync(Int32.Parse(CondominiumTIId.Text));
                     MessageBox.Show("El condominio ha sido borrado con exitosamente.");
                     LoadDataToDataGrid();
                     CleanForm();
-
                 }
                 else
                 {
