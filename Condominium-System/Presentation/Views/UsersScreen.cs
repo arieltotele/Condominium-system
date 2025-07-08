@@ -33,9 +33,75 @@ namespace Condominium_System.Presentation.Views
 
         private void UsersScreen_Load(object sender, EventArgs e)
         {
-            LoadDataToDataGrid();
-            DisableDataGrid();
+            SetDataGridStyle();
+            ConfigureUserColumns();
+            LoadDataToDataGrid();            
             SetComboBoxForTypeOfUsers();
+        }
+
+        private void ConfigureUserColumns()
+        {
+
+            UserDTGData.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Id",
+                HeaderText = "Identificacion",
+                Name = "IdColumn",
+                Width = 110
+            });
+
+            UserDTGData.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "FirstName",
+                HeaderText = "Nombre",
+                Name = "FirstNameColumn",
+                Width = 150
+            });
+
+            UserDTGData.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "LastName",
+                HeaderText = "Apellido",
+                Name = "LastNameColumn",
+                Width = 150
+            });
+
+            UserDTGData.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "DocumentNumber",
+                HeaderText = "Cedula",
+                Name = "DocumentNumberColumn",
+                Width = 130
+            });
+
+            UserDTGData.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Username",
+                HeaderText = "Nombre de Usuario",
+                Name = "UsernameColumn",
+                Width = 180
+            });
+
+            UserDTGData.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Password",
+                HeaderText = "Contraseña",
+                Name = "PasswordColumn",
+                Width = 130
+            });
+
+            UserDTGData.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Type",
+                HeaderText = "Tipo",
+                Name = "TypeColumn",
+                Width = 100
+            });
+        }
+
+        private void SetDataGridStyle()
+        {
+            UIUtils.SetDataGridStyle(UserDTGData);
         }
 
         private void SetComboBoxForTypeOfUsers()
@@ -85,27 +151,12 @@ namespace Condominium_System.Presentation.Views
                 var source = new BindingSource(bindingList, null);
                 UserDTGData.DataSource = source;
 
-                UserDTGData.EnableHeadersVisualStyles = false;
-                UserDTGData.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(0, 65, 194);
-                UserDTGData.ColumnHeadersDefaultCellStyle.ForeColor = Color.White; 
-                UserDTGData.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error cargando los usuarios: {ex.Message}");
             }
-        }
-
-        private void DisableDataGrid()
-        {
-            UserDTGData.ReadOnly = true;
-            UserDTGData.AllowUserToAddRows = false;
-            UserDTGData.AllowUserToDeleteRows = false;
-            UserDTGData.AllowUserToResizeColumns = false;
-            UserDTGData.AllowUserToResizeRows = false;
-            UserDTGData.AllowUserToOrderColumns = false;
-            UserDTGData.MultiSelect = false;
-            UserDTGData.ScrollBars = ScrollBars.Both;
         }
 
         private async void UserBTNSearch_Click(object sender, EventArgs e)

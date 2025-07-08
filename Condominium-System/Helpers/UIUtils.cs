@@ -21,5 +21,25 @@ namespace Condominium_System.Helpers
 
             panel.Region = new Region(path);
         }
+
+        public static void SetDataGridStyle(DataGridView dataGrid)
+        {
+            dataGrid.ReadOnly = true;
+            dataGrid.AllowUserToAddRows = false;
+            dataGrid.AllowUserToDeleteRows = false;
+            dataGrid.AllowUserToResizeColumns = false;
+            dataGrid.AllowUserToResizeRows = false;
+            dataGrid.AllowUserToOrderColumns = false;
+            dataGrid.MultiSelect = false;
+            dataGrid.ScrollBars = ScrollBars.Both;
+            dataGrid.AutoGenerateColumns = false;
+
+            dataGrid.Columns.Clear();
+
+            dataGrid.EnableHeadersVisualStyles = false;
+            dataGrid.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(0, 65, 194);
+            dataGrid.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dataGrid.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+        }
     }
 }

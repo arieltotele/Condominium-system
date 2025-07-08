@@ -24,9 +24,7 @@ namespace Condominium_System.Presentation.Views
         public CondominiumScreen(ICondominiumService condominiumService)
         {
             InitializeComponent();
-            _condominiumService = condominiumService;
-            LoadDataToDataGrid();
-            DisableDataGrid();
+            _condominiumService = condominiumService;                       
             currentUser = Session.CurrentUser;
         }
 
@@ -36,6 +34,79 @@ namespace Condominium_System.Presentation.Views
             UIUtils.RoundPanelCorners(CondominiumPNLBTNSearch, 10);
             UIUtils.RoundPanelCorners(CondominiumPNLBTNUpdate, 10);
             UIUtils.RoundPanelCorners(CondominiumPNLBTNDelete, 10);
+
+            SetDataGridStyle();
+            ConfigureCondominiumColumns();
+            LoadDataToDataGrid();
+        }
+
+        private async void LoadDataToDataGrid()
+        {
+            try
+            {
+                var listCondominium = await _condominiumService.GetAllCondominiumsAsync();
+                var bindingList = new BindingList<Condominium>((List<Condominium>)(IEnumerable<Condominium>)listCondominium);
+                var source = new BindingSource(bindingList, null);
+                CondominiumDTGData.DataSource = source;
+
+                CondominiumDTGData.EnableHeadersVisualStyles = false;
+                CondominiumDTGData.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(0, 65, 194);
+                CondominiumDTGData.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+                CondominiumDTGData.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error cargando condominios: {ex.Message}");
+            }
+        }
+
+        private void SetDataGridStyle()
+        {
+            UIUtils.SetDataGridStyle(CondominiumDTGData);
+        }
+
+        private void ConfigureCondominiumColumns()
+        {
+
+            CondominiumDTGData.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Id",
+                HeaderText = "Identificacion",
+                Name = "IdColumn",
+                Width = 105
+            });
+
+            CondominiumDTGData.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Name",
+                HeaderText = "Nombre",
+                Name = "NameColumn",
+                Width = 130
+            });
+
+            CondominiumDTGData.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Address",
+                HeaderText = "Direccion",
+                Name = "AddressColumn",
+                Width = 135
+            });
+
+            CondominiumDTGData.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "ReceptionContactNumber",
+                HeaderText = "Numero de recepcion",
+                Name = "ReceptionContactNumberColumn",
+                Width = 130
+            });
+
+            CondominiumDTGData.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "BlockCount",
+                HeaderText = "Numero de bloques",
+                Name = "BlockCountColumn",
+                Width = 100
+            });
         }
 
         private async void CondominiumBTNCreate_Click(object sender, EventArgs e)
@@ -122,39 +193,7 @@ namespace Condominium_System.Presentation.Views
             {
                 e.Handled = true;
             }
-        }
-
-        private async void LoadDataToDataGrid()
-        {
-            try
-            {
-                var listCondominium = await _condominiumService.GetAllCondominiumsAsync();
-                var bindingList = new BindingList<Condominium>((List<Condominium>)(IEnumerable<Condominium>)listCondominium);
-                var source = new BindingSource(bindingList, null);
-                CondominiumDTGData.DataSource = source;
-
-                CondominiumDTGData.EnableHeadersVisualStyles = false;
-                CondominiumDTGData.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(0, 65, 194);
-                CondominiumDTGData.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-                CondominiumDTGData.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error cargando condominios: {ex.Message}");
-            }
-        }
-
-        private void DisableDataGrid()
-        {
-            CondominiumDTGData.ReadOnly = true;
-            CondominiumDTGData.AllowUserToAddRows = false;
-            CondominiumDTGData.AllowUserToDeleteRows = false;
-            CondominiumDTGData.AllowUserToResizeColumns = false;
-            CondominiumDTGData.AllowUserToResizeRows = false;
-            CondominiumDTGData.AllowUserToOrderColumns = false;
-            CondominiumDTGData.MultiSelect = false;
-            CondominiumDTGData.ScrollBars = ScrollBars.Both;
-        }
+        }       
 
         private async void CondominiumBTNUpdate_Click(object sender, EventArgs e)
         {
