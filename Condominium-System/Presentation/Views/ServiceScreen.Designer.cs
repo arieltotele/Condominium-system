@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            comboBox1 = new ComboBox();
+            components = new System.ComponentModel.Container();
+            ServiceCBTypes = new ComboBox();
             label3 = new Label();
             label1 = new Label();
             CondominiumPNLBTNCreate = new Panel();
             label8 = new Label();
             pictureBox3 = new PictureBox();
-            textBox1 = new TextBox();
+            ServiceTBDetail = new TextBox();
             panel5 = new Panel();
             label2 = new Label();
             panel1 = new Panel();
@@ -46,16 +47,17 @@
             label9 = new Label();
             pictureBox2 = new PictureBox();
             CondominiumPNLBTNSearch = new Panel();
-            LoginTxtBxPUsername = new TextBox();
-            dataGridView1 = new DataGridView();
+            ServiceTBID = new TextBox();
+            ServiceDTGData = new DataGridView();
             LoginPNLUsername = new Panel();
             CondominiumPNLBTNDelete = new Panel();
             label4 = new Label();
             panel2 = new Panel();
-            textBox2 = new TextBox();
+            ServiceTBName = new TextBox();
             label5 = new Label();
             panel3 = new Panel();
-            textBox3 = new TextBox();
+            ServiceTBCost = new TextBox();
+            toolTip1 = new ToolTip(components);
             CondominiumPNLBTNCreate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             panel5.SuspendLayout();
@@ -65,21 +67,21 @@
             CondominiumPNLBTNUpdate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             CondominiumPNLBTNSearch.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ServiceDTGData).BeginInit();
             LoginPNLUsername.SuspendLayout();
             CondominiumPNLBTNDelete.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             SuspendLayout();
             // 
-            // comboBox1
+            // ServiceCBTypes
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(3, 4);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(181, 23);
-            comboBox1.TabIndex = 0;
-            comboBox1.Text = "Seleccione";
+            ServiceCBTypes.FormattingEnabled = true;
+            ServiceCBTypes.Location = new Point(3, 4);
+            ServiceCBTypes.Name = "ServiceCBTypes";
+            ServiceCBTypes.Size = new Size(181, 23);
+            ServiceCBTypes.TabIndex = 0;
+            ServiceCBTypes.Text = "Seleccione";
             // 
             // label3
             // 
@@ -110,6 +112,8 @@
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 130;
+            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Crear servicio.");
+            CondominiumPNLBTNCreate.Click += ServicePNLBTNCreate_Click;
             // 
             // label8
             // 
@@ -121,6 +125,8 @@
             label8.Size = new Size(48, 21);
             label8.TabIndex = 1;
             label8.Text = "Crear";
+            toolTip1.SetToolTip(label8, "Crear servicio.");
+            label8.Click += ServicePNLBTNCreate_Click;
             // 
             // pictureBox3
             // 
@@ -131,20 +137,22 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
+            toolTip1.SetToolTip(pictureBox3, "Crear servicio.");
+            pictureBox3.Click += ServicePNLBTNCreate_Click;
             // 
-            // textBox1
+            // ServiceTBDetail
             // 
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Location = new Point(4, 4);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(232, 57);
-            textBox1.TabIndex = 2;
+            ServiceTBDetail.BorderStyle = BorderStyle.None;
+            ServiceTBDetail.Location = new Point(4, 4);
+            ServiceTBDetail.Multiline = true;
+            ServiceTBDetail.Name = "ServiceTBDetail";
+            ServiceTBDetail.Size = new Size(232, 57);
+            ServiceTBDetail.TabIndex = 2;
             // 
             // panel5
             // 
             panel5.BackColor = SystemColors.Window;
-            panel5.Controls.Add(comboBox1);
+            panel5.Controls.Add(ServiceCBTypes);
             panel5.Location = new Point(217, 43);
             panel5.Name = "panel5";
             panel5.Size = new Size(187, 30);
@@ -163,7 +171,7 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.Window;
-            panel1.Controls.Add(textBox1);
+            panel1.Controls.Add(ServiceTBDetail);
             panel1.Location = new Point(21, 125);
             panel1.Name = "panel1";
             panel1.Size = new Size(239, 68);
@@ -179,6 +187,8 @@
             label13.Size = new Size(54, 21);
             label13.TabIndex = 1;
             label13.Text = "Borrar";
+            toolTip1.SetToolTip(label13, "Borrar servicio.");
+            label13.Click += ServicePNLBTNDelete_Click;
             // 
             // pictureBox1
             // 
@@ -189,6 +199,8 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Actualizar servicio.");
+            pictureBox1.Click += ServicePNLBTNUpdate_Click;
             // 
             // pictureBox4
             // 
@@ -199,6 +211,8 @@
             pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox4.TabIndex = 0;
             pictureBox4.TabStop = false;
+            toolTip1.SetToolTip(pictureBox4, "Borrar servicio.");
+            pictureBox4.Click += ServicePNLBTNDelete_Click;
             // 
             // label10
             // 
@@ -210,6 +224,8 @@
             label10.Size = new Size(78, 21);
             label10.TabIndex = 1;
             label10.Text = "Actualizar";
+            toolTip1.SetToolTip(label10, "Actualizar servicio.");
+            label10.Click += ServicePNLBTNUpdate_Click;
             // 
             // CondominiumPNLBTNUpdate
             // 
@@ -220,6 +236,8 @@
             CondominiumPNLBTNUpdate.Name = "CondominiumPNLBTNUpdate";
             CondominiumPNLBTNUpdate.Size = new Size(119, 41);
             CondominiumPNLBTNUpdate.TabIndex = 128;
+            toolTip1.SetToolTip(CondominiumPNLBTNUpdate, "Actualizar servicio.");
+            CondominiumPNLBTNUpdate.Click += ServicePNLBTNUpdate_Click;
             // 
             // label9
             // 
@@ -231,6 +249,8 @@
             label9.Size = new Size(56, 21);
             label9.TabIndex = 1;
             label9.Text = "Buscar";
+            toolTip1.SetToolTip(label9, "Buscar Servicio.");
+            label9.Click += ServicePNLBTNSearch_Click;
             // 
             // pictureBox2
             // 
@@ -241,6 +261,8 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
+            toolTip1.SetToolTip(pictureBox2, "Buscar Servicio.");
+            pictureBox2.Click += ServicePNLBTNSearch_Click;
             // 
             // CondominiumPNLBTNSearch
             // 
@@ -251,27 +273,29 @@
             CondominiumPNLBTNSearch.Name = "CondominiumPNLBTNSearch";
             CondominiumPNLBTNSearch.Size = new Size(109, 41);
             CondominiumPNLBTNSearch.TabIndex = 129;
+            toolTip1.SetToolTip(CondominiumPNLBTNSearch, "Buscar Servicio.");
+            CondominiumPNLBTNSearch.Click += ServicePNLBTNSearch_Click;
             // 
-            // LoginTxtBxPUsername
+            // ServiceTBID
             // 
-            LoginTxtBxPUsername.BorderStyle = BorderStyle.None;
-            LoginTxtBxPUsername.Location = new Point(4, 4);
-            LoginTxtBxPUsername.Name = "LoginTxtBxPUsername";
-            LoginTxtBxPUsername.Size = new Size(112, 16);
-            LoginTxtBxPUsername.TabIndex = 2;
+            ServiceTBID.BorderStyle = BorderStyle.None;
+            ServiceTBID.Location = new Point(4, 4);
+            ServiceTBID.Name = "ServiceTBID";
+            ServiceTBID.Size = new Size(112, 16);
+            ServiceTBID.TabIndex = 2;
             // 
-            // dataGridView1
+            // ServiceDTGData
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(51, 292);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(945, 288);
-            dataGridView1.TabIndex = 131;
+            ServiceDTGData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            ServiceDTGData.Location = new Point(51, 292);
+            ServiceDTGData.Name = "ServiceDTGData";
+            ServiceDTGData.Size = new Size(945, 288);
+            ServiceDTGData.TabIndex = 131;
             // 
             // LoginPNLUsername
             // 
             LoginPNLUsername.BackColor = SystemColors.Window;
-            LoginPNLUsername.Controls.Add(LoginTxtBxPUsername);
+            LoginPNLUsername.Controls.Add(ServiceTBID);
             LoginPNLUsername.Location = new Point(21, 43);
             LoginPNLUsername.Name = "LoginPNLUsername";
             LoginPNLUsername.Size = new Size(119, 24);
@@ -286,6 +310,8 @@
             CondominiumPNLBTNDelete.Name = "CondominiumPNLBTNDelete";
             CondominiumPNLBTNDelete.Size = new Size(109, 41);
             CondominiumPNLBTNDelete.TabIndex = 127;
+            toolTip1.SetToolTip(CondominiumPNLBTNDelete, "Borrar servicio.");
+            CondominiumPNLBTNDelete.Click += ServicePNLBTNDelete_Click;
             // 
             // label4
             // 
@@ -300,19 +326,19 @@
             // panel2
             // 
             panel2.BackColor = SystemColors.Window;
-            panel2.Controls.Add(textBox2);
+            panel2.Controls.Add(ServiceTBName);
             panel2.Location = new Point(481, 43);
             panel2.Name = "panel2";
             panel2.Size = new Size(215, 24);
             panel2.TabIndex = 135;
             // 
-            // textBox2
+            // ServiceTBName
             // 
-            textBox2.BorderStyle = BorderStyle.None;
-            textBox2.Location = new Point(4, 4);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(208, 16);
-            textBox2.TabIndex = 2;
+            ServiceTBName.BorderStyle = BorderStyle.None;
+            ServiceTBName.Location = new Point(4, 4);
+            ServiceTBName.Name = "ServiceTBName";
+            ServiceTBName.Size = new Size(208, 16);
+            ServiceTBName.TabIndex = 2;
             // 
             // label5
             // 
@@ -327,19 +353,19 @@
             // panel3
             // 
             panel3.BackColor = SystemColors.Window;
-            panel3.Controls.Add(textBox3);
+            panel3.Controls.Add(ServiceTBCost);
             panel3.Location = new Point(763, 43);
             panel3.Name = "panel3";
             panel3.Size = new Size(149, 24);
             panel3.TabIndex = 137;
             // 
-            // textBox3
+            // ServiceTBCost
             // 
-            textBox3.BorderStyle = BorderStyle.None;
-            textBox3.Location = new Point(4, 4);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(142, 16);
-            textBox3.TabIndex = 2;
+            ServiceTBCost.BorderStyle = BorderStyle.None;
+            ServiceTBCost.Location = new Point(4, 4);
+            ServiceTBCost.Name = "ServiceTBCost";
+            ServiceTBCost.Size = new Size(142, 16);
+            ServiceTBCost.TabIndex = 2;
             // 
             // ServiceScreen
             // 
@@ -358,7 +384,7 @@
             Controls.Add(panel1);
             Controls.Add(CondominiumPNLBTNUpdate);
             Controls.Add(CondominiumPNLBTNSearch);
-            Controls.Add(dataGridView1);
+            Controls.Add(ServiceDTGData);
             Controls.Add(LoginPNLUsername);
             Controls.Add(CondominiumPNLBTNDelete);
             Name = "ServiceScreen";
@@ -377,7 +403,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             CondominiumPNLBTNSearch.ResumeLayout(false);
             CondominiumPNLBTNSearch.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ServiceDTGData).EndInit();
             LoginPNLUsername.ResumeLayout(false);
             LoginPNLUsername.PerformLayout();
             CondominiumPNLBTNDelete.ResumeLayout(false);
@@ -392,13 +418,13 @@
 
         #endregion
 
-        private ComboBox comboBox1;
+        private ComboBox ServiceCBTypes;
         private Label label3;
         private Label label1;
         private Panel CondominiumPNLBTNCreate;
         private Label label8;
         private PictureBox pictureBox3;
-        private TextBox textBox1;
+        private TextBox ServiceTBDetail;
         private Panel panel5;
         private Label label2;
         private Panel panel1;
@@ -410,15 +436,16 @@
         private Label label9;
         private PictureBox pictureBox2;
         private Panel CondominiumPNLBTNSearch;
-        private TextBox LoginTxtBxPUsername;
-        private DataGridView dataGridView1;
+        private TextBox ServiceTBID;
+        private DataGridView ServiceDTGData;
         private Panel LoginPNLUsername;
         private Panel CondominiumPNLBTNDelete;
         private Label label4;
         private Panel panel2;
-        private TextBox textBox2;
+        private TextBox ServiceTBName;
         private Label label5;
         private Panel panel3;
-        private TextBox textBox3;
+        private TextBox ServiceTBCost;
+        private ToolTip toolTip1;
     }
 }

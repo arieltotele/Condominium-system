@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             label3 = new Label();
             panel2 = new Panel();
-            textBox2 = new TextBox();
-            dataGridView1 = new DataGridView();
+            InvoiceTBTotal = new TextBox();
+            InvoiceDTGData = new DataGridView();
             CondominiumPNLBTNCreate = new Panel();
             label8 = new Label();
             pictureBox3 = new PictureBox();
@@ -46,15 +47,16 @@
             pictureBox4 = new PictureBox();
             label2 = new Label();
             panel1 = new Panel();
-            textBox1 = new TextBox();
-            label6 = new Label();
-            panel6 = new Panel();
-            maskedTextBox1 = new MaskedTextBox();
+            InvoiceTBDetail = new TextBox();
             label1 = new Label();
             LoginPNLUsername = new Panel();
-            LoginTxtBxPUsername = new TextBox();
+            InvoiceTBID = new TextBox();
+            label6 = new Label();
+            panel6 = new Panel();
+            InvoiceCBTenants = new ComboBox();
+            toolTip1 = new ToolTip(components);
             panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)InvoiceDTGData).BeginInit();
             CondominiumPNLBTNCreate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             CondominiumPNLBTNSearch.SuspendLayout();
@@ -64,8 +66,8 @@
             CondominiumPNLBTNDelete.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             panel1.SuspendLayout();
-            panel6.SuspendLayout();
             LoginPNLUsername.SuspendLayout();
+            panel6.SuspendLayout();
             SuspendLayout();
             // 
             // label3
@@ -81,27 +83,27 @@
             // panel2
             // 
             panel2.BackColor = SystemColors.Window;
-            panel2.Controls.Add(textBox2);
+            panel2.Controls.Add(InvoiceTBTotal);
             panel2.Location = new Point(826, 43);
             panel2.Name = "panel2";
             panel2.Size = new Size(143, 24);
             panel2.TabIndex = 81;
             // 
-            // textBox2
+            // InvoiceTBTotal
             // 
-            textBox2.BorderStyle = BorderStyle.None;
-            textBox2.Location = new Point(0, 4);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(116, 16);
-            textBox2.TabIndex = 2;
+            InvoiceTBTotal.BorderStyle = BorderStyle.None;
+            InvoiceTBTotal.Location = new Point(3, 3);
+            InvoiceTBTotal.Name = "InvoiceTBTotal";
+            InvoiceTBTotal.Size = new Size(137, 16);
+            InvoiceTBTotal.TabIndex = 2;
             // 
-            // dataGridView1
+            // InvoiceDTGData
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(51, 271);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(945, 309);
-            dataGridView1.TabIndex = 79;
+            InvoiceDTGData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            InvoiceDTGData.Location = new Point(51, 271);
+            InvoiceDTGData.Name = "InvoiceDTGData";
+            InvoiceDTGData.Size = new Size(945, 309);
+            InvoiceDTGData.TabIndex = 79;
             // 
             // CondominiumPNLBTNCreate
             // 
@@ -112,6 +114,8 @@
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 78;
+            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Crear factura.");
+            CondominiumPNLBTNCreate.Click += InvoicePNLBTNCreate_Click;
             // 
             // label8
             // 
@@ -123,6 +127,8 @@
             label8.Size = new Size(48, 21);
             label8.TabIndex = 1;
             label8.Text = "Crear";
+            toolTip1.SetToolTip(label8, "Crear factura.");
+            label8.Click += InvoicePNLBTNCreate_Click;
             // 
             // pictureBox3
             // 
@@ -133,6 +139,8 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
+            toolTip1.SetToolTip(pictureBox3, "Crear factura.");
+            pictureBox3.Click += InvoicePNLBTNCreate_Click;
             // 
             // CondominiumPNLBTNSearch
             // 
@@ -143,6 +151,8 @@
             CondominiumPNLBTNSearch.Name = "CondominiumPNLBTNSearch";
             CondominiumPNLBTNSearch.Size = new Size(109, 41);
             CondominiumPNLBTNSearch.TabIndex = 77;
+            toolTip1.SetToolTip(CondominiumPNLBTNSearch, "Buscar factura.");
+            CondominiumPNLBTNSearch.Click += InvoicePNLBTNSearch_Click;
             // 
             // label9
             // 
@@ -154,6 +164,8 @@
             label9.Size = new Size(56, 21);
             label9.TabIndex = 1;
             label9.Text = "Buscar";
+            toolTip1.SetToolTip(label9, "Buscar factura.");
+            label9.Click += InvoicePNLBTNSearch_Click;
             // 
             // pictureBox2
             // 
@@ -164,6 +176,8 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
+            toolTip1.SetToolTip(pictureBox2, "Buscar factura.");
+            pictureBox2.Click += InvoicePNLBTNSearch_Click;
             // 
             // CondominiumPNLBTNUpdate
             // 
@@ -174,6 +188,8 @@
             CondominiumPNLBTNUpdate.Name = "CondominiumPNLBTNUpdate";
             CondominiumPNLBTNUpdate.Size = new Size(119, 41);
             CondominiumPNLBTNUpdate.TabIndex = 76;
+            toolTip1.SetToolTip(CondominiumPNLBTNUpdate, "Actualizar factura.");
+            CondominiumPNLBTNUpdate.Click += InvoicePNLBTNUpdate_Click;
             // 
             // label10
             // 
@@ -185,6 +201,8 @@
             label10.Size = new Size(78, 21);
             label10.TabIndex = 1;
             label10.Text = "Actualizar";
+            toolTip1.SetToolTip(label10, "Actualizar factura.");
+            label10.Click += InvoicePNLBTNUpdate_Click;
             // 
             // pictureBox1
             // 
@@ -195,6 +213,8 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Actualizar factura.");
+            pictureBox1.Click += InvoicePNLBTNUpdate_Click;
             // 
             // CondominiumPNLBTNDelete
             // 
@@ -205,6 +225,8 @@
             CondominiumPNLBTNDelete.Name = "CondominiumPNLBTNDelete";
             CondominiumPNLBTNDelete.Size = new Size(109, 41);
             CondominiumPNLBTNDelete.TabIndex = 75;
+            toolTip1.SetToolTip(CondominiumPNLBTNDelete, "Borrar factura.");
+            CondominiumPNLBTNDelete.Click += InvoicePNLBTNDelete_Click;
             // 
             // label13
             // 
@@ -216,6 +238,8 @@
             label13.Size = new Size(54, 21);
             label13.TabIndex = 1;
             label13.Text = "Borrar";
+            toolTip1.SetToolTip(label13, "Borrar factura.");
+            label13.Click += InvoicePNLBTNDelete_Click;
             // 
             // pictureBox4
             // 
@@ -226,6 +250,8 @@
             pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox4.TabIndex = 0;
             pictureBox4.TabStop = false;
+            toolTip1.SetToolTip(pictureBox4, "Borrar factura.");
+            pictureBox4.Click += InvoicePNLBTNDelete_Click;
             // 
             // label2
             // 
@@ -240,47 +266,20 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.Window;
-            panel1.Controls.Add(textBox1);
+            panel1.Controls.Add(InvoiceTBDetail);
             panel1.Location = new Point(503, 43);
             panel1.Name = "panel1";
             panel1.Size = new Size(239, 68);
             panel1.TabIndex = 74;
             // 
-            // textBox1
+            // InvoiceTBDetail
             // 
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Location = new Point(4, 4);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(232, 57);
-            textBox1.TabIndex = 2;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 12F);
-            label6.Location = new Point(217, 10);
-            label6.Name = "label6";
-            label6.Size = new Size(209, 21);
-            label6.TabIndex = 71;
-            label6.Text = "Documentación del inquilino";
-            // 
-            // panel6
-            // 
-            panel6.BackColor = SystemColors.Window;
-            panel6.Controls.Add(maskedTextBox1);
-            panel6.Location = new Point(217, 43);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(230, 33);
-            panel6.TabIndex = 72;
-            // 
-            // maskedTextBox1
-            // 
-            maskedTextBox1.Location = new Point(4, 5);
-            maskedTextBox1.Mask = "000-0000000-0";
-            maskedTextBox1.Name = "maskedTextBox1";
-            maskedTextBox1.Size = new Size(223, 23);
-            maskedTextBox1.TabIndex = 0;
+            InvoiceTBDetail.BorderStyle = BorderStyle.None;
+            InvoiceTBDetail.Location = new Point(4, 4);
+            InvoiceTBDetail.Multiline = true;
+            InvoiceTBDetail.Name = "InvoiceTBDetail";
+            InvoiceTBDetail.Size = new Size(232, 57);
+            InvoiceTBDetail.TabIndex = 2;
             // 
             // label1
             // 
@@ -295,43 +294,73 @@
             // LoginPNLUsername
             // 
             LoginPNLUsername.BackColor = SystemColors.Window;
-            LoginPNLUsername.Controls.Add(LoginTxtBxPUsername);
+            LoginPNLUsername.Controls.Add(InvoiceTBID);
             LoginPNLUsername.Location = new Point(21, 43);
             LoginPNLUsername.Name = "LoginPNLUsername";
             LoginPNLUsername.Size = new Size(119, 24);
             LoginPNLUsername.TabIndex = 70;
             // 
-            // LoginTxtBxPUsername
+            // InvoiceTBID
             // 
-            LoginTxtBxPUsername.BorderStyle = BorderStyle.None;
-            LoginTxtBxPUsername.Location = new Point(4, 4);
-            LoginTxtBxPUsername.Name = "LoginTxtBxPUsername";
-            LoginTxtBxPUsername.Size = new Size(327, 16);
-            LoginTxtBxPUsername.TabIndex = 2;
+            InvoiceTBID.BorderStyle = BorderStyle.None;
+            InvoiceTBID.Location = new Point(4, 4);
+            InvoiceTBID.Name = "InvoiceTBID";
+            InvoiceTBID.Size = new Size(112, 16);
+            InvoiceTBID.TabIndex = 2;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 12F);
+            label6.Location = new Point(191, 10);
+            label6.Name = "label6";
+            label6.Size = new Size(192, 21);
+            label6.TabIndex = 99;
+            label6.Text = "Identificación del inquilino";
+            // 
+            // panel6
+            // 
+            panel6.BackColor = SystemColors.Window;
+            panel6.Controls.Add(InvoiceCBTenants);
+            panel6.Location = new Point(191, 43);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(230, 33);
+            panel6.TabIndex = 100;
+            // 
+            // InvoiceCBTenants
+            // 
+            InvoiceCBTenants.DropDownStyle = ComboBoxStyle.DropDownList;
+            InvoiceCBTenants.FormattingEnabled = true;
+            InvoiceCBTenants.Location = new Point(3, 6);
+            InvoiceCBTenants.Name = "InvoiceCBTenants";
+            InvoiceCBTenants.Size = new Size(224, 23);
+            InvoiceCBTenants.TabIndex = 0;
             // 
             // InvoiceScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1017, 591);
+            Controls.Add(label6);
+            Controls.Add(panel6);
             Controls.Add(label3);
             Controls.Add(panel2);
-            Controls.Add(dataGridView1);
+            Controls.Add(InvoiceDTGData);
             Controls.Add(CondominiumPNLBTNCreate);
             Controls.Add(CondominiumPNLBTNSearch);
             Controls.Add(CondominiumPNLBTNUpdate);
             Controls.Add(CondominiumPNLBTNDelete);
             Controls.Add(label2);
             Controls.Add(panel1);
-            Controls.Add(label6);
-            Controls.Add(panel6);
             Controls.Add(label1);
             Controls.Add(LoginPNLUsername);
             Name = "InvoiceScreen";
             Text = "InvoiceScreen";
+            Load += InvoiceScreen_Load;
+            Click += InvoicePNLBTNDelete_Click;
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)InvoiceDTGData).EndInit();
             CondominiumPNLBTNCreate.ResumeLayout(false);
             CondominiumPNLBTNCreate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
@@ -346,10 +375,9 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            panel6.ResumeLayout(false);
-            panel6.PerformLayout();
             LoginPNLUsername.ResumeLayout(false);
             LoginPNLUsername.PerformLayout();
+            panel6.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -358,8 +386,8 @@
 
         private Label label3;
         private Panel panel2;
-        private TextBox textBox2;
-        private DataGridView dataGridView1;
+        private TextBox InvoiceTBTotal;
+        private DataGridView InvoiceDTGData;
         private Panel CondominiumPNLBTNCreate;
         private Label label8;
         private PictureBox pictureBox3;
@@ -374,12 +402,13 @@
         private PictureBox pictureBox4;
         private Label label2;
         private Panel panel1;
-        private TextBox textBox1;
-        private Label label6;
-        private Panel panel6;
-        private MaskedTextBox maskedTextBox1;
+        private TextBox InvoiceTBDetail;
         private Label label1;
         private Panel LoginPNLUsername;
-        private TextBox LoginTxtBxPUsername;
+        private TextBox InvoiceTBID;
+        private Label label6;
+        private Panel panel6;
+        private ComboBox InvoiceCBTenants;
+        private ToolTip toolTip1;
     }
 }
