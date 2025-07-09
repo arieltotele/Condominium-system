@@ -234,8 +234,8 @@ namespace Condominium_System.Presentation.Views
                string.IsNullOrEmpty(TenantMskTPhoneNumber.Text) ||
                !isSexValid ||
                !isHouseValid ||
-               TenantMskTDocumentation.Text.Trim().Length != 10 ||
-               TenantMskTPhoneNumber.Text.Trim().Length != 11
+               TenantMskTPhoneNumber.Text.Trim().Length != 10 ||
+               TenantMskTDocumentation.Text.Trim().Length != 11
            );
         }
 
@@ -313,6 +313,10 @@ namespace Condominium_System.Presentation.Views
                 {
                     MessageBox.Show($"Error actualizando al inquilino: {ex.Message}");
                 }
+            }
+            else
+            {
+                MessageBox.Show("Todos los campos deben ser completados correctamente.");
             }
         }
 
