@@ -1,7 +1,9 @@
 ﻿using Condominium_System.Business.Services;
 using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
+using System.CodeDom.Compiler;
 using System.ComponentModel;
+using System.Data;
 
 namespace Condominium_System.Presentation.Views
 {
@@ -271,6 +273,74 @@ namespace Condominium_System.Presentation.Views
             else
             {
                 MessageBox.Show("El campo Id debe de estar lleno correctamente.");
+            }
+        }
+
+        private async void TenantPNLBTNUpdate_Click(object sender, EventArgs e)
+        {
+            if (FormIsCorrectToUpdate())
+            {
+                try
+                {
+                    var TenantToUpdate = await _tenantService.GetByIdAsync(Int32.Parse(TenantTBID.Text));
+
+                    if (TenantToUpdate != null)
+                    {
+                        TenantToUpdate.Id = Int32.Parse(TenantTBID.Text);
+                        TenantToUpdate.FirstName = TenantTBName.Text;
+                        TenantToUpdate.LastName = TenantTBLastname.Text;
+                        TenantToUpdate.DocumentNumber = TenantMskTDocumentation.Text;
+                        TenantToUpdate.PhoneNumber = TenantMskTPhoneNumber.Text;
+                        TenantToUpdate.BirthDate = TenantDTPBirthdate.Value;
+                        TenantToUpdate.Gender = TenantCBSexs.Text;
+                        TenantToUpdate.HousingId = (int)TenantCBHouses.SelectedValue;
+
+                        TenantToUpdate.UpdatedAt = DateTime.Now;
+
+                        await _tenantService.UpdateAsync(TenantToUpdate);
+
+                        MessageBox.Show("El inquilino ha sido actualizado con exito.");
+                        LoadDataToDataGrid();
+                        CleanForm();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Inquilino no encontrado.");
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error actualizando al inquilino: {ex.Message}");
+                }
+            }
+        }
+
+        private async void TenantPNLBTNDelete_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(TenantTBID.Text))
+            {
+
+                var TenantToDelete = await _tenantService.GetByIdAsync(Int32.Parse(TenantTBID.Text));
+
+                if (TenantToDelete != null)
+                {
+                    TenantToDelete.DeletedAt = DateTime.Now;
+
+                    await _tenantService.DeleteAsync(Int32.Parse(TenantTBID.Text));
+                    MessageBox.Show("El inquilino ha sido borrado con exitosamente.");
+
+                    LoadDataToDataGrid();
+                    CleanForm();
+                }
+                else
+                {
+                    MessageBox.Show("Inquilino no encontrado.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("El campo de Id debe de estar lleno.");
             }
         }
     }

@@ -57,9 +57,6 @@
             CondominiumPNLBTNSearch = new Panel();
             label9 = new Label();
             pictureBox2 = new PictureBox();
-            CondominiumPNLBTNUpdate = new Panel();
-            label10 = new Label();
-            pictureBox1 = new PictureBox();
             CondominiumPNLBTNDelete = new Panel();
             label13 = new Label();
             pictureBox4 = new PictureBox();
@@ -67,6 +64,9 @@
             panel8 = new Panel();
             TenantCBHouses = new ComboBox();
             toolTip1 = new ToolTip(components);
+            label12 = new Label();
+            pictureBox1 = new PictureBox();
+            TenantPNLBTNUpdate = new Panel();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel4.SuspendLayout();
@@ -79,11 +79,11 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             CondominiumPNLBTNSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            CondominiumPNLBTNUpdate.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             CondominiumPNLBTNDelete.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             panel8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            TenantPNLBTNUpdate.SuspendLayout();
             SuspendLayout();
             // 
             // label2
@@ -359,40 +359,6 @@
             toolTip1.SetToolTip(pictureBox2, "Buscar Inquilino.");
             pictureBox2.Click += TenantPNLBTNSearch_Click;
             // 
-            // CondominiumPNLBTNUpdate
-            // 
-            CondominiumPNLBTNUpdate.BackColor = Color.MidnightBlue;
-            CondominiumPNLBTNUpdate.Controls.Add(label10);
-            CondominiumPNLBTNUpdate.Controls.Add(pictureBox1);
-            CondominiumPNLBTNUpdate.Location = new Point(688, 527);
-            CondominiumPNLBTNUpdate.Name = "CondominiumPNLBTNUpdate";
-            CondominiumPNLBTNUpdate.Size = new Size(119, 41);
-            CondominiumPNLBTNUpdate.TabIndex = 59;
-            toolTip1.SetToolTip(CondominiumPNLBTNUpdate, "Actualizar Inquilino.");
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label10.ForeColor = Color.White;
-            label10.Location = new Point(39, 12);
-            label10.Name = "label10";
-            label10.Size = new Size(78, 21);
-            label10.TabIndex = 1;
-            label10.Text = "Actualizar";
-            toolTip1.SetToolTip(label10, "Actualizar Inquilino.");
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = Properties.Resources.update_white;
-            pictureBox1.Location = new Point(3, 12);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(30, 19);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
-            toolTip1.SetToolTip(pictureBox1, "Actualizar Inquilino.");
-            // 
             // CondominiumPNLBTNDelete
             // 
             CondominiumPNLBTNDelete.BackColor = Color.FromArgb(199, 0, 0);
@@ -403,6 +369,7 @@
             CondominiumPNLBTNDelete.Size = new Size(109, 41);
             CondominiumPNLBTNDelete.TabIndex = 58;
             toolTip1.SetToolTip(CondominiumPNLBTNDelete, "Borrar Inquilino.");
+            CondominiumPNLBTNDelete.Click += TenantPNLBTNDelete_Click;
             // 
             // label13
             // 
@@ -415,6 +382,7 @@
             label13.TabIndex = 1;
             label13.Text = "Borrar";
             toolTip1.SetToolTip(label13, "Borrar Inquilino.");
+            label13.Click += TenantPNLBTNDelete_Click;
             // 
             // pictureBox4
             // 
@@ -426,6 +394,7 @@
             pictureBox4.TabIndex = 0;
             pictureBox4.TabStop = false;
             toolTip1.SetToolTip(pictureBox4, "Borrar Inquilino.");
+            pictureBox4.Click += TenantPNLBTNDelete_Click;
             // 
             // label11
             // 
@@ -455,16 +424,53 @@
             TenantCBHouses.Size = new Size(225, 23);
             TenantCBHouses.TabIndex = 0;
             // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label12.ForeColor = Color.White;
+            label12.Location = new Point(39, 12);
+            label12.Name = "label12";
+            label12.Size = new Size(78, 21);
+            label12.TabIndex = 1;
+            label12.Text = "Actualizar";
+            toolTip1.SetToolTip(label12, "Actualizar Inquilino.");
+            label12.Click += TenantPNLBTNUpdate_Click;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.update_white;
+            pictureBox1.Location = new Point(3, 12);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(30, 19);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Actualizar Inquilino.");
+            pictureBox1.Click += TenantPNLBTNUpdate_Click;
+            // 
+            // TenantPNLBTNUpdate
+            // 
+            TenantPNLBTNUpdate.BackColor = Color.MidnightBlue;
+            TenantPNLBTNUpdate.Controls.Add(label12);
+            TenantPNLBTNUpdate.Controls.Add(pictureBox1);
+            TenantPNLBTNUpdate.Location = new Point(693, 527);
+            TenantPNLBTNUpdate.Name = "TenantPNLBTNUpdate";
+            TenantPNLBTNUpdate.Size = new Size(119, 41);
+            TenantPNLBTNUpdate.TabIndex = 154;
+            toolTip1.SetToolTip(TenantPNLBTNUpdate, "Actualizar Inquilino..");
+            TenantPNLBTNUpdate.Click += TenantPNLBTNUpdate_Click;
+            // 
             // TenantScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1017, 591);
+            Controls.Add(TenantPNLBTNUpdate);
             Controls.Add(label11);
             Controls.Add(panel8);
             Controls.Add(CondominiumPNLBTNCreate);
             Controls.Add(CondominiumPNLBTNSearch);
-            Controls.Add(CondominiumPNLBTNUpdate);
             Controls.Add(CondominiumPNLBTNDelete);
             Controls.Add(TenantDTGData);
             Controls.Add(label7);
@@ -483,6 +489,7 @@
             Controls.Add(panel1);
             Name = "TenantScreen";
             Text = "TenantScreen";
+            toolTip1.SetToolTip(this, "Actualizar Inquilino.");
             Load += TenantScreen_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -503,13 +510,13 @@
             CondominiumPNLBTNSearch.ResumeLayout(false);
             CondominiumPNLBTNSearch.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            CondominiumPNLBTNUpdate.ResumeLayout(false);
-            CondominiumPNLBTNUpdate.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             CondominiumPNLBTNDelete.ResumeLayout(false);
             CondominiumPNLBTNDelete.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
             panel8.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            TenantPNLBTNUpdate.ResumeLayout(false);
+            TenantPNLBTNUpdate.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -544,9 +551,6 @@
         private Panel CondominiumPNLBTNSearch;
         private Label label9;
         private PictureBox pictureBox2;
-        private Panel CondominiumPNLBTNUpdate;
-        private Label label10;
-        private PictureBox pictureBox1;
         private Panel CondominiumPNLBTNDelete;
         private Label label13;
         private PictureBox pictureBox4;
@@ -554,5 +558,8 @@
         private Panel panel8;
         private ComboBox TenantCBHouses;
         private ToolTip toolTip1;
+        private Label label12;
+        private PictureBox pictureBox1;
+        private Panel TenantPNLBTNUpdate;
     }
 }
