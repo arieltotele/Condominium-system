@@ -103,6 +103,7 @@ namespace Condominium_System.Presentation.Views
                     break;
 
                 case "HomeScreenPNLInvoice":
+                    HomeScreenLBLTitle.Text = "Factura";
                     var invoiceScreen = _serviceProvider.GetRequiredService<InvoiceScreen>();
                     LoadFormInPanel(invoiceScreen);
                     break;
