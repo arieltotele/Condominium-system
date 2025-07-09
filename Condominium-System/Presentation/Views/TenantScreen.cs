@@ -51,13 +51,12 @@ namespace Condominium_System.Presentation.Views
             {
                 var houses = await _housingEntityService.GetAllHousingsAsync();
 
-                TenantCBHouses.DisplayMember = "Code";
-                TenantCBHouses.ValueMember = "Id";
-                TenantCBHouses.DataSource = houses;
-
                 var placeholder = new Housing { Id = 0, Code = "-- Seleccione una vivienda --" };
                 var listWithPlaceholder = new List<Housing> { placeholder };
                 listWithPlaceholder.AddRange(houses);
+
+                TenantCBHouses.DisplayMember = "Code";
+                TenantCBHouses.ValueMember = "Id";
                 TenantCBHouses.DataSource = listWithPlaceholder;
             }
             catch (Exception ex)
@@ -162,7 +161,7 @@ namespace Condominium_System.Presentation.Views
                         BirthDate = TenantDTPBirthdate.Value,
                         Gender = TenantCBSexs.Text,
                         EntryDate = DateTime.Now,
-                        HousingId = (int) TenantCBHouses.SelectedIndex,
+                        HousingId = (int)TenantCBHouses.SelectedValue,
 
                         Author = currentUser.Username
                     };
@@ -171,7 +170,7 @@ namespace Condominium_System.Presentation.Views
 
                     MessageBox.Show("El inquilino ha sido creado con exito.");
                     CleanForm();
-                    LoadDataToDataGrid();
+                    await LoadDataToDataGrid();
                 }
                 catch (Exception ex)
                 {
@@ -215,7 +214,7 @@ namespace Condominium_System.Presentation.Views
                !isSexValid ||
                !isHouseValid ||
                TenantMskTPhoneNumber.Text.Trim().Length != 10 ||
-               TenantMskTDocumentation.Text.Trim().Length != 11           
+               TenantMskTDocumentation.Text.Trim().Length != 11
            );
         }
 
@@ -236,6 +235,43 @@ namespace Condominium_System.Presentation.Views
                TenantMskTDocumentation.Text.Trim().Length != 10 ||
                TenantMskTPhoneNumber.Text.Trim().Length != 11
            );
+        }
+
+        private async void TenantPNLBTNSearch_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(TenantTBID.Text))
+            {
+                try
+                {
+                    var TenantFound = await _tenantService.GetByIdAsync(Int32.Parse(TenantTBID.Text));
+                    if (TenantFound != null)
+                    {
+                        TenantTBName.Text = TenantFound.FirstName;
+                        TenantTBLastname.Text = TenantFound.LastName;
+                        TenantMskTDocumentation.Text = TenantFound.DocumentNumber;
+                        TenantMskTPhoneNumber.Text = TenantFound.PhoneNumber;
+                        TenantDTPBirthdate.Value = TenantFound.BirthDate;
+                        TenantCBSexs.Text = TenantFound.Gender;
+
+                        await LoadHousesIntoComboBox();
+
+                        TenantCBHouses.SelectedValue = TenantFound.HousingId;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Inquilino no encontrado.");
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error buscando al inquilino: {ex.Message}");
+                }
+            }
+            else
+            {
+                MessageBox.Show("El campo Id debe de estar lleno correctamente.");
+            }
         }
     }
 }

@@ -332,6 +332,7 @@
             CondominiumPNLBTNSearch.Size = new Size(109, 41);
             CondominiumPNLBTNSearch.TabIndex = 60;
             toolTip1.SetToolTip(CondominiumPNLBTNSearch, "Buscar Inquilino.");
+            CondominiumPNLBTNSearch.Click += TenantPNLBTNSearch_Click;
             // 
             // label9
             // 
@@ -344,6 +345,7 @@
             label9.TabIndex = 1;
             label9.Text = "Buscar";
             toolTip1.SetToolTip(label9, "Buscar Inquilino.");
+            label9.Click += TenantPNLBTNSearch_Click;
             // 
             // pictureBox2
             // 
@@ -355,6 +357,7 @@
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
             toolTip1.SetToolTip(pictureBox2, "Buscar Inquilino.");
+            pictureBox2.Click += TenantPNLBTNSearch_Click;
             // 
             // CondominiumPNLBTNUpdate
             // 
