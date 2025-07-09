@@ -28,27 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             label2 = new Label();
             panel1 = new Panel();
-            textBox1 = new TextBox();
+            TenantTBID = new TextBox();
             label1 = new Label();
             panel2 = new Panel();
-            textBox2 = new TextBox();
+            TenantTBName = new TextBox();
             label3 = new Label();
             label4 = new Label();
             panel4 = new Panel();
-            textBox4 = new TextBox();
+            TenantTBLastname = new TextBox();
             panel3 = new Panel();
             TenantCBSexs = new ComboBox();
             label5 = new Label();
             panel5 = new Panel();
-            dateTimePicker1 = new DateTimePicker();
+            TenantDTPBirthdate = new DateTimePicker();
             label6 = new Label();
             panel6 = new Panel();
-            maskedTextBox1 = new MaskedTextBox();
+            TenantMskTDocumentation = new MaskedTextBox();
             label7 = new Label();
             panel7 = new Panel();
-            maskedTextBox2 = new MaskedTextBox();
+            TenantMskTPhoneNumber = new MaskedTextBox();
             TenantDTGData = new DataGridView();
             CondominiumPNLBTNCreate = new Panel();
             label8 = new Label();
@@ -65,6 +66,7 @@
             label11 = new Label();
             panel8 = new Panel();
             TenantCBHouses = new ComboBox();
+            toolTip1 = new ToolTip(components);
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel4.SuspendLayout();
@@ -97,19 +99,19 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.Window;
-            panel1.Controls.Add(textBox1);
+            panel1.Controls.Add(TenantTBID);
             panel1.Location = new Point(12, 42);
             panel1.Name = "panel1";
             panel1.Size = new Size(232, 24);
             panel1.TabIndex = 44;
             // 
-            // textBox1
+            // TenantTBID
             // 
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Location = new Point(4, 4);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(225, 16);
-            textBox1.TabIndex = 2;
+            TenantTBID.BorderStyle = BorderStyle.None;
+            TenantTBID.Location = new Point(4, 4);
+            TenantTBID.Name = "TenantTBID";
+            TenantTBID.Size = new Size(225, 16);
+            TenantTBID.TabIndex = 2;
             // 
             // label1
             // 
@@ -124,19 +126,19 @@
             // panel2
             // 
             panel2.BackColor = SystemColors.Window;
-            panel2.Controls.Add(textBox2);
+            panel2.Controls.Add(TenantTBName);
             panel2.Location = new Point(12, 112);
             panel2.Name = "panel2";
             panel2.Size = new Size(232, 24);
             panel2.TabIndex = 46;
             // 
-            // textBox2
+            // TenantTBName
             // 
-            textBox2.BorderStyle = BorderStyle.None;
-            textBox2.Location = new Point(4, 4);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(225, 16);
-            textBox2.TabIndex = 2;
+            TenantTBName.BorderStyle = BorderStyle.None;
+            TenantTBName.Location = new Point(4, 4);
+            TenantTBName.Name = "TenantTBName";
+            TenantTBName.Size = new Size(225, 16);
+            TenantTBName.TabIndex = 2;
             // 
             // label3
             // 
@@ -161,19 +163,19 @@
             // panel4
             // 
             panel4.BackColor = SystemColors.Window;
-            panel4.Controls.Add(textBox4);
+            panel4.Controls.Add(TenantTBLastname);
             panel4.Location = new Point(12, 182);
             panel4.Name = "panel4";
             panel4.Size = new Size(232, 24);
             panel4.TabIndex = 48;
             // 
-            // textBox4
+            // TenantTBLastname
             // 
-            textBox4.BorderStyle = BorderStyle.None;
-            textBox4.Location = new Point(4, 4);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(225, 16);
-            textBox4.TabIndex = 2;
+            TenantTBLastname.BorderStyle = BorderStyle.None;
+            TenantTBLastname.Location = new Point(4, 4);
+            TenantTBLastname.Name = "TenantTBLastname";
+            TenantTBLastname.Size = new Size(225, 16);
+            TenantTBLastname.TabIndex = 2;
             // 
             // panel3
             // 
@@ -206,18 +208,18 @@
             // panel5
             // 
             panel5.BackColor = SystemColors.Window;
-            panel5.Controls.Add(dateTimePicker1);
+            panel5.Controls.Add(TenantDTPBirthdate);
             panel5.Location = new Point(12, 321);
             panel5.Name = "panel5";
             panel5.Size = new Size(232, 29);
             panel5.TabIndex = 52;
             // 
-            // dateTimePicker1
+            // TenantDTPBirthdate
             // 
-            dateTimePicker1.Location = new Point(3, 3);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(226, 23);
-            dateTimePicker1.TabIndex = 0;
+            TenantDTPBirthdate.Location = new Point(3, 3);
+            TenantDTPBirthdate.Name = "TenantDTPBirthdate";
+            TenantDTPBirthdate.Size = new Size(226, 23);
+            TenantDTPBirthdate.TabIndex = 0;
             // 
             // label6
             // 
@@ -232,19 +234,20 @@
             // panel6
             // 
             panel6.BackColor = SystemColors.Window;
-            panel6.Controls.Add(maskedTextBox1);
+            panel6.Controls.Add(TenantMskTDocumentation);
             panel6.Location = new Point(12, 400);
             panel6.Name = "panel6";
             panel6.Size = new Size(232, 33);
             panel6.TabIndex = 54;
             // 
-            // maskedTextBox1
+            // TenantMskTDocumentation
             // 
-            maskedTextBox1.Location = new Point(4, 5);
-            maskedTextBox1.Mask = "000-0000000-0";
-            maskedTextBox1.Name = "maskedTextBox1";
-            maskedTextBox1.Size = new Size(225, 23);
-            maskedTextBox1.TabIndex = 0;
+            TenantMskTDocumentation.Location = new Point(4, 5);
+            TenantMskTDocumentation.Mask = "000-0000000-0";
+            TenantMskTDocumentation.Name = "TenantMskTDocumentation";
+            TenantMskTDocumentation.Size = new Size(225, 23);
+            TenantMskTDocumentation.TabIndex = 0;
+            TenantMskTDocumentation.TextMaskFormat = MaskFormat.ExcludePromptAndLiterals;
             // 
             // label7
             // 
@@ -259,19 +262,20 @@
             // panel7
             // 
             panel7.BackColor = SystemColors.Window;
-            panel7.Controls.Add(maskedTextBox2);
+            panel7.Controls.Add(TenantMskTPhoneNumber);
             panel7.Location = new Point(12, 478);
             panel7.Name = "panel7";
             panel7.Size = new Size(232, 33);
             panel7.TabIndex = 56;
             // 
-            // maskedTextBox2
+            // TenantMskTPhoneNumber
             // 
-            maskedTextBox2.Location = new Point(4, 5);
-            maskedTextBox2.Mask = "(999)000-0000";
-            maskedTextBox2.Name = "maskedTextBox2";
-            maskedTextBox2.Size = new Size(225, 23);
-            maskedTextBox2.TabIndex = 0;
+            TenantMskTPhoneNumber.Location = new Point(4, 5);
+            TenantMskTPhoneNumber.Mask = "(999)000-0000";
+            TenantMskTPhoneNumber.Name = "TenantMskTPhoneNumber";
+            TenantMskTPhoneNumber.Size = new Size(225, 23);
+            TenantMskTPhoneNumber.TabIndex = 0;
+            TenantMskTPhoneNumber.TextMaskFormat = MaskFormat.ExcludePromptAndLiterals;
             // 
             // TenantDTGData
             // 
@@ -290,6 +294,8 @@
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 61;
+            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Crear Inquilino.");
+            CondominiumPNLBTNCreate.Click += TenantPNLBTNCreate_Click;
             // 
             // label8
             // 
@@ -301,6 +307,8 @@
             label8.Size = new Size(48, 21);
             label8.TabIndex = 1;
             label8.Text = "Crear";
+            toolTip1.SetToolTip(label8, "Crear Inquilino.");
+            label8.Click += TenantPNLBTNCreate_Click;
             // 
             // pictureBox3
             // 
@@ -311,6 +319,8 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
+            toolTip1.SetToolTip(pictureBox3, "Crear Inquilino.");
+            pictureBox3.Click += TenantPNLBTNCreate_Click;
             // 
             // CondominiumPNLBTNSearch
             // 
@@ -321,6 +331,7 @@
             CondominiumPNLBTNSearch.Name = "CondominiumPNLBTNSearch";
             CondominiumPNLBTNSearch.Size = new Size(109, 41);
             CondominiumPNLBTNSearch.TabIndex = 60;
+            toolTip1.SetToolTip(CondominiumPNLBTNSearch, "Buscar Inquilino.");
             // 
             // label9
             // 
@@ -332,6 +343,7 @@
             label9.Size = new Size(56, 21);
             label9.TabIndex = 1;
             label9.Text = "Buscar";
+            toolTip1.SetToolTip(label9, "Buscar Inquilino.");
             // 
             // pictureBox2
             // 
@@ -342,6 +354,7 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
+            toolTip1.SetToolTip(pictureBox2, "Buscar Inquilino.");
             // 
             // CondominiumPNLBTNUpdate
             // 
@@ -352,6 +365,7 @@
             CondominiumPNLBTNUpdate.Name = "CondominiumPNLBTNUpdate";
             CondominiumPNLBTNUpdate.Size = new Size(119, 41);
             CondominiumPNLBTNUpdate.TabIndex = 59;
+            toolTip1.SetToolTip(CondominiumPNLBTNUpdate, "Actualizar Inquilino.");
             // 
             // label10
             // 
@@ -363,6 +377,7 @@
             label10.Size = new Size(78, 21);
             label10.TabIndex = 1;
             label10.Text = "Actualizar";
+            toolTip1.SetToolTip(label10, "Actualizar Inquilino.");
             // 
             // pictureBox1
             // 
@@ -373,6 +388,7 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Actualizar Inquilino.");
             // 
             // CondominiumPNLBTNDelete
             // 
@@ -383,6 +399,7 @@
             CondominiumPNLBTNDelete.Name = "CondominiumPNLBTNDelete";
             CondominiumPNLBTNDelete.Size = new Size(109, 41);
             CondominiumPNLBTNDelete.TabIndex = 58;
+            toolTip1.SetToolTip(CondominiumPNLBTNDelete, "Borrar Inquilino.");
             // 
             // label13
             // 
@@ -394,6 +411,7 @@
             label13.Size = new Size(54, 21);
             label13.TabIndex = 1;
             label13.Text = "Borrar";
+            toolTip1.SetToolTip(label13, "Borrar Inquilino.");
             // 
             // pictureBox4
             // 
@@ -404,6 +422,7 @@
             pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox4.TabIndex = 0;
             pictureBox4.TabStop = false;
+            toolTip1.SetToolTip(pictureBox4, "Borrar Inquilino.");
             // 
             // label11
             // 
@@ -426,6 +445,7 @@
             // 
             // TenantCBHouses
             // 
+            TenantCBHouses.DropDownStyle = ComboBoxStyle.DropDownList;
             TenantCBHouses.FormattingEnabled = true;
             TenantCBHouses.Location = new Point(4, 4);
             TenantCBHouses.Name = "TenantCBHouses";
@@ -495,25 +515,25 @@
 
         private Label label2;
         private Panel panel1;
-        private TextBox textBox1;
+        private TextBox TenantTBID;
         private Label label1;
         private Panel panel2;
-        private TextBox textBox2;
+        private TextBox TenantTBName;
         private Label label3;
         private Label label4;
         private Panel panel4;
-        private TextBox textBox4;
+        private TextBox TenantTBLastname;
         private Panel panel3;
         private ComboBox TenantCBSexs;
         private Label label5;
         private Panel panel5;
-        private DateTimePicker dateTimePicker1;
+        private DateTimePicker TenantDTPBirthdate;
         private Label label6;
         private Panel panel6;
-        private MaskedTextBox maskedTextBox1;
+        private MaskedTextBox TenantMskTDocumentation;
         private Label label7;
         private Panel panel7;
-        private MaskedTextBox maskedTextBox2;
+        private MaskedTextBox TenantMskTPhoneNumber;
         private DataGridView TenantDTGData;
         private Panel CondominiumPNLBTNCreate;
         private Label label8;
@@ -530,5 +550,6 @@
         private Label label11;
         private Panel panel8;
         private ComboBox TenantCBHouses;
+        private ToolTip toolTip1;
     }
 }

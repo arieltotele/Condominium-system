@@ -1,15 +1,7 @@
 ﻿using Condominium_System.Business.Services;
 using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Condominium_System.Presentation.Views
 {
@@ -17,7 +9,7 @@ namespace Condominium_System.Presentation.Views
     {
 
         private readonly ITenantService _tenantService;
-        private readonly IHousingEntityService _housingEntityService;        
+        private readonly IHousingEntityService _housingEntityService;
 
         User currentUser;
         public TenantScreen(ITenantService tenantService, IHousingEntityService housingEntityService)
@@ -26,7 +18,7 @@ namespace Condominium_System.Presentation.Views
             _tenantService = tenantService;
             _housingEntityService = housingEntityService;
             currentUser = Session.CurrentUser;
-        
+
         }
 
         private async void TenantScreen_Load(object sender, EventArgs e)
@@ -128,7 +120,7 @@ namespace Condominium_System.Presentation.Views
             TenantDTGData.Columns.Add(new DataGridViewTextBoxColumn
             {
                 DataPropertyName = "PhoneNumber",
-                HeaderText = "Numero de telefono",
+                HeaderText = "Numero de teléfono",
                 Name = "PhoneNumberColumn",
                 Width = 160
             });
@@ -144,7 +136,7 @@ namespace Condominium_System.Presentation.Views
             TenantDTGData.Columns.Add(new DataGridViewTextBoxColumn
             {
                 DataPropertyName = "HousingId",
-                HeaderText = "Identificacion de la vivienda",
+                HeaderText = "Identificación de la vivienda",
                 Name = "HousingIdColumn",
                 Width = 155
             });
@@ -153,6 +145,97 @@ namespace Condominium_System.Presentation.Views
         private void SetDataGridStyle()
         {
             UIUtils.SetDataGridStyle(TenantDTGData);
+        }
+
+        private async void TenantPNLBTNCreate_Click(object sender, EventArgs e)
+        {
+            if (FormIsCorrect())
+            {
+                try
+                {
+                    var NewTenant = new Tenant()
+                    {
+                        FirstName = TenantTBName.Text,
+                        LastName = TenantTBLastname.Text,
+                        DocumentNumber = TenantMskTDocumentation.Text,
+                        PhoneNumber = TenantMskTPhoneNumber.Text,
+                        BirthDate = TenantDTPBirthdate.Value,
+                        Gender = TenantCBSexs.Text,
+                        EntryDate = DateTime.Now,
+                        HousingId = (int) TenantCBHouses.SelectedIndex,
+
+                        Author = currentUser.Username
+                    };
+
+                    await _tenantService.CreateAsync(NewTenant);
+
+                    MessageBox.Show("El inquilino ha sido creado con exito.");
+                    CleanForm();
+                    LoadDataToDataGrid();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error guardando la vivienda: {ex.Message}");
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Todos los campos deben ser completados correctamente.");
+            }
+        }
+
+        private void CleanForm()
+        {
+            TenantTBID.Clear();
+            TenantTBName.Clear();
+            TenantTBLastname.Clear();
+            TenantMskTDocumentation.Clear();
+            TenantMskTPhoneNumber.Clear();
+            TenantDTPBirthdate.Value = DateTime.Today;
+
+            if (TenantCBSexs.Items.Count > 0)
+                TenantCBSexs.SelectedIndex = 0;
+
+            if (TenantCBHouses.Items.Count > 0)
+                TenantCBHouses.SelectedIndex = 0;
+        }
+
+        public bool FormIsCorrect()
+        {
+            bool isSexValid = int.TryParse(TenantCBSexs.SelectedValue?.ToString(), out int sexId) && sexId != 0;
+            bool isHouseValid = int.TryParse(TenantCBHouses.SelectedValue?.ToString(), out int houseId) && houseId != 0;
+
+            return !(
+               string.IsNullOrEmpty(TenantTBName.Text) ||
+               string.IsNullOrEmpty(TenantTBLastname.Text) ||
+               string.IsNullOrEmpty(TenantDTPBirthdate.Text) ||
+               string.IsNullOrEmpty(TenantMskTDocumentation.Text) ||
+               string.IsNullOrEmpty(TenantMskTPhoneNumber.Text) ||
+               !isSexValid ||
+               !isHouseValid ||
+               TenantMskTPhoneNumber.Text.Trim().Length != 10 ||
+               TenantMskTDocumentation.Text.Trim().Length != 11           
+           );
+        }
+
+        public bool FormIsCorrectToUpdate()
+        {
+            bool isSexValid = int.TryParse(TenantCBSexs.SelectedValue?.ToString(), out int sexId) && sexId != 0;
+            bool isHouseValid = int.TryParse(TenantCBHouses.SelectedValue?.ToString(), out int houseId) && houseId != 0;
+
+            return !(
+               string.IsNullOrEmpty(TenantTBID.Text) ||
+               string.IsNullOrEmpty(TenantTBName.Text) ||
+               string.IsNullOrEmpty(TenantTBLastname.Text) ||
+               string.IsNullOrEmpty(TenantDTPBirthdate.Text) ||
+               string.IsNullOrEmpty(TenantMskTDocumentation.Text) ||
+               string.IsNullOrEmpty(TenantMskTPhoneNumber.Text) ||
+               !isSexValid ||
+               !isHouseValid ||
+               TenantMskTDocumentation.Text.Trim().Length != 10 ||
+               TenantMskTPhoneNumber.Text.Trim().Length != 11
+           );
         }
     }
 }
