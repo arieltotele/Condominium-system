@@ -28,15 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            LoginTxtBxPUsername = new TextBox();
+            IncidenceTBID = new TextBox();
             label1 = new Label();
-            dateTimePicker1 = new DateTimePicker();
+            IncidenceDTPDate = new DateTimePicker();
             label5 = new Label();
             panel5 = new Panel();
-            maskedTextBox1 = new MaskedTextBox();
+            IncidenceMskTBDocument = new MaskedTextBox();
             label6 = new Label();
             panel6 = new Panel();
-            textBox1 = new TextBox();
+            IncidenceTBDescription = new TextBox();
             label2 = new Label();
             panel1 = new Panel();
             label13 = new Label();
@@ -50,7 +50,7 @@
             CondominiumPNLBTNSearch = new Panel();
             label8 = new Label();
             pictureBox3 = new PictureBox();
-            dataGridView1 = new DataGridView();
+            IncidenceDTGData = new DataGridView();
             CondominiumPNLBTNCreate = new Panel();
             LoginPNLUsername = new Panel();
             panel5.SuspendLayout();
@@ -63,18 +63,18 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             CondominiumPNLBTNSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)IncidenceDTGData).BeginInit();
             CondominiumPNLBTNCreate.SuspendLayout();
             LoginPNLUsername.SuspendLayout();
             SuspendLayout();
             // 
-            // LoginTxtBxPUsername
+            // IncidenceTBID
             // 
-            LoginTxtBxPUsername.BorderStyle = BorderStyle.None;
-            LoginTxtBxPUsername.Location = new Point(4, 4);
-            LoginTxtBxPUsername.Name = "LoginTxtBxPUsername";
-            LoginTxtBxPUsername.Size = new Size(327, 16);
-            LoginTxtBxPUsername.TabIndex = 2;
+            IncidenceTBID.BorderStyle = BorderStyle.None;
+            IncidenceTBID.Location = new Point(4, 4);
+            IncidenceTBID.Name = "IncidenceTBID";
+            IncidenceTBID.Size = new Size(112, 16);
+            IncidenceTBID.TabIndex = 2;
             // 
             // label1
             // 
@@ -86,12 +86,12 @@
             label1.TabIndex = 93;
             label1.Text = "ID";
             // 
-            // dateTimePicker1
+            // IncidenceDTPDate
             // 
-            dateTimePicker1.Location = new Point(3, 3);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(226, 23);
-            dateTimePicker1.TabIndex = 0;
+            IncidenceDTPDate.Location = new Point(3, 3);
+            IncidenceDTPDate.Name = "IncidenceDTPDate";
+            IncidenceDTPDate.Size = new Size(226, 23);
+            IncidenceDTPDate.TabIndex = 0;
             // 
             // label5
             // 
@@ -106,19 +106,20 @@
             // panel5
             // 
             panel5.BackColor = SystemColors.Window;
-            panel5.Controls.Add(dateTimePicker1);
+            panel5.Controls.Add(IncidenceDTPDate);
             panel5.Location = new Point(189, 43);
             panel5.Name = "panel5";
             panel5.Size = new Size(232, 29);
             panel5.TabIndex = 96;
             // 
-            // maskedTextBox1
+            // IncidenceMskTBDocument
             // 
-            maskedTextBox1.Location = new Point(4, 5);
-            maskedTextBox1.Mask = "000-0000000-0";
-            maskedTextBox1.Name = "maskedTextBox1";
-            maskedTextBox1.Size = new Size(223, 23);
-            maskedTextBox1.TabIndex = 0;
+            IncidenceMskTBDocument.Location = new Point(4, 5);
+            IncidenceMskTBDocument.Mask = "000-0000000-0";
+            IncidenceMskTBDocument.Name = "IncidenceMskTBDocument";
+            IncidenceMskTBDocument.Size = new Size(223, 23);
+            IncidenceMskTBDocument.TabIndex = 0;
+            IncidenceMskTBDocument.TextMaskFormat = MaskFormat.ExcludePromptAndLiterals;
             // 
             // label6
             // 
@@ -133,20 +134,20 @@
             // panel6
             // 
             panel6.BackColor = SystemColors.Window;
-            panel6.Controls.Add(maskedTextBox1);
+            panel6.Controls.Add(IncidenceMskTBDocument);
             panel6.Location = new Point(471, 43);
             panel6.Name = "panel6";
             panel6.Size = new Size(230, 33);
             panel6.TabIndex = 98;
             // 
-            // textBox1
+            // IncidenceTBDescription
             // 
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Location = new Point(4, 4);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(232, 57);
-            textBox1.TabIndex = 2;
+            IncidenceTBDescription.BorderStyle = BorderStyle.None;
+            IncidenceTBDescription.Location = new Point(4, 4);
+            IncidenceTBDescription.Multiline = true;
+            IncidenceTBDescription.Name = "IncidenceTBDescription";
+            IncidenceTBDescription.Size = new Size(232, 61);
+            IncidenceTBDescription.TabIndex = 2;
             // 
             // label2
             // 
@@ -161,7 +162,7 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.Window;
-            panel1.Controls.Add(textBox1);
+            panel1.Controls.Add(IncidenceTBDescription);
             panel1.Location = new Point(757, 43);
             panel1.Name = "panel1";
             panel1.Size = new Size(239, 68);
@@ -281,13 +282,13 @@
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
             // 
-            // dataGridView1
+            // IncidenceDTGData
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(51, 271);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(945, 309);
-            dataGridView1.TabIndex = 105;
+            IncidenceDTGData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            IncidenceDTGData.Location = new Point(51, 271);
+            IncidenceDTGData.Name = "IncidenceDTGData";
+            IncidenceDTGData.Size = new Size(945, 309);
+            IncidenceDTGData.TabIndex = 105;
             // 
             // CondominiumPNLBTNCreate
             // 
@@ -302,7 +303,7 @@
             // LoginPNLUsername
             // 
             LoginPNLUsername.BackColor = SystemColors.Window;
-            LoginPNLUsername.Controls.Add(LoginTxtBxPUsername);
+            LoginPNLUsername.Controls.Add(IncidenceTBID);
             LoginPNLUsername.Location = new Point(21, 43);
             LoginPNLUsername.Name = "LoginPNLUsername";
             LoginPNLUsername.Size = new Size(119, 24);
@@ -323,7 +324,7 @@
             Controls.Add(CondominiumPNLBTNDelete);
             Controls.Add(CondominiumPNLBTNUpdate);
             Controls.Add(CondominiumPNLBTNSearch);
-            Controls.Add(dataGridView1);
+            Controls.Add(IncidenceDTGData);
             Controls.Add(CondominiumPNLBTNCreate);
             Controls.Add(LoginPNLUsername);
             Name = "IncidenceScreen";
@@ -344,7 +345,7 @@
             CondominiumPNLBTNSearch.ResumeLayout(false);
             CondominiumPNLBTNSearch.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)IncidenceDTGData).EndInit();
             CondominiumPNLBTNCreate.ResumeLayout(false);
             CondominiumPNLBTNCreate.PerformLayout();
             LoginPNLUsername.ResumeLayout(false);
@@ -355,15 +356,15 @@
 
         #endregion
 
-        private TextBox LoginTxtBxPUsername;
+        private TextBox IncidenceTBID;
         private Label label1;
-        private DateTimePicker dateTimePicker1;
+        private DateTimePicker IncidenceDTPDate;
         private Label label5;
         private Panel panel5;
-        private MaskedTextBox maskedTextBox1;
+        private MaskedTextBox IncidenceMskTBDocument;
         private Label label6;
         private Panel panel6;
-        private TextBox textBox1;
+        private TextBox IncidenceTBDescription;
         private Label label2;
         private Panel panel1;
         private Label label13;
@@ -377,7 +378,7 @@
         private Panel CondominiumPNLBTNSearch;
         private Label label8;
         private PictureBox pictureBox3;
-        private DataGridView dataGridView1;
+        private DataGridView IncidenceDTGData;
         private Panel CondominiumPNLBTNCreate;
         private Panel LoginPNLUsername;
     }

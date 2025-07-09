@@ -128,8 +128,6 @@ namespace Condominium_System.Data.Context
                 .OnDelete(DeleteBehavior.Cascade);
         }
 
-
-
         public void SeedInitialSuperUser()
         {
             if (!Users.Any(u => u.Type == "SuperUsuario"))
