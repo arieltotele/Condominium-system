@@ -28,14 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             IncidenceTBID = new TextBox();
             label1 = new Label();
             IncidenceDTPDate = new DateTimePicker();
             label5 = new Label();
             panel5 = new Panel();
-            IncidenceMskTBDocument = new MaskedTextBox();
             label6 = new Label();
             panel6 = new Panel();
+            IncidenceCBTenants = new ComboBox();
             IncidenceTBDescription = new TextBox();
             label2 = new Label();
             panel1 = new Panel();
@@ -53,6 +54,7 @@
             IncidenceDTGData = new DataGridView();
             CondominiumPNLBTNCreate = new Panel();
             LoginPNLUsername = new Panel();
+            toolTip1 = new ToolTip(components);
             panel5.SuspendLayout();
             panel6.SuspendLayout();
             panel1.SuspendLayout();
@@ -112,33 +114,33 @@
             panel5.Size = new Size(232, 29);
             panel5.TabIndex = 96;
             // 
-            // IncidenceMskTBDocument
-            // 
-            IncidenceMskTBDocument.Location = new Point(4, 5);
-            IncidenceMskTBDocument.Mask = "000-0000000-0";
-            IncidenceMskTBDocument.Name = "IncidenceMskTBDocument";
-            IncidenceMskTBDocument.Size = new Size(223, 23);
-            IncidenceMskTBDocument.TabIndex = 0;
-            IncidenceMskTBDocument.TextMaskFormat = MaskFormat.ExcludePromptAndLiterals;
-            // 
             // label6
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F);
             label6.Location = new Point(471, 10);
             label6.Name = "label6";
-            label6.Size = new Size(209, 21);
+            label6.Size = new Size(192, 21);
             label6.TabIndex = 97;
-            label6.Text = "Documentación del inquilino";
+            label6.Text = "Identificación del inquilino";
             // 
             // panel6
             // 
             panel6.BackColor = SystemColors.Window;
-            panel6.Controls.Add(IncidenceMskTBDocument);
+            panel6.Controls.Add(IncidenceCBTenants);
             panel6.Location = new Point(471, 43);
             panel6.Name = "panel6";
             panel6.Size = new Size(230, 33);
             panel6.TabIndex = 98;
+            // 
+            // IncidenceCBTenants
+            // 
+            IncidenceCBTenants.DropDownStyle = ComboBoxStyle.DropDownList;
+            IncidenceCBTenants.FormattingEnabled = true;
+            IncidenceCBTenants.Location = new Point(3, 6);
+            IncidenceCBTenants.Name = "IncidenceCBTenants";
+            IncidenceCBTenants.Size = new Size(224, 23);
+            IncidenceCBTenants.TabIndex = 0;
             // 
             // IncidenceTBDescription
             // 
@@ -178,6 +180,8 @@
             label13.Size = new Size(54, 21);
             label13.TabIndex = 1;
             label13.Text = "Borrar";
+            toolTip1.SetToolTip(label13, "Borrar incidencia.");
+            label13.Click += IncidencePNLBTNDelete_Click;
             // 
             // pictureBox4
             // 
@@ -188,6 +192,8 @@
             pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox4.TabIndex = 0;
             pictureBox4.TabStop = false;
+            toolTip1.SetToolTip(pictureBox4, "Borrar incidencia.");
+            pictureBox4.Click += IncidencePNLBTNDelete_Click;
             // 
             // CondominiumPNLBTNDelete
             // 
@@ -198,6 +204,8 @@
             CondominiumPNLBTNDelete.Name = "CondominiumPNLBTNDelete";
             CondominiumPNLBTNDelete.Size = new Size(109, 41);
             CondominiumPNLBTNDelete.TabIndex = 101;
+            toolTip1.SetToolTip(CondominiumPNLBTNDelete, "Borrar incidencia.");
+            CondominiumPNLBTNDelete.Click += IncidencePNLBTNDelete_Click;
             // 
             // label10
             // 
@@ -209,6 +217,8 @@
             label10.Size = new Size(78, 21);
             label10.TabIndex = 1;
             label10.Text = "Actualizar";
+            toolTip1.SetToolTip(label10, "Actualizar incidencia.");
+            label10.Click += IncidencePNLBTNUpdate_Click;
             // 
             // pictureBox1
             // 
@@ -219,6 +229,8 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Actualizar incidencia.");
+            pictureBox1.Click += IncidencePNLBTNUpdate_Click;
             // 
             // CondominiumPNLBTNUpdate
             // 
@@ -229,6 +241,8 @@
             CondominiumPNLBTNUpdate.Name = "CondominiumPNLBTNUpdate";
             CondominiumPNLBTNUpdate.Size = new Size(119, 41);
             CondominiumPNLBTNUpdate.TabIndex = 102;
+            toolTip1.SetToolTip(CondominiumPNLBTNUpdate, "Actualizar incidencia.");
+            CondominiumPNLBTNUpdate.Click += IncidencePNLBTNUpdate_Click;
             // 
             // label9
             // 
@@ -240,6 +254,8 @@
             label9.Size = new Size(56, 21);
             label9.TabIndex = 1;
             label9.Text = "Buscar";
+            toolTip1.SetToolTip(label9, "Buscar incidencia.");
+            label9.Click += IncidentPNLBTNSearch_Click;
             // 
             // pictureBox2
             // 
@@ -250,6 +266,8 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
+            toolTip1.SetToolTip(pictureBox2, "Buscar incidencia.");
+            pictureBox2.Click += IncidentPNLBTNSearch_Click;
             // 
             // CondominiumPNLBTNSearch
             // 
@@ -260,6 +278,8 @@
             CondominiumPNLBTNSearch.Name = "CondominiumPNLBTNSearch";
             CondominiumPNLBTNSearch.Size = new Size(109, 41);
             CondominiumPNLBTNSearch.TabIndex = 103;
+            toolTip1.SetToolTip(CondominiumPNLBTNSearch, "Buscar incidencia.");
+            CondominiumPNLBTNSearch.Click += IncidentPNLBTNSearch_Click;
             // 
             // label8
             // 
@@ -271,6 +291,8 @@
             label8.Size = new Size(48, 21);
             label8.TabIndex = 1;
             label8.Text = "Crear";
+            toolTip1.SetToolTip(label8, "Crear incidencia.");
+            label8.Click += IncidentPNLBTNCreate_Click;
             // 
             // pictureBox3
             // 
@@ -281,6 +303,8 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
+            toolTip1.SetToolTip(pictureBox3, "Crear incidencia.");
+            pictureBox3.Click += IncidentPNLBTNCreate_Click;
             // 
             // IncidenceDTGData
             // 
@@ -299,6 +323,8 @@
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 104;
+            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Crear incidencia.");
+            CondominiumPNLBTNCreate.Click += IncidentPNLBTNCreate_Click;
             // 
             // LoginPNLUsername
             // 
@@ -329,10 +355,11 @@
             Controls.Add(LoginPNLUsername);
             Name = "IncidenceScreen";
             Text = "IncidenceScreen";
+            toolTip1.SetToolTip(this, "Crear incidencia.");
             Load += IncidenceScreen_Load;
+            Click += IncidentPNLBTNSearch_Click;
             panel5.ResumeLayout(false);
             panel6.ResumeLayout(false);
-            panel6.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
@@ -361,7 +388,6 @@
         private DateTimePicker IncidenceDTPDate;
         private Label label5;
         private Panel panel5;
-        private MaskedTextBox IncidenceMskTBDocument;
         private Label label6;
         private Panel panel6;
         private TextBox IncidenceTBDescription;
@@ -381,5 +407,7 @@
         private DataGridView IncidenceDTGData;
         private Panel CondominiumPNLBTNCreate;
         private Panel LoginPNLUsername;
+        private ComboBox IncidenceCBTenants;
+        private ToolTip toolTip1;
     }
 }
