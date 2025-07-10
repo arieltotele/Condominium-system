@@ -22,6 +22,8 @@ namespace Condominium_System.Presentation.Views
         private readonly User? _currentUser;
         private readonly Housing? _currentHouse;
 
+        public bool IsEditMode { get; set; } = false;
+
         public AddFurnitureScreen(IServiceProvider serviceProvider, IFurnitureService furnitureService, IHousingFurnitureService housingFurnitureService)
         {
             InitializeComponent();
@@ -41,7 +43,14 @@ namespace Condominium_System.Presentation.Views
             await LoadFurnitureCheckboxesForHousing("Dormitorio", housingId, AddFurnitrureFlowLayoutBedroom);
             await LoadFurnitureCheckboxesForHousing("Cocina", housingId, AddFurnitrureFlowLayoutKitchen);
             await LoadFurnitureCheckboxesForHousing("Exterior", housingId, AddFurnitrureFlowLayoutOutside);
+
+            ChangeLabelIfInEditMode(IsEditMode);
         }
+
+
+
+        private void ChangeLabelIfInEditMode(bool isEditMode) =>
+            AddFurnitureScreenLBLTitle.Text = isEditMode ? "Modificar inmuebles de la vivienda" : AddFurnitureScreenLBLTitle.Text;
 
         private async Task LoadFurnitureCheckboxesForHousing(string furnitureType, int housingId, FlowLayoutPanel targetPanel)
         {
@@ -107,22 +116,46 @@ namespace Condominium_System.Presentation.Views
                 {
                     foreach (Control control in panel.Controls)
                     {
-                        if (control is CheckBox checkBox && checkBox.Checked)
+                        if (control is CheckBox checkBox)
                         {
                             if (int.TryParse(checkBox.Tag?.ToString(), out int furnitureId))
                             {
                                 var existing = await _housingFurnitureService.GetByIdsAsync(housingId, furnitureId);
-                                if (existing == null)
-                                {
-                                    var newRelation = new HousingFurniture
-                                    {
-                                        HousingId = housingId,
-                                        FurnitureId = furnitureId,
-                                        CreatedAt = DateTime.Now,
-                                        Author = _currentUser.Username
-                                    };
 
-                                    await _housingFurnitureService.CreateAsync(newRelation);
+                                if (checkBox.Checked)
+                                {
+                                    if (existing == null)
+                                    {
+                                        var newRelation = new HousingFurniture
+                                        {
+                                            HousingId = housingId,
+                                            FurnitureId = furnitureId,
+                                            CreatedAt = DateTime.Now,
+                                            Author = _currentUser.Username,
+                                            IsActive = true
+                                        };
+
+                                        await _housingFurnitureService.CreateAsync(newRelation);
+                                    }
+                                    else if (!existing.IsActive)
+                                    {
+                                        existing.IsActive = true;
+                                        existing.UpdatedAt = DateTime.Now;
+                                        existing.Author = _currentUser.Username;
+
+                                        await _housingFurnitureService.UpdateAsync(existing);
+                                    }
+                                }
+                                else
+                                {
+                                    if (existing != null && existing.IsActive)
+                                    {
+                                        existing.IsActive = false;
+                                        existing.UpdatedAt = DateTime.Now;
+                                        existing.Author = _currentUser.Username;
+
+                                        await _housingFurnitureService.UpdateAsync(existing);
+                                    }
                                 }
                             }
                         }
@@ -143,7 +176,7 @@ namespace Condominium_System.Presentation.Views
 
             this.Hide();
             var form = _serviceProvider.GetRequiredService<AddServiceScreen>();
-            form.Closed += (s, args) => this.Close();
+            form.IsEditMode = this.IsEditMode;
             form.Show();
         }
     }

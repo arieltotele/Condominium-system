@@ -1,5 +1,6 @@
 ﻿using Condominium_System.Data.Entities;
 using Condominium_System.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +25,9 @@ namespace Condominium_System.Business.Services
 
         public async Task<HousingFurniture> GetByIdsAsync(int housingId, int furnitureId)
         {
-            return (await _repository.FindAsync(hf => hf.HousingId == housingId && hf.FurnitureId == furnitureId))
-                   .FirstOrDefault();
+            return await _repository
+                .FindAsync(hf => hf.HousingId == housingId && hf.FurnitureId == furnitureId, asNoTracking: true)
+                .ContinueWith(t => t.Result.FirstOrDefault());
         }
 
         public async Task<HousingFurniture> CreateAsync(HousingFurniture entity)
@@ -43,6 +45,22 @@ namespace Condominium_System.Business.Services
                 _repository.Remove(entity);
                 await _repository.SaveChangesAsync();
             }
+        }
+
+        public async Task UpdateAsync(HousingFurniture entity)
+        {
+            var trackedEntity = _repository.Context.ChangeTracker
+                .Entries<HousingFurniture>()
+                .FirstOrDefault(e => e.Entity.HousingId == entity.HousingId && e.Entity.FurnitureId == entity.FurnitureId);
+
+
+            if (trackedEntity != null)
+            {
+                trackedEntity.State = EntityState.Detached;
+            }
+
+            _repository.Update(entity);
+            await _repository.SaveChangesAsync();
         }
     }
 }

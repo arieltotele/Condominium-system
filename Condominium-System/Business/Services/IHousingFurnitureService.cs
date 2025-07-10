@@ -12,6 +12,7 @@ namespace Condominium_System.Business.Services
         Task<IEnumerable<HousingFurniture>> GetAllAsync();
         Task<HousingFurniture> GetByIdsAsync(int housingId, int furnitureId);
         Task<HousingFurniture> CreateAsync(HousingFurniture entity);
+        Task UpdateAsync(HousingFurniture entity);
         Task DeleteAsync(int housingId, int furnitureId);
     }
 }

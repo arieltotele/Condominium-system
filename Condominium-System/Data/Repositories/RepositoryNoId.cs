@@ -21,6 +21,8 @@ namespace Condominium_System.Data.Repositories
             _entities = context.Set<T>();
         }
 
+        public AppDbContext Context => _context;
+
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _entities
@@ -28,24 +30,30 @@ namespace Condominium_System.Data.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
+        public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate, bool asNoTracking = false)
         {
+            var query = _entities.AsQueryable();
+
             if (typeof(AuditableModel).IsAssignableFrom(typeof(T)))
             {
                 var parameter = Expression.Parameter(typeof(T), "x");
                 var isActiveProperty = Expression.Property(parameter, nameof(AuditableModel.IsActive));
                 var isActiveTrue = Expression.Equal(isActiveProperty, Expression.Constant(true));
-
                 var combined = Expression.Lambda<Func<T, bool>>(
                     Expression.AndAlso(isActiveTrue, Expression.Invoke(predicate, parameter)), parameter
                 );
 
-                return await _entities.Where(combined).ToListAsync();
+                query = query.Where(combined);
             }
             else
             {
-                return await _entities.Where(predicate).ToListAsync();
+                query = query.Where(predicate);
             }
+
+            if (asNoTracking)
+                query = query.AsNoTracking();
+
+            return await query.ToListAsync();
         }
 
         public async Task AddAsync(T entity)
@@ -55,6 +63,35 @@ namespace Condominium_System.Data.Repositories
 
         public void Update(T entity)
         {
+            var entityType = _context.Model.FindEntityType(typeof(T));
+            var keyProperties = entityType.FindPrimaryKey().Properties;
+
+            var entries = _context.ChangeTracker.Entries<T>()
+                .Where(e => e.State != EntityState.Detached);
+
+            foreach (var entry in entries)
+            {
+                bool isSameKey = true;
+
+                foreach (var keyProp in keyProperties)
+                {
+                    var entityKeyValue = keyProp.PropertyInfo.GetValue(entity);
+                    var trackedKeyValue = keyProp.PropertyInfo.GetValue(entry.Entity);
+
+                    if (!Equals(entityKeyValue, trackedKeyValue))
+                    {
+                        isSameKey = false;
+                        break;
+                    }
+                }
+
+                if (isSameKey)
+                {
+                    entry.State = EntityState.Detached;
+                    break;
+                }
+            }
+
             _entities.Update(entity);
         }
 

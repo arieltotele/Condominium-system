@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            HomeScreenLBLTitle = new Label();
+            AddFurnitureScreenLBLTitle = new Label();
             panel3 = new Panel();
             label1 = new Label();
             label2 = new Label();
@@ -55,20 +55,20 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
-            // HomeScreenLBLTitle
+            // AddFurnitureScreenLBLTitle
             // 
-            HomeScreenLBLTitle.AutoSize = true;
-            HomeScreenLBLTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            HomeScreenLBLTitle.Location = new Point(21, 15);
-            HomeScreenLBLTitle.Name = "HomeScreenLBLTitle";
-            HomeScreenLBLTitle.Size = new Size(366, 32);
-            HomeScreenLBLTitle.TabIndex = 0;
-            HomeScreenLBLTitle.Text = "Añadir inmuebles a la vivienda";
+            AddFurnitureScreenLBLTitle.AutoSize = true;
+            AddFurnitureScreenLBLTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            AddFurnitureScreenLBLTitle.Location = new Point(21, 15);
+            AddFurnitureScreenLBLTitle.Name = "AddFurnitureScreenLBLTitle";
+            AddFurnitureScreenLBLTitle.Size = new Size(366, 32);
+            AddFurnitureScreenLBLTitle.TabIndex = 0;
+            AddFurnitureScreenLBLTitle.Text = "Añadir inmuebles a la vivienda";
             // 
             // panel3
             // 
             panel3.BackColor = Color.FromArgb(217, 217, 217);
-            panel3.Controls.Add(HomeScreenLBLTitle);
+            panel3.Controls.Add(AddFurnitureScreenLBLTitle);
             panel3.Location = new Point(1, 1);
             panel3.Name = "panel3";
             panel3.Size = new Size(1329, 59);
@@ -270,7 +270,7 @@
 
         #endregion
 
-        private Label HomeScreenLBLTitle;
+        private Label AddFurnitureScreenLBLTitle;
         private Panel panel3;
         private Label label1;
         private CheckBox checkBox1;

@@ -30,7 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             panel1 = new Panel();
-            HomeScreenLBLTitle = new Label();
+            AddServiceLBLTitle = new Label();
             label2 = new Label();
             label1 = new Label();
             label3 = new Label();
@@ -54,21 +54,21 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(217, 217, 217);
-            panel1.Controls.Add(HomeScreenLBLTitle);
+            panel1.Controls.Add(AddServiceLBLTitle);
             panel1.Location = new Point(1, 2);
             panel1.Name = "panel1";
             panel1.Size = new Size(782, 64);
             panel1.TabIndex = 0;
             // 
-            // HomeScreenLBLTitle
+            // AddServiceLBLTitle
             // 
-            HomeScreenLBLTitle.AutoSize = true;
-            HomeScreenLBLTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            HomeScreenLBLTitle.Location = new Point(11, 16);
-            HomeScreenLBLTitle.Name = "HomeScreenLBLTitle";
-            HomeScreenLBLTitle.Size = new Size(348, 32);
-            HomeScreenLBLTitle.TabIndex = 1;
-            HomeScreenLBLTitle.Text = "Añadir servicios a la vivienda";
+            AddServiceLBLTitle.AutoSize = true;
+            AddServiceLBLTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            AddServiceLBLTitle.Location = new Point(11, 16);
+            AddServiceLBLTitle.Name = "AddServiceLBLTitle";
+            AddServiceLBLTitle.Size = new Size(348, 32);
+            AddServiceLBLTitle.TabIndex = 1;
+            AddServiceLBLTitle.Text = "Añadir servicios a la vivienda";
             // 
             // label2
             // 
@@ -226,7 +226,7 @@
         #endregion
 
         private Panel panel1;
-        private Label HomeScreenLBLTitle;
+        private Label AddServiceLBLTitle;
         private Label label2;
         private Label label1;
         private Label label3;

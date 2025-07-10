@@ -248,6 +248,12 @@ namespace Condominium_System.Presentation.Views
                         MessageBox.Show("La vivienda ha sido actualizada con exito.");
                         LoadDataToDataGrid();
                         CleanFormHousing();
+
+                        Session.CurrentHouse = HousingToUpdate;
+
+                        var addFurnitureToHouseScreen = _serviceProvider.GetRequiredService<AddFurnitureScreen>();
+                        addFurnitureToHouseScreen.IsEditMode = true;
+                        addFurnitureToHouseScreen.Show();
                     }
                     else
                     {

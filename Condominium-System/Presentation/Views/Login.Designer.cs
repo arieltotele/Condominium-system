@@ -70,6 +70,7 @@
             LoginTxtBxPUsername.Name = "LoginTxtBxPUsername";
             LoginTxtBxPUsername.Size = new Size(360, 16);
             LoginTxtBxPUsername.TabIndex = 2;
+            LoginTxtBxPUsername.Text = "admin";
             // 
             // LoginPNLUsername
             // 
@@ -120,6 +121,7 @@
             LoginTxtBxPassword.PasswordChar = '*';
             LoginTxtBxPassword.Size = new Size(360, 16);
             LoginTxtBxPassword.TabIndex = 2;
+            LoginTxtBxPassword.Text = "admin123";
             // 
             // Login
             // 

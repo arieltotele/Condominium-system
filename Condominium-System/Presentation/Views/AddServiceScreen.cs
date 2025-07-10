@@ -21,6 +21,8 @@ namespace Condominium_System.Presentation.Views
         private readonly User? _currentUser;
         private readonly Housing? _currentHouse;
 
+        public bool IsEditMode { get; set; } = false;
+
         public AddServiceScreen(IServiceProvider serviceProvider, IHousingServiceRelationService housingServiceService, IServiceService serviceService)
         {
             InitializeComponent();
@@ -39,7 +41,12 @@ namespace Condominium_System.Presentation.Views
             await LoadServiceCheckboxesForHousing("Esenciales", housingId, AddServiceFlowLayoutEssentials);
             await LoadServiceCheckboxesForHousing("Comunitarios", housingId, AddServiceFlowLayoutCommunity);
             await LoadServiceCheckboxesForHousing("Convivencia", housingId, AddServiceFlowLayoutConvivence);
+
+            ChangeLabelIfInEditMode(IsEditMode);
         }
+
+        private void ChangeLabelIfInEditMode(bool isEditMode) =>
+            AddServiceLBLTitle.Text = isEditMode ? "Modificar servicios de la vivienda" : AddServiceLBLTitle.Text;
 
         private async Task LoadServiceCheckboxesForHousing(string serviceType, int housingId, FlowLayoutPanel targetPanel)
         {
@@ -93,16 +100,25 @@ namespace Condominium_System.Presentation.Views
         {
             try
             {
+                var allRelations = await _housingServiceService.GetAllAsync();
+                var existingServiceIds = allRelations
+                    .Where(hs => hs.HousingId == housingId)
+                    .Select(hs => hs.ServiceId)
+                    .ToHashSet();
+
+                var selectedServiceIds = new HashSet<int>();
+
                 foreach (var panel in panels)
                 {
                     foreach (Control control in panel.Controls)
                     {
-                        if (control is CheckBox checkBox && checkBox.Checked)
+                        if (control is CheckBox checkBox && int.TryParse(checkBox.Tag?.ToString(), out int serviceId))
                         {
-                            if (int.TryParse(checkBox.Tag?.ToString(), out int serviceId))
+                            if (checkBox.Checked)
                             {
-                                var existing = await _housingServiceService.GetByIdsAsync(housingId, serviceId);
-                                if (existing == null)
+                                selectedServiceIds.Add(serviceId);
+
+                                if (!existingServiceIds.Contains(serviceId))
                                 {
                                     var newRelation = new HousingService
                                     {
@@ -116,6 +132,15 @@ namespace Condominium_System.Presentation.Views
                                 }
                             }
                         }
+                    }
+                }
+
+                if (IsEditMode)
+                {
+                    var toDelete = existingServiceIds.Except(selectedServiceIds);
+                    foreach (var serviceId in toDelete)
+                    {
+                        await _housingServiceService.DeleteAsync(housingId, serviceId);
                     }
                 }
             }
