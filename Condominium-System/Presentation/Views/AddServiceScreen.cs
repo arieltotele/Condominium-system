@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Condominium_System.Business.Services;
+using Condominium_System.Data.Entities;
+using Condominium_System.Helpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +15,135 @@ namespace Condominium_System.Presentation.Views
 {
     public partial class AddServiceScreen : Form
     {
-        public AddServiceScreen()
+        private readonly IServiceProvider _serviceProvider;
+        private readonly IHousingServiceRelationService _housingServiceService;
+        private readonly IServiceService _serviceService;
+        private readonly User? _currentUser;
+        private readonly Housing? _currentHouse;
+
+        public AddServiceScreen(IServiceProvider serviceProvider, IHousingServiceRelationService housingServiceService, IServiceService serviceService)
         {
             InitializeComponent();
+
+            _serviceProvider = serviceProvider;
+            _housingServiceService = housingServiceService;
+            _serviceService = serviceService;
+            _currentUser = Session.CurrentUser;
+            _currentHouse = Session.CurrentHouse;
+        }
+
+        private async void AddServiceScreen_Load(object sender, EventArgs e)
+        {
+            int housingId = _currentHouse.Id;
+
+            await LoadServiceCheckboxesForHousing("Esenciales", housingId, AddServiceFlowLayoutEssentials);
+            await LoadServiceCheckboxesForHousing("Comunitarios", housingId, AddServiceFlowLayoutCommunity);
+            await LoadServiceCheckboxesForHousing("Convivencia", housingId, AddServiceFlowLayoutConvivence);
+        }
+
+        private async Task LoadServiceCheckboxesForHousing(string serviceType, int housingId, FlowLayoutPanel targetPanel)
+        {
+            try
+            {
+                targetPanel.Controls.Clear();
+
+                var services = await _serviceService.GetAllAsync();
+                var filteredServices = services.Where(s => s.Type == serviceType).ToList();
+
+                var allRelations = await _housingServiceService.GetAllAsync();
+                var assignedServiceIds = allRelations
+                    .Where(hs => hs.HousingId == housingId)
+                    .Select(hs => hs.ServiceId)
+                    .ToHashSet();
+
+                foreach (var service in filteredServices)
+                {
+                    var checkBox = new CheckBox
+                    {
+                        Text = service.Name,
+                        Tag = service.Id,
+                        Checked = assignedServiceIds.Contains(service.Id),
+                        AutoSize = true,
+                        Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                        Margin = new Padding(5, 5, 5, 5)
+                    };
+
+                    targetPanel.Controls.Add(checkBox);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error cargando servicios de tipo {serviceType}: {ex.Message}");
+            }
+        }
+
+        private void UncheckAllServiceCheckboxes(params FlowLayoutPanel[] panels)
+        {
+            foreach (var panel in panels)
+            {
+                foreach (Control control in panel.Controls)
+                {
+                    if (control is CheckBox checkBox)
+                        checkBox.Checked = false;
+                }
+            }
+        }
+
+        private async Task SaveSelectedServicesForHousingAsync(int housingId, params FlowLayoutPanel[] panels)
+        {
+            try
+            {
+                foreach (var panel in panels)
+                {
+                    foreach (Control control in panel.Controls)
+                    {
+                        if (control is CheckBox checkBox && checkBox.Checked)
+                        {
+                            if (int.TryParse(checkBox.Tag?.ToString(), out int serviceId))
+                            {
+                                var existing = await _housingServiceService.GetByIdsAsync(housingId, serviceId);
+                                if (existing == null)
+                                {
+                                    var newRelation = new HousingService
+                                    {
+                                        HousingId = housingId,
+                                        ServiceId = serviceId,
+                                        CreatedAt = DateTime.Now,
+                                        Author = _currentUser.Username
+                                    };
+
+                                    await _housingServiceService.CreateAsync(newRelation);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al guardar los servicios seleccionados: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void AddServicePNLBTNNext_Click(object sender, EventArgs e)
+        {
+            await SaveSelectedServicesForHousingAsync(
+                _currentHouse.Id,
+                AddServiceFlowLayoutEssentials,
+                AddServiceFlowLayoutCommunity,
+                AddServiceFlowLayoutConvivence
+            );
+
+            this.Hide();;
+        }
+
+        private void AddServicePNLBTNClean_Click(object sender, EventArgs e)
+        {
+            UncheckAllServiceCheckboxes(
+                AddServiceFlowLayoutEssentials,
+                AddServiceFlowLayoutCommunity,
+                AddServiceFlowLayoutConvivence
+            );
         }
     }
 }

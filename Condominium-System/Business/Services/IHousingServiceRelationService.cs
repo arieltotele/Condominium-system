@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Condominium_System.Business.Services
 {
-    internal interface IHousingServiceRelationService
+    public interface IHousingServiceRelationService
     {
         Task<IEnumerable<HousingService>> GetAllAsync();
         Task<HousingService> GetByIdsAsync(int housingId, int serviceId);

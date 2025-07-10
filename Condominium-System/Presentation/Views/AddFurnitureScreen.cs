@@ -1,6 +1,7 @@
 ﻿using Condominium_System.Business.Services;
 using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,14 +16,16 @@ namespace Condominium_System.Presentation.Views
 {
     public partial class AddFurnitureScreen : Form
     {
+        private readonly IServiceProvider _serviceProvider;
         private readonly IHousingFurnitureService _housingFurnitureService;
         private readonly IFurnitureService _furnitureService;
-        private User? _currentUser;
-        private Housing? _currentHouse;
+        private readonly User? _currentUser;
+        private readonly Housing? _currentHouse;
 
-        public AddFurnitureScreen(IFurnitureService furnitureService, IHousingFurnitureService housingFurnitureService)
+        public AddFurnitureScreen(IServiceProvider serviceProvider, IFurnitureService furnitureService, IHousingFurnitureService housingFurnitureService)
         {
             InitializeComponent();
+            _serviceProvider = serviceProvider;
             _furnitureService = furnitureService;
             _housingFurnitureService = housingFurnitureService;
             _currentUser = Session.CurrentUser;
@@ -44,7 +47,6 @@ namespace Condominium_System.Presentation.Views
         {
             try
             {
-
                 targetPanel.Controls.Clear();
 
                 var furnitures = await _furnitureService.GetAllFurnituresAsync();
@@ -79,7 +81,7 @@ namespace Condominium_System.Presentation.Views
 
         private void AddFurniturePNLBTNClean_Click(object sender, EventArgs e)
         {
-            UncheckAllFurnitureCheckboxes(AddFurnitrureFlowLayoutLivingRoom, AddFurnitrureFlowLayoutDinningRoom, 
+            UncheckAllFurnitureCheckboxes(AddFurnitrureFlowLayoutLivingRoom, AddFurnitrureFlowLayoutDinningRoom,
                 AddFurnitrureFlowLayoutBedroom, AddFurnitrureFlowLayoutKitchen, AddFurnitrureFlowLayoutOutside);
         }
 
@@ -95,6 +97,54 @@ namespace Condominium_System.Presentation.Views
                     }
                 }
             }
+        }
+
+        private async Task SaveSelectedFurnitureForHousingAsync(int housingId, params FlowLayoutPanel[] panels)
+        {
+            try
+            {
+                foreach (var panel in panels)
+                {
+                    foreach (Control control in panel.Controls)
+                    {
+                        if (control is CheckBox checkBox && checkBox.Checked)
+                        {
+                            if (int.TryParse(checkBox.Tag?.ToString(), out int furnitureId))
+                            {
+                                var existing = await _housingFurnitureService.GetByIdsAsync(housingId, furnitureId);
+                                if (existing == null)
+                                {
+                                    var newRelation = new HousingFurniture
+                                    {
+                                        HousingId = housingId,
+                                        FurnitureId = furnitureId,
+                                        CreatedAt = DateTime.Now,
+                                        Author = _currentUser.Username
+                                    };
+
+                                    await _housingFurnitureService.CreateAsync(newRelation);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al guardar el mobiliario seleccionado: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void AddFurniturePNLBTNNext_Click(object sender, EventArgs e)
+        {
+            await SaveSelectedFurnitureForHousingAsync(_currentHouse.Id, AddFurnitrureFlowLayoutLivingRoom, 
+                AddFurnitrureFlowLayoutDinningRoom, AddFurnitrureFlowLayoutBedroom, AddFurnitrureFlowLayoutKitchen, 
+                AddFurnitrureFlowLayoutOutside);
+
+            this.Hide();
+            var form = _serviceProvider.GetRequiredService<AddServiceScreen>();
+            form.Closed += (s, args) => this.Close();
+            form.Show();
         }
     }
 }

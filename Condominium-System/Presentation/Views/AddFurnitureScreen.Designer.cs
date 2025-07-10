@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             HomeScreenLBLTitle = new Label();
             panel3 = new Panel();
             label1 = new Label();
@@ -46,6 +47,7 @@
             AddFurnitrureFlowLayoutBedroom = new FlowLayoutPanel();
             AddFurnitrureFlowLayoutKitchen = new FlowLayoutPanel();
             AddFurnitrureFlowLayoutOutside = new FlowLayoutPanel();
+            toolTip1 = new ToolTip(components);
             panel3.SuspendLayout();
             SignUpPNLBTNClean.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -131,6 +133,7 @@
             SignUpPNLBTNClean.Name = "SignUpPNLBTNClean";
             SignUpPNLBTNClean.Size = new Size(109, 41);
             SignUpPNLBTNClean.TabIndex = 31;
+            toolTip1.SetToolTip(SignUpPNLBTNClean, "Limpiar formulario.");
             SignUpPNLBTNClean.Click += AddFurniturePNLBTNClean_Click;
             // 
             // label12
@@ -143,6 +146,7 @@
             label12.Size = new Size(63, 21);
             label12.TabIndex = 1;
             label12.Text = "Limpiar";
+            toolTip1.SetToolTip(label12, "Limpiar formulario.");
             label12.Click += AddFurniturePNLBTNClean_Click;
             // 
             // pictureBox3
@@ -154,6 +158,7 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
+            toolTip1.SetToolTip(pictureBox3, "Limpiar formulario.");
             pictureBox3.Click += AddFurniturePNLBTNClean_Click;
             // 
             // panel1
@@ -165,6 +170,8 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(109, 41);
             panel1.TabIndex = 32;
+            toolTip1.SetToolTip(panel1, "Ir a la siguiente pantalla.");
+            panel1.Click += AddFurniturePNLBTNNext_Click;
             // 
             // label6
             // 
@@ -176,6 +183,8 @@
             label6.Size = new Size(75, 21);
             label6.TabIndex = 1;
             label6.Text = "Siguiente";
+            toolTip1.SetToolTip(label6, "Ir a la siguiente pantalla.");
+            label6.Click += AddFurniturePNLBTNNext_Click;
             // 
             // pictureBox1
             // 
@@ -186,6 +195,8 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Ir a la siguiente pantalla.");
+            pictureBox1.Click += AddFurniturePNLBTNNext_Click;
             // 
             // AddFurnitrureFlowLayoutLivingRoom
             // 
@@ -242,7 +253,9 @@
             Controls.Add(AddFurnitrureFlowLayoutOutside);
             Name = "AddFurnitureScreen";
             Text = "AddFurnitureScreen";
+            toolTip1.SetToolTip(this, "Ir a la siguiente pantalla.");
             Load += AddFurnitureScreen_Load;
+            Click += AddFurniturePNLBTNNext_Click;
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
             SignUpPNLBTNClean.ResumeLayout(false);
@@ -279,5 +292,6 @@
         private FlowLayoutPanel AddFurnitrureFlowLayoutBedroom;
         private FlowLayoutPanel AddFurnitrureFlowLayoutKitchen;
         private FlowLayoutPanel AddFurnitrureFlowLayoutOutside;
+        private ToolTip toolTip1;
     }
 }

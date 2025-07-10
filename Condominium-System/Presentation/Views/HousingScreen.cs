@@ -148,7 +148,6 @@ namespace Condominium_System.Presentation.Views
                     LoadDataToDataGrid();
 
                     var addfurnitureToHouseScreen = _serviceProvider.GetRequiredService<AddFurnitureScreen>();
-
                     addfurnitureToHouseScreen.Show();
                 }
                 catch (Exception ex)

@@ -28,19 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             panel1 = new Panel();
             HomeScreenLBLTitle = new Label();
-            checkBox6 = new CheckBox();
-            checkBox7 = new CheckBox();
-            checkBox8 = new CheckBox();
             label2 = new Label();
-            checkBox1 = new CheckBox();
-            checkBox2 = new CheckBox();
-            checkBox3 = new CheckBox();
             label1 = new Label();
-            checkBox4 = new CheckBox();
-            checkBox5 = new CheckBox();
-            checkBox9 = new CheckBox();
             label3 = new Label();
             panel2 = new Panel();
             label6 = new Label();
@@ -48,6 +40,10 @@
             SignUpPNLBTNClean = new Panel();
             label12 = new Label();
             pictureBox3 = new PictureBox();
+            AddServiceFlowLayoutEssentials = new FlowLayoutPanel();
+            AddServiceFlowLayoutCommunity = new FlowLayoutPanel();
+            AddServiceFlowLayoutConvivence = new FlowLayoutPanel();
+            toolTip1 = new ToolTip(components);
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -61,7 +57,7 @@
             panel1.Controls.Add(HomeScreenLBLTitle);
             panel1.Location = new Point(1, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(771, 64);
+            panel1.Size = new Size(782, 64);
             panel1.TabIndex = 0;
             // 
             // HomeScreenLBLTitle
@@ -74,39 +70,6 @@
             HomeScreenLBLTitle.TabIndex = 1;
             HomeScreenLBLTitle.Text = "Añadir servicios a la vivienda";
             // 
-            // checkBox6
-            // 
-            checkBox6.AutoSize = true;
-            checkBox6.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            checkBox6.Location = new Point(22, 212);
-            checkBox6.Name = "checkBox6";
-            checkBox6.Size = new Size(146, 25);
-            checkBox6.TabIndex = 17;
-            checkBox6.Text = "Administracion";
-            checkBox6.UseVisualStyleBackColor = true;
-            // 
-            // checkBox7
-            // 
-            checkBox7.AutoSize = true;
-            checkBox7.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            checkBox7.Location = new Point(22, 165);
-            checkBox7.Name = "checkBox7";
-            checkBox7.Size = new Size(148, 25);
-            checkBox7.TabIndex = 16;
-            checkBox7.Text = "Mantenimiento";
-            checkBox7.UseVisualStyleBackColor = true;
-            // 
-            // checkBox8
-            // 
-            checkBox8.AutoSize = true;
-            checkBox8.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            checkBox8.Location = new Point(22, 120);
-            checkBox8.Name = "checkBox8";
-            checkBox8.Size = new Size(107, 25);
-            checkBox8.TabIndex = 15;
-            checkBox8.Text = "Seguridad";
-            checkBox8.UseVisualStyleBackColor = true;
-            // 
             // label2
             // 
             label2.AutoSize = true;
@@ -117,81 +80,15 @@
             label2.TabIndex = 14;
             label2.Text = "Esenciales:";
             // 
-            // checkBox1
-            // 
-            checkBox1.AutoSize = true;
-            checkBox1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            checkBox1.Location = new Point(240, 212);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(205, 25);
-            checkBox1.TabIndex = 21;
-            checkBox1.Text = "Actividades recreativas";
-            checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox2
-            // 
-            checkBox2.AutoSize = true;
-            checkBox2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            checkBox2.Location = new Point(240, 165);
-            checkBox2.Name = "checkBox2";
-            checkBox2.Size = new Size(158, 25);
-            checkBox2.TabIndex = 20;
-            checkBox2.Text = "Espacios sociales";
-            checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            checkBox3.AutoSize = true;
-            checkBox3.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            checkBox3.Location = new Point(240, 120);
-            checkBox3.Name = "checkBox3";
-            checkBox3.Size = new Size(158, 25);
-            checkBox3.TabIndex = 19;
-            checkBox3.Text = "Areas recreativas";
-            checkBox3.UseVisualStyleBackColor = true;
-            // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(230, 79);
+            label1.Location = new Point(246, 79);
             label1.Name = "label1";
             label1.Size = new Size(125, 25);
             label1.TabIndex = 18;
             label1.Text = "Comunitarios";
-            // 
-            // checkBox4
-            // 
-            checkBox4.AutoSize = true;
-            checkBox4.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            checkBox4.Location = new Point(519, 212);
-            checkBox4.Name = "checkBox4";
-            checkBox4.Size = new Size(247, 25);
-            checkBox4.TabIndex = 25;
-            checkBox4.Text = "Estacionamiento para visitas";
-            checkBox4.UseVisualStyleBackColor = true;
-            // 
-            // checkBox5
-            // 
-            checkBox5.AutoSize = true;
-            checkBox5.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            checkBox5.Location = new Point(519, 165);
-            checkBox5.Name = "checkBox5";
-            checkBox5.Size = new Size(205, 25);
-            checkBox5.TabIndex = 24;
-            checkBox5.Text = "Recepcion de paquetes";
-            checkBox5.UseVisualStyleBackColor = true;
-            // 
-            // checkBox9
-            // 
-            checkBox9.AutoSize = true;
-            checkBox9.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            checkBox9.Location = new Point(519, 120);
-            checkBox9.Name = "checkBox9";
-            checkBox9.Size = new Size(113, 25);
-            checkBox9.TabIndex = 23;
-            checkBox9.Text = "Lavanderia";
-            checkBox9.UseVisualStyleBackColor = true;
             // 
             // label3
             // 
@@ -208,10 +105,12 @@
             panel2.BackColor = Color.MidnightBlue;
             panel2.Controls.Add(label6);
             panel2.Controls.Add(pictureBox1);
-            panel2.Location = new Point(437, 309);
+            panel2.Location = new Point(473, 439);
             panel2.Name = "panel2";
             panel2.Size = new Size(109, 41);
             panel2.TabIndex = 34;
+            toolTip1.SetToolTip(panel2, "Finalizar proceso.");
+            panel2.Click += AddServicePNLBTNNext_Click;
             // 
             // label6
             // 
@@ -223,6 +122,8 @@
             label6.Size = new Size(68, 21);
             label6.TabIndex = 1;
             label6.Text = "Finalizar";
+            toolTip1.SetToolTip(label6, "Finalizar proceso.");
+            label6.Click += AddServicePNLBTNNext_Click;
             // 
             // pictureBox1
             // 
@@ -233,16 +134,19 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Finalizar proceso.");
+            pictureBox1.Click += AddServicePNLBTNNext_Click;
             // 
             // SignUpPNLBTNClean
             // 
             SignUpPNLBTNClean.BackColor = Color.MidnightBlue;
             SignUpPNLBTNClean.Controls.Add(label12);
             SignUpPNLBTNClean.Controls.Add(pictureBox3);
-            SignUpPNLBTNClean.Location = new Point(152, 309);
+            SignUpPNLBTNClean.Location = new Point(188, 439);
             SignUpPNLBTNClean.Name = "SignUpPNLBTNClean";
             SignUpPNLBTNClean.Size = new Size(109, 41);
             SignUpPNLBTNClean.TabIndex = 33;
+            toolTip1.SetToolTip(SignUpPNLBTNClean, "Limpiar formulario.");
             // 
             // label12
             // 
@@ -254,6 +158,7 @@
             label12.Size = new Size(63, 21);
             label12.TabIndex = 1;
             label12.Text = "Limpiar";
+            toolTip1.SetToolTip(label12, "Limpiar formulario.");
             // 
             // pictureBox3
             // 
@@ -264,29 +169,48 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
+            toolTip1.SetToolTip(pictureBox3, "Limpiar formulario.");
+            // 
+            // AddServiceFlowLayoutEssentials
+            // 
+            AddServiceFlowLayoutEssentials.Location = new Point(12, 107);
+            AddServiceFlowLayoutEssentials.Name = "AddServiceFlowLayoutEssentials";
+            AddServiceFlowLayoutEssentials.Size = new Size(209, 285);
+            AddServiceFlowLayoutEssentials.TabIndex = 0;
+            // 
+            // AddServiceFlowLayoutCommunity
+            // 
+            AddServiceFlowLayoutCommunity.Location = new Point(246, 107);
+            AddServiceFlowLayoutCommunity.Name = "AddServiceFlowLayoutCommunity";
+            AddServiceFlowLayoutCommunity.Size = new Size(242, 285);
+            AddServiceFlowLayoutCommunity.TabIndex = 1;
+            // 
+            // AddServiceFlowLayoutConvivence
+            // 
+            AddServiceFlowLayoutConvivence.Location = new Point(509, 107);
+            AddServiceFlowLayoutConvivence.Name = "AddServiceFlowLayoutConvivence";
+            AddServiceFlowLayoutConvivence.Size = new Size(260, 285);
+            AddServiceFlowLayoutConvivence.TabIndex = 2;
             // 
             // AddServiceScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(772, 362);
+            ClientSize = new Size(783, 503);
             Controls.Add(panel2);
             Controls.Add(SignUpPNLBTNClean);
-            Controls.Add(checkBox4);
-            Controls.Add(checkBox5);
-            Controls.Add(checkBox9);
             Controls.Add(label3);
-            Controls.Add(checkBox1);
-            Controls.Add(checkBox2);
-            Controls.Add(checkBox3);
             Controls.Add(label1);
-            Controls.Add(checkBox6);
-            Controls.Add(checkBox7);
-            Controls.Add(checkBox8);
             Controls.Add(label2);
             Controls.Add(panel1);
+            Controls.Add(AddServiceFlowLayoutEssentials);
+            Controls.Add(AddServiceFlowLayoutCommunity);
+            Controls.Add(AddServiceFlowLayoutConvivence);
             Name = "AddServiceScreen";
             Text = "AddServiceScreen";
+            toolTip1.SetToolTip(this, "Finalizar proceso.");
+            Load += AddServiceScreen_Load;
+            Click += AddServicePNLBTNNext_Click;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel2.ResumeLayout(false);
@@ -303,17 +227,8 @@
 
         private Panel panel1;
         private Label HomeScreenLBLTitle;
-        private CheckBox checkBox6;
-        private CheckBox checkBox7;
-        private CheckBox checkBox8;
         private Label label2;
-        private CheckBox checkBox1;
-        private CheckBox checkBox2;
-        private CheckBox checkBox3;
         private Label label1;
-        private CheckBox checkBox4;
-        private CheckBox checkBox5;
-        private CheckBox checkBox9;
         private Label label3;
         private Panel panel2;
         private Label label6;
@@ -321,5 +236,9 @@
         private Panel SignUpPNLBTNClean;
         private Label label12;
         private PictureBox pictureBox3;
+        private FlowLayoutPanel AddServiceFlowLayoutEssentials;
+        private FlowLayoutPanel AddServiceFlowLayoutCommunity;
+        private FlowLayoutPanel AddServiceFlowLayoutConvivence;
+        private ToolTip toolTip1;
     }
 }
