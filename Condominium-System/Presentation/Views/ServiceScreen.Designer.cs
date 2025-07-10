@@ -249,7 +249,7 @@
             label9.Size = new Size(56, 21);
             label9.TabIndex = 1;
             label9.Text = "Buscar";
-            toolTip1.SetToolTip(label9, "Buscar Servicio.");
+            toolTip1.SetToolTip(label9, "Buscar servicio.");
             label9.Click += ServicePNLBTNSearch_Click;
             // 
             // pictureBox2
@@ -261,7 +261,7 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
-            toolTip1.SetToolTip(pictureBox2, "Buscar Servicio.");
+            toolTip1.SetToolTip(pictureBox2, "Buscar servicio.");
             pictureBox2.Click += ServicePNLBTNSearch_Click;
             // 
             // CondominiumPNLBTNSearch
@@ -273,7 +273,7 @@
             CondominiumPNLBTNSearch.Name = "CondominiumPNLBTNSearch";
             CondominiumPNLBTNSearch.Size = new Size(109, 41);
             CondominiumPNLBTNSearch.TabIndex = 129;
-            toolTip1.SetToolTip(CondominiumPNLBTNSearch, "Buscar Servicio.");
+            toolTip1.SetToolTip(CondominiumPNLBTNSearch, "Buscar servicio.");
             CondominiumPNLBTNSearch.Click += ServicePNLBTNSearch_Click;
             // 
             // ServiceTBID

@@ -131,7 +131,17 @@ namespace Condominium_System.Presentation.Views
 
         public bool FormIsCorrectToUpdate()
         {
-            return !string.IsNullOrEmpty(ServiceTBID.Text) && FormIsCorrect();
+            bool isTypeValid = ServiceCBTypes.SelectedIndex != 0;
+            bool isCostValid = int.TryParse(ServiceTBCost.Text, out int _);
+
+            return !(
+                string.IsNullOrEmpty(ServiceTBID.Text) ||
+                string.IsNullOrEmpty(ServiceTBName.Text) ||
+                string.IsNullOrEmpty(ServiceTBDetail.Text) ||
+                string.IsNullOrEmpty(ServiceTBCost.Text) ||
+                !isCostValid ||
+                !isTypeValid
+            );        
         }
 
         private async void ServicePNLBTNCreate_Click(object sender, EventArgs e)

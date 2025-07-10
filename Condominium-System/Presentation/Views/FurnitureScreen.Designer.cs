@@ -28,9 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataGridView1 = new DataGridView();
+            components = new System.ComponentModel.Container();
+            FurnitureDTGData = new DataGridView();
             LoginPNLUsername = new Panel();
-            LoginTxtBxPUsername = new TextBox();
+            FurnitureTBID = new TextBox();
             label8 = new Label();
             pictureBox3 = new PictureBox();
             CondominiumPNLBTNSearch = new Panel();
@@ -44,16 +45,17 @@
             pictureBox4 = new PictureBox();
             label2 = new Label();
             panel1 = new Panel();
-            textBox1 = new TextBox();
+            FurnitureTBDetail = new TextBox();
             label6 = new Label();
             panel6 = new Panel();
-            maskedTextBox1 = new MaskedTextBox();
+            FurnitureTBName = new TextBox();
             label1 = new Label();
             CondominiumPNLBTNCreate = new Panel();
             label3 = new Label();
             panel5 = new Panel();
-            comboBox1 = new ComboBox();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            FurnitureCBTypes = new ComboBox();
+            toolTip1 = new ToolTip(components);
+            ((System.ComponentModel.ISupportInitialize)FurnitureDTGData).BeginInit();
             LoginPNLUsername.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             CondominiumPNLBTNSearch.SuspendLayout();
@@ -68,30 +70,30 @@
             panel5.SuspendLayout();
             SuspendLayout();
             // 
-            // dataGridView1
+            // FurnitureDTGData
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(51, 249);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(945, 331);
-            dataGridView1.TabIndex = 118;
+            FurnitureDTGData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            FurnitureDTGData.Location = new Point(51, 249);
+            FurnitureDTGData.Name = "FurnitureDTGData";
+            FurnitureDTGData.Size = new Size(945, 331);
+            FurnitureDTGData.TabIndex = 118;
             // 
             // LoginPNLUsername
             // 
             LoginPNLUsername.BackColor = SystemColors.Window;
-            LoginPNLUsername.Controls.Add(LoginTxtBxPUsername);
+            LoginPNLUsername.Controls.Add(FurnitureTBID);
             LoginPNLUsername.Location = new Point(21, 43);
             LoginPNLUsername.Name = "LoginPNLUsername";
             LoginPNLUsername.Size = new Size(119, 24);
             LoginPNLUsername.TabIndex = 107;
             // 
-            // LoginTxtBxPUsername
+            // FurnitureTBID
             // 
-            LoginTxtBxPUsername.BorderStyle = BorderStyle.None;
-            LoginTxtBxPUsername.Location = new Point(4, 4);
-            LoginTxtBxPUsername.Name = "LoginTxtBxPUsername";
-            LoginTxtBxPUsername.Size = new Size(112, 16);
-            LoginTxtBxPUsername.TabIndex = 2;
+            FurnitureTBID.BorderStyle = BorderStyle.None;
+            FurnitureTBID.Location = new Point(4, 4);
+            FurnitureTBID.Name = "FurnitureTBID";
+            FurnitureTBID.Size = new Size(112, 16);
+            FurnitureTBID.TabIndex = 2;
             // 
             // label8
             // 
@@ -103,6 +105,8 @@
             label8.Size = new Size(48, 21);
             label8.TabIndex = 1;
             label8.Text = "Crear";
+            toolTip1.SetToolTip(label8, "Crear mobiliario.");
+            label8.Click += FurniturePNLBTNCreate_Click;
             // 
             // pictureBox3
             // 
@@ -113,6 +117,8 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
+            toolTip1.SetToolTip(pictureBox3, "Crear mobiliario.");
+            pictureBox3.Click += FurniturePNLBTNCreate_Click;
             // 
             // CondominiumPNLBTNSearch
             // 
@@ -123,6 +129,8 @@
             CondominiumPNLBTNSearch.Name = "CondominiumPNLBTNSearch";
             CondominiumPNLBTNSearch.Size = new Size(109, 41);
             CondominiumPNLBTNSearch.TabIndex = 116;
+            toolTip1.SetToolTip(CondominiumPNLBTNSearch, "Buscar mobiliario.");
+            CondominiumPNLBTNSearch.Click += FurniturePNLBTNSearch_Click;
             // 
             // label9
             // 
@@ -134,6 +142,8 @@
             label9.Size = new Size(56, 21);
             label9.TabIndex = 1;
             label9.Text = "Buscar";
+            toolTip1.SetToolTip(label9, "Buscar mobiliario.");
+            label9.Click += FurniturePNLBTNSearch_Click;
             // 
             // pictureBox2
             // 
@@ -144,6 +154,8 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabIndex = 0;
             pictureBox2.TabStop = false;
+            toolTip1.SetToolTip(pictureBox2, "Buscar mobiliario.");
+            pictureBox2.Click += FurniturePNLBTNSearch_Click;
             // 
             // CondominiumPNLBTNUpdate
             // 
@@ -154,6 +166,8 @@
             CondominiumPNLBTNUpdate.Name = "CondominiumPNLBTNUpdate";
             CondominiumPNLBTNUpdate.Size = new Size(119, 41);
             CondominiumPNLBTNUpdate.TabIndex = 115;
+            toolTip1.SetToolTip(CondominiumPNLBTNUpdate, "Actualizar mobiliario.");
+            CondominiumPNLBTNUpdate.Click += FurniturePNLBTNUpdate_Click;
             // 
             // label10
             // 
@@ -165,6 +179,8 @@
             label10.Size = new Size(78, 21);
             label10.TabIndex = 1;
             label10.Text = "Actualizar";
+            toolTip1.SetToolTip(label10, "Actualizar mobiliario.");
+            label10.Click += FurniturePNLBTNUpdate_Click;
             // 
             // pictureBox1
             // 
@@ -175,6 +191,8 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Actualizar mobiliario.");
+            pictureBox1.Click += FurniturePNLBTNUpdate_Click;
             // 
             // CondominiumPNLBTNDelete
             // 
@@ -185,6 +203,8 @@
             CondominiumPNLBTNDelete.Name = "CondominiumPNLBTNDelete";
             CondominiumPNLBTNDelete.Size = new Size(109, 41);
             CondominiumPNLBTNDelete.TabIndex = 114;
+            toolTip1.SetToolTip(CondominiumPNLBTNDelete, "Borrar mobiliario.");
+            CondominiumPNLBTNDelete.Click += FurniturePNLBTNDelete_Click;
             // 
             // label13
             // 
@@ -196,6 +216,8 @@
             label13.Size = new Size(54, 21);
             label13.TabIndex = 1;
             label13.Text = "Borrar";
+            toolTip1.SetToolTip(label13, "Borrar mobiliario.");
+            label13.Click += FurniturePNLBTNDelete_Click;
             // 
             // pictureBox4
             // 
@@ -206,6 +228,8 @@
             pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox4.TabIndex = 0;
             pictureBox4.TabStop = false;
+            toolTip1.SetToolTip(pictureBox4, "Borrar mobiliario.");
+            pictureBox4.Click += FurniturePNLBTNDelete_Click;
             // 
             // label2
             // 
@@ -220,20 +244,20 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.Window;
-            panel1.Controls.Add(textBox1);
+            panel1.Controls.Add(FurnitureTBDetail);
             panel1.Location = new Point(757, 43);
             panel1.Name = "panel1";
             panel1.Size = new Size(239, 68);
             panel1.TabIndex = 113;
             // 
-            // textBox1
+            // FurnitureTBDetail
             // 
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Location = new Point(4, 4);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(232, 57);
-            textBox1.TabIndex = 2;
+            FurnitureTBDetail.BorderStyle = BorderStyle.None;
+            FurnitureTBDetail.Location = new Point(4, 4);
+            FurnitureTBDetail.Multiline = true;
+            FurnitureTBDetail.Name = "FurnitureTBDetail";
+            FurnitureTBDetail.Size = new Size(232, 57);
+            FurnitureTBDetail.TabIndex = 2;
             // 
             // label6
             // 
@@ -241,26 +265,26 @@
             label6.Font = new Font("Segoe UI", 12F);
             label6.Location = new Point(471, 10);
             label6.Name = "label6";
-            label6.Size = new Size(209, 21);
+            label6.Size = new Size(68, 21);
             label6.TabIndex = 110;
-            label6.Text = "Documentación del inquilino";
+            label6.Text = "Nombre";
             // 
             // panel6
             // 
             panel6.BackColor = SystemColors.Window;
-            panel6.Controls.Add(maskedTextBox1);
+            panel6.Controls.Add(FurnitureTBName);
             panel6.Location = new Point(471, 43);
             panel6.Name = "panel6";
-            panel6.Size = new Size(230, 33);
+            panel6.Size = new Size(230, 27);
             panel6.TabIndex = 111;
             // 
-            // maskedTextBox1
+            // FurnitureTBName
             // 
-            maskedTextBox1.Location = new Point(4, 5);
-            maskedTextBox1.Mask = "000-0000000-0";
-            maskedTextBox1.Name = "maskedTextBox1";
-            maskedTextBox1.Size = new Size(223, 23);
-            maskedTextBox1.TabIndex = 0;
+            FurnitureTBName.BorderStyle = BorderStyle.None;
+            FurnitureTBName.Location = new Point(3, 4);
+            FurnitureTBName.Name = "FurnitureTBName";
+            FurnitureTBName.Size = new Size(224, 16);
+            FurnitureTBName.TabIndex = 3;
             // 
             // label1
             // 
@@ -281,6 +305,8 @@
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 117;
+            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Crear mobiliario.");
+            CondominiumPNLBTNCreate.Click += FurniturePNLBTNCreate_Click;
             // 
             // label3
             // 
@@ -295,20 +321,20 @@
             // panel5
             // 
             panel5.BackColor = SystemColors.Window;
-            panel5.Controls.Add(comboBox1);
+            panel5.Controls.Add(FurnitureCBTypes);
             panel5.Location = new Point(217, 43);
             panel5.Name = "panel5";
             panel5.Size = new Size(187, 30);
             panel5.TabIndex = 120;
             // 
-            // comboBox1
+            // FurnitureCBTypes
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(3, 4);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(181, 23);
-            comboBox1.TabIndex = 0;
-            comboBox1.Text = "Seleccione";
+            FurnitureCBTypes.FormattingEnabled = true;
+            FurnitureCBTypes.Location = new Point(3, 4);
+            FurnitureCBTypes.Name = "FurnitureCBTypes";
+            FurnitureCBTypes.Size = new Size(181, 23);
+            FurnitureCBTypes.TabIndex = 0;
+            FurnitureCBTypes.Text = "Seleccione";
             // 
             // FurnitureScreen
             // 
@@ -317,7 +343,7 @@
             ClientSize = new Size(1017, 591);
             Controls.Add(label3);
             Controls.Add(panel5);
-            Controls.Add(dataGridView1);
+            Controls.Add(FurnitureDTGData);
             Controls.Add(LoginPNLUsername);
             Controls.Add(CondominiumPNLBTNSearch);
             Controls.Add(CondominiumPNLBTNUpdate);
@@ -330,7 +356,10 @@
             Controls.Add(CondominiumPNLBTNCreate);
             Name = "FurnitureScreen";
             Text = "FurnitureScreen";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            toolTip1.SetToolTip(this, "Borrar mobiliario.");
+            Load += FurnitureScreen_Load;
+            Click += FurniturePNLBTNDelete_Click;
+            ((System.ComponentModel.ISupportInitialize)FurnitureDTGData).EndInit();
             LoginPNLUsername.ResumeLayout(false);
             LoginPNLUsername.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
@@ -356,9 +385,9 @@
 
         #endregion
 
-        private DataGridView dataGridView1;
+        private DataGridView FurnitureDTGData;
         private Panel LoginPNLUsername;
-        private TextBox LoginTxtBxPUsername;
+        private TextBox FurnitureTBID;
         private Label label8;
         private PictureBox pictureBox3;
         private Panel CondominiumPNLBTNSearch;
@@ -372,14 +401,15 @@
         private PictureBox pictureBox4;
         private Label label2;
         private Panel panel1;
-        private TextBox textBox1;
+        private TextBox FurnitureTBDetail;
         private Label label6;
         private Panel panel6;
-        private MaskedTextBox maskedTextBox1;
         private Label label1;
         private Panel CondominiumPNLBTNCreate;
         private Label label3;
         private Panel panel5;
-        private ComboBox comboBox1;
+        private ComboBox FurnitureCBTypes;
+        private TextBox FurnitureTBName;
+        private ToolTip toolTip1;
     }
 }
