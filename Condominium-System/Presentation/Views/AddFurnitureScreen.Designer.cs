@@ -131,6 +131,7 @@
             SignUpPNLBTNClean.Name = "SignUpPNLBTNClean";
             SignUpPNLBTNClean.Size = new Size(109, 41);
             SignUpPNLBTNClean.TabIndex = 31;
+            SignUpPNLBTNClean.Click += AddFurniturePNLBTNClean_Click;
             // 
             // label12
             // 
@@ -142,6 +143,7 @@
             label12.Size = new Size(63, 21);
             label12.TabIndex = 1;
             label12.Text = "Limpiar";
+            label12.Click += AddFurniturePNLBTNClean_Click;
             // 
             // pictureBox3
             // 
@@ -152,6 +154,7 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
+            pictureBox3.Click += AddFurniturePNLBTNClean_Click;
             // 
             // panel1
             // 

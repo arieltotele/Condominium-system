@@ -76,5 +76,25 @@ namespace Condominium_System.Presentation.Views
                 MessageBox.Show($"Error cargando muebles de tipo {furnitureType}: {ex.Message}");
             }
         }
+
+        private void AddFurniturePNLBTNClean_Click(object sender, EventArgs e)
+        {
+            UncheckAllFurnitureCheckboxes(AddFurnitrureFlowLayoutLivingRoom, AddFurnitrureFlowLayoutDinningRoom, 
+                AddFurnitrureFlowLayoutBedroom, AddFurnitrureFlowLayoutKitchen, AddFurnitrureFlowLayoutOutside);
+        }
+
+        private void UncheckAllFurnitureCheckboxes(params FlowLayoutPanel[] panels)
+        {
+            foreach (var panel in panels)
+            {
+                foreach (Control control in panel.Controls)
+                {
+                    if (control is CheckBox checkBox)
+                    {
+                        checkBox.Checked = false;
+                    }
+                }
+            }
+        }
     }
 }
