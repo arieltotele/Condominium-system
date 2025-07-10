@@ -41,7 +41,8 @@ namespace Condominium_System.Presentation.Views
                 "Sala de estar",
                 "Comedor",
                 "Dormitorio",
-                "Cocina"
+                "Cocina",
+                "Exterior"
             };
 
             FurnitureCBTypes.DataSource = types;

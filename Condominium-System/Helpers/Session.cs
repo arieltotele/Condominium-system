@@ -10,5 +10,6 @@ namespace Condominium_System.Helpers
     public class Session
     {
         public static User? CurrentUser { get; set; }
+        public static Housing? CurrentHouse { get; set; }
     }
 }

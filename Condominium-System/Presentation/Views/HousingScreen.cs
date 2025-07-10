@@ -1,20 +1,23 @@
 ﻿using Condominium_System.Business.Services;
 using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
+using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
 
 namespace Condominium_System.Presentation.Views
 {
     public partial class HousingScreen : Form
     {
+        private readonly IServiceProvider _serviceProvider;
         private readonly IHousingEntityService _housingEntityService;
         private readonly IBlockService _blockService;
 
-        User currentUser;
+        User? currentUser;
 
-        public HousingScreen(IHousingEntityService housingEntityService, IBlockService blockService)
+        public HousingScreen(IServiceProvider serviceProvider, IHousingEntityService housingEntityService, IBlockService blockService)
         {
             InitializeComponent();
+            _serviceProvider = serviceProvider;
             _housingEntityService = housingEntityService;
             _blockService = blockService;
             currentUser = Session.CurrentUser;
@@ -138,11 +141,15 @@ namespace Condominium_System.Presentation.Views
                         Author = currentUser.Username
                     };
 
-                    await _housingEntityService.CreateHousingAsync(NewHouse);
+                    Session.CurrentHouse = await _housingEntityService.CreateHousingAsync(NewHouse);
 
                     MessageBox.Show("La vivienda ha sido creada con exito.");
                     CleanFormHousing();
                     LoadDataToDataGrid();
+
+                    var addfurnitureToHouseScreen = _serviceProvider.GetRequiredService<AddFurnitureScreen>();
+
+                    addfurnitureToHouseScreen.Show();
                 }
                 catch (Exception ex)
                 {

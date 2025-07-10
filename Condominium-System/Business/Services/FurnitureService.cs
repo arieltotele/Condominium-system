@@ -49,5 +49,11 @@ namespace Condominium_System.Business.Services
                 await _furnitureRepository.SaveChangesAsync();
             }
         }
+
+        public async Task<IEnumerable<Furniture>> GetFurnituresByTypeAsync(string type)
+        {
+            return await _furnitureRepository
+            .GetAllWithIncludesAsync(f => f.Housings, f => f.Type == type);
+        }
     }
 }
