@@ -145,7 +145,7 @@ namespace Condominium_System.Presentation.Views
 
                     MessageBox.Show("La vivienda ha sido creada con exito.");
                     CleanFormHousing();
-                    LoadDataToDataGrid();
+                    await LoadDataToDataGrid();
 
                     var addfurnitureToHouseScreen = _serviceProvider.GetRequiredService<AddFurnitureScreen>();
                     addfurnitureToHouseScreen.Show();
@@ -246,7 +246,7 @@ namespace Condominium_System.Presentation.Views
                         await _housingEntityService.UpdateHousingAsync(HousingToUpdate);
 
                         MessageBox.Show("La vivienda ha sido actualizada con exito.");
-                        LoadDataToDataGrid();
+                        await LoadDataToDataGrid();
                         CleanFormHousing();
 
                         Session.CurrentHouse = HousingToUpdate;
@@ -294,7 +294,7 @@ namespace Condominium_System.Presentation.Views
 
                     MessageBox.Show("La vivienda ha sido borrada exitosamente.");
 
-                    LoadDataToDataGrid();
+                    await LoadDataToDataGrid();
                     CleanFormHousing();
                 }
                 else

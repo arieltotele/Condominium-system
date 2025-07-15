@@ -300,7 +300,7 @@ namespace Condominium_System.Presentation.Views
                         await _tenantService.UpdateAsync(TenantToUpdate);
 
                         MessageBox.Show("El inquilino ha sido actualizado con exito.");
-                        LoadDataToDataGrid();
+                        await LoadDataToDataGrid();
                         CleanForm();
                     }
                     else
@@ -334,7 +334,7 @@ namespace Condominium_System.Presentation.Views
                     await _tenantService.DeleteAsync(Int32.Parse(TenantTBID.Text));
                     MessageBox.Show("El inquilino ha sido borrado con exitosamente.");
 
-                    LoadDataToDataGrid();
+                    await LoadDataToDataGrid();
                     CleanForm();
                 }
                 else

@@ -193,6 +193,26 @@ namespace Condominium_System.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap pencil_blue {
+            get {
+                object obj = ResourceManager.GetObject("pencil_blue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pencil_white {
+            get {
+                object obj = ResourceManager.GetObject("pencil_white", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap power_off_white {
             get {
                 object obj = ResourceManager.GetObject("power_off_white", resourceCulture);
@@ -226,6 +246,16 @@ namespace Condominium_System.Properties {
         internal static System.Drawing.Bitmap tenant_white {
             get {
                 object obj = ResourceManager.GetObject("tenant_white", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap trash_red {
+            get {
+                object obj = ResourceManager.GetObject("trash_red", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -34,7 +34,7 @@ namespace Condominium_System.Presentation.Views
             ConfigureBlockColumns();
             LoadDataToDataGrid();
             SetComboBoxForTypeOfHousing();
-            LoadCondominiumsIntoComboBox();
+            await LoadCondominiumsIntoComboBox();
         }
 
         private void SetComboBoxForTypeOfHousing()

@@ -157,6 +157,12 @@
   <data name="next_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\next_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="pencil_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pencil_blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pencil_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pencil_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="power_off_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\power_off_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -168,6 +174,9 @@
   </data>
   <data name="tenant_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tenant_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="trash_red" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\trash_red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="trash_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\trash_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

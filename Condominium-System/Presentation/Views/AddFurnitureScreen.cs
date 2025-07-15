@@ -121,10 +121,8 @@ namespace Condominium_System.Presentation.Views
         {
             try
             {
-                // 1. Eliminar todas las relaciones actuales del housing
                 await _housingFurnitureService.DeleteAllByHousingIdAsync(housingId);
 
-                // 2. Recopilar los muebles seleccionados (checkboxes marcados)
                 var selectedFurniture = new List<HousingFurniture>();
 
                 foreach (var panel in panels)
@@ -148,7 +146,6 @@ namespace Condominium_System.Presentation.Views
                     }
                 }
 
-                // 3. Insertar las nuevas relaciones
                 if (selectedFurniture.Count > 0)
                 {
                     await _housingFurnitureService.CreateRangeAsync(selectedFurniture);

@@ -225,7 +225,7 @@ namespace Condominium_System.Presentation.Views
                         UserToUpdate.CondominiumId = (int)UserTBCondominium.SelectedValue;
                         UserToUpdate.Type = UserCbType.Text;
 
-                        _userService.UpdateAsync(UserToUpdate);
+                        await _userService.UpdateAsync(UserToUpdate);
 
                         MessageBox.Show("El usuario ha sido actualizado con exito");
                         LoadDataToDataGrid();
