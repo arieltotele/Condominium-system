@@ -46,5 +46,20 @@ namespace Condominium_System.Business.Services
                 await _repository.SaveChangesAsync();
             }
         }
+
+        public async Task DeleteAllByHousingIdAsync(int housingId)
+        {
+            var items = await _repository
+                .FindAsync(hs => hs.HousingId == housingId);
+
+            _repository.RemoveRange(items);
+            await _repository.SaveChangesAsync();         
+        }
+
+        public async Task CreateRangeAsync(IEnumerable<HousingService> entities)
+        {
+            await _repository.AddRangeAsync(entities);
+            await _repository.SaveChangesAsync();
+        }
     }
 }

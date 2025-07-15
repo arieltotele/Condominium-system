@@ -32,7 +32,6 @@ namespace Condominium_System
                 options.UseLazyLoadingProxies();
             });
 
-
             // Registration for services and repositories
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRepositoryWithId<User>, RepositoryWithId<User>>();

@@ -53,7 +53,6 @@ namespace Condominium_System.Business.Services
                 .Entries<HousingFurniture>()
                 .FirstOrDefault(e => e.Entity.HousingId == entity.HousingId && e.Entity.FurnitureId == entity.FurnitureId);
 
-
             if (trackedEntity != null)
             {
                 trackedEntity.State = EntityState.Detached;
@@ -62,5 +61,21 @@ namespace Condominium_System.Business.Services
             _repository.Update(entity);
             await _repository.SaveChangesAsync();
         }
+
+        public async Task DeleteAllByHousingIdAsync(int housingId)
+        {
+            var items = await _repository
+                .FindAsync(hf => hf.HousingId == housingId);
+
+            _repository.RemoveRange(items);
+            await _repository.SaveChangesAsync();
+        }
+
+        public async Task CreateRangeAsync(IEnumerable<HousingFurniture> entities)
+        {
+            await _repository.AddRangeAsync(entities);
+            await _repository.SaveChangesAsync();
+        }
+
     }
 }

@@ -22,6 +22,9 @@ namespace Condominium_System.Presentation.Views
         private readonly User? _currentUser;
         private readonly Housing? _currentHouse;
 
+        private readonly SemaphoreSlim _furnitureLoadLock = new SemaphoreSlim(1, 1);
+
+
         public bool IsEditMode { get; set; } = false;
 
         public AddFurnitureScreen(IServiceProvider serviceProvider, IFurnitureService furnitureService, IHousingFurnitureService housingFurnitureService)
@@ -47,22 +50,23 @@ namespace Condominium_System.Presentation.Views
             ChangeLabelIfInEditMode(IsEditMode);
         }
 
-
-
         private void ChangeLabelIfInEditMode(bool isEditMode) =>
             AddFurnitureScreenLBLTitle.Text = isEditMode ? "Modificar inmuebles de la vivienda" : AddFurnitureScreenLBLTitle.Text;
 
         private async Task LoadFurnitureCheckboxesForHousing(string furnitureType, int housingId, FlowLayoutPanel targetPanel)
         {
+            await _furnitureLoadLock.WaitAsync();
             try
             {
                 targetPanel.Controls.Clear();
 
-                var furnitures = await _furnitureService.GetAllFurnituresAsync();
-                var filteredFurnitures = furnitures.Where(f => f.Type == furnitureType).ToList();
+                var furnitureList = await _furnitureService.GetAllFurnituresAsync();
+                var filteredFurnitures = furnitureList
+                    .Where(f => f.Type == furnitureType)
+                    .ToList();
 
-                var allRelations = await _housingFurnitureService.GetAllAsync();
-                var assignedFurnitureIds = allRelations
+                var relationList = await _housingFurnitureService.GetAllAsync();
+                var assignedFurnitureIds = relationList
                     .Where(hf => hf.HousingId == housingId)
                     .Select(hf => hf.FurnitureId)
                     .ToHashSet();
@@ -84,9 +88,14 @@ namespace Condominium_System.Presentation.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error cargando muebles de tipo {furnitureType}: {ex.Message}");
+                MessageBox.Show($"Error cargando muebles de tipo {furnitureType}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                _furnitureLoadLock.Release();
             }
         }
+
 
         private void AddFurniturePNLBTNClean_Click(object sender, EventArgs e)
         {
@@ -112,54 +121,37 @@ namespace Condominium_System.Presentation.Views
         {
             try
             {
+                // 1. Eliminar todas las relaciones actuales del housing
+                await _housingFurnitureService.DeleteAllByHousingIdAsync(housingId);
+
+                // 2. Recopilar los muebles seleccionados (checkboxes marcados)
+                var selectedFurniture = new List<HousingFurniture>();
+
                 foreach (var panel in panels)
                 {
                     foreach (Control control in panel.Controls)
                     {
-                        if (control is CheckBox checkBox)
+                        if (control is CheckBox checkBox && checkBox.Checked)
                         {
                             if (int.TryParse(checkBox.Tag?.ToString(), out int furnitureId))
                             {
-                                var existing = await _housingFurnitureService.GetByIdsAsync(housingId, furnitureId);
-
-                                if (checkBox.Checked)
+                                selectedFurniture.Add(new HousingFurniture
                                 {
-                                    if (existing == null)
-                                    {
-                                        var newRelation = new HousingFurniture
-                                        {
-                                            HousingId = housingId,
-                                            FurnitureId = furnitureId,
-                                            CreatedAt = DateTime.Now,
-                                            Author = _currentUser.Username,
-                                            IsActive = true
-                                        };
-
-                                        await _housingFurnitureService.CreateAsync(newRelation);
-                                    }
-                                    else if (!existing.IsActive)
-                                    {
-                                        existing.IsActive = true;
-                                        existing.UpdatedAt = DateTime.Now;
-                                        existing.Author = _currentUser.Username;
-
-                                        await _housingFurnitureService.UpdateAsync(existing);
-                                    }
-                                }
-                                else
-                                {
-                                    if (existing != null && existing.IsActive)
-                                    {
-                                        existing.IsActive = false;
-                                        existing.UpdatedAt = DateTime.Now;
-                                        existing.Author = _currentUser.Username;
-
-                                        await _housingFurnitureService.UpdateAsync(existing);
-                                    }
-                                }
+                                    HousingId = housingId,
+                                    FurnitureId = furnitureId,
+                                    CreatedAt = DateTime.Now,
+                                    Author = _currentUser.Username,
+                                    IsActive = true
+                                });
                             }
                         }
                     }
+                }
+
+                // 3. Insertar las nuevas relaciones
+                if (selectedFurniture.Count > 0)
+                {
+                    await _housingFurnitureService.CreateRangeAsync(selectedFurniture);
                 }
             }
             catch (Exception ex)
@@ -167,6 +159,7 @@ namespace Condominium_System.Presentation.Views
                 MessageBox.Show($"Error al guardar el mobiliario seleccionado: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private async void AddFurniturePNLBTNNext_Click(object sender, EventArgs e)
         {

@@ -18,5 +18,7 @@ namespace Condominium_System.Data.Repositories
         void Update(T entity);
         void Remove(T entity);
         Task SaveChangesAsync();
+        void RemoveRange(IEnumerable<T> entities);
+        Task AddRangeAsync(IEnumerable<T> entities);
     }
 }

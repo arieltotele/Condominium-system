@@ -14,5 +14,8 @@ namespace Condominium_System.Business.Services
         Task<HousingFurniture> CreateAsync(HousingFurniture entity);
         Task UpdateAsync(HousingFurniture entity);
         Task DeleteAsync(int housingId, int furnitureId);
+        Task DeleteAllByHousingIdAsync(int housingId);
+        Task CreateRangeAsync(IEnumerable<HousingFurniture> entities);
+
     }
 }

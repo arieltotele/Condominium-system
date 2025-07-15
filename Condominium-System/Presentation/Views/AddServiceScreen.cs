@@ -54,16 +54,20 @@ namespace Condominium_System.Presentation.Views
             {
                 targetPanel.Controls.Clear();
 
-                var services = await _serviceService.GetAllAsync();
-                var filteredServices = services.Where(s => s.Type == serviceType).ToList();
+                // Espera a que termine completamente esta consulta antes de iniciar la próxima
+                var servicesList = await _serviceService.GetAllAsync();
+                var services = servicesList
+                    .Where(s => s.Type == serviceType)
+                    .ToList();
 
-                var allRelations = await _housingServiceService.GetAllAsync();
-                var assignedServiceIds = allRelations
+                // También espera completamente esta antes de procesar resultados
+                var relationsList = await _housingServiceService.GetAllAsync();
+                var assignedServiceIds = relationsList
                     .Where(hs => hs.HousingId == housingId)
                     .Select(hs => hs.ServiceId)
                     .ToHashSet();
 
-                foreach (var service in filteredServices)
+                foreach (var service in services)
                 {
                     var checkBox = new CheckBox
                     {
@@ -80,7 +84,7 @@ namespace Condominium_System.Presentation.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error cargando servicios de tipo {serviceType}: {ex.Message}");
+                MessageBox.Show($"Error cargando servicios de tipo {serviceType}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -100,48 +104,36 @@ namespace Condominium_System.Presentation.Views
         {
             try
             {
-                var allRelations = await _housingServiceService.GetAllAsync();
-                var existingServiceIds = allRelations
-                    .Where(hs => hs.HousingId == housingId)
-                    .Select(hs => hs.ServiceId)
-                    .ToHashSet();
+                // 1. Eliminar todas las relaciones existentes para ese Housing
+                await _housingServiceService.DeleteAllByHousingIdAsync(housingId);
 
-                var selectedServiceIds = new HashSet<int>();
+                // 2. Recopilar los servicios seleccionados (checkboxes marcados)
+                var selectedServices = new List<HousingService>();
 
                 foreach (var panel in panels)
                 {
                     foreach (Control control in panel.Controls)
                     {
-                        if (control is CheckBox checkBox && int.TryParse(checkBox.Tag?.ToString(), out int serviceId))
+                        if (control is CheckBox checkBox && checkBox.Checked)
                         {
-                            if (checkBox.Checked)
+                            if (int.TryParse(checkBox.Tag?.ToString(), out int serviceId))
                             {
-                                selectedServiceIds.Add(serviceId);
-
-                                if (!existingServiceIds.Contains(serviceId))
+                                selectedServices.Add(new HousingService
                                 {
-                                    var newRelation = new HousingService
-                                    {
-                                        HousingId = housingId,
-                                        ServiceId = serviceId,
-                                        CreatedAt = DateTime.Now,
-                                        Author = _currentUser.Username
-                                    };
-
-                                    await _housingServiceService.CreateAsync(newRelation);
-                                }
+                                    HousingId = housingId,
+                                    ServiceId = serviceId,
+                                    CreatedAt = DateTime.Now,
+                                    Author = _currentUser.Username
+                                });
                             }
                         }
                     }
                 }
 
-                if (IsEditMode)
+                // 3. Insertar las nuevas relaciones
+                if (selectedServices.Count > 0)
                 {
-                    var toDelete = existingServiceIds.Except(selectedServiceIds);
-                    foreach (var serviceId in toDelete)
-                    {
-                        await _housingServiceService.DeleteAsync(housingId, serviceId);
-                    }
+                    await _housingServiceService.CreateRangeAsync(selectedServices);
                 }
             }
             catch (Exception ex)
@@ -149,6 +141,7 @@ namespace Condominium_System.Presentation.Views
                 MessageBox.Show($"Error al guardar los servicios seleccionados: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private async void AddServicePNLBTNNext_Click(object sender, EventArgs e)
         {
