@@ -104,9 +104,9 @@
             label8.ForeColor = Color.White;
             label8.Location = new Point(39, 12);
             label8.Name = "label8";
-            label8.Size = new Size(48, 21);
+            label8.Size = new Size(56, 21);
             label8.TabIndex = 1;
-            label8.Text = "Crear";
+            label8.Text = "Nuevo";
             toolTip1.SetToolTip(label8, "Crear un nuevo condominio.");
             label8.Click += CondominiumBTNCreate_Click;
             // 
@@ -157,8 +157,7 @@
             Controls.Add(LoginPNLUsername);
             Name = "CondominiumScreen";
             Text = "CondominuiumScreen";
-            Load += CondominuiumScreen_Load;
-            Click += CondominiumBTNDelete_Click;
+            Load += CondominuiumScreen_Load;    
             LoginPNLUsername.ResumeLayout(false);
             LoginPNLUsername.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)CondominiumDTGData).EndInit();

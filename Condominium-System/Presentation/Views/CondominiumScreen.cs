@@ -2,6 +2,7 @@
 using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -17,23 +18,21 @@ namespace Condominium_System.Presentation.Views
 {
     public partial class CondominiumScreen : Form
     {
-
         private readonly ICondominiumService _condominiumService;
+        private readonly IServiceProvider _serviceProvider;
         User currentUser;
 
-        public CondominiumScreen(ICondominiumService condominiumService)
+        public CondominiumScreen(ICondominiumService condominiumService, IServiceProvider serviceProvider)
         {
             InitializeComponent();
-            _condominiumService = condominiumService;                       
+            _condominiumService = condominiumService;
+            _serviceProvider = serviceProvider;
             currentUser = Session.CurrentUser;
         }
 
         private void CondominuiumScreen_Load(object sender, EventArgs e)
         {
             UIUtils.RoundPanelCorners(CondominiumPNLBTNCreate, 10);
-            //UIUtils.RoundPanelCorners(CondominiumPNLBTNSearch, 10);
-            //UIUtils.RoundPanelCorners(CondominiumPNLBTNUpdate, 10);
-            //UIUtils.RoundPanelCorners(CondominiumPNLBTNDelete, 10);
 
             CondominiumDTGData.CellPainting += CondominiumDTGData_CellPainting;
             CondominiumDTGData.CellClick += CondominiumDTGData_CellClick;
@@ -43,7 +42,7 @@ namespace Condominium_System.Presentation.Views
             LoadDataToDataGrid();
         }
 
-        private async void LoadDataToDataGrid()
+        public async void LoadDataToDataGrid()
         {
             try
             {
@@ -130,14 +129,11 @@ namespace Condominium_System.Presentation.Views
                 int iconHeight = 16;
                 int padding = 5;
 
-                // Calcula posición para los íconos
                 int x = e.CellBounds.Left + padding;
                 int y = e.CellBounds.Top + (e.CellBounds.Height - iconHeight) / 2;
 
-                // Dibuja el ícono de editar
                 e.Graphics.DrawImage(Properties.Resources.pencil_blue, new Rectangle(x, y, iconWidth, iconHeight));
-
-                // Dibuja el ícono de eliminar al lado derecho
+                                
                 x += iconWidth + padding;
                 e.Graphics.DrawImage(Properties.Resources.trash_red, new Rectangle(x, y, iconWidth, iconHeight));
 
@@ -145,69 +141,86 @@ namespace Condominium_System.Presentation.Views
             }
         }
 
-        private void CondominiumDTGData_CellClick(object sender, DataGridViewCellEventArgs e)
+        private async void CondominiumDTGData_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && CondominiumDTGData.Columns[e.ColumnIndex].Name == "ActionsColumn")
             {
                 var cellBounds = CondominiumDTGData.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
                 var clickPosition = CondominiumDTGData.PointToClient(Cursor.Position);
-
                 int relativeX = clickPosition.X - cellBounds.Left;
 
-                if (relativeX < 26) // Primer botón (Editar)
+                var selectedRow = CondominiumDTGData.Rows[e.RowIndex];
+                var selectedCondo = selectedRow.DataBoundItem as Condominium;
+
+                if (selectedCondo == null)
                 {
-                    MessageBox.Show("Editar fila: " + e.RowIndex);
+                    MessageBox.Show("No se pudo identificar el condominio.");
+                    return;
                 }
-                else if (relativeX >= 26 && relativeX < 52) // Segundo botón (Eliminar)
+
+                if (relativeX < 26) // 🟢 Editar
                 {
-                    MessageBox.Show("Eliminar fila: " + e.RowIndex);
+                    Session.CondominiumToUpsert = selectedCondo;
+                    GoToUpsertScreen(true);
+                }
+                else if (relativeX >= 26 && relativeX < 52) // 🔴 Eliminar
+                {
+                    var confirm = MessageBox.Show($"¿Deseas eliminar el condominio '{selectedCondo.Name}'?",
+                                                  "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                    if (confirm == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            await _condominiumService.DeleteCondominiumAsync(selectedCondo.Id);
+                            MessageBox.Show("Condominio eliminado correctamente.");
+                            LoadDataToDataGrid();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Error al eliminar condominio: {ex.Message}");
+                        }
+                    }
                 }
             }
         }
 
-        private async void CondominiumBTNCreate_Click(object sender, EventArgs e)
+
+        private void GoToUpsertScreen(bool isToUpdate)
         {
-            //if (FormIsCorrect())
-            //{
-            //    try
-            //    {
-            //        var NewCondominium = new Condominium()
-            //        {
-            //            Name = CondominiumTIName.Text,
-            //            Address = CondominiumTIAddress.Text,
-            //            ReceptionContactNumber = CondominiumMskTBContactNumber.Text,
-            //            BlockCount = Int32.Parse(CondominiumTIBlocksQuantity.Text),
+            if (isToUpdate)
+            {
+                if (CondominiumDTGData.CurrentRow == null)
+                {
+                    MessageBox.Show("Por favor, selecciona un condominio para editar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-            //            Author = currentUser.Username
-            //        };
+                // Obtener el objeto seleccionado
+                var selectedCondo = CondominiumDTGData.CurrentRow.DataBoundItem as Condominium;
+                if (selectedCondo == null)
+                {
+                    MessageBox.Show("Error al obtener el condominio seleccionado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
-            //        await _condominiumService.CreateCondominiumAsync(NewCondominium);
+                Session.CondominiumToUpsert = selectedCondo;
+            }
+            else
+            {
+                Session.CondominiumToUpsert = null;
+            }
 
-            //        MessageBox.Show("El condominio ha sido creado con exito.", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //        LoadDataToDataGrid();
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show($"Error guardando condominio: {ex.Message}");
-            //    }
-
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Todos los campos deben ser completados correctamente.");
-            //}
+            var upsertScreen = _serviceProvider.GetRequiredService<UpsertCondominiumScreen>();
+            upsertScreen.IsEditMode = isToUpdate;
+            upsertScreen.Owner = this;
+            upsertScreen.Show();
         }
 
-        //public bool FormIsCorrect() =>
-        //     (String.IsNullOrEmpty(CondominiumTIName.Text) || String.IsNullOrEmpty(CondominiumTIAddress.Text)
-        //        || String.IsNullOrEmpty(CondominiumTIBlocksQuantity.Text) || String.IsNullOrEmpty(CondominiumMskTBContactNumber.Text)
-        //        || CondominiumMskTBContactNumber.Text.Trim().Length != 10) ? false : true;
-
-
-        //public bool FormIsCorrectToUpdate() =>
-        //     (String.IsNullOrEmpty(CondominiumTIId.Text) || String.IsNullOrEmpty(CondominiumTIName.Text)
-        //        || String.IsNullOrEmpty(CondominiumTIAddress.Text) || String.IsNullOrEmpty(CondominiumTIBlocksQuantity.Text)
-        //        || String.IsNullOrEmpty(CondominiumMskTBContactNumber.Text) || CondominiumMskTBContactNumber.Text.Trim().Length != 10) ? false : true;
+        private async void CondominiumBTNCreate_Click(object sender, EventArgs e)
+        {
+            GoToUpsertScreen(false);
+        }
 
         private async void CondominiumBTNSearch_Click(object sender, EventArgs e)
         {
@@ -220,22 +233,24 @@ namespace Condominium_System.Presentation.Views
 
                     if (condominiumFound != null)
                     {
-                        // Mostrar solo el condominio encontrado
                         CondominiumDTGData.DataSource = new List<Condominium> { condominiumFound };
                     }
                     else
                     {
                         MessageBox.Show("Condominio no encontrado.", "Búsqueda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CleanForm();
                     }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error buscando condominio: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    CleanForm();
                 }
             }
             else
             {
                 MessageBox.Show("El campo Id debe estar lleno correctamente.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                CleanForm();
             }
         }
 
@@ -245,85 +260,40 @@ namespace Condominium_System.Presentation.Views
             {
                 e.Handled = true;
             }
-        }       
-
-        private async void CondominiumBTNUpdate_Click(object sender, EventArgs e)
-        {
-            //if (FormIsCorrectToUpdate())
-            //{
-            //    try
-            //    {
-            //        var CondominiumToUpdate = await _condominiumService.GetCondominiumByIdAsync(Int32.Parse(CondominiumTIId.Text));
-
-            //        if (CondominiumToUpdate != null)
-            //        {
-            //            //CondominiumToUpdate.Id = Int32.Parse(CondominiumTIId.Text);
-            //            //CondominiumToUpdate.Name = CondominiumTIName.Text;
-            //            //CondominiumToUpdate.Address = CondominiumTIAddress.Text;
-            //            //CondominiumToUpdate.ReceptionContactNumber = CondominiumMskTBContactNumber.Text;
-            //            //CondominiumToUpdate.BlockCount = Int32.Parse(CondominiumTIBlocksQuantity.Text);
-            //            //CondominiumToUpdate.UpdatedAt = DateTime.Now;
-
-            //            CondominiumToUpdate.UpdatedAt = DateTime.Now;
-
-            //            await _condominiumService.UpdateCondominiumAsync(CondominiumToUpdate);
-
-            //            MessageBox.Show("El condominio ha sido actualizado con exito");
-            //            LoadDataToDataGrid();
-            //            CleanForm();
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Condominio no encontrado.");
-            //            return;
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show($"Error guardando el condominio: {ex.Message}");
-            //    }
-
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Todos los campos deben ser completados correctamente.");
-            //}
         }
 
-        private async void CondominiumBTNDelete_Click(object sender, EventArgs e)
-        {
+        //private async void CondominiumBTNDelete_Click(object sender, EventArgs e)
+        //{
 
-            if (!String.IsNullOrEmpty(CondominiumTIId.Text))
-            {
+        //    if (!String.IsNullOrEmpty(CondominiumTIId.Text))
+        //    {
                 
-                var CondominiumToDelete = await _condominiumService.GetCondominiumByIdAsync(Int32.Parse(CondominiumTIId.Text));
+        //        var CondominiumToDelete = await _condominiumService.GetCondominiumByIdAsync(Int32.Parse(CondominiumTIId.Text));
 
-                if (CondominiumToDelete != null)
-                {
-                    CondominiumToDelete.DeletedAt = DateTime.Now;
-                    await _condominiumService.DeleteCondominiumAsync(Int32.Parse(CondominiumTIId.Text));
-                    MessageBox.Show("El condominio ha sido borrado con exitosamente.");
-                    LoadDataToDataGrid();
-                    CleanForm();
-                }
-                else
-                {
-                    MessageBox.Show("Condominio no encontrado.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("El campo de Id debe de estar lleno.");
-            }
-        }
+        //        if (CondominiumToDelete != null)
+        //        {
+        //            CondominiumToDelete.DeletedAt = DateTime.Now;
+        //            await _condominiumService.DeleteCondominiumAsync(Int32.Parse(CondominiumTIId.Text));
+        //            MessageBox.Show("El condominio ha sido borrado con exitosamente.");
+        //            LoadDataToDataGrid();
+        //            CleanForm();
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("Condominio no encontrado.");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("El campo de Id debe de estar lleno.");
+        //    }
+        //}
 
         private void CleanForm()
         {
             CondominiumTIId.Text = string.Empty;
-            //CondominiumTIName.Text = string.Empty;
-            //CondominiumTIAddress.Text = string.Empty;
-            //CondominiumTIBlocksQuantity.Text = string.Empty;
-            //CondominiumMskTBContactNumber.Clear();
+
+            LoadDataToDataGrid();
         }
     }
 }

@@ -21,6 +21,8 @@ namespace Condominium_System.Presentation.Views
         User currentUser;
         public event EventHandler UserCreated;
 
+        public bool IsEditMode { get; set; } = false;
+
         public SignUpScreen(IUserService userService, ICondominiumService condominiumService)
         {
             InitializeComponent();

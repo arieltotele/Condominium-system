@@ -1,6 +1,7 @@
 ﻿using Condominium_System.Business.Services;
 using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,14 +19,16 @@ namespace Condominium_System.Presentation.Views
     {
         private readonly IBlockService _blockService;
         private readonly ICondominiumService _condominiumService;
+        private readonly IServiceProvider _serviceProvider;
         User currentUser;
 
-        public HousingBlocksScreen(IBlockService blockService, ICondominiumService condominiumService)
+        public HousingBlocksScreen(IBlockService blockService, ICondominiumService condominiumService, IServiceProvider serviceProvider)
         {
             InitializeComponent();
             _blockService = blockService;
             _condominiumService = condominiumService;
             currentUser = Session.CurrentUser;
+            _serviceProvider = serviceProvider;
         }
 
         private async void HousingBlocksScreen_Load(object sender, EventArgs e)
@@ -135,16 +138,22 @@ namespace Condominium_System.Presentation.Views
 
         private async Task LoadCondominiumsIntoComboBox()
         {
-            var condominiums = await _condominiumService.GetAllCondominiumsAsync();
+            try
+            {
+                using (var scope = _serviceProvider.CreateScope())
+                {
+                    var condoService = scope.ServiceProvider.GetRequiredService<ICondominiumService>();
+                    var condominiums = await condoService.GetAllCondominiumsAsync();
 
-            BlockCBCondominium.DisplayMember = "Name";
-            BlockCBCondominium.ValueMember = "Id";
-            BlockCBCondominium.DataSource = condominiums;
-
-            var placeholder = new Condominium { Id = 0, Name = "-- Seleccione un condominio --" };
-            var listWithPlaceholder = new List<Condominium> { placeholder };
-            listWithPlaceholder.AddRange(condominiums);
-            BlockCBCondominium.DataSource = listWithPlaceholder;
+                    BlockCBCondominium.DataSource = condominiums;
+                    BlockCBCondominium.DisplayMember = "Name";  // ajusta según tu modelo
+                    BlockCBCondominium.ValueMember = "Id";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error cargando condominios: {ex.Message}");
+            }
         }
 
         private async void BlockPNLBTNCreate_Click(object sender, EventArgs e)

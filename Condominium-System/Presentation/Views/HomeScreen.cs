@@ -133,7 +133,7 @@ namespace Condominium_System.Presentation.Views
         private void OpenServiceScreen()
         {
             var screen = _serviceProvider.GetRequiredService<ServiceScreen>();
-            LoadFormInPanel(screen); // Asegúrate de usar una nueva instancia cada vez
+            LoadFormInPanel(screen);
         }
 
         private void LoadFormInPanel(Form childForm)
@@ -143,8 +143,8 @@ namespace Condominium_System.Presentation.Views
                 var oldForm = HomeScreenPNLMain.Controls[0] as Form;
                 if (oldForm != null)
                 {
-                    oldForm.Hide(); // en vez de .Close()
-                    oldForm.Dispose(); // opcional si no vas a reutilizarlo
+                    oldForm.Hide();
+                    oldForm.Dispose();
                 }
 
                 HomeScreenPNLMain.Controls.Clear();
