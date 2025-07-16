@@ -69,7 +69,6 @@ namespace Condominium_System.Presentation.Views
 
         private void ConfigureCondominiumColumns()
         {
-
             CondominiumDTGData.Columns.Add(new DataGridViewTextBoxColumn
             {
                 DataPropertyName = "Id",
@@ -185,7 +184,6 @@ namespace Condominium_System.Presentation.Views
             }
         }
 
-
         private void GoToUpsertScreen(bool isToUpdate)
         {
             if (isToUpdate)
@@ -196,7 +194,6 @@ namespace Condominium_System.Presentation.Views
                     return;
                 }
 
-                // Obtener el objeto seleccionado
                 var selectedCondo = CondominiumDTGData.CurrentRow.DataBoundItem as Condominium;
                 if (selectedCondo == null)
                 {
@@ -261,33 +258,6 @@ namespace Condominium_System.Presentation.Views
                 e.Handled = true;
             }
         }
-
-        //private async void CondominiumBTNDelete_Click(object sender, EventArgs e)
-        //{
-
-        //    if (!String.IsNullOrEmpty(CondominiumTIId.Text))
-        //    {
-                
-        //        var CondominiumToDelete = await _condominiumService.GetCondominiumByIdAsync(Int32.Parse(CondominiumTIId.Text));
-
-        //        if (CondominiumToDelete != null)
-        //        {
-        //            CondominiumToDelete.DeletedAt = DateTime.Now;
-        //            await _condominiumService.DeleteCondominiumAsync(Int32.Parse(CondominiumTIId.Text));
-        //            MessageBox.Show("El condominio ha sido borrado con exitosamente.");
-        //            LoadDataToDataGrid();
-        //            CleanForm();
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("Condominio no encontrado.");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("El campo de Id debe de estar lleno.");
-        //    }
-        //}
 
         private void CleanForm()
         {

@@ -51,7 +51,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(12, 18);
+            label1.Location = new Point(15, 66);
             label1.Name = "label1";
             label1.Size = new Size(25, 21);
             label1.TabIndex = 9;
@@ -61,7 +61,7 @@
             // 
             LoginPNLUsername.BackColor = SystemColors.Window;
             LoginPNLUsername.Controls.Add(CondominiumTIId);
-            LoginPNLUsername.Location = new Point(12, 51);
+            LoginPNLUsername.Location = new Point(15, 99);
             LoginPNLUsername.Name = "LoginPNLUsername";
             LoginPNLUsername.Size = new Size(235, 24);
             LoginPNLUsername.TabIndex = 10;
@@ -90,7 +90,7 @@
             CondominiumPNLBTNCreate.BackColor = Color.MidnightBlue;
             CondominiumPNLBTNCreate.Controls.Add(label8);
             CondominiumPNLBTNCreate.Controls.Add(pictureBox3);
-            CondominiumPNLBTNCreate.Location = new Point(856, 34);
+            CondominiumPNLBTNCreate.Location = new Point(859, 82);
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 35;
@@ -126,7 +126,7 @@
             // 
             panel1.BackColor = Color.MidnightBlue;
             panel1.Controls.Add(pictureBox5);
-            panel1.Location = new Point(244, 51);
+            panel1.Location = new Point(247, 99);
             panel1.Name = "panel1";
             panel1.Size = new Size(26, 24);
             panel1.TabIndex = 36;
@@ -157,7 +157,7 @@
             Controls.Add(LoginPNLUsername);
             Name = "CondominiumScreen";
             Text = "CondominuiumScreen";
-            Load += CondominuiumScreen_Load;    
+            Load += CondominuiumScreen_Load;
             LoginPNLUsername.ResumeLayout(false);
             LoginPNLUsername.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)CondominiumDTGData).EndInit();

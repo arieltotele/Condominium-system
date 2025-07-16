@@ -471,9 +471,9 @@
             // HomeScreenPNLMain
             // 
             HomeScreenPNLMain.BackColor = Color.White;
-            HomeScreenPNLMain.Location = new Point(170, 129);
+            HomeScreenPNLMain.Location = new Point(170, 128);
             HomeScreenPNLMain.Name = "HomeScreenPNLMain";
-            HomeScreenPNLMain.Size = new Size(1032, 630);
+            HomeScreenPNLMain.Size = new Size(1032, 631);
             HomeScreenPNLMain.TabIndex = 3;
             // 
             // HomeScreen
@@ -486,6 +486,7 @@
             Controls.Add(HomeScreenPNLMenu);
             Controls.Add(panel1);
             Name = "HomeScreen";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "HomeScreen";
             Load += HomeScreen_Load;
             panel1.ResumeLayout(false);

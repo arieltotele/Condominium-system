@@ -1,6 +1,8 @@
 ﻿using Condominium_System.Business.Services;
 using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -102,20 +104,28 @@ namespace Condominium_System.Presentation.Views
 
                         await _condominiumService.UpdateCondominiumAsync(CondominiumToUpdate);
 
-                        MessageBox.Show("El condominio ha sido actualizado con exito");                        
+                        MessageBox.Show("El condominio ha sido actualizado con exito");
                         CleanForm();
+                        ((CondominiumScreen)this.Owner).LoadDataToDataGrid();
+                        this.Hide();
+
                     }
                     else
                     {
                         MessageBox.Show("Condominio no encontrado.");
+                        CleanForm();
                         return;
                     }
                 }
+                catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx && (sqlEx.Number == 2601 || sqlEx.Number == 2627))
+                {
+                    MessageBox.Show("Ya existe un condominio con ese nombre. Por favor elija otro.", "Nombre duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error guardando el condominio: {ex.Message}");
+                    MessageBox.Show($"Error guardando condominio: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    CleanForm();
                 }
-
             }
             else
             {
@@ -146,9 +156,15 @@ namespace Condominium_System.Presentation.Views
                     ((CondominiumScreen)this.Owner).LoadDataToDataGrid();
                     this.Hide();
                 }
+                catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx && (sqlEx.Number == 2601 || sqlEx.Number == 2627))
+                {
+                    MessageBox.Show("Ya existe un condominio con ese nombre. Por favor elija otro.", "Nombre duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    CleanForm();
+                }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error guardando condominio: {ex.Message}");
+                    MessageBox.Show($"Error guardando condominio: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    CleanForm();
                 }
             }
             else

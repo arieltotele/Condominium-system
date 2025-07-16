@@ -122,7 +122,6 @@
             UpsertTIAddress.Name = "UpsertTIAddress";
             UpsertTIAddress.Size = new Size(327, 16);
             UpsertTIAddress.TabIndex = 2;
-            UpsertTIAddress.KeyPress += OnlyAllowLetters_KeyPress;
             // 
             // label2
             // 
@@ -150,7 +149,6 @@
             UpsertTIName.Name = "UpsertTIName";
             UpsertTIName.Size = new Size(327, 16);
             UpsertTIName.TabIndex = 2;
-            UpsertTIName.KeyPress += OnlyAllowLetters_KeyPress;
             // 
             // UpsertPNLBTN
             // 
@@ -201,6 +199,7 @@
             Controls.Add(label2);
             Controls.Add(panel1);
             Name = "UpsertCondominiumScreen";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "AddCondominiumScreen";
             Load += AddCondominiumScreen_Load;
             panel2.ResumeLayout(false);
