@@ -33,30 +33,82 @@ namespace Condominium_System.Presentation.Views
 
         private async void HousingBlocksScreen_Load(object sender, EventArgs e)
         {
+            BlockDTGData.CellPainting += BlockDTGData_CellPainting;
+            BlockDTGData.CellClick += BlockDTGData_CellClick;
+
             SetDataGridStyle();
             ConfigureBlockColumns();
             LoadDataToDataGrid();
-            SetComboBoxForTypeOfHousing();
-            await LoadCondominiumsIntoComboBox();
         }
 
-        private void SetComboBoxForTypeOfHousing()
+        private void BlockDTGData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            var userTypes = new List<KeyValuePair<int, string>>
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && BlockDTGData.Columns[e.ColumnIndex].Name == "ActionsColumn")
             {
-                new KeyValuePair<int, string>(0, "-- Seleccione un tipo de vivienda --"),
-                new KeyValuePair<int, string>(1, "Casa"),
-                new KeyValuePair<int, string>(2, "Apartamento")
-            };
+                e.PaintBackground(e.CellBounds, true);
+                e.PaintContent(e.CellBounds);
 
-            BlockCBTypeHousing.DataSource = userTypes;
-            BlockCBTypeHousing.DisplayMember = "Value";
-            BlockCBTypeHousing.ValueMember = "Key";
-            BlockCBTypeHousing.DropDownStyle = ComboBoxStyle.DropDownList;
-            BlockCBTypeHousing.SelectedIndex = 0;
+                int iconWidth = 16;
+                int iconHeight = 16;
+                int padding = 5;
+
+                int x = e.CellBounds.Left + padding;
+                int y = e.CellBounds.Top + (e.CellBounds.Height - iconHeight) / 2;
+
+                e.Graphics.DrawImage(Properties.Resources.pencil_blue, new Rectangle(x, y, iconWidth, iconHeight));
+
+                x += iconWidth + padding;
+                e.Graphics.DrawImage(Properties.Resources.trash_red, new Rectangle(x, y, iconWidth, iconHeight));
+
+                e.Handled = true;
+            }
         }
 
-        private async void LoadDataToDataGrid()
+        private async void BlockDTGData_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && BlockDTGData.Columns[e.ColumnIndex].Name == "ActionsColumn")
+            {
+                var cellBounds = BlockDTGData.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
+                var clickPosition = BlockDTGData.PointToClient(Cursor.Position);
+                int relativeX = clickPosition.X - cellBounds.Left;
+
+                var selectedRow = BlockDTGData.Rows[e.RowIndex];
+                var selectedBlock = selectedRow.DataBoundItem as Block;
+
+                if (selectedBlock == null)
+                {
+                    MessageBox.Show("No se pudo identificar el bloque.");
+                    return;
+                }
+
+                if (relativeX < 26) // 🟢 Editar
+                {
+                    Session.BlockToUpsert = selectedBlock;
+                    GoToUpsertScreen(true);
+                }
+                else if (relativeX >= 26 && relativeX < 52) // 🔴 Eliminar
+                {
+                    var confirm = MessageBox.Show($"¿Deseas eliminar el bloque '{selectedBlock.Name}'?",
+                                                  "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                    if (confirm == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            await _blockService.DeleteBlockAsync(selectedBlock.Id);
+                            MessageBox.Show("Bloque eliminado correctamente.");
+                            LoadDataToDataGrid();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Error al eliminar bloque: {ex.Message}");
+                        }
+                    }
+                }
+            }
+        }
+
+        public async void LoadDataToDataGrid()
         {
             try
             {
@@ -67,7 +119,7 @@ namespace Condominium_System.Presentation.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error cargando condominios: {ex.Message}");
+                MessageBox.Show($"Error cargando bloques: {ex.Message}");
             }
         }
 
@@ -100,7 +152,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "Feature",
                 HeaderText = "Caracteristica",
                 Name = "FeatureColumn",
-                Width = 130
+                Width = 250
             });
 
             BlockDTGData.Columns.Add(new DataGridViewTextBoxColumn
@@ -108,7 +160,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "HousingType",
                 HeaderText = "Tipos de vivienda",
                 Name = "HousingTypeColumn",
-                Width = 120
+                Width = 170
             });
 
             BlockDTGData.Columns.Add(new DataGridViewTextBoxColumn
@@ -116,7 +168,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "HousingCount",
                 HeaderText = "Numero de casas",
                 Name = "HousingCountColumn",
-                Width = 110
+                Width = 120
             });
 
             BlockDTGData.Columns.Add(new DataGridViewTextBoxColumn
@@ -126,222 +178,221 @@ namespace Condominium_System.Presentation.Views
                 Name = "AddressColumn",
                 Width = 120
             });
-        }
 
-        private void BlockTBHouseQuantity_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            BlockDTGData.Columns.Add(new DataGridViewTextBoxColumn
             {
-                e.Handled = true;
-            }
-        }
-
-        private async Task LoadCondominiumsIntoComboBox()
-        {
-            try
-            {
-                using (var scope = _serviceProvider.CreateScope())
-                {
-                    var condoService = scope.ServiceProvider.GetRequiredService<ICondominiumService>();
-                    var condominiums = await condoService.GetAllCondominiumsAsync();
-
-                    BlockCBCondominium.DataSource = condominiums;
-                    BlockCBCondominium.DisplayMember = "Name";  // ajusta según tu modelo
-                    BlockCBCondominium.ValueMember = "Id";
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error cargando condominios: {ex.Message}");
-            }
-        }
+                HeaderText = "Acciones",
+                Name = "ActionsColumn",
+                Width = 100
+            });
+        }    
 
         private async void BlockPNLBTNCreate_Click(object sender, EventArgs e)
         {
-            if (FormIsCorrect())
+            GoToUpsertScreen(false);
+
+            //if (FormIsCorrect())
+            //{
+            //    try
+            //    {
+            //        var NewBlock = new Block()
+            //        {
+            //            Name = BlockTBName.Text,
+            //            Address = BlockTBAddress.Text,
+            //            HousingType = BlockCBTypeHousing.Text,
+            //            HousingCount = Int32.Parse(BlockTBHouseQuantity.Text),
+            //            Feature = BlockTBFeature.Text,
+            //            CondominiumId = (int)BlockCBCondominium.SelectedValue,
+            //            Author = currentUser.Username
+            //        };
+
+            //        await _blockService.CreateBlockAsync(NewBlock);
+
+            //        MessageBox.Show("El bloque de casas ha sido creado con exito.", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //        CleanForm();
+            //        LoadDataToDataGrid();
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show($"Error guardando el bloque de casas: {ex.Message}");
+            //    }
+
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Todos los campos deben ser completados correctamente.");
+            //}
+        }
+
+        private void GoToUpsertScreen(bool isToUpdate)
+        {
+            if (isToUpdate)
             {
-                try
+                if (BlockDTGData.CurrentRow == null)
                 {
-                    var NewBlock = new Block()
-                    {
-                        Name = BlockTBName.Text,
-                        Address = BlockTBAddress.Text,
-                        HousingType = BlockCBTypeHousing.Text,
-                        HousingCount = Int32.Parse(BlockTBHouseQuantity.Text),
-                        Feature = BlockTBFeature.Text,
-                        CondominiumId = (int)BlockCBCondominium.SelectedValue,
-                        Author = currentUser.Username
-                    };
-
-                    await _blockService.CreateBlockAsync(NewBlock);
-
-                    MessageBox.Show("El bloque de casas ha sido creado con exito.", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    CleanForm();
-                    LoadDataToDataGrid();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error guardando el bloque de casas: {ex.Message}");
+                    MessageBox.Show("Por favor, selecciona un bloque para editar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
+                var selectedHousingBlock = BlockDTGData.CurrentRow.DataBoundItem as Condominium;
+                if (selectedHousingBlock == null)
+                {
+                    MessageBox.Show("Error al obtener el bloque seleccionado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                Session.CondominiumToUpsert = selectedHousingBlock;
             }
             else
             {
-                MessageBox.Show("Todos los campos deben ser completados correctamente.");
+                Session.CondominiumToUpsert = null;
             }
-        }
 
-        public bool FormIsCorrect()
-        {
-            bool isTypeValid = int.TryParse(BlockCBTypeHousing.SelectedValue?.ToString(), out int typeId) && typeId != 0;
-            bool isCondoValid = int.TryParse(BlockCBCondominium.SelectedValue?.ToString(), out int condoId) && condoId != 0;
-
-            return !(
-               string.IsNullOrEmpty(BlockTBName.Text) ||
-               string.IsNullOrEmpty(BlockTBAddress.Text) ||
-               string.IsNullOrEmpty(BlockTBHouseQuantity.Text) ||
-               string.IsNullOrEmpty(BlockTBFeature.Text) ||
-               !isTypeValid ||
-               !isCondoValid
-           );
-        }
-
-        public bool FormIsCorrectToUpdate()
-        {
-            bool isTypeValid = int.TryParse(BlockCBTypeHousing.SelectedValue?.ToString(), out int typeId) && typeId != 0;
-            bool isCondoValid = int.TryParse(BlockCBCondominium.SelectedValue?.ToString(), out int condoId) && condoId != 0;
-
-            return !(
-               string.IsNullOrEmpty(BlockTBID.Text) ||
-               string.IsNullOrEmpty(BlockTBName.Text) ||
-               string.IsNullOrEmpty(BlockTBAddress.Text) ||
-               string.IsNullOrEmpty(BlockTBHouseQuantity.Text) ||
-               string.IsNullOrEmpty(BlockTBFeature.Text) ||
-               !isTypeValid ||
-               !isCondoValid
-           );
+            var upsertScreen = _serviceProvider.GetRequiredService<UpsertHousingBlocks>();
+            upsertScreen.IsEditMode = isToUpdate;
+            upsertScreen.Owner = this;
+            upsertScreen.Show();
         }
 
         private async void BlockPNLBTNSearch_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(BlockTBID.Text))
+            if (!string.IsNullOrWhiteSpace(BlockTBID.Text))
             {
                 try
                 {
-                    var BlockFound = await _blockService.GetBlockByIdAsync(Int32.Parse(BlockTBID.Text));
-                    if (BlockFound != null)
+                    int id = int.Parse(BlockTBID.Text);
+                    var housingBlockFound = await _blockService.GetBlockByIdAsync(id);
+
+                    if (housingBlockFound != null)
                     {
-                        BlockTBID.Text = BlockFound.Id.ToString();
-                        BlockTBName.Text = BlockFound.Name;
-                        BlockTBAddress.Text = BlockFound.Address;
-                        BlockTBHouseQuantity.Text = BlockFound.HousingCount.ToString();
-                        BlockTBFeature.Text = BlockFound.Feature;
-
-                        await LoadCondominiumsIntoComboBox();
-
-                        BlockCBCondominium.SelectedValue = BlockFound.CondominiumId;
-
-                        if (BlockFound.HousingType == "Casa")
-                            BlockCBTypeHousing.SelectedValue = 1;
-                        else if (BlockFound.HousingType == "Apartamento")
-                            BlockCBTypeHousing.SelectedValue = 2;
-                        else
-                            BlockCBTypeHousing.SelectedValue = 0;
+                        BlockDTGData.DataSource = new List<Block> { housingBlockFound };
                     }
                     else
                     {
-                        MessageBox.Show("Bloque de casa no encontrado.");
+                        MessageBox.Show("Bloque no encontrado.", "Búsqueda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CleanForm();
                     }
-
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error buscando el bloque de casa: {ex.Message}");
+                    MessageBox.Show($"Error buscando Bloque: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    CleanForm();
                 }
             }
             else
             {
-                MessageBox.Show("El campo Id debe de estar lleno correctamente.");
+                MessageBox.Show("El campo Id debe estar lleno correctamente.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                CleanForm();
             }
+            //if (!String.IsNullOrEmpty(BlockPNLID.Text))
+            //{
+            //    try
+            //    {
+            //        var BlockFound = await _blockService.GetBlockByIdAsync(Int32.Parse(BlockPNLID.Text));
+            //        if (BlockFound != null)
+            //        {
+            //            BlockPNLID.Text = BlockFound.Id.ToString();
+            //            BlockTBName.Text = BlockFound.Name;
+            //            BlockTBAddress.Text = BlockFound.Address;
+            //            BlockTBHouseQuantity.Text = BlockFound.HousingCount.ToString();
+            //            BlockTBFeature.Text = BlockFound.Feature;
+
+            //            await LoadCondominiumsIntoComboBox();
+
+            //            BlockCBCondominium.SelectedValue = BlockFound.CondominiumId;
+
+            //            if (BlockFound.HousingType == "Casa")
+            //                BlockCBTypeHousing.SelectedValue = 1;
+            //            else if (BlockFound.HousingType == "Apartamento")
+            //                BlockCBTypeHousing.SelectedValue = 2;
+            //            else
+            //                BlockCBTypeHousing.SelectedValue = 0;
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("Bloque de casa no encontrado.");
+            //        }
+
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show($"Error buscando el bloque de casa: {ex.Message}");
+            //    }
+            //}
+            //else
+            //{
+            //    MessageBox.Show("El campo Id debe de estar lleno correctamente.");
+            //}
         }
 
         private async void BlockPNLBTNUpdate_Click(object sender, EventArgs e)
         {
-            if (FormIsCorrectToUpdate())
-            {
-                try
-                {
-                    var BlockToUpdate = await _blockService.GetBlockByIdAsync(Int32.Parse(BlockTBID.Text));
+            //if (FormIsCorrectToUpdate())
+            //{
+            //    try
+            //    {
+            //        var BlockToUpdate = await _blockService.GetBlockByIdAsync(Int32.Parse(BlockTBID.Text));
 
-                    if (BlockToUpdate != null)
-                    {
-                        BlockToUpdate.Id = int.Parse(BlockTBID.Text);
-                        BlockToUpdate.Name = BlockTBName.Text;
-                        BlockToUpdate.Feature = BlockTBFeature.Text;
-                        BlockToUpdate.HousingCount = Int32.Parse(BlockTBHouseQuantity.Text);
-                        BlockToUpdate.Address = BlockTBAddress.Text;
-                        BlockToUpdate.CondominiumId = (int)BlockCBCondominium.SelectedValue;
-                        BlockToUpdate.HousingType = BlockCBTypeHousing.Text;
+            //        if (BlockToUpdate != null)
+            //        {
+            //            BlockToUpdate.Id = int.Parse(BlockTBID.Text);
+            //            BlockToUpdate.Name = BlockTBName.Text;
+            //            BlockToUpdate.Feature = BlockTBFeature.Text;
+            //            BlockToUpdate.HousingCount = Int32.Parse(BlockTBHouseQuantity.Text);
+            //            BlockToUpdate.Address = BlockTBAddress.Text;
+            //            BlockToUpdate.CondominiumId = (int)BlockCBCondominium.SelectedValue;
+            //            BlockToUpdate.HousingType = BlockCBTypeHousing.Text;
 
-                        BlockToUpdate.UpdatedAt = DateTime.Now;
+            //            BlockToUpdate.UpdatedAt = DateTime.Now;
 
-                        await _blockService.UpdateBlockAsync(BlockToUpdate);
+            //            await _blockService.UpdateBlockAsync(BlockToUpdate);
 
-                        MessageBox.Show("El bloque de vivienda ha sido actualizado con exito");
-                        LoadDataToDataGrid();
-                        CleanForm();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Bloque de vivienda no encontrado.");
-                        return;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error actualizando el bloque de vivienda: {ex.Message}");
-                }
-            }
+            //            MessageBox.Show("El bloque de vivienda ha sido actualizado con exito");
+            //            LoadDataToDataGrid();
+            //            CleanForm();
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("Bloque de vivienda no encontrado.");
+            //            return;
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show($"Error actualizando el bloque de vivienda: {ex.Message}");
+            //    }
+            //}
         }
 
         private async void BlockPNLBTNDelete_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(BlockTBID.Text))
-            {
-                var BlockToDelete = await _blockService.GetBlockByIdAsync(Int32.Parse(BlockTBID.Text));
+            //if (!String.IsNullOrEmpty(BlockTBID.Text))
+            //{
+            //    var BlockToDelete = await _blockService.GetBlockByIdAsync(Int32.Parse(BlockTBID.Text));
 
-                if (BlockToDelete != null)
-                {
-                    BlockToDelete.DeletedAt = DateTime.Now;
-                    await _blockService.DeleteBlockAsync(Int32.Parse(BlockTBID.Text));
-                    MessageBox.Show("El bloque de viviendas ha sido borrado con exitosamente.");
-                    LoadDataToDataGrid();
-                    CleanForm();
-                }
-                else
-                {
-                    MessageBox.Show("Bloque de viviendas no encontrado.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("El campo de Id debe de estar lleno.");
-            }
+            //    if (BlockToDelete != null)
+            //    {
+            //        BlockToDelete.DeletedAt = DateTime.Now;
+            //        await _blockService.DeleteBlockAsync(Int32.Parse(BlockTBID.Text));
+            //        MessageBox.Show("El bloque de viviendas ha sido borrado con exitosamente.");
+            //        LoadDataToDataGrid();
+            //        CleanForm();
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Bloque de viviendas no encontrado.");
+            //    }
+            //}
+            //else
+            //{
+            //    MessageBox.Show("El campo de Id debe de estar lleno.");
+            //}
         }
 
         private void CleanForm()
         {
             BlockTBID.Clear();
-            BlockTBName.Clear();
-            BlockTBAddress.Clear();
-            BlockTBHouseQuantity.Clear();
-            BlockTBFeature.Clear();
-
-            if (BlockCBTypeHousing.Items.Count > 0)
-                BlockCBTypeHousing.SelectedIndex = 0;
-
-            if (BlockCBCondominium.Items.Count > 0)
-                BlockCBCondominium.SelectedIndex = 0;
+            LoadDataToDataGrid();
         }        
     }
 }
