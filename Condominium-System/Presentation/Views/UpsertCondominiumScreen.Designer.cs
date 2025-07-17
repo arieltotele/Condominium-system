@@ -42,6 +42,7 @@
             UpsertPNLBTN = new Panel();
             UpsertLBLBTN = new Label();
             UpsertPCTBXBTN = new PictureBox();
+            panel4 = new Panel();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             panel1.SuspendLayout();
@@ -184,6 +185,14 @@
             UpsertPCTBXBTN.TabStop = false;
             UpsertPCTBXBTN.Click += UpsertLBLBTN_Click;
             // 
+            // panel4
+            // 
+            panel4.Dock = DockStyle.Fill;
+            panel4.Location = new Point(0, 0);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(411, 491);
+            panel4.TabIndex = 46;
+            // 
             // UpsertCondominiumScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -198,6 +207,7 @@
             Controls.Add(panel3);
             Controls.Add(label2);
             Controls.Add(panel1);
+            Controls.Add(panel4);
             Name = "UpsertCondominiumScreen";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "AddCondominiumScreen";
@@ -231,5 +241,6 @@
         private Panel UpsertPNLBTN;
         private Label UpsertLBLBTN;
         private PictureBox UpsertPCTBXBTN;
+        private Panel panel4;
     }
 }
