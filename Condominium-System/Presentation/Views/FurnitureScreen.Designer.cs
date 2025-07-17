@@ -156,7 +156,6 @@
             Name = "FurnitureScreen";
             Text = "FurnitureScreen";
             Load += FurnitureScreen_Load;
-            Click += FurniturePNLBTNDelete_Click;
             LoginPNLUsername.ResumeLayout(false);
             LoginPNLUsername.PerformLayout();
             CondominiumPNLBTNCreate.ResumeLayout(false);
