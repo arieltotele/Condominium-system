@@ -139,7 +139,7 @@ namespace Condominium_System.Presentation.Views
             upsertScreen.Show();
         }
 
-        private async Task LoadDataToDataGrid()
+        public async Task LoadDataToDataGrid()
         {
             try
             {
