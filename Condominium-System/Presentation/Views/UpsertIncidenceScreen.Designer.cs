@@ -173,6 +173,7 @@
             Controls.Add(label2);
             Controls.Add(panel1);
             Name = "UpsertIncidenceScreen";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "UpsertIncidenceScreen";
             Load += UpsertIncidenceScreen_Load;
             panel5.ResumeLayout(false);
