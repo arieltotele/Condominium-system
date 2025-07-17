@@ -22,6 +22,7 @@ namespace Condominium_System.Presentation.Views
         User currentUser;
 
         public bool IsEditMode { get; set; } = false;
+
         public UpsertTenantScreen(ITenantService tenantService, IHousingEntityService housingEntityService, IServiceProvider serviceProvider)
         {
             InitializeComponent();

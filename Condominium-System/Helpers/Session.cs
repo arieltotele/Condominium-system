@@ -16,5 +16,6 @@ namespace Condominium_System.Helpers
         public static Tenant? TenantToUpsert { get; set; }
         public static Incident? IncidenceToUpsert { get; set; }
         public static Furniture? FurnitureToUpsert { get; set; }
+        public static Service? ServiceToUpsert { get; set; }
     }
 }
