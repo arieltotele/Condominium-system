@@ -149,9 +149,9 @@ namespace Condominium_System.Presentation.Views
                 int relativeX = clickPosition.X - cellBounds.Left;
 
                 var selectedRow = CondominiumDTGData.Rows[e.RowIndex];
-                var selectedCondo = selectedRow.DataBoundItem as Condominium;
+                var selectedFurniture = selectedRow.DataBoundItem as Condominium;
 
-                if (selectedCondo == null)
+                if (selectedFurniture == null)
                 {
                     MessageBox.Show("No se pudo identificar el condominio.");
                     return;
@@ -159,19 +159,19 @@ namespace Condominium_System.Presentation.Views
 
                 if (relativeX < 26) // 🟢 Editar
                 {
-                    Session.CondominiumToUpsert = selectedCondo;
+                    Session.CondominiumToUpsert = selectedFurniture;
                     GoToUpsertScreen(true);
                 }
                 else if (relativeX >= 26 && relativeX < 52) // 🔴 Eliminar
                 {
-                    var confirm = MessageBox.Show($"¿Deseas eliminar el condominio '{selectedCondo.Name}'?",
+                    var confirm = MessageBox.Show($"¿Deseas eliminar el condominio '{selectedFurniture.Name}'?",
                                                   "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                     if (confirm == DialogResult.Yes)
                     {
                         try
                         {
-                            await _condominiumService.DeleteCondominiumAsync(selectedCondo.Id);
+                            await _condominiumService.DeleteCondominiumAsync(selectedFurniture.Id);
                             MessageBox.Show("Condominio eliminado correctamente.");
                             LoadDataToDataGrid();
                         }

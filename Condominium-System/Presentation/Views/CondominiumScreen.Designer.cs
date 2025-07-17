@@ -51,7 +51,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(15, 66);
+            label1.Location = new Point(12, 58);
             label1.Name = "label1";
             label1.Size = new Size(25, 21);
             label1.TabIndex = 9;
@@ -61,7 +61,7 @@
             // 
             LoginPNLUsername.BackColor = SystemColors.Window;
             LoginPNLUsername.Controls.Add(CondominiumTIId);
-            LoginPNLUsername.Location = new Point(15, 99);
+            LoginPNLUsername.Location = new Point(12, 91);
             LoginPNLUsername.Name = "LoginPNLUsername";
             LoginPNLUsername.Size = new Size(235, 24);
             LoginPNLUsername.TabIndex = 10;
@@ -90,7 +90,7 @@
             CondominiumPNLBTNCreate.BackColor = Color.MidnightBlue;
             CondominiumPNLBTNCreate.Controls.Add(label8);
             CondominiumPNLBTNCreate.Controls.Add(pictureBox3);
-            CondominiumPNLBTNCreate.Location = new Point(859, 82);
+            CondominiumPNLBTNCreate.Location = new Point(856, 74);
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 35;
@@ -126,7 +126,7 @@
             // 
             panel1.BackColor = Color.MidnightBlue;
             panel1.Controls.Add(pictureBox5);
-            panel1.Location = new Point(247, 99);
+            panel1.Location = new Point(244, 91);
             panel1.Name = "panel1";
             panel1.Size = new Size(26, 24);
             panel1.TabIndex = 36;
@@ -136,7 +136,7 @@
             // pictureBox5
             // 
             pictureBox5.Image = Properties.Resources.search_white;
-            pictureBox5.Location = new Point(3, 3);
+            pictureBox5.Location = new Point(1, 3);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(22, 18);
             pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;

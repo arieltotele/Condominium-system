@@ -86,6 +86,7 @@ namespace Condominium_System
             services.AddTransient<UpsertHousingBlocks>();
             services.AddTransient<UpsertTenantScreen>();
             services.AddTransient<UpsertIncidenceScreen>();
+            services.AddTransient<UpsertFurnitureScreen>();
 
             var serviceProvider = services.BuildServiceProvider();
 
