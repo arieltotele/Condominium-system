@@ -234,18 +234,18 @@ namespace Condominium_System.Presentation.Views
                     return;
                 }
 
-                var selectedHousingBlock = BlockDTGData.CurrentRow.DataBoundItem as Condominium;
+                var selectedHousingBlock = BlockDTGData.CurrentRow.DataBoundItem as Block;
                 if (selectedHousingBlock == null)
                 {
                     MessageBox.Show("Error al obtener el bloque seleccionado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                Session.CondominiumToUpsert = selectedHousingBlock;
+                Session.BlockToUpsert = selectedHousingBlock;
             }
             else
             {
-                Session.CondominiumToUpsert = null;
+                Session.BlockToUpsert = null;
             }
 
             var upsertScreen = _serviceProvider.GetRequiredService<UpsertHousingBlocks>();
