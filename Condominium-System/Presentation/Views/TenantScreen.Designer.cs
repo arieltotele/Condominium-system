@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             panel1 = new Panel();
             pictureBox5 = new PictureBox();
             CondominiumPNLBTNCreate = new Panel();
@@ -37,6 +38,7 @@
             label1 = new Label();
             BlockPNLID = new Panel();
             TenantTBID = new TextBox();
+            toolTip1 = new ToolTip(components);
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             CondominiumPNLBTNCreate.SuspendLayout();
@@ -63,6 +65,7 @@
             pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox5.TabIndex = 0;
             pictureBox5.TabStop = false;
+            toolTip1.SetToolTip(pictureBox5, "Buscar inquilino y mostrarlo en la tabla.");
             pictureBox5.Click += TenantPNLBTNSearch_Click;
             // 
             // CondominiumPNLBTNCreate
@@ -74,6 +77,8 @@
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 45;
+            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Agregar inquilino.");
+            CondominiumPNLBTNCreate.Click += TenantPNLBTNCreate_Click;
             // 
             // label8
             // 
@@ -85,6 +90,8 @@
             label8.Size = new Size(56, 21);
             label8.TabIndex = 1;
             label8.Text = "Nuevo";
+            toolTip1.SetToolTip(label8, "Agregar inquilino.");
+            label8.Click += TenantPNLBTNCreate_Click;
             // 
             // pictureBox3
             // 
@@ -95,6 +102,8 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
+            toolTip1.SetToolTip(pictureBox3, "Agregar inquilino.");
+            pictureBox3.Click += TenantPNLBTNCreate_Click;
             // 
             // TenantDTGData
             // 
@@ -144,6 +153,7 @@
             Controls.Add(BlockPNLID);
             Name = "TenantScreen";
             Text = "TenantScreen";
+            toolTip1.SetToolTip(this, "Agregar inquilino.");
             Load += TenantScreen_Load;
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
@@ -168,5 +178,6 @@
         private Label label1;
         private Panel BlockPNLID;
         private TextBox TenantTBID;
+        private ToolTip toolTip1;
     }
 }

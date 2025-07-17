@@ -13,5 +13,7 @@ namespace Condominium_System.Helpers
         public static Housing? CurrentHouse { get; set; }
         public static Condominium? CondominiumToUpsert {  get; set; }
         public static Block? BlockToUpsert { get; set; }
+
+        public static Tenant? TenantToUpsert { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using Condominium_System.Helpers;
 using System.CodeDom.Compiler;
 using System.ComponentModel;
 using System.Data;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Condominium_System.Presentation.Views
 {
@@ -11,64 +12,127 @@ namespace Condominium_System.Presentation.Views
     {
 
         private readonly ITenantService _tenantService;
-        private readonly IHousingEntityService _housingEntityService;
+        private readonly IServiceProvider _serviceProvider;
 
         User currentUser;
-        public TenantScreen(ITenantService tenantService, IHousingEntityService housingEntityService)
+
+        public TenantScreen(ITenantService tenantService, IServiceProvider serviceProvider)
         {
             InitializeComponent();
             _tenantService = tenantService;
-            _housingEntityService = housingEntityService;
             currentUser = Session.CurrentUser;
-
+            _serviceProvider = serviceProvider;
         }
 
         private async void TenantScreen_Load(object sender, EventArgs e)
         {
+
+            TenantDTGData.CellPainting += TenantDTGData_CellPainting;
+            TenantDTGData.CellClick += TenantDTGData_CellClick;
+
             SetDataGridStyle();
             ConfigureHousingColumns();
             await LoadDataToDataGrid();
-            await LoadHousesIntoComboBox();
-            //SetComboBoxForSexs();
         }
-        private void SetComboBoxForSexs()
+
+        private void TenantDTGData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            var userTypes = new List<KeyValuePair<int, string>>
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && TenantDTGData.Columns[e.ColumnIndex].Name == "ActionsColumn")
             {
-                new KeyValuePair<int, string>(0, "-- Seleccione un sexo --"),
-                new KeyValuePair<int, string>(1, "Masculino"),
-                new KeyValuePair<int, string>(2, "Femenino")
-            };
+                e.PaintBackground(e.CellBounds, true);
+                e.PaintContent(e.CellBounds);
 
-            //TenantCBSexs.DataSource = userTypes;
-            //TenantCBSexs.DisplayMember = "Value";
-            //TenantCBSexs.ValueMember = "Key";
-            //TenantCBSexs.DropDownStyle = ComboBoxStyle.DropDownList;
-            //TenantCBSexs.SelectedIndex = 0;
+                int iconWidth = 16;
+                int iconHeight = 16;
+                int padding = 5;
+
+                int x = e.CellBounds.Left + padding;
+                int y = e.CellBounds.Top + (e.CellBounds.Height - iconHeight) / 2;
+
+                e.Graphics.DrawImage(Properties.Resources.pencil_blue, new Rectangle(x, y, iconWidth, iconHeight));
+
+                x += iconWidth + padding;
+                e.Graphics.DrawImage(Properties.Resources.trash_red, new Rectangle(x, y, iconWidth, iconHeight));
+
+                e.Handled = true;
+            }
         }
 
-        private async Task LoadHousesIntoComboBox()
+        private async void TenantDTGData_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //try
-            //{
-            //    var houses = await _housingEntityService.GetAllHousingsAsync();
+            if (e.RowIndex >= 0 && TenantDTGData.Columns[e.ColumnIndex].Name == "ActionsColumn")
+            {
+                var cellBounds = TenantDTGData.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
+                var clickPosition = TenantDTGData.PointToClient(Cursor.Position);
+                int relativeX = clickPosition.X - cellBounds.Left;
 
-            //    var placeholder = new Housing { Id = 0, Code = "-- Seleccione una vivienda --" };
-            //    var listWithPlaceholder = new List<Housing> { placeholder };
-            //    listWithPlaceholder.AddRange(houses);
+                var selectedRow = TenantDTGData.Rows[e.RowIndex];
+                var selectedTenant = selectedRow.DataBoundItem as Tenant;
 
-            //    TenantCBHouses.DisplayMember = "Code";
-            //    TenantCBHouses.ValueMember = "Id";
-            //    TenantCBHouses.DataSource = listWithPlaceholder;
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"Error cargando las viviendas: {ex.Message}");
-            //}
+                if (selectedTenant == null)
+                {
+                    MessageBox.Show("No se pudo identificar el inqulino.");
+                    return;
+                }
 
+                if (relativeX < 26) // 🟢 Editar
+                {
+                    Session.TenantToUpsert = selectedTenant;
+                    GoToUpsertScreen(true);
+                }
+                else if (relativeX >= 26 && relativeX < 52) // 🔴 Eliminar
+                {
+                    var confirm = MessageBox.Show($"¿Deseas eliminar el inquilino '{selectedTenant.FirstName}'?",
+                                                  "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                    if (confirm == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            await _tenantService.DeleteAsync(selectedTenant.Id);
+                            MessageBox.Show("Inquilino eliminado correctamente.");
+                            LoadDataToDataGrid();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Error al eliminar inquilino: {ex.Message}");
+                        }
+                    }
+                }
+            }
         }
 
-        private async Task LoadDataToDataGrid()
+        private void GoToUpsertScreen(bool isToUpdate)
+        {
+            if (isToUpdate)
+            {
+                if (TenantDTGData.CurrentRow == null)
+                {
+                    MessageBox.Show("Por favor, selecciona un inquilino para editar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var selectedTenant = TenantDTGData.CurrentRow.DataBoundItem as Tenant;
+                if (selectedTenant == null)
+                {
+                    MessageBox.Show("Error al obtener el inquilino seleccionado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                Session.TenantToUpsert = selectedTenant;
+            }
+            else
+            {
+                Session.TenantToUpsert = null;
+            }
+
+            var upsertScreen = _serviceProvider.GetRequiredService<UpsertTenantScreen>();
+            upsertScreen.IsEditMode = isToUpdate;
+            upsertScreen.Owner = this;
+            upsertScreen.Show();
+        }               
+
+        public async Task LoadDataToDataGrid()
         {
             try
             {
@@ -99,7 +163,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "FirstName",
                 HeaderText = "Nombre",
                 Name = "FirstNameColumn",
-                Width = 150
+                Width = 120
             });
 
             TenantDTGData.Columns.Add(new DataGridViewTextBoxColumn
@@ -115,7 +179,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "DocumentNumber",
                 HeaderText = "Cantidad de habitaciones",
                 Name = "DocumentNumberColumn",
-                Width = 190
+                Width = 150
             });
 
             TenantDTGData.Columns.Add(new DataGridViewTextBoxColumn
@@ -123,7 +187,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "PhoneNumber",
                 HeaderText = "Numero de teléfono",
                 Name = "PhoneNumberColumn",
-                Width = 160
+                Width = 155
             });
 
             TenantDTGData.Columns.Add(new DataGridViewTextBoxColumn
@@ -139,7 +203,14 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "HousingId",
                 HeaderText = "Identificación de la vivienda",
                 Name = "HousingIdColumn",
-                Width = 155
+                Width = 130
+            });
+
+            TenantDTGData.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Acciones",
+                Name = "ActionsColumn",
+                Width = 100
             });
         }
 
@@ -152,55 +223,12 @@ namespace Condominium_System.Presentation.Views
         {
             TenantTBID.Clear();
             await LoadDataToDataGrid();
-            //TenantTBName.Clear();
-            //TenantTBLastname.Clear();
-            //TenantMskTDocumentation.Clear();
-            //TenantMskTPhoneNumber.Clear();
-            //TenantDTPBirthdate.Value = DateTime.Today;
-
-            //if (TenantCBSexs.Items.Count > 0)
-            //    TenantCBSexs.SelectedIndex = 0;
-
-            //if (TenantCBHouses.Items.Count > 0)
-            //    TenantCBHouses.SelectedIndex = 0;
         }
 
-        public void FormIsCorrect()
+        private async void TenantPNLBTNCreate_Click(object sender, EventArgs e)
         {
-            //bool isSexValid = int.TryParse(TenantCBSexs.SelectedValue?.ToString(), out int sexId) && sexId != 0;
-            //bool isHouseValid = int.TryParse(TenantCBHouses.SelectedValue?.ToString(), out int houseId) && houseId != 0;
-
-            //return !(
-            //   string.IsNullOrEmpty(TenantTBName.Text) ||
-            //   string.IsNullOrEmpty(TenantTBLastname.Text) ||
-            //   string.IsNullOrEmpty(TenantDTPBirthdate.Text) ||
-            //   string.IsNullOrEmpty(TenantMskTDocumentation.Text) ||
-            //   string.IsNullOrEmpty(TenantMskTPhoneNumber.Text) ||
-            //   !isSexValid ||
-            //   !isHouseValid ||
-            //   TenantMskTPhoneNumber.Text.Trim().Length != 10 ||
-            //   TenantMskTDocumentation.Text.Trim().Length != 11
-           //);
+            GoToUpsertScreen(false);
         }
-
-        //public bool FormIsCorrectToUpdate()
-        //{
-        //    //bool isSexValid = int.TryParse(TenantCBSexs.SelectedValue?.ToString(), out int sexId) && sexId != 0;
-        //    //bool isHouseValid = int.TryParse(TenantCBHouses.SelectedValue?.ToString(), out int houseId) && houseId != 0;
-
-        //    //return !(
-        //    //   string.IsNullOrEmpty(TenantTBID.Text) ||
-        //    //   string.IsNullOrEmpty(TenantTBName.Text) ||
-        //    //   string.IsNullOrEmpty(TenantTBLastname.Text) ||
-        //    //   string.IsNullOrEmpty(TenantDTPBirthdate.Text) ||
-        //    //   string.IsNullOrEmpty(TenantMskTDocumentation.Text) ||
-        //    //   string.IsNullOrEmpty(TenantMskTPhoneNumber.Text) ||
-        //    //   !isSexValid ||
-        //    //   !isHouseValid ||
-        //    //   TenantMskTPhoneNumber.Text.Trim().Length != 10 ||
-        //    //   TenantMskTDocumentation.Text.Trim().Length != 11
-        //   );
-        //}
 
         private async void TenantPNLBTNSearch_Click(object sender, EventArgs e)
         {
@@ -233,77 +261,32 @@ namespace Condominium_System.Presentation.Views
                 CleanForm();
             }
         }
-
-        private async void TenantPNLBTNUpdate_Click(object sender, EventArgs e)
-        {
-        //    if (FormIsCorrectToUpdate())
-        //    {
-        //        try
-        //        {
-        //            var TenantToUpdate = await _tenantService.GetByIdAsync(Int32.Parse(TenantTBID.Text));
-
-        //            if (TenantToUpdate != null)
-        //            {
-        //                TenantToUpdate.Id = Int32.Parse(TenantTBID.Text);
-        //                TenantToUpdate.FirstName = TenantTBName.Text;
-        //                TenantToUpdate.LastName = TenantTBLastname.Text;
-        //                TenantToUpdate.DocumentNumber = TenantMskTDocumentation.Text;
-        //                TenantToUpdate.PhoneNumber = TenantMskTPhoneNumber.Text;
-        //                TenantToUpdate.BirthDate = TenantDTPBirthdate.Value;
-        //                TenantToUpdate.Gender = TenantCBSexs.Text;
-        //                TenantToUpdate.HousingId = (int)TenantCBHouses.SelectedValue;
-
-        //                TenantToUpdate.UpdatedAt = DateTime.Now;
-
-        //                await _tenantService.UpdateAsync(TenantToUpdate);
-
-        //                MessageBox.Show("El inquilino ha sido actualizado con exito.");
-        //                await LoadDataToDataGrid();
-        //                CleanForm();
-        //            }
-        //            else
-        //            {
-        //                MessageBox.Show("Inquilino no encontrado.");
-        //                return;
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show($"Error actualizando al inquilino: {ex.Message}");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Todos los campos deben ser completados correctamente.");
-        //    }
-        }
-
+                
         private async void TenantPNLBTNDelete_Click(object sender, EventArgs e)
         {
-        //    if (!String.IsNullOrEmpty(TenantTBID.Text))
-        //    {
+            if (!String.IsNullOrEmpty(TenantTBID.Text))
+            {
+                var TenantToDelete = await _tenantService.GetByIdAsync(Int32.Parse(TenantTBID.Text));
 
-        //        var TenantToDelete = await _tenantService.GetByIdAsync(Int32.Parse(TenantTBID.Text));
+                if (TenantToDelete != null)
+                {
+                    TenantToDelete.DeletedAt = DateTime.Now;
 
-        //        if (TenantToDelete != null)
-        //        {
-        //            TenantToDelete.DeletedAt = DateTime.Now;
+                    await _tenantService.DeleteAsync(Int32.Parse(TenantTBID.Text));
+                    MessageBox.Show("El inquilino ha sido borrado con exitosamente.");
 
-        //            await _tenantService.DeleteAsync(Int32.Parse(TenantTBID.Text));
-        //            MessageBox.Show("El inquilino ha sido borrado con exitosamente.");
-
-        //            await LoadDataToDataGrid();
-        //            CleanForm();
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("Inquilino no encontrado.");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("El campo de Id debe de estar lleno.");
-        //    }
+                    await LoadDataToDataGrid();
+                    CleanForm();
+                }
+                else
+                {
+                    MessageBox.Show("Inquilino no encontrado.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("El campo de Id debe de estar lleno.");
+            }
         }
     }
 }

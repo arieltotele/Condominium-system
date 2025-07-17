@@ -119,11 +119,11 @@ namespace Condominium_System.Presentation.Views
 
         private void UpsertLBLBTN_Click(object sender, EventArgs e)
         {
-            if (IsEditMode) { EditCondominium(); }
+            if (IsEditMode) { EditBlock(); }
             else { SaveBlock(); }
         }
 
-        private async void EditCondominium()
+        private async void EditBlock()
         {
             if (FormIsCorrect())
             {

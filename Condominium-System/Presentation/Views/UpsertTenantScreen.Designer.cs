@@ -264,6 +264,7 @@
             UpsertPNLBTN.Name = "UpsertPNLBTN";
             UpsertPNLBTN.Size = new Size(109, 41);
             UpsertPNLBTN.TabIndex = 78;
+            UpsertPNLBTN.Click += UpsertPNLBTN_Click;
             // 
             // UpsertLBLBTN
             // 
@@ -275,6 +276,7 @@
             UpsertLBLBTN.Size = new Size(67, 21);
             UpsertLBLBTN.TabIndex = 1;
             UpsertLBLBTN.Text = "Guardar";
+            UpsertLBLBTN.Click += UpsertPNLBTN_Click;
             // 
             // UpsertPCTBXBTN
             // 
@@ -285,6 +287,7 @@
             UpsertPCTBXBTN.SizeMode = PictureBoxSizeMode.Zoom;
             UpsertPCTBXBTN.TabIndex = 0;
             UpsertPCTBXBTN.TabStop = false;
+            UpsertPCTBXBTN.Click += UpsertPNLBTN_Click;
             // 
             // UpsertTenantScreen
             // 
@@ -308,6 +311,7 @@
             Controls.Add(panel2);
             Name = "UpsertTenantScreen";
             Text = "UpsertTenant";
+            Load += UpsertTenantScreen_Load;
             panel8.ResumeLayout(false);
             panel7.ResumeLayout(false);
             panel7.PerformLayout();

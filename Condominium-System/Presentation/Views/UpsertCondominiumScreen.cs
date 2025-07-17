@@ -35,15 +35,8 @@ namespace Condominium_System.Presentation.Views
         {
             if (IsEditMode)
             {
-                //CustomButtonToUpsert();
                 LoadDataIfIsToUpdate();
             }
-        }
-
-        private void CustomButtonToUpsert()
-        {
-            UpsertLBLBTN.Text = "Editar";
-            UpsertPCTBXBTN.Image = Properties.Resources.pencil_white;
         }
 
         private void LoadDataIfIsToUpdate()
