@@ -89,8 +89,8 @@ namespace Condominium_System.Presentation.Views
 
                     if (CondominiumToUpdate != null)
                     {
-                        CondominiumToUpdate.Name = UpsertTIName.Text;
-                        CondominiumToUpdate.Address = UpsertTIAddress.Text;
+                        CondominiumToUpdate.Name = UpsertTIName.Text.Trim().ToUpper();
+                        CondominiumToUpdate.Address = UpsertTIAddress.Text.Trim().ToUpper();
                         CondominiumToUpdate.ReceptionContactNumber = UpsertMskTBContactNumber.Text;
                         CondominiumToUpdate.BlockCount = Int32.Parse(UpsertTIBlocksQuantity.Text);
                         CondominiumToUpdate.UpdatedAt = DateTime.Now;
@@ -134,8 +134,8 @@ namespace Condominium_System.Presentation.Views
                 {
                     var NewCondominium = new Condominium()
                     {
-                        Name = UpsertTIName.Text,
-                        Address = UpsertTIAddress.Text,
+                        Name = UpsertTIName.Text.Trim().ToUpper(),
+                        Address = UpsertTIAddress.Text.Trim().ToUpper(),
                         ReceptionContactNumber = UpsertMskTBContactNumber.Text,
                         BlockCount = Int32.Parse(UpsertTIBlocksQuantity.Text),
 

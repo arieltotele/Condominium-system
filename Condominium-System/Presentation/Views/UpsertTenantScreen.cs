@@ -115,8 +115,8 @@ namespace Condominium_System.Presentation.Views
                     if (TenantToUpdate != null)
                     {
 
-                        TenantToUpdate.FirstName = TenantTBName.Text;
-                        TenantToUpdate.LastName = TenantTBLastname.Text;
+                        TenantToUpdate.FirstName = TenantTBName.Text.Trim().ToUpper();
+                        TenantToUpdate.LastName = TenantTBLastname.Text.Trim().ToUpper();
                         TenantToUpdate.DocumentNumber = TenantMskTDocumentation.Text;
                         TenantToUpdate.PhoneNumber = TenantMskTPhoneNumber.Text;
                         TenantToUpdate.BirthDate = TenantDTPBirthdate.Value;
@@ -160,8 +160,8 @@ namespace Condominium_System.Presentation.Views
                 {
                     var NewTenant = new Tenant()
                     {
-                        FirstName = TenantTBName.Text,
-                        LastName = TenantTBLastname.Text,
+                        FirstName = TenantTBName.Text.Trim().ToUpper(),
+                        LastName = TenantTBLastname.Text.Trim().ToUpper(),
                         DocumentNumber = TenantMskTDocumentation.Text,
                         PhoneNumber = TenantMskTPhoneNumber.Text,
                         BirthDate = TenantDTPBirthdate.Value,

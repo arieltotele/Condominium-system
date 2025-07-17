@@ -185,11 +185,11 @@ namespace Condominium_System.Presentation.Views
                 Name = "ActionsColumn",
                 Width = 100
             });
-        }    
+        }
 
         private async void BlockPNLBTNCreate_Click(object sender, EventArgs e)
         {
-            GoToUpsertScreen(false);            
+            GoToUpsertScreen(false);
         }
 
         private void GoToUpsertScreen(bool isToUpdate)
@@ -251,13 +251,21 @@ namespace Condominium_System.Presentation.Views
             {
                 MessageBox.Show("El campo Id debe estar lleno correctamente.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 CleanForm();
-            }            
-        }       
+            }
+        }
 
         private void CleanForm()
         {
             BlockTBID.Clear();
             LoadDataToDataGrid();
-        }        
+        }
+
+        private void BlockTBID_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

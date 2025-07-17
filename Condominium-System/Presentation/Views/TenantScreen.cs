@@ -130,7 +130,7 @@ namespace Condominium_System.Presentation.Views
             upsertScreen.IsEditMode = isToUpdate;
             upsertScreen.Owner = this;
             upsertScreen.Show();
-        }               
+        }
 
         public async Task LoadDataToDataGrid()
         {
@@ -261,7 +261,7 @@ namespace Condominium_System.Presentation.Views
                 CleanForm();
             }
         }
-                
+
         private async void TenantPNLBTNDelete_Click(object sender, EventArgs e)
         {
             if (!String.IsNullOrEmpty(TenantTBID.Text))
@@ -286,6 +286,14 @@ namespace Condominium_System.Presentation.Views
             else
             {
                 MessageBox.Show("El campo de Id debe de estar lleno.");
+            }
+        }
+
+        private void TenantTBID_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
             }
         }
     }

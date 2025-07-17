@@ -134,6 +134,7 @@
             BlockTBID.Name = "BlockTBID";
             BlockTBID.Size = new Size(225, 16);
             BlockTBID.TabIndex = 2;
+            BlockTBID.KeyPress += BlockTBID_KeyPress;
             // 
             // HousingBlocksScreen
             // 

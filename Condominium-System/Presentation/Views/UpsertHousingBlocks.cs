@@ -133,10 +133,10 @@ namespace Condominium_System.Presentation.Views
 
                     if (BlockToUpdate != null)
                     {
-                        BlockToUpdate.Name = BlockTBName.Text;
-                        BlockToUpdate.Feature = BlockTBFeature.Text;
+                        BlockToUpdate.Name = BlockTBName.Text.Trim().ToUpper();
+                        BlockToUpdate.Feature = BlockTBFeature.Text.Trim().ToUpper();
                         BlockToUpdate.HousingCount = Int32.Parse(BlockTBHouseQuantity.Text);
-                        BlockToUpdate.Address = BlockTBAddress.Text;
+                        BlockToUpdate.Address = BlockTBAddress.Text.Trim().ToUpper();
                         BlockToUpdate.CondominiumId = (int)BlockCBCondominium.SelectedValue;
                         BlockToUpdate.HousingType = BlockCBTypeHousing.Text;
 

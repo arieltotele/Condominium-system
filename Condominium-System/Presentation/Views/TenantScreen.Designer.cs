@@ -130,7 +130,7 @@
             BlockPNLID.Controls.Add(TenantTBID);
             BlockPNLID.Location = new Point(15, 66);
             BlockPNLID.Name = "BlockPNLID";
-            BlockPNLID.Size = new Size(235, 24);
+            BlockPNLID.Size = new Size(236, 24);
             BlockPNLID.TabIndex = 43;
             // 
             // TenantTBID
@@ -140,6 +140,7 @@
             TenantTBID.Name = "TenantTBID";
             TenantTBID.Size = new Size(225, 16);
             TenantTBID.TabIndex = 2;
+            TenantTBID.KeyPress += TenantTBID_KeyPress;
             // 
             // TenantScreen
             // 
