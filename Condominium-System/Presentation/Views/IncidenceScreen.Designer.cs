@@ -156,7 +156,7 @@
             Name = "IncidenceScreen";
             Text = "IncidenceScreen";
             Load += IncidenceScreen_Load;
-            Click += IncidentPNLBTNSearch_Click;
+            Click += IncidentPNLBTNCreate_Click;
             LoginPNLUsername.ResumeLayout(false);
             LoginPNLUsername.PerformLayout();
             CondominiumPNLBTNCreate.ResumeLayout(false);

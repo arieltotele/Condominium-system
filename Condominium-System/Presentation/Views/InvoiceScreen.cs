@@ -1,15 +1,8 @@
 ﻿using Condominium_System.Business.Services;
 using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
-using System;
-using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Condominium_System.Presentation.Views
 {
@@ -17,48 +10,149 @@ namespace Condominium_System.Presentation.Views
     {
         private readonly IInvoiceService _invoiceService;
         private readonly ITenantService _tenantService;
+        private readonly IServiceProvider _serviceProvider;
         private User currentUser;
 
-        public InvoiceScreen(IInvoiceService invoiceService, ITenantService tenantService)
+        public InvoiceScreen(IInvoiceService invoiceService, ITenantService tenantService, IServiceProvider serviceProvider)
         {
             InitializeComponent();
             _invoiceService = invoiceService;
             _tenantService = tenantService;
             currentUser = Session.CurrentUser;
+            _serviceProvider = serviceProvider;
         }
 
         private async void InvoiceScreen_Load(object sender, EventArgs e)
         {
+            InvoiceDTGData.CellPainting += InvoiceDTGData_CellPainting;
+            InvoiceDTGData.CellClick += InvoiceDTGData_CellClick;
+
             SetDataGridStyle();
             ConfigureInvoiceColumns();
             await LoadDataToDataGrid();
-            await LoadTenantsIntoComboBox();
         }
 
-        private async Task LoadTenantsIntoComboBox()
+        private void InvoiceDTGData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            try
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && InvoiceDTGData.Columns[e.ColumnIndex].Name == "ActionsColumn")
             {
-                var tenants = await _tenantService.GetAllAsync();
-                var placeholder = new { Id = 0, Display = "-- Seleccione un inquilino --" };
+                e.PaintBackground(e.CellBounds, true);
+                e.PaintContent(e.CellBounds);
 
-                var tenantDisplayList = tenants.Select(t => new
-                {
-                    Id = t.Id,
-                    Display = $"{FormatDocument(t.DocumentNumber)} - {t.FirstName} {t.LastName}"
-                }).ToList();
+                int iconWidth = 16;
+                int iconHeight = 16;
+                int padding = 5;
 
-                tenantDisplayList.Insert(0, placeholder);
+                int x = e.CellBounds.Left + padding;
+                int y = e.CellBounds.Top + (e.CellBounds.Height - iconHeight) / 2;
 
-                InvoiceCBTenants.DisplayMember = "Display";
-                InvoiceCBTenants.ValueMember = "Id";
-                InvoiceCBTenants.DataSource = tenantDisplayList;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error cargando los inquilinos: {ex.Message}");
+                e.Graphics.DrawImage(Properties.Resources.pencil_blue, new Rectangle(x, y, iconWidth, iconHeight));
+
+                x += iconWidth + padding;
+                e.Graphics.DrawImage(Properties.Resources.trash_red, new Rectangle(x, y, iconWidth, iconHeight));
+
+                e.Handled = true;
             }
         }
+
+        private async void InvoiceDTGData_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && InvoiceDTGData.Columns[e.ColumnIndex].Name == "ActionsColumn")
+            {
+                var cellBounds = InvoiceDTGData.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
+                var clickPosition = InvoiceDTGData.PointToClient(Cursor.Position);
+                int relativeX = clickPosition.X - cellBounds.Left;
+
+                var selectedRow = InvoiceDTGData.Rows[e.RowIndex];
+                var selectedInvoice = selectedRow.DataBoundItem as Invoice;
+
+                if (selectedInvoice == null)
+                {
+                    MessageBox.Show("No se pudo identificar la factura.");
+                    return;
+                }
+
+                if (relativeX < 26) // 🟢 Editar
+                {
+                    Session.InvoiceToUpsert = selectedInvoice;
+                    GoToUpsertScreen(true);
+                }
+                else if (relativeX >= 26 && relativeX < 52) // 🔴 Eliminar
+                {
+                    var confirm = MessageBox.Show($"¿Deseas eliminar la factura '{selectedInvoice.Id}'?",
+                                                  "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                    if (confirm == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            await _invoiceService.DeleteAsync(selectedInvoice.Id);
+                            MessageBox.Show("Factura eliminada correctamente.");
+                            LoadDataToDataGrid();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Error al eliminar la factura: {ex.Message}");
+                        }
+                    }
+                }
+            }
+        }
+
+        private void GoToUpsertScreen(bool isToUpdate)
+        {
+            if (isToUpdate)
+            {
+                if (InvoiceDTGData.CurrentRow == null)
+                {
+                    MessageBox.Show("Por favor, selecciona una factura para editar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var selectedInvoice = InvoiceDTGData.CurrentRow.DataBoundItem as Invoice;
+                if (selectedInvoice == null)
+                {
+                    MessageBox.Show("Error al obtener la factura seleccionada.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                Session.InvoiceToUpsert = selectedInvoice;
+            }
+            else
+            {
+                Session.InvoiceToUpsert = null;
+            }
+
+            var upsertScreen = _serviceProvider.GetRequiredService<UpsertInvoiceScreen>();
+            upsertScreen.IsEditMode = isToUpdate;
+            upsertScreen.Owner = this;
+            upsertScreen.Show();
+        }
+
+        //private async Task LoadTenantsIntoComboBox()
+        //{
+        //    try
+        //    {
+        //        var tenants = await _tenantService.GetAllAsync();
+        //        var placeholder = new { Id = 0, Display = "-- Seleccione un inquilino --" };
+
+        //        var tenantDisplayList = tenants.Select(t => new
+        //        {
+        //            Id = t.Id,
+        //            Display = $"{FormatDocument(t.DocumentNumber)} - {t.FirstName} {t.LastName}"
+        //        }).ToList();
+
+        //        tenantDisplayList.Insert(0, placeholder);
+
+        //        InvoiceCBTenants.DisplayMember = "Display";
+        //        InvoiceCBTenants.ValueMember = "Id";
+        //        InvoiceCBTenants.DataSource = tenantDisplayList;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show($"Error cargando los inquilinos: {ex.Message}");
+        //    }
+        //}
 
         private string FormatDocument(string doc)
         {
@@ -67,7 +161,7 @@ namespace Condominium_System.Presentation.Views
             return doc;
         }
 
-        private async Task LoadDataToDataGrid()
+        public async Task LoadDataToDataGrid()
         {
             try
             {
@@ -123,6 +217,13 @@ namespace Condominium_System.Presentation.Views
                 Name = "TenantColumn",
                 Width = 150
             });
+
+            InvoiceDTGData.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Acciones",
+                Name = "ActionsColumn",
+                Width = 100
+            });
         }
 
         private void SetDataGridStyle()
@@ -133,65 +234,11 @@ namespace Condominium_System.Presentation.Views
         private void CleanForm()
         {
             InvoiceTBID.Clear();
-            InvoiceTBDetail.Clear();
-            InvoiceTBTotal.Clear();
-
-            if (InvoiceCBTenants.Items.Count > 0)
-                InvoiceCBTenants.SelectedIndex = 0;
-        }
-
-        public bool FormIsCorrect()
-        {
-            bool isTenantValid = int.TryParse(InvoiceCBTenants.SelectedValue?.ToString(), out int tenantId) && tenantId != 0;
-
-            return !(
-               string.IsNullOrEmpty(InvoiceTBDetail.Text) ||
-               string.IsNullOrEmpty(InvoiceTBTotal.Text) ||
-               !isTenantValid
-           );
-        }
-
-        public bool FormIsCorrectToUpdate()
-        {
-            bool isTenantValid = int.TryParse(InvoiceCBTenants.SelectedValue?.ToString(), out int tenantId) && tenantId != 0;
-
-            return !(
-               string.IsNullOrEmpty(InvoiceTBID.Text) ||
-               string.IsNullOrEmpty(InvoiceTBDetail.Text) ||
-               string.IsNullOrEmpty(InvoiceTBTotal.Text) ||
-               !isTenantValid
-           );
         }
 
         private async void InvoicePNLBTNCreate_Click(object sender, EventArgs e)
         {
-            if (FormIsCorrect())
-            {
-                try
-                {
-                    var newInvoice = new Invoice()
-                    {
-                        Detail = InvoiceTBDetail.Text,
-                        TotalAmount = InvoiceTBTotal.Text,
-                        TenantId = (int)InvoiceCBTenants.SelectedValue,
-                        Author = currentUser.Username
-                    };
-
-                    await _invoiceService.CreateAsync(newInvoice);
-
-                    MessageBox.Show("La factura ha sido creada con éxito.");
-                    CleanForm();
-                    await LoadDataToDataGrid();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error al crear la factura: {ex.Message}");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Todos los campos deben estar completos correctamente.");
-            }
+            GoToUpsertScreen(false);
         }
 
         private async void InvoicePNLBTNSearch_Click(object sender, EventArgs e)
@@ -200,101 +247,33 @@ namespace Condominium_System.Presentation.Views
             {
                 try
                 {
-                    var invoice = await _invoiceService.GetByIdAsync(int.Parse(InvoiceTBID.Text));
+                    int id = int.Parse(InvoiceTBID.Text);
+                    var invoiceFound = await _invoiceService.GetByIdAsync(id);
 
-                    if (invoice != null)
+                    if (invoiceFound != null)
                     {
-                        InvoiceTBDetail.Text = invoice.Detail;
-                        InvoiceTBTotal.Text = invoice.TotalAmount;
-
-                        await LoadTenantsIntoComboBox();
-                        InvoiceCBTenants.SelectedValue = invoice.TenantId;
+                        InvoiceDTGData.DataSource = new List<Invoice> { invoiceFound };
                     }
                     else
                     {
-                        MessageBox.Show("Factura no encontrada.");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error al buscar la factura: {ex.Message}");
-                }
-            }
-            else
-            {
-                MessageBox.Show("El campo ID debe estar lleno.");
-            }
-        }
-
-        private async void InvoicePNLBTNUpdate_Click(object sender, EventArgs e)
-        {
-            if (FormIsCorrectToUpdate())
-            {
-                try
-                {
-                    var invoiceToUpdate = await _invoiceService.GetByIdAsync(int.Parse(InvoiceTBID.Text));
-
-                    if (invoiceToUpdate != null)
-                    {
-                        invoiceToUpdate.Detail = InvoiceTBDetail.Text;
-                        invoiceToUpdate.TotalAmount = InvoiceTBTotal.Text;
-                        invoiceToUpdate.TenantId = (int)InvoiceCBTenants.SelectedValue;
-                        invoiceToUpdate.UpdatedAt = DateTime.Now;
-
-                        await _invoiceService.UpdateAsync(invoiceToUpdate);
-
-                        MessageBox.Show("La factura ha sido actualizada con éxito.");
-                        await LoadDataToDataGrid();
+                        MessageBox.Show("Factura no encontrada.", "Búsqueda", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         CleanForm();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Factura no encontrada.");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error al actualizar la factura: {ex.Message}");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Todos los campos deben estar completos correctamente.");
-            }
-        }
-
-        private async void InvoicePNLBTNDelete_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(InvoiceTBID.Text))
-            {
-                try
-                {
-                    var invoiceToDelete = await _invoiceService.GetByIdAsync(int.Parse(InvoiceTBID.Text));
-
-                    if (invoiceToDelete != null)
-                    {
-                        invoiceToDelete.DeletedAt = DateTime.Now;
-
-                        await _invoiceService.DeleteAsync(invoiceToDelete.Id);
-
-                        MessageBox.Show("La factura ha sido eliminada exitosamente.");
                         await LoadDataToDataGrid();
-                        CleanForm();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Factura no encontrada.");
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error al eliminar la factura: {ex.Message}");
+                    MessageBox.Show($"Error buscando la factura: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    CleanForm();
+                    await LoadDataToDataGrid();
                 }
             }
             else
             {
-                MessageBox.Show("El campo ID debe estar lleno.");
-            }
+                MessageBox.Show("El campo Id debe estar lleno correctamente.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                CleanForm();
+                await LoadDataToDataGrid();                
+            }        
         }
     }
 }

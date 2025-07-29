@@ -17,7 +17,7 @@ namespace Condominium_System.Helpers
         public static Incident? IncidenceToUpsert { get; set; }
         public static Furniture? FurnitureToUpsert { get; set; }
         public static Service? ServiceToUpsert { get; set; }
-
         public static User? UserToUpsert { get; set; }
+        public static Invoice? InvoiceToUpsert { get; set; }
     }
 }

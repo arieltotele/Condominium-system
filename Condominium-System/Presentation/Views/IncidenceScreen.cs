@@ -309,7 +309,7 @@ namespace Condominium_System.Presentation.Views
             //        {
             //            incidentToUpdate.Description = IncidenceTBDescription.Text;
             //            incidentToUpdate.Date = IncidenceDTPDate.Value;
-            //            incidentToUpdate.TenantId = (int) IncidenceCBTenants.SelectedValue;
+            //            incidentToUpdate.TenantId = (int)IncidenceCBTenants.SelectedValue;
             //            incidentToUpdate.UpdatedAt = DateTime.Now;
 
             //            await _incidentService.UpdateAsync(incidentToUpdate);
