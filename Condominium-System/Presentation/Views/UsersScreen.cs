@@ -28,7 +28,7 @@ namespace Condominium_System.Presentation.Views
             _userService = userService;
             _serviceProvider = serviceProvider;
             _condominiumService = condominiumService;
-            currentUser = Session.CurrentUser;            
+            currentUser = Session.CurrentUser;
         }
 
         private void UsersScreen_Load(object sender, EventArgs e)
@@ -38,7 +38,7 @@ namespace Condominium_System.Presentation.Views
 
             SetDataGridStyle();
             ConfigureUserColumns();
-            LoadDataToDataGrid();            
+            LoadDataToDataGrid();
             //SetComboBoxForTypeOfUsers();
         }
 
@@ -258,7 +258,7 @@ namespace Condominium_System.Presentation.Views
                 var source = new BindingSource(bindingList, null);
                 UserDTGData.DataSource = source;
 
-                
+
             }
             catch (Exception ex)
             {
@@ -268,6 +268,34 @@ namespace Condominium_System.Presentation.Views
 
         private async void UserBTNSearch_Click(object sender, EventArgs e)
         {
+            if (!string.IsNullOrWhiteSpace(UserTxtBxPId.Text))
+            {
+                try
+                {
+                    int id = int.Parse(UserTxtBxPId.Text);
+                    var userFound = await _userService.GetByIdAsync(id);
+
+                    if (userFound != null)
+                    {
+                        UserDTGData.DataSource = new List<User> { userFound };
+                    }
+                    else
+                    {
+                        MessageBox.Show("Usuario no encontrado.", "Búsqueda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CleanForm();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error buscando usuario: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    CleanForm();
+                }
+            }
+            else
+            {
+                MessageBox.Show("El campo Id debe estar lleno correctamente.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                CleanForm();
+            }
             //if (!String.IsNullOrEmpty(UserTxtBxPId.Text))
             //{
             //    try

@@ -138,6 +138,7 @@
             pictureBox5.TabIndex = 0;
             pictureBox5.TabStop = false;
             toolTip1.SetToolTip(pictureBox5, "Boton para buscar un condominio.");
+            pictureBox5.Click += UserBTNSearch_Click;
             // 
             // UsersScreen
             // 
