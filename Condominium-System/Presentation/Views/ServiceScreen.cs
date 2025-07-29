@@ -171,74 +171,11 @@ namespace Condominium_System.Presentation.Views
         {
             ServiceTBID.Clear();
             await LoadDataToDataGrid();
-            //ServiceTBName.Clear();
-            //ServiceTBDetail.Clear();
-            //ServiceTBCost.Clear();
-
-            //if (ServiceCBTypes.Items.Count > 0)
-            //    ServiceCBTypes.SelectedIndex = 0;
         }
-
-        //public bool FormIsCorrect()
-        //{
-        //    bool isTypeValid = ServiceCBTypes.SelectedIndex != 0;
-        //    bool isCostValid = int.TryParse(ServiceTBCost.Text, out int _);
-
-        //    return !(
-        //        string.IsNullOrEmpty(ServiceTBName.Text) ||
-        //        string.IsNullOrEmpty(ServiceTBDetail.Text) ||
-        //        string.IsNullOrEmpty(ServiceTBCost.Text) ||
-        //        !isCostValid ||
-        //        !isTypeValid
-        //    );
-        //}
-
-        //public bool FormIsCorrectToUpdate()
-        //{
-        //    bool isTypeValid = ServiceCBTypes.SelectedIndex != 0;
-        //    bool isCostValid = int.TryParse(ServiceTBCost.Text, out int _);
-
-        //    return !(
-        //        string.IsNullOrEmpty(ServiceTBID.Text) ||
-        //        string.IsNullOrEmpty(ServiceTBName.Text) ||
-        //        string.IsNullOrEmpty(ServiceTBDetail.Text) ||
-        //        string.IsNullOrEmpty(ServiceTBCost.Text) ||
-        //        !isCostValid ||
-        //        !isTypeValid
-        //    );        
-        //}
 
         private async void ServicePNLBTNCreate_Click(object sender, EventArgs e)
         {
             GoToUpsertScreen(false);
-            //if (FormIsCorrect())
-            //{
-            //    try
-            //    {
-            //        var newService = new Service
-            //        {
-            //            Name = ServiceTBName.Text,
-            //            Detail = ServiceTBDetail.Text,
-            //            Cost = int.Parse(ServiceTBCost.Text),
-            //            Type = ServiceCBTypes.SelectedItem.ToString(),
-            //            Author = currentUser.Username
-            //        };
-
-            //        await _serviceService.CreateAsync(newService);
-
-            //        MessageBox.Show("El servicio ha sido creado con éxito.");
-            //        CleanForm();
-            //        await LoadDataToDataGrid();
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show($"Error creando el servicio: {ex.Message}");
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Todos los campos deben estar completos correctamente.");
-            //}
         }
 
         private void GoToUpsertScreen(bool isToUpdate)
@@ -300,74 +237,8 @@ namespace Condominium_System.Presentation.Views
             else
             {
                 MessageBox.Show("El campo Id debe estar lleno correctamente.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                CleanForm();
+                CleanForm(); 
             }
-
-            //if (!string.IsNullOrWhiteSpace(ServiceTBID.Text))
-            //{
-            //    try
-            //    {
-            //        var service = await _serviceService.GetByIdAsync(int.Parse(ServiceTBID.Text));
-
-            //        if (service != null)
-            //        {
-            //            ServiceTBName.Text = service.Name;
-            //            ServiceTBDetail.Text = service.Detail;
-            //            ServiceTBCost.Text = service.Cost.ToString();
-            //            ServiceCBTypes.SelectedItem = service.Type;
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Servicio no encontrado.");
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show($"Error al buscar el servicio: {ex.Message}");
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("El campo ID debe estar lleno.");
-            //}
-        }
-
-        private async void ServicePNLBTNUpdate_Click(object sender, EventArgs e)
-        {
-            //if (FormIsCorrectToUpdate())
-            //{
-            //    try
-            //    {
-            //        var service = await _serviceService.GetByIdAsync(int.Parse(ServiceTBID.Text));
-
-            //        if (service != null)
-            //        {
-            //            service.Name = ServiceTBName.Text;
-            //            service.Detail = ServiceTBDetail.Text;
-            //            service.Cost = int.Parse(ServiceTBCost.Text);
-            //            service.Type = ServiceCBTypes.SelectedItem.ToString();
-            //            service.UpdatedAt = DateTime.Now;
-
-            //            await _serviceService.UpdateAsync(service);
-
-            //            MessageBox.Show("El servicio ha sido actualizado con éxito.");
-            //            await LoadDataToDataGrid();
-            //            CleanForm();
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Servicio no encontrado.");
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show($"Error actualizando el servicio: {ex.Message}");
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Todos los campos deben estar completos correctamente.");
-            //}
         }
 
         private async void ServicePNLBTNDelete_Click(object sender, EventArgs e)
