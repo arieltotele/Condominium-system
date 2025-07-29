@@ -135,6 +135,7 @@
             Controls.Add(pictureBox1);
             Controls.Add(LoginPNLUsername);
             Name = "Login";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Iniciar Sesion";
             Load += Login_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

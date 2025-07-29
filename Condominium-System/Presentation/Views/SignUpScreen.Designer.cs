@@ -30,7 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             pictureBox1 = new PictureBox();
-            label1 = new Label();
+            SignUpTitleLBL = new Label();
             label2 = new Label();
             SignUpPNLName = new Panel();
             SignUpTxtBxName = new TextBox();
@@ -92,15 +92,15 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
-            // label1
+            // SignUpTitleLBL
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(439, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(129, 21);
-            label1.TabIndex = 1;
-            label1.Text = "Registrar usuario";
+            SignUpTitleLBL.AutoSize = true;
+            SignUpTitleLBL.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            SignUpTitleLBL.Location = new Point(439, 9);
+            SignUpTitleLBL.Name = "SignUpTitleLBL";
+            SignUpTitleLBL.Size = new Size(129, 21);
+            SignUpTitleLBL.TabIndex = 1;
+            SignUpTitleLBL.Text = "Registrar usuario";
             // 
             // label2
             // 
@@ -472,9 +472,10 @@
             Controls.Add(SignUpPNLLastname);
             Controls.Add(label2);
             Controls.Add(SignUpPNLName);
-            Controls.Add(label1);
+            Controls.Add(SignUpTitleLBL);
             Controls.Add(pictureBox1);
             Name = "SignUpScreen";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Registrar";
             toolTip1.SetToolTip(this, "Limpiar los campos del formulario.+");
             Load += SignUp_Load;
@@ -510,7 +511,7 @@
         #endregion
 
         private PictureBox pictureBox1;
-        private Label label1;
+        private Label SignUpTitleLBL;
         private Label label2;
         private Panel SignUpPNLName;
         private TextBox SignUpTxtBxName;

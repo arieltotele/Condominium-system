@@ -133,7 +133,7 @@ namespace Condominium_System.Presentation.Views
                 Session.UserToUpsert = null;
             }
 
-            var upsertScreen = _serviceProvider.GetRequiredService<UpsertUserScreen>();
+            var upsertScreen = _serviceProvider.GetRequiredService<SignUpScreen>();
             upsertScreen.IsEditMode = isToUpdate;
             upsertScreen.Owner = this;
             upsertScreen.Show();
@@ -239,17 +239,19 @@ namespace Condominium_System.Presentation.Views
         //    var listWithPlaceholder = new List<Condominium> { placeholder };
         //    listWithPlaceholder.AddRange(condominiums);
         //    UserTBCondominium.DataSource = listWithPlaceholder;
-        //}
+       // }
 
         private void UserBTNCreate_Click(object sender, EventArgs e)
         {
-            var signUpScreen = _serviceProvider.GetRequiredService<SignUpScreen>();
-            signUpScreen.UserCreated += (s, ev) => LoadDataToDataGrid();
+            GoToUpsertScreen(false);
 
-            signUpScreen.Show();
+            //var signUpScreen = _serviceProvider.GetRequiredService<SignUpScreen>();
+            //signUpScreen.UserCreated += (s, ev) => LoadDataToDataGrid();
+
+            //signUpScreen.Show();
         }
 
-        private async void LoadDataToDataGrid()
+        public async void LoadDataToDataGrid()
         {
             try
             {
@@ -257,8 +259,6 @@ namespace Condominium_System.Presentation.Views
                 var bindingList = new BindingList<User>((List<User>)(IEnumerable<User>)listUser);
                 var source = new BindingSource(bindingList, null);
                 UserDTGData.DataSource = source;
-
-
             }
             catch (Exception ex)
             {

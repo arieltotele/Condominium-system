@@ -83,7 +83,8 @@
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 40;
-            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Crear un nuevo condominio.");
+            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Crear un nuevo usuario.");
+            CondominiumPNLBTNCreate.Click += UserBTNCreate_Click;
             // 
             // label8
             // 
@@ -95,7 +96,8 @@
             label8.Size = new Size(56, 21);
             label8.TabIndex = 1;
             label8.Text = "Nuevo";
-            toolTip1.SetToolTip(label8, "Crear un nuevo condominio.");
+            toolTip1.SetToolTip(label8, "Crear un nuevo usuario.");
+            label8.Click += UserBTNCreate_Click;
             // 
             // pictureBox3
             // 
@@ -106,7 +108,8 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
-            toolTip1.SetToolTip(pictureBox3, "Crear un nuevo condominio.");
+            toolTip1.SetToolTip(pictureBox3, "Crear un nuevo usuario.");
+            pictureBox3.Click += UserBTNCreate_Click;
             // 
             // UserDTGData
             // 
@@ -116,7 +119,7 @@
             UserDTGData.Name = "UserDTGData";
             UserDTGData.Size = new Size(1017, 443);
             UserDTGData.TabIndex = 39;
-            toolTip1.SetToolTip(UserDTGData, "Condominios almacenados en la Base de Datos.");
+            toolTip1.SetToolTip(UserDTGData, "Usuarios almacenados en la Base de Datos.");
             // 
             // panel1
             // 
@@ -126,7 +129,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(26, 24);
             panel1.TabIndex = 41;
-            toolTip1.SetToolTip(panel1, "Boton para buscar un condominio.");
+            toolTip1.SetToolTip(panel1, "Boton para buscar un usuario.");
             // 
             // pictureBox5
             // 
@@ -137,7 +140,7 @@
             pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox5.TabIndex = 0;
             pictureBox5.TabStop = false;
-            toolTip1.SetToolTip(pictureBox5, "Boton para buscar un condominio.");
+            toolTip1.SetToolTip(pictureBox5, "Boton para buscar un usuario.");
             pictureBox5.Click += UserBTNSearch_Click;
             // 
             // UsersScreen

@@ -49,5 +49,15 @@ namespace Condominium_System.Business.Services
                 await _userRepository.SaveChangesAsync();
             }
         }
+
+        public async Task<bool> UsernameExistsAsync(string username, int? excludedUserId = null)
+        {
+            var users = await _userRepository.FindAsync(u =>
+                u.Username == username &&
+                u.IsActive &&
+                (excludedUserId == null || u.Id != excludedUserId.Value));
+
+            return users.Any();
+        }
     }
 }
