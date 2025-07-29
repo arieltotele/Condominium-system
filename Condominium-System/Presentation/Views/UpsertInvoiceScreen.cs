@@ -1,5 +1,6 @@
 ﻿using Condominium_System.Business.Services;
 using Condominium_System.Data.Entities;
+using Condominium_System.Data.Repositories;
 using Condominium_System.Helpers;
 using System;
 using System.Collections.Generic;
@@ -18,17 +19,21 @@ namespace Condominium_System.Presentation.Views
         private readonly IInvoiceService _invoiceService;
         private readonly ITenantService _tenantService;
         private readonly IServiceProvider _serviceProvider;
+        private readonly IRepositoryNoId<HousingService> _housingServiceRepository;
+
         private readonly User currentUser;
 
         public bool IsEditMode { get; set; } = false;
 
-        public UpsertInvoiceScreen(IInvoiceService invoiceService, ITenantService tenantService, IServiceProvider serviceProvider)
+        public UpsertInvoiceScreen(IInvoiceService invoiceService, ITenantService tenantService,
+            IServiceProvider serviceProvider, IRepositoryNoId<HousingService> housingServiceRepository)
         {
             InitializeComponent();
             _invoiceService = invoiceService;
             _tenantService = tenantService;
             _serviceProvider = serviceProvider;
             currentUser = Session.CurrentUser;
+            _housingServiceRepository = housingServiceRepository;
         }
 
         private async void UpsertInvoiceScreen_Load(object sender, EventArgs e)
@@ -170,6 +175,27 @@ namespace Condominium_System.Presentation.Views
 
             if (UpsertInvoiceComboBxTenants.Items.Count > 0)
                 UpsertInvoiceComboBxTenants.SelectedIndex = 0;
+        }
+
+        private async void UpsertInvoiceComboBxTenants_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (UpsertInvoiceComboBxTenants.SelectedValue is int tenantId && tenantId > 0)
+            {
+                try
+                {
+                    decimal totalServices = await _tenantService.CalculateTotalServicesByTenantAsync(tenantId);
+                    UpsertInvoiceTBTotalAmount.Text = totalServices.ToString("N2");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error calculando servicios: {ex.Message}");
+                    UpsertInvoiceTBTotalAmount.Text = "0.00";
+                }
+            }
+            else
+            {
+                UpsertInvoiceTBTotalAmount.Text = "0.00";
+            }
         }
     }
 }

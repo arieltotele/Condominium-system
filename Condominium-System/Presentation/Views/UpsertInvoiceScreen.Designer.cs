@@ -74,6 +74,7 @@
             UpsertInvoiceComboBxTenants.Name = "UpsertInvoiceComboBxTenants";
             UpsertInvoiceComboBxTenants.Size = new Size(255, 23);
             UpsertInvoiceComboBxTenants.TabIndex = 0;
+            UpsertInvoiceComboBxTenants.SelectedIndexChanged += UpsertInvoiceComboBxTenants_SelectedIndexChanged;
             // 
             // label2
             // 
