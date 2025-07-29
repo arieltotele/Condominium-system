@@ -194,14 +194,14 @@ namespace Condominium_System.Presentation.Views
                     return;
                 }
 
-                var selectedCondo = CondominiumDTGData.CurrentRow.DataBoundItem as Condominium;
-                if (selectedCondo == null)
+                var selectedCondominium = CondominiumDTGData.CurrentRow.DataBoundItem as Condominium;
+                if (selectedCondominium == null)
                 {
                     MessageBox.Show("Error al obtener el condominio seleccionado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                Session.CondominiumToUpsert = selectedCondo;
+                Session.CondominiumToUpsert = selectedCondominium;
             }
             else
             {
