@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -89,6 +90,12 @@ namespace Condominium_System.Presentation.Views
             {
                 try
                 {
+                    if (!TryGetRawDecimal(UpsertInvoiceTBTotalAmount.Text, out string totalAmount))
+                    {
+                        MessageBox.Show("Formato de monto inválido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
                     var InvoiceToUpdate = Session.InvoiceToUpsert;
 
                     if (InvoiceToUpdate != null)
@@ -130,30 +137,37 @@ namespace Condominium_System.Presentation.Views
             {
                 try
                 {
+                    if (!TryGetRawDecimal(UpsertInvoiceTBTotalAmount.Text, out string totalAmount))
+                    {
+                        MessageBox.Show("El monto total debe ser un valor numérico positivo",
+                                      "Error",
+                                      MessageBoxButtons.OK,
+                                      MessageBoxIcon.Error);
+                        return;
+                    }
+
                     var newInvoice = new Invoice()
                     {
                         Detail = UpsertInvoiceTBDescription.Text,
-                        TotalAmount = UpsertInvoiceTBTotalAmount.Text,
+                        TotalAmount = totalAmount.ToString(CultureInfo.InvariantCulture), // Guardar sin formato
                         TenantId = (int)UpsertInvoiceComboBxTenants.SelectedValue,
-                        Author = currentUser.Username
+                        Author = currentUser.Username,
+                        IssueDate = DateTime.Now
                     };
 
                     await _invoiceService.CreateAsync(newInvoice);
 
-                    MessageBox.Show("La factura ha sido creado con exito.", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Factura creada exitosamente");
                     CleanForm();
                     ((InvoiceScreen)this.Owner).LoadDataToDataGrid();
-                    this.Hide();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error guardando factura: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    CleanForm();
+                    MessageBox.Show($"Error al guardar la factura: {ex.Message}",
+                                  "Error",
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Error);
                 }
-            }
-            else
-            {
-                MessageBox.Show("Todos los campos deben ser completados correctamente.");
             }
         }
 
@@ -196,6 +210,31 @@ namespace Condominium_System.Presentation.Views
             {
                 UpsertInvoiceTBTotalAmount.Text = "0.00";
             }
+        }
+
+        public static bool TryGetRawDecimal(string formattedValue, out string rawValue)
+        {
+            string cleanValue = formattedValue
+                .Replace("$", "")
+                .Replace(",", "")
+                .Replace(" ", "")
+                .Trim();
+
+            if (decimal.TryParse(cleanValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal decimalValue))
+            {
+                if (decimalValue == Math.Floor(decimalValue))
+                {
+                    rawValue = ((int)decimalValue).ToString(CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    rawValue = decimalValue.ToString(CultureInfo.InvariantCulture);
+                }
+                return true;
+            }
+
+            rawValue = null;
+            return false;
         }
     }
 }
