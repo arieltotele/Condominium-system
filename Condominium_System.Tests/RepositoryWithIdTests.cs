@@ -395,7 +395,7 @@ namespace Condominium_System.Tests
             var updated = await context.Blocks.FindAsync(1);
 
             // Assert
-            Assert.False(updated.IsActive);
+            Assert.False(updated!.IsActive);
             Assert.NotNull(updated.DeletedAt);
         }
 
