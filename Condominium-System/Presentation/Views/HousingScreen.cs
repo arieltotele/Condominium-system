@@ -25,35 +25,113 @@ namespace Condominium_System.Presentation.Views
 
         private async void HousingScreen_Load(object sender, EventArgs e)
         {
+            HousingDTGData.CellPainting += HousingDTGData_CellPainting;
+            HousingDTGData.CellClick += HousingDTGData_CellClick;
+
             SetDataGridStyle();
             ConfigureHousingColumns();
             await LoadDataToDataGrid();
-            await LoadBlocksIntoComboBox();            
+            //await LoadBlocksIntoComboBox();            
         }
 
-        private async Task LoadBlocksIntoComboBox()
+        private void HousingDTGData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            try
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && HousingDTGData.Columns[e.ColumnIndex].Name == "ActionsColumn")
             {
-                var blocks = await _blockService.GetAllBlocksAsync();
+                e.PaintBackground(e.CellBounds, true);
+                e.PaintContent(e.CellBounds);
 
-                HousingCBBlock.DisplayMember = "Name";
-                HousingCBBlock.ValueMember = "Id";
-                HousingCBBlock.DataSource = blocks;
+                int iconWidth = 16;
+                int iconHeight = 16;
+                int padding = 5;
 
-                var placeholder = new Block { Id = 0, Name = "-- Seleccione un bloque --" };
-                var listWithPlaceholder = new List<Block> { placeholder };
-                listWithPlaceholder.AddRange(blocks);
-                HousingCBBlock.DataSource = listWithPlaceholder;
+                int x = e.CellBounds.Left + padding;
+                int y = e.CellBounds.Top + (e.CellBounds.Height - iconHeight) / 2;
+
+                e.Graphics.DrawImage(Properties.Resources.pencil_blue, new Rectangle(x, y, iconWidth, iconHeight));
+
+                x += iconWidth + padding;
+                e.Graphics.DrawImage(Properties.Resources.trash_red, new Rectangle(x, y, iconWidth, iconHeight));
+
+                e.Handled = true;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error cargando los bloques: {ex.Message}");
-            }
-
         }
 
-        private async Task LoadDataToDataGrid()
+        private async void HousingDTGData_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && HousingDTGData.Columns[e.ColumnIndex].Name == "ActionsColumn")
+            {
+                var cellBounds = HousingDTGData.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
+                var clickPosition = HousingDTGData.PointToClient(Cursor.Position);
+                int relativeX = clickPosition.X - cellBounds.Left;
+
+                var selectedRow = HousingDTGData.Rows[e.RowIndex];
+                var selectedHousing = selectedRow.DataBoundItem as Housing;
+
+                if (selectedHousing == null)
+                {
+                    MessageBox.Show("No se pudo identificar el servicio.");
+                    return;
+                }
+
+                if (relativeX < 26) // 🟢 Editar
+                {
+                    Session.CurrentHouse = selectedHousing;
+                    GoToUpsertScreen(true);
+                }
+                else if (relativeX >= 26 && relativeX < 52) // 🔴 Eliminar
+                {
+                    var confirm = MessageBox.Show($"¿Deseas eliminar la vivienda '{selectedHousing.Code}'?",
+                                                  "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                    if (confirm == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            await _housingEntityService.DeleteHousingAsync(selectedHousing.Id);
+                            MessageBox.Show("Vivienda eliminada correctamente.");
+                            await LoadDataToDataGrid();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Error al eliminar la vivienda: {ex.Message}");
+                        }
+                    }
+                }
+            }
+        }
+
+        private void GoToUpsertScreen(bool isToUpdate)
+        {
+            if (isToUpdate)
+            {
+                if (HousingDTGData.CurrentRow == null)
+                {
+                    MessageBox.Show("Por favor, selecciona una vivienda para editar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var selectedHouse = HousingDTGData.CurrentRow.DataBoundItem as Housing;
+                if (selectedHouse == null)
+                {
+                    MessageBox.Show("Error al obtener la vivienda seleccionada.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                Session.CurrentHouse = selectedHouse;
+            }
+            else
+            {
+                Session.CurrentHouse = null;
+            }
+
+            var upsertScreen = _serviceProvider.GetRequiredService<UpsertHousingScreen>();
+            upsertScreen.IsEditMode = isToUpdate;
+            upsertScreen.Owner = this;
+            upsertScreen.Show();
+        }
+
+        public async Task LoadDataToDataGrid()
         {
             try
             {
@@ -76,7 +154,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "Id",
                 HeaderText = "Identificacion",
                 Name = "IdColumn",
-                Width = 105
+                Width = 115
             });
 
             HousingDTGData.Columns.Add(new DataGridViewTextBoxColumn
@@ -84,7 +162,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "Code",
                 HeaderText = "Codigo",
                 Name = "CodeColumn",
-                Width = 150
+                Width = 130
             });
 
             HousingDTGData.Columns.Add(new DataGridViewTextBoxColumn
@@ -92,7 +170,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "PeopleCount",
                 HeaderText = "Cantidad de personas",
                 Name = "PeopleCountColumn",
-                Width = 180
+                Width = 160
             });
 
             HousingDTGData.Columns.Add(new DataGridViewTextBoxColumn
@@ -100,7 +178,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "RoomCount",
                 HeaderText = "Cantidad de habitaciones",
                 Name = "RoomCountColumn",
-                Width = 200
+                Width = 180
             });
 
             HousingDTGData.Columns.Add(new DataGridViewTextBoxColumn
@@ -108,7 +186,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "BathroomCount",
                 HeaderText = "Numero de baños",
                 Name = "BathroomCountColumn",
-                Width = 160
+                Width = 140
             });
 
             HousingDTGData.Columns.Add(new DataGridViewTextBoxColumn
@@ -116,7 +194,14 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "BlockID",
                 HeaderText = "Identificacion del bloque",
                 Name = "BlockIDColumn",
-                Width = 155
+                Width = 165
+            });
+
+            HousingDTGData.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Acciones",
+                Name = "ActionsColumn",
+                Width = 100
             });
         }
 
@@ -127,157 +212,131 @@ namespace Condominium_System.Presentation.Views
 
         private async void HousingPNLBTNCreate_Click(object sender, EventArgs e)
         {
-            if (FormIsCorrect())
-            {
-                try
-                {
-                    var NewHouse = new Housing()
-                    {
-                        Code = HousingTBCode.Text,
-                        PeopleCount = Int32.Parse(HousingTBPeopleQuantity.Text),
-                        RoomCount = Int32.Parse(HousingTBRoomQuantity.Text),
-                        BathroomCount = Int32.Parse(HousingTBBathroomQuantity.Text),
-                        BlockId = (int)HousingCBBlock.SelectedValue,
-                        Author = currentUser.Username
-                    };
+            GoToUpsertScreen(false);
+            //if (FormIsCorrect())
+            //{
+            //    try
+            //    {
+            //        var NewHouse = new Housing()
+            //        {
+            //            Code = HousingTBCode.Text,
+            //            PeopleCount = Int32.Parse(HousingTBPeopleQuantity.Text),
+            //            RoomCount = Int32.Parse(HousingTBRoomQuantity.Text),
+            //            BathroomCount = Int32.Parse(HousingTBBathroomQuantity.Text),
+            //            BlockId = (int)HousingDTGData.SelectedValue,
+            //            Author = currentUser.Username
+            //        };
 
-                    Session.CurrentHouse = await _housingEntityService.CreateHousingAsync(NewHouse);
+            //        Session.CurrentHouse = await _housingEntityService.CreateHousingAsync(NewHouse);
 
-                    MessageBox.Show("La vivienda ha sido creada con exito.");
-                    CleanFormHousing();
-                    await LoadDataToDataGrid();
+            //        MessageBox.Show("La vivienda ha sido creada con exito.");
+            //        CleanFormHousing();
+            //        await LoadDataToDataGrid();
 
-                    var addfurnitureToHouseScreen = _serviceProvider.GetRequiredService<AddFurnitureScreen>();
-                    addfurnitureToHouseScreen.Show();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error guardando la vivienda: {ex.Message}");
-                }
+            //        var addfurnitureToHouseScreen = _serviceProvider.GetRequiredService<AddFurnitureScreen>();
+            //        addfurnitureToHouseScreen.Show();
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show($"Error guardando la vivienda: {ex.Message}");
+            //    }
 
-            }
-            else
-            {
-                MessageBox.Show("Todos los campos deben ser completados correctamente.");
-            }
-        }
-
-        public bool FormIsCorrect()
-        {
-            bool isBlockValid = int.TryParse(HousingCBBlock.SelectedValue?.ToString(), out int condoId) && condoId != 0;
-
-            return !(
-               string.IsNullOrEmpty(HousingTBPeopleQuantity.Text) ||
-               string.IsNullOrEmpty(HousingTBRoomQuantity.Text) ||
-               string.IsNullOrEmpty(HousingTBBathroomQuantity.Text) ||
-               string.IsNullOrEmpty(HousingTBCode.Text) ||
-               !isBlockValid
-           );
-        }
-
-        public bool FormIsCorrectToUpdate()
-        {
-            bool isBlockValid = int.TryParse(HousingCBBlock.SelectedValue?.ToString(), out int condoId) && condoId != 0;
-
-            return !(
-               string.IsNullOrEmpty(HousingTBID.Text) ||
-               string.IsNullOrEmpty(HousingTBPeopleQuantity.Text) ||
-               string.IsNullOrEmpty(HousingTBRoomQuantity.Text) ||
-               string.IsNullOrEmpty(HousingTBBathroomQuantity.Text) ||
-               string.IsNullOrEmpty(HousingTBCode.Text) ||
-               !isBlockValid
-           );
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Todos los campos deben ser completados correctamente.");
+            //}
         }
 
         private async void HousingPNLBTNSearch_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(HousingTBID.Text))
+            if (!string.IsNullOrWhiteSpace(HousingTBID.Text))
             {
                 try
                 {
-                    var HousingFound = await _housingEntityService.GetHousingByIdAsync(Int32.Parse(HousingTBID.Text));
+                    int id = int.Parse(HousingTBID.Text);
+                    var HousingFound = await _housingEntityService.GetHousingByIdAsync(id);
+
                     if (HousingFound != null)
                     {
-                        HousingTBID.Text = HousingFound.Id.ToString();
-                        HousingTBPeopleQuantity.Text = HousingFound.PeopleCount.ToString();
-                        HousingTBRoomQuantity.Text = HousingFound.RoomCount.ToString();
-                        HousingTBBathroomQuantity.Text = HousingFound.BathroomCount.ToString();
-                        HousingTBCode.Text = HousingFound.Code;
-
-                        HousingCBBlock.SelectedValue = HousingFound.BlockId;
+                        HousingDTGData.DataSource = new List<Housing> { HousingFound };
                     }
                     else
                     {
-                        MessageBox.Show("Vivienda no encontrada.");
+                        MessageBox.Show("Vivienda no encontrada.", "Búsqueda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CleanFormHousing();
+                        await LoadDataToDataGrid();
                     }
-
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error buscando la vivienda: {ex.Message}");
+                    MessageBox.Show($"Error buscando vivienda: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    CleanFormHousing();
+                    await LoadDataToDataGrid();
                 }
             }
             else
             {
-                MessageBox.Show("El campo Id debe de estar lleno correctamente.");
+                MessageBox.Show("El campo Id debe estar lleno correctamente.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                CleanFormHousing();
+                await LoadDataToDataGrid(); 
             }
-
         }
 
         private async void HousingPNLBTNUpdate_Click(object sender, EventArgs e)
         {
-            if (FormIsCorrectToUpdate())
-            {
-                try
-                {
-                    var HousingToUpdate = await _housingEntityService.GetHousingByIdAsync(Int32.Parse(HousingTBID.Text));
+            //if (FormIsCorrectToUpdate())
+            //{
+            //    try
+            //    {
+            //        var HousingToUpdate = await _housingEntityService.GetHousingByIdAsync(Int32.Parse(HousingTBID.Text));
 
-                    if (HousingToUpdate != null)
-                    {
-                        HousingToUpdate.Id = int.Parse(HousingTBID.Text);
-                        HousingToUpdate.PeopleCount = Int32.Parse(HousingTBPeopleQuantity.Text);
-                        HousingToUpdate.RoomCount = Int32.Parse(HousingTBRoomQuantity.Text);
-                        HousingToUpdate.BathroomCount = Int32.Parse(HousingTBBathroomQuantity.Text);
-                        HousingToUpdate.Code = HousingTBCode.Text;
-                        HousingToUpdate.BlockId = (int)HousingCBBlock.SelectedValue;
+            //        if (HousingToUpdate != null)
+            //        {
+            //            HousingToUpdate.Id = int.Parse(HousingTBID.Text);
+            //            HousingToUpdate.PeopleCount = Int32.Parse(HousingTBPeopleQuantity.Text);
+            //            HousingToUpdate.RoomCount = Int32.Parse(HousingTBRoomQuantity.Text);
+            //            HousingToUpdate.BathroomCount = Int32.Parse(HousingTBBathroomQuantity.Text);
+            //            HousingToUpdate.Code = HousingTBCode.Text;
+            //            HousingToUpdate.BlockId = (int)HousingDTGData.SelectedValue;
 
-                        HousingToUpdate.UpdatedAt = DateTime.Now;
+            //            HousingToUpdate.UpdatedAt = DateTime.Now;
 
-                        await _housingEntityService.UpdateHousingAsync(HousingToUpdate);
+            //            await _housingEntityService.UpdateHousingAsync(HousingToUpdate);
 
-                        MessageBox.Show("La vivienda ha sido actualizada con exito.");
-                        await LoadDataToDataGrid();
-                        CleanFormHousing();
+            //            MessageBox.Show("La vivienda ha sido actualizada con exito.");
+            //            await LoadDataToDataGrid();
+            //            CleanFormHousing();
 
-                        Session.CurrentHouse = HousingToUpdate;
+            //            Session.CurrentHouse = HousingToUpdate;
 
-                        var addFurnitureToHouseScreen = _serviceProvider.GetRequiredService<AddFurnitureScreen>();
-                        addFurnitureToHouseScreen.IsEditMode = true;
-                        addFurnitureToHouseScreen.Show();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Vivienda no encontrada.");
-                        return;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error actualizando la vivienda: {ex.Message}");
-                }
-            }
+            //            var addFurnitureToHouseScreen = _serviceProvider.GetRequiredService<AddFurnitureScreen>();
+            //            addFurnitureToHouseScreen.IsEditMode = true;
+            //            addFurnitureToHouseScreen.Show();
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("Vivienda no encontrada.");
+            //            return;
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show($"Error actualizando la vivienda: {ex.Message}");
+            //    }
+            //}
         }
 
         private void CleanFormHousing()
         {
             HousingTBID.Clear();
-            HousingTBCode.Clear();
-            HousingTBPeopleQuantity.Clear();
-            HousingTBRoomQuantity.Clear();
-            HousingTBBathroomQuantity.Clear();
+            //HousingTBCode.Clear();
+            //HousingTBPeopleQuantity.Clear();
+            //HousingTBRoomQuantity.Clear();
+            //HousingTBBathroomQuantity.Clear();
 
-            if (HousingCBBlock.Items.Count > 0)
-                HousingCBBlock.SelectedIndex = 0;
+            //if (HousingDTGData.Items.Count > 0)
+            //    HousingDTGData.SelectedIndex = 0;
         }
 
         private async void HousingPNLBTNDelete_Click(object sender, EventArgs e)

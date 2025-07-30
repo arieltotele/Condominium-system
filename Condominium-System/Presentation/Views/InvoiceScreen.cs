@@ -129,38 +129,6 @@ namespace Condominium_System.Presentation.Views
             upsertScreen.Show();
         }
 
-        //private async Task LoadTenantsIntoComboBox()
-        //{
-        //    try
-        //    {
-        //        var tenants = await _tenantService.GetAllAsync();
-        //        var placeholder = new { Id = 0, Display = "-- Seleccione un inquilino --" };
-
-        //        var tenantDisplayList = tenants.Select(t => new
-        //        {
-        //            Id = t.Id,
-        //            Display = $"{FormatDocument(t.DocumentNumber)} - {t.FirstName} {t.LastName}"
-        //        }).ToList();
-
-        //        tenantDisplayList.Insert(0, placeholder);
-
-        //        InvoiceCBTenants.DisplayMember = "Display";
-        //        InvoiceCBTenants.ValueMember = "Id";
-        //        InvoiceCBTenants.DataSource = tenantDisplayList;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show($"Error cargando los inquilinos: {ex.Message}");
-        //    }
-        //}
-
-        private string FormatDocument(string doc)
-        {
-            if (!string.IsNullOrEmpty(doc) && doc.Length == 11)
-                return $"{doc.Substring(0, 3)}-{doc.Substring(3, 7)}-{doc.Substring(10, 1)}";
-            return doc;
-        }
-
         public async Task LoadDataToDataGrid()
         {
             try
@@ -199,7 +167,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "Detail",
                 HeaderText = "Detalle",
                 Name = "DetailColumn",
-                Width = 200
+                Width = 229
             });
 
             InvoiceDTGData.Columns.Add(new DataGridViewTextBoxColumn
@@ -215,6 +183,14 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "TenantId",
                 HeaderText = "Inquilino",
                 Name = "TenantColumn",
+                Width = 150
+            });
+
+            InvoiceDTGData.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Author",
+                HeaderText = "Facturante",
+                Name = "AuthorColumn",
                 Width = 150
             });
 

@@ -91,7 +91,7 @@
             panel1.Controls.Add(FurnitureTBDetail);
             panel1.Location = new Point(38, 201);
             panel1.Name = "panel1";
-            panel1.Size = new Size(396, 68);
+            panel1.Size = new Size(396, 87);
             panel1.TabIndex = 124;
             // 
             // FurnitureTBDetail
@@ -100,7 +100,7 @@
             FurnitureTBDetail.Location = new Point(4, 4);
             FurnitureTBDetail.Multiline = true;
             FurnitureTBDetail.Name = "FurnitureTBDetail";
-            FurnitureTBDetail.Size = new Size(389, 57);
+            FurnitureTBDetail.Size = new Size(389, 80);
             FurnitureTBDetail.TabIndex = 2;
             // 
             // label6
