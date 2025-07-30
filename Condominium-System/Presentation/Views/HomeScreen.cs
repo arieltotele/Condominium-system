@@ -37,11 +37,14 @@ namespace Condominium_System.Presentation.Views
                 HomeScreenLBLTitleName.Text = "Hola, " + user.FirstName + " " + user.LastName;
             }
 
+            if (user.Type.Equals("Operario")) {
+                HomeScreenPNLUsers.Visible = false;
+            }
+
             foreach (Panel panel in HomeScreenPNLMenu.Controls.OfType<Panel>())
             {
                 panel.Click += SelectPanel;
 
-                // Also attach the event to child controls (Label, PictureBox, etc.)
                 foreach (Control child in panel.Controls)
                 {
                     child.Click += SelectPanel;

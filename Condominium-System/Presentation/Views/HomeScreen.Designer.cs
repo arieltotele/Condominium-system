@@ -117,7 +117,7 @@
             HomeScreenLBLTitleName.AutoSize = true;
             HomeScreenLBLTitleName.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             HomeScreenLBLTitleName.ForeColor = Color.White;
-            HomeScreenLBLTitleName.Location = new Point(910, 18);
+            HomeScreenLBLTitleName.Location = new Point(887, 18);
             HomeScreenLBLTitleName.Name = "HomeScreenLBLTitleName";
             HomeScreenLBLTitleName.Size = new Size(166, 30);
             HomeScreenLBLTitleName.TabIndex = 1;
