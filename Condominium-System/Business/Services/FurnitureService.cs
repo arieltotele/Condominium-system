@@ -52,8 +52,8 @@ namespace Condominium_System.Business.Services
 
         public async Task<IEnumerable<Furniture>> GetFurnituresByTypeAsync(string type)
         {
-            return await _furnitureRepository
-            .GetAllWithIncludesAsync(f => f.Housings, f => f.Type == type);
+            var allFurniture = await _furnitureRepository.GetAllWithIncludesAsync(f => f.Housings);
+            return allFurniture.Where(f => f.Type == type);
         }
     }
 }
