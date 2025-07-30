@@ -69,9 +69,9 @@
             // FurnitureCBTypes
             // 
             FurnitureCBTypes.FormattingEnabled = true;
-            FurnitureCBTypes.Location = new Point(0, 3);
+            FurnitureCBTypes.Location = new Point(3, 3);
             FurnitureCBTypes.Name = "FurnitureCBTypes";
-            FurnitureCBTypes.Size = new Size(388, 23);
+            FurnitureCBTypes.Size = new Size(385, 23);
             FurnitureCBTypes.TabIndex = 0;
             FurnitureCBTypes.Text = "Seleccione";
             // 
@@ -177,6 +177,7 @@
             Controls.Add(label6);
             Controls.Add(panel6);
             Name = "UpsertFurnitureScreen";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "UpsertFurnitureScreen";
             Load += UpsertFurnitureScreen_Load;
             panel5.ResumeLayout(false);

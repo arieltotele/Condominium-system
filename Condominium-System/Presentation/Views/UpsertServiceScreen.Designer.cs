@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             label5 = new Label();
             panel3 = new Panel();
             ServiceTBCost = new TextBox();
@@ -43,6 +44,7 @@
             UpsertLBLBTN = new Label();
             UpsertPCTBXBTN = new PictureBox();
             UpsertPNLBTN = new Panel();
+            toolTip1 = new ToolTip(components);
             panel3.SuspendLayout();
             panel2.SuspendLayout();
             panel5.SuspendLayout();
@@ -55,7 +57,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(38, 161);
+            label5.Location = new Point(41, 163);
             label5.Name = "label5";
             label5.Size = new Size(50, 21);
             label5.TabIndex = 142;
@@ -65,7 +67,7 @@
             // 
             panel3.BackColor = SystemColors.Window;
             panel3.Controls.Add(ServiceTBCost);
-            panel3.Location = new Point(38, 194);
+            panel3.Location = new Point(41, 196);
             panel3.Name = "panel3";
             panel3.Size = new Size(329, 24);
             panel3.TabIndex = 143;
@@ -82,7 +84,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(38, 85);
+            label4.Location = new Point(41, 87);
             label4.Name = "label4";
             label4.Size = new Size(68, 21);
             label4.TabIndex = 140;
@@ -92,7 +94,7 @@
             // 
             panel2.BackColor = SystemColors.Window;
             panel2.Controls.Add(ServiceTBName);
-            panel2.Location = new Point(38, 118);
+            panel2.Location = new Point(41, 120);
             panel2.Name = "panel2";
             panel2.Size = new Size(329, 24);
             panel2.TabIndex = 141;
@@ -100,16 +102,16 @@
             // ServiceTBName
             // 
             ServiceTBName.BorderStyle = BorderStyle.None;
-            ServiceTBName.Location = new Point(0, 3);
+            ServiceTBName.Location = new Point(3, 3);
             ServiceTBName.Name = "ServiceTBName";
-            ServiceTBName.Size = new Size(329, 16);
+            ServiceTBName.Size = new Size(323, 16);
             ServiceTBName.TabIndex = 2;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(38, 9);
+            label3.Location = new Point(41, 9);
             label3.Name = "label3";
             label3.Size = new Size(40, 21);
             label3.TabIndex = 138;
@@ -119,7 +121,7 @@
             // 
             panel5.BackColor = SystemColors.Window;
             panel5.Controls.Add(ServiceCBTypes);
-            panel5.Location = new Point(38, 42);
+            panel5.Location = new Point(41, 42);
             panel5.Name = "panel5";
             panel5.Size = new Size(332, 30);
             panel5.TabIndex = 139;
@@ -137,7 +139,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(41, 258);
+            label2.Location = new Point(41, 252);
             label2.Name = "label2";
             label2.Size = new Size(91, 21);
             label2.TabIndex = 144;
@@ -147,7 +149,7 @@
             // 
             panel1.BackColor = SystemColors.Window;
             panel1.Controls.Add(ServiceTBDetail);
-            panel1.Location = new Point(41, 291);
+            panel1.Location = new Point(41, 285);
             panel1.Name = "panel1";
             panel1.Size = new Size(329, 68);
             panel1.TabIndex = 145;
@@ -171,6 +173,7 @@
             UpsertLBLBTN.Size = new Size(67, 21);
             UpsertLBLBTN.TabIndex = 1;
             UpsertLBLBTN.Text = "Guardar";
+            toolTip1.SetToolTip(UpsertLBLBTN, "Guardar/Actualizar servicio.");
             UpsertLBLBTN.Click += UpsertPNLBTN_Click;
             // 
             // UpsertPCTBXBTN
@@ -182,6 +185,7 @@
             UpsertPCTBXBTN.SizeMode = PictureBoxSizeMode.Zoom;
             UpsertPCTBXBTN.TabIndex = 0;
             UpsertPCTBXBTN.TabStop = false;
+            toolTip1.SetToolTip(UpsertPCTBXBTN, "Guardar/Actualizar servicio.");
             UpsertPCTBXBTN.Click += UpsertPNLBTN_Click;
             // 
             // UpsertPNLBTN
@@ -193,6 +197,7 @@
             UpsertPNLBTN.Name = "UpsertPNLBTN";
             UpsertPNLBTN.Size = new Size(109, 41);
             UpsertPNLBTN.TabIndex = 146;
+            toolTip1.SetToolTip(UpsertPNLBTN, "Guardar/Actualizar servicio.");
             UpsertPNLBTN.Click += UpsertPNLBTN_Click;
             // 
             // UpsertServiceScreen
@@ -210,6 +215,7 @@
             Controls.Add(label3);
             Controls.Add(panel5);
             Name = "UpsertServiceScreen";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "UpsertServiceScreen";
             Load += UpsertServiceScreen_Load;
             panel3.ResumeLayout(false);
@@ -243,5 +249,6 @@
         private Label UpsertLBLBTN;
         private PictureBox UpsertPCTBXBTN;
         private Panel UpsertPNLBTN;
+        private ToolTip toolTip1;
     }
 }

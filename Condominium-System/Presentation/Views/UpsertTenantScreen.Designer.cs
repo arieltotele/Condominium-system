@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             label11 = new Label();
             panel8 = new Panel();
             TenantCBHouses = new ComboBox();
@@ -52,6 +53,7 @@
             UpsertPNLBTN = new Panel();
             UpsertLBLBTN = new Label();
             UpsertPCTBXBTN = new PictureBox();
+            toolTip1 = new ToolTip(components);
             panel8.SuspendLayout();
             panel7.SuspendLayout();
             panel6.SuspendLayout();
@@ -264,6 +266,7 @@
             UpsertPNLBTN.Name = "UpsertPNLBTN";
             UpsertPNLBTN.Size = new Size(109, 41);
             UpsertPNLBTN.TabIndex = 78;
+            toolTip1.SetToolTip(UpsertPNLBTN, "Guardar/Actualizar inquilino.");
             UpsertPNLBTN.Click += UpsertPNLBTN_Click;
             // 
             // UpsertLBLBTN
@@ -276,6 +279,7 @@
             UpsertLBLBTN.Size = new Size(67, 21);
             UpsertLBLBTN.TabIndex = 1;
             UpsertLBLBTN.Text = "Guardar";
+            toolTip1.SetToolTip(UpsertLBLBTN, "Guardar/Actualizar inquilino.");
             UpsertLBLBTN.Click += UpsertPNLBTN_Click;
             // 
             // UpsertPCTBXBTN
@@ -287,6 +291,7 @@
             UpsertPCTBXBTN.SizeMode = PictureBoxSizeMode.Zoom;
             UpsertPCTBXBTN.TabIndex = 0;
             UpsertPCTBXBTN.TabStop = false;
+            toolTip1.SetToolTip(UpsertPCTBXBTN, "Guardar/Actualizar inquilino.");
             UpsertPCTBXBTN.Click += UpsertPNLBTN_Click;
             // 
             // UpsertTenantScreen
@@ -310,7 +315,9 @@
             Controls.Add(label1);
             Controls.Add(panel2);
             Name = "UpsertTenantScreen";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "UpsertTenant";
+            toolTip1.SetToolTip(this, "Guardar/Actualizar inquilino.");
             Load += UpsertTenantScreen_Load;
             panel8.ResumeLayout(false);
             panel7.ResumeLayout(false);
@@ -356,5 +363,6 @@
         private Panel UpsertPNLBTN;
         private Label UpsertLBLBTN;
         private PictureBox UpsertPCTBXBTN;
+        private ToolTip toolTip1;
     }
 }

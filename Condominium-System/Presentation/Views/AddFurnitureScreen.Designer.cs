@@ -252,6 +252,7 @@
             Controls.Add(AddFurnitrureFlowLayoutKitchen);
             Controls.Add(AddFurnitrureFlowLayoutOutside);
             Name = "AddFurnitureScreen";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "AddFurnitureScreen";
             toolTip1.SetToolTip(this, "Ir a la siguiente pantalla.");
             Load += AddFurnitureScreen_Load;

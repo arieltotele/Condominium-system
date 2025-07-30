@@ -169,6 +169,10 @@ namespace Condominium_System.Presentation.Views
                                   MessageBoxIcon.Error);
                 }
             }
+            else
+            {
+                MessageBox.Show("Todos los campos deben ser completados correctamente.");
+            }
         }
 
         public bool FormIsCorrect()

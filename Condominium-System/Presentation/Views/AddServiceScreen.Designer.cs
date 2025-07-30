@@ -207,6 +207,7 @@
             Controls.Add(AddServiceFlowLayoutCommunity);
             Controls.Add(AddServiceFlowLayoutConvivence);
             Name = "AddServiceScreen";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "AddServiceScreen";
             toolTip1.SetToolTip(this, "Finalizar proceso.");
             Load += AddServiceScreen_Load;

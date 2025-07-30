@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             label10 = new Label();
             panel4 = new Panel();
             BlockTBFeature = new TextBox();
@@ -47,6 +48,7 @@
             UpsertPNLBTN = new Panel();
             UpsertLBLBTN = new Label();
             UpsertPCTBXBTN = new PictureBox();
+            toolTip1 = new ToolTip(components);
             panel4.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
@@ -212,6 +214,7 @@
             UpsertPNLBTN.Name = "UpsertPNLBTN";
             UpsertPNLBTN.Size = new Size(109, 41);
             UpsertPNLBTN.TabIndex = 70;
+            toolTip1.SetToolTip(UpsertPNLBTN, "Guardar/Actualizar bloque.");
             UpsertPNLBTN.Click += UpsertLBLBTN_Click;
             // 
             // UpsertLBLBTN
@@ -224,6 +227,7 @@
             UpsertLBLBTN.Size = new Size(67, 21);
             UpsertLBLBTN.TabIndex = 1;
             UpsertLBLBTN.Text = "Guardar";
+            toolTip1.SetToolTip(UpsertLBLBTN, "Guardar/Actualizar bloque.");
             UpsertLBLBTN.Click += UpsertLBLBTN_Click;
             // 
             // UpsertPCTBXBTN
@@ -235,6 +239,7 @@
             UpsertPCTBXBTN.SizeMode = PictureBoxSizeMode.Zoom;
             UpsertPCTBXBTN.TabIndex = 0;
             UpsertPCTBXBTN.TabStop = false;
+            toolTip1.SetToolTip(UpsertPCTBXBTN, "Guardar/Actualizar bloque.");
             UpsertPCTBXBTN.Click += UpsertLBLBTN_Click;
             // 
             // UpsertHousingBlocks
@@ -295,5 +300,6 @@
         private Panel UpsertPNLBTN;
         private Label UpsertLBLBTN;
         private PictureBox UpsertPCTBXBTN;
+        private ToolTip toolTip1;
     }
 }

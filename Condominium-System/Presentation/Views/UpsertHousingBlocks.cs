@@ -37,18 +37,11 @@ namespace Condominium_System.Presentation.Views
         {
             if (IsEditMode)
             {
-                CustomButtonToUpsert();
                 LoadDataIfIsToUpdate();
             }
 
             SetComboBoxForTypeOfHousing();
             await LoadCondominiumsIntoComboBox();
-        }
-
-        private void CustomButtonToUpsert()
-        {
-            UpsertLBLBTN.Text = "Editar";
-            UpsertPCTBXBTN.Image = Properties.Resources.pencil_white;
         }
 
         private async void LoadDataIfIsToUpdate()

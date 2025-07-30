@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             UpsertMskTBContactNumber = new MaskedTextBox();
             label5 = new Label();
             label3 = new Label();
@@ -43,6 +44,7 @@
             UpsertLBLBTN = new Label();
             UpsertPCTBXBTN = new PictureBox();
             panel4 = new Panel();
+            toolTip1 = new ToolTip(components);
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             panel1.SuspendLayout();
@@ -160,6 +162,7 @@
             UpsertPNLBTN.Name = "UpsertPNLBTN";
             UpsertPNLBTN.Size = new Size(109, 41);
             UpsertPNLBTN.TabIndex = 45;
+            toolTip1.SetToolTip(UpsertPNLBTN, "Guardar/Actualizar condominio.");
             UpsertPNLBTN.Click += UpsertLBLBTN_Click;
             // 
             // UpsertLBLBTN
@@ -172,6 +175,7 @@
             UpsertLBLBTN.Size = new Size(67, 21);
             UpsertLBLBTN.TabIndex = 1;
             UpsertLBLBTN.Text = "Guardar";
+            toolTip1.SetToolTip(UpsertLBLBTN, "Guardar/Actualizar condominio.");
             UpsertLBLBTN.Click += UpsertLBLBTN_Click;
             // 
             // UpsertPCTBXBTN
@@ -183,6 +187,7 @@
             UpsertPCTBXBTN.SizeMode = PictureBoxSizeMode.Zoom;
             UpsertPCTBXBTN.TabIndex = 0;
             UpsertPCTBXBTN.TabStop = false;
+            toolTip1.SetToolTip(UpsertPCTBXBTN, "Guardar/Actualizar condominio.");
             UpsertPCTBXBTN.Click += UpsertLBLBTN_Click;
             // 
             // panel4
@@ -242,5 +247,6 @@
         private Label UpsertLBLBTN;
         private PictureBox UpsertPCTBXBTN;
         private Panel panel4;
+        private ToolTip toolTip1;
     }
 }
