@@ -73,6 +73,7 @@
             IncidenceTBID.Name = "IncidenceTBID";
             IncidenceTBID.Size = new Size(228, 16);
             IncidenceTBID.TabIndex = 2;
+            IncidenceTBID.TextChanged += IncidenceTBID_TextChanged;
             // 
             // CondominiumPNLBTNCreate
             // 

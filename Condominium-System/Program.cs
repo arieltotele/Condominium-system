@@ -69,7 +69,6 @@ namespace Condominium_System
             services.AddScoped<IRepositoryNoId<HousingService>>(provider => 
                 new RepositoryNoId<HousingService>(provider.GetRequiredService<AppDbContext>()));
 
-
             // Registration for formularies
             services.AddTransient<HomeScreen>();
             services.AddTransient<Login>();

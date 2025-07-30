@@ -26,7 +26,7 @@ namespace Condominium_System.Presentation.Views
         {
             InitializeComponent();
             _incidentService = incidentService;
-            _tenantService = tenantService;            
+            _tenantService = tenantService;
             currentUser = Session.CurrentUser;
             _serviceProvider = serviceProvider;
         }
@@ -39,7 +39,6 @@ namespace Condominium_System.Presentation.Views
             SetDataGridStyle();
             ConfigureIncidenceColumns();
             await LoadDataToDataGrid();
-            //await LoadTenantsIntoComboBox();
         }
 
         private void IncidenceDTGData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
@@ -203,35 +202,7 @@ namespace Condominium_System.Presentation.Views
 
         private async void IncidentPNLBTNCreate_Click(object sender, EventArgs e)
         {
-
             GoToUpsertScreen(false);
-            //if (FormIsCorrect())
-            //{
-            //    try
-            //    {
-            //        var newIncident = new Incident()
-            //        {
-            //            Description = IncidenceTBDescription.Text,
-            //            Date = IncidenceDTPDate.Value,
-            //            TenantId = (int) IncidenceCBTenants.SelectedValue,
-            //            Author = currentUser.Username
-            //        };
-
-            //        await _incidentService.CreateAsync(newIncident);
-
-            //        MessageBox.Show("La incidencia ha sido creada con éxito.");
-            //        CleanForm();
-            //        await LoadDataToDataGrid();
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show($"Error al guardar la incidencia: {ex.Message}");
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Todos los campos deben estar completados correctamente.");
-            //}
         }
 
         private async void IncidentPNLBTNSearch_Click(object sender, EventArgs e)
@@ -265,73 +236,6 @@ namespace Condominium_System.Presentation.Views
                 MessageBox.Show("El campo Id debe estar lleno correctamente.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 CleanForm();
             }
-            //if (!string.IsNullOrWhiteSpace(IncidenceTBID.Text))
-            //{
-            //    try
-            //    {
-            //        var IncidenceToSearch = await _incidentService.GetByIdAsync(int.Parse(IncidenceTBID.Text));
-
-            //        if (IncidenceToSearch != null)
-            //        {
-            //            IncidenceTBID.Text = IncidenceTBID.Text;
-            //            IncidenceTBDescription.Text = IncidenceToSearch.Description;
-            //            IncidenceDTPDate.Value = IncidenceToSearch.Date;
-
-            //            await LoadTenantsIntoComboBox();
-
-            //            IncidenceCBTenants.SelectedValue = IncidenceToSearch.TenantId;
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Incidencia no encontrada.");
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show($"Error al buscar la incidencia: {ex.Message}");
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("El campo ID debe estar lleno correctamente.");
-            //}
-        }
-
-        private async void IncidencePNLBTNUpdate_Click(object sender, EventArgs e)
-        {
-            //if (FormIsCorrectToUpdate())
-            //{
-            //    try
-            //    {
-            //        var incidentToUpdate = await _incidentService.GetByIdAsync(int.Parse(IncidenceTBID.Text));
-
-            //        if (incidentToUpdate != null)
-            //        {
-            //            incidentToUpdate.Description = IncidenceTBDescription.Text;
-            //            incidentToUpdate.Date = IncidenceDTPDate.Value;
-            //            incidentToUpdate.TenantId = (int)IncidenceCBTenants.SelectedValue;
-            //            incidentToUpdate.UpdatedAt = DateTime.Now;
-
-            //            await _incidentService.UpdateAsync(incidentToUpdate);
-
-            //            MessageBox.Show("La incidencia ha sido actualizada con éxito.");
-            //            await LoadDataToDataGrid();
-            //            CleanForm();
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Incidencia no encontrada.");
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show($"Error actualizando la incidencia: {ex.Message}");
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Todos los campos deben estar completos correctamente.");
-            //}
         }
 
         private async void IncidencePNLBTNDelete_Click(object sender, EventArgs e)
@@ -372,34 +276,30 @@ namespace Condominium_System.Presentation.Views
         {
             IncidenceTBID.Clear();
             await LoadDataToDataGrid();
-            //IncidenceTBDescription.Clear();
-            //IncidenceDTPDate.Value = DateTime.Today;
-
-            //if (IncidenceCBTenants.Items.Count > 0)
-            //    IncidenceCBTenants.SelectedIndex = 0;
         }
 
-        //public bool FormIsCorrect()
-        //{
-        //    bool isTenantValid = int.TryParse(IncidenceCBTenants.SelectedValue?.ToString(), out int tenantId) && tenantId != 0;
+        private async void IncidenceTBID_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string searchTerm = IncidenceTBID.Text.Trim();
+                var filteredIncidents = await _incidentService.SearchIncidentsAsync(searchTerm);
 
-        //    return !(
-        //       string.IsNullOrEmpty(IncidenceDTPDate.Text) ||
-        //       string.IsNullOrEmpty(IncidenceTBDescription.Text) ||
-        //       !isTenantValid
-        //   );
-        //}
+                // Actualizar DataGridView
+                IncidenceDTGData.DataSource = filteredIncidents.ToList();
 
-        //public bool FormIsCorrectToUpdate()
-        //{
-        //    bool isTenantValid = int.TryParse(IncidenceCBTenants.SelectedValue?.ToString(), out int tenantId) && tenantId != 0;
-
-        //    return !(
-        //       string.IsNullOrEmpty(IncidenceTBID.Text) ||
-        //       string.IsNullOrEmpty(IncidenceDTPDate.Text) ||
-        //       string.IsNullOrEmpty(IncidenceTBDescription.Text) ||
-        //       !isTenantValid
-        //   );
-        //}
+                // Opcional: Mostrar mensaje si no hay resultados
+                if (!filteredIncidents.Any())
+                {
+                    MessageBox.Show("No se encontraron incidentes", "Información",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al buscar: {ex.Message}", "Error",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

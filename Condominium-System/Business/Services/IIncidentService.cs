@@ -11,6 +11,7 @@ namespace Condominium_System.Business.Services
     {
         Task<IEnumerable<Incident>> GetAllAsync();
         Task<Incident> GetByIdAsync(int id);
+        Task<IEnumerable<Incident>> SearchIncidentsAsync(string searchTerm);
         Task<Incident> CreateAsync(Incident incident);
         Task UpdateAsync(Incident incident);
         Task DeleteAsync(int id);
