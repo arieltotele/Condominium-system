@@ -49,18 +49,69 @@ namespace Condominium_System.Presentation.Views
 
         private async Task SetComboBoxForTenants()
         {
-            var tenants = (await _tenantService.GetAllAsync()).ToList();
-
-            tenants.Insert(0, new Tenant
+            try
             {
-                Id = 0,
-                FirstName = "-- Seleccione un condominio --"
-            });
+                var tenants = (await _tenantService.GetAllAsync()).ToList();
 
-            UpsertInvoiceComboBxTenants.DataSource = tenants;
-            UpsertInvoiceComboBxTenants.DisplayMember = "FirstName";
-            UpsertInvoiceComboBxTenants.ValueMember = "Id";
-            UpsertInvoiceComboBxTenants.SelectedIndex = 0;
+                if (!tenants.Any())
+                {
+                    UpsertInvoiceComboBxTenants.DataSource = null;
+                    UpsertInvoiceComboBxTenants.Items.Clear();
+                    UpsertInvoiceComboBxTenants.Text = "No hay inquilinos registrados";
+                    UpsertInvoiceComboBxTenants.Enabled = false;
+
+                    MessageBox.Show("No se encontraron inquilinos registrados. Por favor, registre al menos un inquilino.",
+                                  "Información",
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Information);
+
+                    // Cierra el modal si no hay inquilinos
+                    if (this.Owner is InvoiceScreen owner) // Ajusta el tipo según tu formulario padre
+                    {
+                        await owner.LoadDataToDataGrid();
+                    }
+                    this.Hide();
+                    return;
+                }
+                var placeholder = new Tenant
+                {
+                    Id = 0,
+                    FirstName = "-- Seleccione un inquilino --",
+                    LastName = string.Empty,
+                    DocumentNumber = string.Empty
+                };
+
+                var tenantList = new List<Tenant> { placeholder };
+                tenantList.AddRange(tenants);
+
+                UpsertInvoiceComboBxTenants.DataSource = tenantList;
+                UpsertInvoiceComboBxTenants.DisplayMember = "FirstName";
+                UpsertInvoiceComboBxTenants.ValueMember = "Id";
+                UpsertInvoiceComboBxTenants.SelectedIndex = 0;
+                UpsertInvoiceComboBxTenants.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                UpsertInvoiceComboBxTenants.DataSource = null;
+                UpsertInvoiceComboBxTenants.Items.Clear();
+                UpsertInvoiceComboBxTenants.Text = "Error al cargar inquilinos";
+                UpsertInvoiceComboBxTenants.Enabled = false;
+
+                MessageBox.Show($"Error cargando inquilinos: {ex.Message}",
+                              "Error",
+                              MessageBoxButtons.OK,
+                              MessageBoxIcon.Error);
+
+                if (this.Owner is InvoiceScreen owner)
+                {
+                    await owner.LoadDataToDataGrid();
+                }
+                this.Hide();
+            }
+            finally
+            {
+                UpsertInvoiceComboBxTenants.Refresh();
+            }
         }
 
         private async void LoadDataIfIsToUpdate()

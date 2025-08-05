@@ -92,18 +92,69 @@ namespace Condominium_System.Presentation.Views
 
         private async Task SetComboBoxForCondominiums()
         {
-            var condominiums = (await _condominiumService.GetAllCondominiumsAsync()).ToList();
-
-            condominiums.Insert(0, new Condominium
+            try
             {
-                Id = 0,
-                Name = "-- Seleccione un condominio --"
-            });
+                var condominiums = (await _condominiumService.GetAllCondominiumsAsync()).ToList();
 
-            SignUpComboBxCondominium.DataSource = condominiums;
-            SignUpComboBxCondominium.DisplayMember = "Name";
-            SignUpComboBxCondominium.ValueMember = "Id";
-            SignUpComboBxCondominium.SelectedIndex = 0;
+                if (!condominiums.Any())
+                {
+                    SignUpComboBxCondominium.DataSource = null;
+                    SignUpComboBxCondominium.Items.Clear();
+                    SignUpComboBxCondominium.Text = "No hay condominios registrados";
+                    SignUpComboBxCondominium.Enabled = false;
+
+                    MessageBox.Show("No se encontraron condominios registrados. Por favor, registre al menos un condominio.",
+                                  "Información",
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Information);
+
+                    if (this.Owner is UsersScreen owner)
+                    {
+                        owner.LoadDataToDataGrid();
+                    }
+                    this.Hide();
+                    return;
+                }
+
+                var placeholder = new Condominium
+                {
+                    Id = 0,
+                    Name = "-- Seleccione un condominio --",
+                    Address = string.Empty,
+                    ReceptionContactNumber = string.Empty
+                };
+
+                var condominiumList = new List<Condominium> { placeholder };
+                condominiumList.AddRange(condominiums);
+
+                SignUpComboBxCondominium.DataSource = condominiumList;
+                SignUpComboBxCondominium.DisplayMember = "Name";
+                SignUpComboBxCondominium.ValueMember = "Id";
+                SignUpComboBxCondominium.SelectedIndex = 0;
+                SignUpComboBxCondominium.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                SignUpComboBxCondominium.DataSource = null;
+                SignUpComboBxCondominium.Items.Clear();
+                SignUpComboBxCondominium.Text = "Error al cargar condominios";
+                SignUpComboBxCondominium.Enabled = false;
+
+                MessageBox.Show($"Error cargando condominios: {ex.Message}",
+                              "Error",
+                              MessageBoxButtons.OK,
+                              MessageBoxIcon.Error);
+
+                if (this.Owner is UsersScreen owner)
+                {
+                    owner.LoadDataToDataGrid();
+                }
+                this.Hide();
+            }
+            finally
+            {
+                SignUpComboBxCondominium.Refresh();
+            }
         }
 
         private void SignUpTxtBxName_KeyPress(object sender, KeyPressEventArgs e)

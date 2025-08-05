@@ -178,6 +178,7 @@
             Controls.Add(label6);
             Controls.Add(panel5);
             Name = "UpsertInvoiceScreen";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "UpsertInvoice";
             Load += UpsertInvoiceScreen_Load;
             panel5.ResumeLayout(false);
