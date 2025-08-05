@@ -96,7 +96,7 @@ namespace Condominium_System.Presentation.Views
                         {
                             await _tenantService.DeleteAsync(selectedTenant.Id);
                             MessageBox.Show("Inquilino eliminado correctamente.");
-                            LoadDataToDataGrid();
+                            await LoadDataToDataGrid();
                         }
                         catch (Exception ex)
                         {

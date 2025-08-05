@@ -199,7 +199,7 @@ namespace Condominium_System.Presentation.Views
 
                     MessageBox.Show("La incidencia ha sido creado con exito.", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     CleanForm();
-                    ((IncidenceScreen)this.Owner).LoadDataToDataGrid();
+                    await ((IncidenceScreen)this.Owner).LoadDataToDataGrid();
                     this.Hide();
                 }
                 catch (Exception ex)

@@ -98,7 +98,7 @@ namespace Condominium_System.Presentation.Views
 
                     if (this.Owner is TenantScreen owner)
                     {
-                        owner.LoadDataToDataGrid();
+                        await owner.LoadDataToDataGrid();
                     }
                     this.Hide();
                     return;
@@ -128,7 +128,7 @@ namespace Condominium_System.Presentation.Views
 
                 if (this.Owner is TenantScreen owner)
                 {
-                    owner.LoadDataToDataGrid();
+                    await owner.LoadDataToDataGrid();
                 }
                 this.Hide();
             }

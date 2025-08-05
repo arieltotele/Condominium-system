@@ -3,6 +3,7 @@ using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
+using Timer = System.Windows.Forms.Timer;
 
 namespace Condominium_System.Presentation.Views
 {
@@ -11,7 +12,11 @@ namespace Condominium_System.Presentation.Views
         private readonly IInvoiceService _invoiceService;
         private readonly ITenantService _tenantService;
         private readonly IServiceProvider _serviceProvider;
+
         private User currentUser;
+
+        private CancellationTokenSource _searchCts;
+        private DateTime _lastSearchTime;
 
         public InvoiceScreen(IInvoiceService invoiceService, ITenantService tenantService, IServiceProvider serviceProvider)
         {
@@ -72,12 +77,12 @@ namespace Condominium_System.Presentation.Views
                     return;
                 }
 
-                if (relativeX < 26) // 🟢 Editar
+                if (relativeX < 26)
                 {
                     Session.InvoiceToUpsert = selectedInvoice;
                     GoToUpsertScreen(true);
                 }
-                else if (relativeX >= 26 && relativeX < 52) // 🔴 Eliminar
+                else if (relativeX >= 26 && relativeX < 52)
                 {
                     var confirm = MessageBox.Show($"¿Deseas eliminar la factura '{selectedInvoice.Id}'?",
                                                   "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -88,7 +93,7 @@ namespace Condominium_System.Presentation.Views
                         {
                             await _invoiceService.DeleteAsync(selectedInvoice.Id);
                             MessageBox.Show("Factura eliminada correctamente.");
-                            LoadDataToDataGrid();
+                            await LoadDataToDataGrid();
                         }
                         catch (Exception ex)
                         {
@@ -248,8 +253,69 @@ namespace Condominium_System.Presentation.Views
             {
                 MessageBox.Show("El campo Id debe estar lleno correctamente.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 CleanForm();
-                await LoadDataToDataGrid();                
-            }        
+                await LoadDataToDataGrid();
+            }
+        }
+
+        private async void InvoiceTBID_TextChanged(object sender, EventArgs e)
+        {
+            _searchCts?.Cancel();
+            _searchCts = new CancellationTokenSource();
+
+            try
+            {
+                string searchTerm = InvoiceTBID.Text.Trim();
+
+                await Task.Delay(500, _searchCts.Token);
+
+                bool shouldSearch = string.IsNullOrEmpty(searchTerm) || searchTerm.Length >= 2;
+
+                if (shouldSearch)
+                {
+                    var filteredInvoices = await _invoiceService.SearchInvoicesAsync(searchTerm);
+
+                    if (!_searchCts.IsCancellationRequested)
+                    {
+                        _lastSearchTime = DateTime.Now;
+
+                        this.Invoke((MethodInvoker)delegate {
+                            InvoiceDTGData.DataSource = filteredInvoices.ToList();
+
+                            if (!filteredInvoices.Any() && !string.IsNullOrEmpty(searchTerm))
+                            {
+                                ShowStatusMessage("No se encontraron facturas", 3000);
+                            }
+                            else
+                            {
+                                statusLabel.Visible = false;
+                            }
+                        });
+                    }
+                }
+            }
+            catch (TaskCanceledException) { }
+            catch (Exception ex)
+            {
+                this.Invoke((MethodInvoker)delegate {
+                    if (!_searchCts.IsCancellationRequested)
+                    {
+                        ShowStatusMessage($"Error: {ex.Message}", 3000);
+                    }
+                });
+            }
+        }
+
+        private void ShowStatusMessage(string message, int durationMs)
+        {
+            statusLabel.Text = message;
+            statusLabel.Visible = true;
+
+            var timer = new Timer { Interval = durationMs };
+            timer.Tick += (s, e) => {
+                statusLabel.Visible = false;
+                timer.Stop();
+            };
+            timer.Start();
         }
     }
 }

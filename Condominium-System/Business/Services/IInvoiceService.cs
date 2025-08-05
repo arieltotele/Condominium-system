@@ -11,6 +11,7 @@ namespace Condominium_System.Business.Services
     {
         Task<IEnumerable<Invoice>> GetAllAsync();
         Task<Invoice> GetByIdAsync(int id);
+        Task<IEnumerable<Invoice>> SearchInvoicesAsync(string searchTerm);
         Task<Invoice> CreateAsync(Invoice invoice);
         Task UpdateAsync(Invoice invoice);
         Task DeleteAsync(int id);

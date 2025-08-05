@@ -27,6 +27,35 @@ namespace Condominium_System.Business.Services
             return await _repository.GetByIdWithIncludesAsync(id, i => i.Tenant);
         }
 
+        public async Task<IEnumerable<Invoice>> SearchInvoicesAsync(string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return await GetAllAsync();
+            }
+
+            var results = new List<Invoice>();
+
+            if (searchTerm.All(char.IsDigit) && int.TryParse(searchTerm, out int id))
+            {
+                var invoiceById = await GetByIdAsync(id);
+                if (invoiceById != null)
+                {
+                    results.Add(invoiceById);
+                }
+            }
+
+            var invoicesByDetail = await _repository.FindAsync(i =>
+                i.Detail.Contains(searchTerm));
+
+            results.AddRange(invoicesByDetail);
+
+            return results
+                .DistinctBy(i => i.Id)
+                .OrderByDescending(i => i.IssueDate)
+                .ToList();
+        }
+
         public async Task<Invoice> CreateAsync(Invoice invoice)
         {
             await _repository.AddAsync(invoice);

@@ -101,7 +101,7 @@ namespace Condominium_System.Presentation.Views
                         {
                             await _incidentService.DeleteAsync(selectedIncidence.Id);
                             MessageBox.Show("Incidencia eliminada correctamente.");
-                            LoadDataToDataGrid();
+                            await LoadDataToDataGrid();
                         }
                         catch (Exception ex)
                         {

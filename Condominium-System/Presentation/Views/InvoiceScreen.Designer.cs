@@ -39,19 +39,22 @@
             toolTip1 = new ToolTip(components);
             panel1 = new Panel();
             pictureBox5 = new PictureBox();
+            statusStrip1 = new StatusStrip();
+            statusLabel = new ToolStripStatusLabel();
             LoginPNLUsername.SuspendLayout();
             CondominiumPNLBTNCreate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)InvoiceDTGData).BeginInit();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
+            statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(15, 16);
+            label1.Location = new Point(12, 47);
             label1.Name = "label1";
             label1.Size = new Size(25, 21);
             label1.TabIndex = 42;
@@ -61,7 +64,7 @@
             // 
             LoginPNLUsername.BackColor = SystemColors.Window;
             LoginPNLUsername.Controls.Add(InvoiceTBID);
-            LoginPNLUsername.Location = new Point(15, 49);
+            LoginPNLUsername.Location = new Point(12, 80);
             LoginPNLUsername.Name = "LoginPNLUsername";
             LoginPNLUsername.Size = new Size(235, 24);
             LoginPNLUsername.TabIndex = 43;
@@ -73,13 +76,14 @@
             InvoiceTBID.Name = "InvoiceTBID";
             InvoiceTBID.Size = new Size(228, 16);
             InvoiceTBID.TabIndex = 2;
+            InvoiceTBID.TextChanged += InvoiceTBID_TextChanged;
             // 
             // CondominiumPNLBTNCreate
             // 
             CondominiumPNLBTNCreate.BackColor = Color.MidnightBlue;
             CondominiumPNLBTNCreate.Controls.Add(label8);
             CondominiumPNLBTNCreate.Controls.Add(pictureBox3);
-            CondominiumPNLBTNCreate.Location = new Point(859, 32);
+            CondominiumPNLBTNCreate.Location = new Point(856, 63);
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 45;
@@ -125,7 +129,7 @@
             // 
             panel1.BackColor = Color.MidnightBlue;
             panel1.Controls.Add(pictureBox5);
-            panel1.Location = new Point(247, 49);
+            panel1.Location = new Point(244, 80);
             panel1.Name = "panel1";
             panel1.Size = new Size(26, 24);
             panel1.TabIndex = 46;
@@ -143,11 +147,29 @@
             toolTip1.SetToolTip(pictureBox5, "Boton para buscar un condominio.");
             pictureBox5.Click += InvoicePNLBTNSearch_Click;
             // 
+            // statusStrip1
+            // 
+            statusStrip1.Items.AddRange(new ToolStripItem[] { statusLabel });
+            statusStrip1.Location = new Point(0, 126);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(1017, 22);
+            statusStrip1.TabIndex = 47;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // statusLabel
+            // 
+            statusLabel.AutoSize = false;
+            statusLabel.Name = "statusLabel";
+            statusLabel.Size = new Size(1002, 17);
+            statusLabel.Spring = true;
+            statusLabel.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // InvoiceScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1017, 591);
+            Controls.Add(statusStrip1);
             Controls.Add(label1);
             Controls.Add(LoginPNLUsername);
             Controls.Add(CondominiumPNLBTNCreate);
@@ -164,6 +186,8 @@
             ((System.ComponentModel.ISupportInitialize)InvoiceDTGData).EndInit();
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -180,5 +204,7 @@
         private DataGridView InvoiceDTGData;
         private Panel panel1;
         private PictureBox pictureBox5;
+        private StatusStrip statusStrip1;
+        private ToolStripStatusLabel statusLabel;
     }
 }

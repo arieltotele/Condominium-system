@@ -87,7 +87,7 @@ namespace Condominium_System.Presentation.Views
 
                         MessageBox.Show("El servicio ha sido actualizado con exito");
                         CleanForm();
-                        ((ServiceScreen)this.Owner).LoadDataToDataGrid();
+                        await ((ServiceScreen)this.Owner).LoadDataToDataGrid();
                         this.Hide();
 
                     }
@@ -129,7 +129,7 @@ namespace Condominium_System.Presentation.Views
 
                     MessageBox.Show("El servicio ha sido creado con exito.", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     CleanForm();
-                    ((ServiceScreen)this.Owner).LoadDataToDataGrid();
+                    await ((ServiceScreen)this.Owner).LoadDataToDataGrid();
                     this.Hide();
                 }
                 catch (Exception ex)

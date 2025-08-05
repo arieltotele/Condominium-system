@@ -160,7 +160,7 @@ namespace Condominium_System.Presentation.Views
 
                         MessageBox.Show("La factura ha sido actualizado con exito");
                         CleanForm();
-                        ((InvoiceScreen)this.Owner).LoadDataToDataGrid();
+                        await ((InvoiceScreen)this.Owner).LoadDataToDataGrid();
                         this.Hide();
                     }
                     else
@@ -210,7 +210,7 @@ namespace Condominium_System.Presentation.Views
 
                     MessageBox.Show("Factura creada exitosamente");
                     CleanForm();
-                    ((InvoiceScreen)this.Owner).LoadDataToDataGrid();
+                    await ((InvoiceScreen)this.Owner).LoadDataToDataGrid();
                 }
                 catch (Exception ex)
                 {

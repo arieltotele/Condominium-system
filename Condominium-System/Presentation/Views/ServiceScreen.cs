@@ -86,7 +86,7 @@ namespace Condominium_System.Presentation.Views
                         {
                             await _serviceService.DeleteAsync(selectedService.Id);
                             MessageBox.Show("Servicio eliminado correctamente.");
-                            LoadDataToDataGrid();
+                            await LoadDataToDataGrid();
                         }
                         catch (Exception ex)
                         {

@@ -95,7 +95,7 @@ namespace Condominium_System.Presentation.Views
 
                         MessageBox.Show("El mobiliario ha sido actualizado con exito");
                         CleanForm();
-                        ((FurnitureScreen)this.Owner).LoadDataToDataGrid();
+                        await ((FurnitureScreen)this.Owner).LoadDataToDataGrid();
                         this.Hide();
 
                     }
@@ -136,7 +136,7 @@ namespace Condominium_System.Presentation.Views
 
                     MessageBox.Show("El mobiliario ha sido creado con exito.", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     CleanForm();
-                    ((FurnitureScreen)this.Owner).LoadDataToDataGrid();
+                    await ((FurnitureScreen)this.Owner).LoadDataToDataGrid();
                     this.Hide();
                 }
                 catch (Exception ex)

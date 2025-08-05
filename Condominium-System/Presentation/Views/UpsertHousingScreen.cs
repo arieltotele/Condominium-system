@@ -149,7 +149,7 @@ namespace Condominium_System.Presentation.Views
 
                         Session.CurrentHouse = HousingToUpdate;
 
-                        ((HousingScreen)this.Owner).LoadDataToDataGrid();
+                        await ((HousingScreen)this.Owner).LoadDataToDataGrid();
 
                         GoToAddFurnitureScreen(true);
                     }
@@ -192,7 +192,7 @@ namespace Condominium_System.Presentation.Views
                     MessageBox.Show("La vivienda ha sido creada con exito.");
                     CleanForm();
 
-                    ((HousingScreen)this.Owner).LoadDataToDataGrid();
+                    await ((HousingScreen)this.Owner).LoadDataToDataGrid();
 
                     GoToAddFurnitureScreen(false);
                 }
