@@ -39,12 +39,16 @@
             toolTip1 = new ToolTip(components);
             panel1 = new Panel();
             pictureBox5 = new PictureBox();
+            statusStrip1 = new StatusStrip();
+            statusLabel = new ToolStripStatusLabel();
+            contextMenuStrip1 = new ContextMenuStrip(components);
             LoginPNLUsername.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)CondominiumDTGData).BeginInit();
             CondominiumPNLBTNCreate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
+            statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -71,9 +75,9 @@
             CondominiumTIId.BorderStyle = BorderStyle.None;
             CondominiumTIId.Location = new Point(4, 3);
             CondominiumTIId.Name = "CondominiumTIId";
-            CondominiumTIId.Size = new Size(222, 16);
+            CondominiumTIId.Size = new Size(228, 16);
             CondominiumTIId.TabIndex = 2;
-            CondominiumTIId.KeyPress += CondominiumTIId_KeyPress;
+            CondominiumTIId.TextChanged += CondominiumTIId_TextChanged;
             // 
             // CondominiumDTGData
             // 
@@ -145,11 +149,36 @@
             toolTip1.SetToolTip(pictureBox5, "Boton para buscar un condominio.");
             pictureBox5.Click += CondominiumBTNSearch_Click;
             // 
+            // statusStrip1
+            // 
+            statusStrip1.Items.AddRange(new ToolStripItem[] { statusLabel });
+            statusStrip1.Location = new Point(0, 126);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(1017, 22);
+            statusStrip1.TabIndex = 37;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // statusLabel
+            // 
+            statusLabel.AutoSize = false;
+            statusLabel.ForeColor = Color.FromArgb(238, 210, 2);
+            statusLabel.Name = "statusLabel";
+            statusLabel.Size = new Size(971, 17);
+            statusLabel.Spring = true;
+            statusLabel.Text = "toolStripStatusLabel1";
+            statusLabel.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(61, 4);
+            // 
             // CondominiumScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1017, 591);
+            Controls.Add(statusStrip1);
             Controls.Add(panel1);
             Controls.Add(CondominiumPNLBTNCreate);
             Controls.Add(CondominiumDTGData);
@@ -166,6 +195,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -182,5 +213,8 @@
         private ToolTip toolTip1;
         private Panel panel1;
         private PictureBox pictureBox5;
+        private StatusStrip statusStrip1;
+        private ToolStripStatusLabel statusLabel;
+        private ContextMenuStrip contextMenuStrip1;
     }
 }

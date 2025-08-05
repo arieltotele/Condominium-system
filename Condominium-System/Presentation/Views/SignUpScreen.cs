@@ -18,9 +18,12 @@ namespace Condominium_System.Presentation.Views
     {
         private readonly IUserService _userService;
         private readonly ICondominiumService _condominiumService;
-        User currentUser;
-        public event EventHandler UserCreated;
         private readonly IServiceProvider _serviceProvider;
+
+        User currentUser;
+
+        public event EventHandler UserCreated;
+        
 
         public bool IsEditMode { get; set; } = false;
 

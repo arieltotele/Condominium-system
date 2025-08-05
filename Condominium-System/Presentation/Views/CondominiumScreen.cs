@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Timer = System.Windows.Forms.Timer;
 
 namespace Condominium_System.Presentation.Views
 {
@@ -20,7 +21,11 @@ namespace Condominium_System.Presentation.Views
     {
         private readonly ICondominiumService _condominiumService;
         private readonly IServiceProvider _serviceProvider;
+
         User currentUser;
+
+        private CancellationTokenSource _searchCts;
+        private DateTime _lastSearchTime;
 
         public CondominiumScreen(ICondominiumService condominiumService, IServiceProvider serviceProvider)
         {
@@ -132,7 +137,7 @@ namespace Condominium_System.Presentation.Views
                 int y = e.CellBounds.Top + (e.CellBounds.Height - iconHeight) / 2;
 
                 e.Graphics.DrawImage(Properties.Resources.pencil_blue, new Rectangle(x, y, iconWidth, iconHeight));
-                                
+
                 x += iconWidth + padding;
                 e.Graphics.DrawImage(Properties.Resources.trash_red, new Rectangle(x, y, iconWidth, iconHeight));
 
@@ -251,19 +256,72 @@ namespace Condominium_System.Presentation.Views
             }
         }
 
-        private void CondominiumTIId_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
-        }
-
         private void CleanForm()
         {
             CondominiumTIId.Text = string.Empty;
 
             LoadDataToDataGrid();
+        }
+
+        private async void CondominiumTIId_TextChanged(object sender, EventArgs e)
+        {
+            _searchCts?.Cancel();
+            _searchCts = new CancellationTokenSource();
+
+            try
+            {
+                string searchTerm = CondominiumTIId.Text.Trim();
+
+                await Task.Delay(500, _searchCts.Token);
+
+                bool shouldSearch = string.IsNullOrEmpty(searchTerm) ||
+                                  searchTerm.All(char.IsDigit) ||
+                                  searchTerm.Length >= 2; // Cambiado a 2 caracteres mínimo para búsqueda
+
+                if (shouldSearch)
+                {
+                    var results = await _condominiumService.SearchCondominiumsAsync(searchTerm);
+
+                    if (!_searchCts.IsCancellationRequested)
+                    {
+                        this.Invoke((MethodInvoker)delegate {
+                            CondominiumDTGData.DataSource = results.ToList();
+
+                            if (!results.Any() && !string.IsNullOrEmpty(searchTerm))
+                            {
+                                ShowStatusMessage("No se encontraron condominios", 3000);
+                            }
+                            else
+                            {
+                                statusLabel.Visible = false;
+                            }
+                        });
+                    }
+                }
+            }
+            catch (TaskCanceledException) { }
+            catch (Exception ex)
+            {
+                this.Invoke((MethodInvoker)delegate {
+                    if (!_searchCts.IsCancellationRequested)
+                    {
+                        ShowStatusMessage($"Error: {ex.Message}", 3000);
+                    }
+                });
+            }
+        }
+
+        private void ShowStatusMessage(string message, int durationMs)
+        {
+            statusLabel.Text = message;
+            statusLabel.Visible = true;
+
+            var timer = new Timer { Interval = durationMs };
+            timer.Tick += (s, e) => {
+                statusLabel.Visible = false;
+                timer.Stop();
+            };
+            timer.Start();
         }
     }
 }

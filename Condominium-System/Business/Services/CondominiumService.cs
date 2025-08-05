@@ -27,6 +27,26 @@ namespace Condominium_System.Business.Services
             return await _condominiumRepository.GetByIdWithIncludesAsync(id, c => c.Users, c => c.Blocks);
         }
 
+        public async Task<IEnumerable<Condominium>> SearchCondominiumsAsync(string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return await GetAllCondominiumsAsync();
+            }
+
+            if (searchTerm.All(char.IsDigit) && int.TryParse(searchTerm, out int id))
+            {
+                // Búsqueda por ID - Usamos GetByIdAsync que ya incluye la verificación IsActive
+                var condominium = await _condominiumRepository.GetByIdAsync(id);
+                return condominium != null ? new List<Condominium> { condominium } : Enumerable.Empty<Condominium>();
+            }
+            else
+            {
+                // Búsqueda por nombre - Usamos FindAsync que ya aplica el filtro IsActive
+                return await _condominiumRepository.FindAsync(c => c.Name.Contains(searchTerm));
+            }
+        }
+
         public async Task<Condominium> CreateCondominiumAsync(Condominium condominium)
         {
             await _condominiumRepository.AddAsync(condominium);
