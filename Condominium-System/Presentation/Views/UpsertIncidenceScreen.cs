@@ -71,7 +71,27 @@ namespace Condominium_System.Presentation.Views
         {
             try
             {
-                var tenants = await _tenantService.GetAllAsync();
+                var tenants = (await _tenantService.GetAllAsync()).ToList();
+
+                if (!tenants.Any())
+                {
+                    IncidenceCBTenants.DataSource = null;
+                    IncidenceCBTenants.Items.Clear();
+                    IncidenceCBTenants.Text = "No hay inquilinos registrados";
+                    IncidenceCBTenants.Enabled = false;
+
+                    MessageBox.Show("No se encontraron inquilinos registrados. Por favor, registre al menos un inquilino.",
+                                  "Información",
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Information);
+
+                    if (this.Owner is IncidenceScreen owner) 
+                    {
+                        await owner.LoadDataToDataGrid();
+                    }
+                    this.Hide();
+                    return;
+                }
 
                 var placeholder = new { Id = 0, Display = "-- Seleccione un inquilino --" };
 
@@ -86,10 +106,30 @@ namespace Condominium_System.Presentation.Views
                 IncidenceCBTenants.DisplayMember = "Display";
                 IncidenceCBTenants.ValueMember = "Id";
                 IncidenceCBTenants.DataSource = tenantDisplayList;
+                IncidenceCBTenants.SelectedIndex = 0;
+                IncidenceCBTenants.Enabled = true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error cargando los inquilinos: {ex.Message}");
+                IncidenceCBTenants.DataSource = null;
+                IncidenceCBTenants.Items.Clear();
+                IncidenceCBTenants.Text = "Error al cargar inquilinos";
+                IncidenceCBTenants.Enabled = false;
+
+                MessageBox.Show($"Error cargando inquilinos: {ex.Message}",
+                              "Error",
+                              MessageBoxButtons.OK,
+                              MessageBoxIcon.Error);
+
+                if (this.Owner is IncidenceScreen owner)
+                {
+                    await owner.LoadDataToDataGrid();
+                }
+                this.Hide();
+            }
+            finally
+            {
+                IncidenceCBTenants.Refresh();
             }
         }
 
@@ -118,7 +158,7 @@ namespace Condominium_System.Presentation.Views
 
                         MessageBox.Show("La incidencia ha sido actualizado con exito");
                         CleanForm();
-                        ((IncidenceScreen)this.Owner).LoadDataToDataGrid();
+                        await ((IncidenceScreen)this.Owner).LoadDataToDataGrid();
                         this.Hide();
 
                     }
