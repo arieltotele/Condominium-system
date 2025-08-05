@@ -157,12 +157,12 @@ namespace Condominium_System.Presentation.Views
                     return;
                 }
 
-                if (relativeX < 26) // 🟢 Editar
+                if (relativeX < 26)
                 {
                     Session.CondominiumToUpsert = selectedFurniture;
                     GoToUpsertScreen(true);
                 }
-                else if (relativeX >= 26 && relativeX < 52) // 🔴 Eliminar
+                else if (relativeX >= 26 && relativeX < 52)
                 {
                     var confirm = MessageBox.Show($"¿Deseas eliminar el condominio '{selectedFurniture.Name}'?",
                                                   "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);

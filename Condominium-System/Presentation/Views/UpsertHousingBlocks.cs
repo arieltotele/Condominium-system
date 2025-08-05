@@ -82,16 +82,54 @@ namespace Condominium_System.Presentation.Views
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var condoService = scope.ServiceProvider.GetRequiredService<ICondominiumService>();
-                    var condominiums = await condoService.GetAllCondominiumsAsync();
+                    var condominiums = (await condoService.GetAllCondominiumsAsync()).ToList();
+
+                    if (!condominiums.Any())
+                    {
+                        BlockCBCondominium.DataSource = null;
+                        BlockCBCondominium.Items.Clear();
+                        BlockCBCondominium.Text = "No hay condominios registrados";
+                        BlockCBCondominium.Enabled = false;
+
+                        MessageBox.Show("No se encontraron condominios registrados. Por favor, registre al menos un condominio.",
+                                      "Información",
+                                      MessageBoxButtons.OK,
+                                      MessageBoxIcon.Information);
+
+                        this.Hide();
+
+                        return;
+                    }
 
                     BlockCBCondominium.DataSource = condominiums;
                     BlockCBCondominium.DisplayMember = "Name";
                     BlockCBCondominium.ValueMember = "Id";
+                    BlockCBCondominium.Enabled = true;
+
+                    if (BlockCBCondominium.Items.Count > 0)
+                    {
+                        BlockCBCondominium.SelectedIndex = 0;
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error cargando condominios: {ex.Message}");
+                BlockCBCondominium.DataSource = null;
+                BlockCBCondominium.Items.Clear();
+                BlockCBCondominium.Text = "Error al cargar condominios";
+                BlockCBCondominium.Enabled = false;
+
+                MessageBox.Show($"Error cargando condominios: {ex.Message}",
+                                "Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+
+                ((HousingBlocksScreen)this.Owner).LoadDataToDataGrid();
+                this.Hide();
+            }
+            finally
+            {
+                BlockCBCondominium.Refresh();
             }
         }
 
