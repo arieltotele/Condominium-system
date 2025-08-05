@@ -27,6 +27,26 @@ namespace Condominium_System.Business.Services
             return await _blockRepository.GetByIdWithIncludesAsync(id, b => b.Condominium, b => b.Housings);
         }
 
+        public async Task<IEnumerable<Block>> SearchBlocksAsync(string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return await GetAllBlocksAsync();
+            }
+
+            if (searchTerm.All(char.IsDigit) && int.TryParse(searchTerm, out int id))
+            {
+                var block = await GetBlockByIdAsync(id);
+                return block != null ? new List<Block> { block } : Enumerable.Empty<Block>();
+            }
+            else
+            {
+                return await _blockRepository.FindAsync(b =>
+                    b.Name.Contains(searchTerm) ||
+                    b.Feature.Contains(searchTerm));
+            }
+        }
+
         public async Task<Block> CreateBlockAsync(Block block)
         {
             await _blockRepository.AddAsync(block);

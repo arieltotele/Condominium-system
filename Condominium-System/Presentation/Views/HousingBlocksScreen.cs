@@ -12,6 +12,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Timer = System.Windows.Forms.Timer;
 
 namespace Condominium_System.Presentation.Views
 {
@@ -20,7 +21,12 @@ namespace Condominium_System.Presentation.Views
         private readonly IBlockService _blockService;
         private readonly ICondominiumService _condominiumService;
         private readonly IServiceProvider _serviceProvider;
+
         User currentUser;
+
+        private CancellationTokenSource _searchCts;
+        private DateTime _lastSearchTime;
+
 
         public HousingBlocksScreen(IBlockService blockService, ICondominiumService condominiumService, IServiceProvider serviceProvider)
         {
@@ -29,6 +35,7 @@ namespace Condominium_System.Presentation.Views
             _condominiumService = condominiumService;
             currentUser = Session.CurrentUser;
             _serviceProvider = serviceProvider;
+            _searchCts = new CancellationTokenSource();
         }
 
         private async void HousingBlocksScreen_Load(object sender, EventArgs e)
@@ -260,12 +267,67 @@ namespace Condominium_System.Presentation.Views
             LoadDataToDataGrid();
         }
 
-        private void BlockTBID_KeyPress(object sender, KeyPressEventArgs e)
+        private async void BlockTBID_TextChanged(object sender, EventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            _searchCts?.Cancel();
+            _searchCts = new CancellationTokenSource();
+
+            try
             {
-                e.Handled = true;
+                string searchTerm = BlockTBID.Text.Trim();
+
+                await Task.Delay(500, _searchCts.Token);
+
+                bool shouldSearch = string.IsNullOrEmpty(searchTerm) ||
+                                  searchTerm.All(char.IsDigit) ||
+                                  searchTerm.Length >= 2; // Búsqueda con mínimo 2 caracteres
+
+                if (shouldSearch)
+                {
+                    var filteredBlocks = await _blockService.SearchBlocksAsync(searchTerm);
+
+                    if (!_searchCts.IsCancellationRequested)
+                    {
+                        _lastSearchTime = DateTime.Now;
+
+                        this.Invoke((MethodInvoker)delegate {
+                            BlockDTGData.DataSource = filteredBlocks.ToList();
+
+                            if (!filteredBlocks.Any() && !string.IsNullOrEmpty(searchTerm))
+                            {
+                                ShowStatusMessage("No se encontraron bloques", 3000);
+                            }
+                            else
+                            {
+                                statusLabel.Visible = false;
+                            }
+                        });
+                    }
+                }
             }
+            catch (TaskCanceledException) { }
+            catch (Exception ex)
+            {
+                this.Invoke((MethodInvoker)delegate {
+                    if (!_searchCts.IsCancellationRequested)
+                    {
+                        ShowStatusMessage($"Error: {ex.Message}", 3000);
+                    }
+                });
+            }
+        }
+
+        private void ShowStatusMessage(string message, int durationMs)
+        {
+            statusLabel.Text = message;
+            statusLabel.Visible = true;
+
+            var timer = new Timer { Interval = durationMs };
+            timer.Tick += (s, e) => {
+                statusLabel.Visible = false;
+                timer.Stop();
+            };
+            timer.Start();
         }
     }
 }

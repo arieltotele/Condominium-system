@@ -11,6 +11,7 @@ namespace Condominium_System.Business.Services
     {
         Task<IEnumerable<Block>> GetAllBlocksAsync();
         Task<Block> GetBlockByIdAsync(int id);
+        Task<IEnumerable<Block>> SearchBlocksAsync(string searchTerm);
         Task<Block> CreateBlockAsync(Block block);
         Task UpdateBlockAsync(Block block);
         Task DeleteBlockAsync(int id);
