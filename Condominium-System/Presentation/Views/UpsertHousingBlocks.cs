@@ -207,12 +207,13 @@ namespace Condominium_System.Presentation.Views
                 {
                     var NewBlock = new Block()
                     {
-                        Name = BlockTBName.Text,
-                        Address = BlockTBAddress.Text,
+                        Name = BlockTBName.Text.Trim().ToUpper(),
+                        Address = BlockTBAddress.Text.Trim().ToUpper(),
                         HousingType = BlockCBTypeHousing.Text,
                         HousingCount = Int32.Parse(BlockTBHouseQuantity.Text),
-                        Feature = BlockTBFeature.Text,
+                        Feature = BlockTBFeature.Text.Trim().ToUpper(),
                         CondominiumId = (int)BlockCBCondominium.SelectedValue,
+
                         Author = currentUser.Username
                     };
 

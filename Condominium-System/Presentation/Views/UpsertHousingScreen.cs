@@ -137,7 +137,7 @@ namespace Condominium_System.Presentation.Views
                         HousingToUpdate.PeopleCount = Int32.Parse(HousingTBPeopleQuantity.Text);
                         HousingToUpdate.RoomCount = Int32.Parse(HousingTBRoomQuantity.Text);
                         HousingToUpdate.BathroomCount = Int32.Parse(HousingTBBathroomQuantity.Text);
-                        HousingToUpdate.Code = HousingTBCode.Text;
+                        HousingToUpdate.Code = HousingTBCode.Text.Trim().ToUpper();
                         HousingToUpdate.BlockId = (int)HousingCBBlock.SelectedValue;
 
                         HousingToUpdate.UpdatedAt = DateTime.Now;
@@ -179,7 +179,7 @@ namespace Condominium_System.Presentation.Views
                 {
                     var NewHouse = new Housing()
                     {
-                        Code = HousingTBCode.Text,
+                        Code = HousingTBCode.Text.Trim().ToUpper(),
                         PeopleCount = Int32.Parse(HousingTBPeopleQuantity.Text),
                         RoomCount = Int32.Parse(HousingTBRoomQuantity.Text),
                         BathroomCount = Int32.Parse(HousingTBBathroomQuantity.Text),
