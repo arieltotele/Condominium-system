@@ -60,22 +60,19 @@ namespace Condominium_System.Business.Services
                 return await _repository.GetAllWithIncludesAsync(i => i.Tenant);
             }
 
-            IEnumerable<Incident> results;
-
-            // Búsqueda por ID
-            if (int.TryParse(searchTerm, out int id))
+            // Búsqueda por ID exacto (si es completamente numérico)
+            if (searchTerm.All(char.IsDigit) && int.TryParse(searchTerm, out int id))
             {
                 var incident = await _repository.GetByIdWithIncludesAsync(id, i => i.Tenant);
-                results = incident != null ? new List<Incident> { incident } : Enumerable.Empty<Incident>();
-            }
-            else
-            {
-                // Búsqueda por descripción
-                results = await _repository.FindAsync(i => i.Description.Contains(searchTerm));
-                results = await LoadTenantsForIncidents(results.ToList());
+                return incident != null ? new List<Incident> { incident } : Enumerable.Empty<Incident>();
             }
 
-            return results;
+            // Búsqueda por descripción (contains)
+            var results = await _repository.FindAsync(i =>
+                i.Description.Contains(searchTerm) ||
+                (i.Tenant != null && i.Tenant.FirstName.Contains(searchTerm)));
+
+            return await LoadTenantsForIncidents(results.ToList());
         }
 
         private async Task<IEnumerable<Incident>> LoadTenantsForIncidents(List<Incident> incidents)

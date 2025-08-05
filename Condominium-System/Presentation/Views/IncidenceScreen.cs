@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Timer = System.Windows.Forms.Timer;
 
 namespace Condominium_System.Presentation.Views
 {
@@ -21,6 +22,9 @@ namespace Condominium_System.Presentation.Views
         private readonly IServiceProvider _serviceProvider;
 
         User currentUser;
+
+        private CancellationTokenSource _searchCts;
+        private DateTime _lastSearchTime = DateTime.MinValue;
 
         public IncidenceScreen(IIncidentService incidentService, ITenantService tenantService, IServiceProvider serviceProvider)
         {
@@ -238,40 +242,6 @@ namespace Condominium_System.Presentation.Views
             }
         }
 
-        private async void IncidencePNLBTNDelete_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(IncidenceTBID.Text))
-            {
-                try
-                {
-                    var incidentToDelete = await _incidentService.GetByIdAsync(int.Parse(IncidenceTBID.Text));
-
-                    if (incidentToDelete != null)
-                    {
-                        incidentToDelete.DeletedAt = DateTime.Now;
-
-                        await _incidentService.DeleteAsync(incidentToDelete.Id);
-
-                        MessageBox.Show("La incidencia ha sido eliminada exitosamente.");
-                        await LoadDataToDataGrid();
-                        CleanForm();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Incidencia no encontrada.");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error eliminando la incidencia: {ex.Message}");
-                }
-            }
-            else
-            {
-                MessageBox.Show("El campo ID debe estar lleno.");
-            }
-        }
-
         private async void CleanForm()
         {
             IncidenceTBID.Clear();
@@ -280,25 +250,52 @@ namespace Condominium_System.Presentation.Views
 
         private async void IncidenceTBID_TextChanged(object sender, EventArgs e)
         {
+            _searchCts?.Cancel();
+            _searchCts = new CancellationTokenSource();
+
             try
             {
                 string searchTerm = IncidenceTBID.Text.Trim();
-                var filteredIncidents = await _incidentService.SearchIncidentsAsync(searchTerm);
 
-                // Actualizar DataGridView
-                IncidenceDTGData.DataSource = filteredIncidents.ToList();
+                await Task.Delay(500, _searchCts.Token);
 
-                // Opcional: Mostrar mensaje si no hay resultados
-                if (!filteredIncidents.Any())
+                bool shouldSearch = string.IsNullOrEmpty(searchTerm) ||
+                                  (searchTerm.All(char.IsDigit)) ||
+                                  (searchTerm.Length > 1);
+
+                if (shouldSearch)
                 {
-                    MessageBox.Show("No se encontraron incidentes", "Información",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    var filteredIncidents = await _incidentService.SearchIncidentsAsync(searchTerm);
+
+                    if (!_searchCts.IsCancellationRequested)
+                    {
+                        _lastSearchTime = DateTime.Now;
+                        IncidenceDTGData.DataSource = filteredIncidents.ToList();
+
+                        if (!filteredIncidents.Any() && !string.IsNullOrEmpty(searchTerm))
+                        {
+                            statusLabel.Text = "No se encontraron incidentes";
+                            statusLabel.Visible = true;
+
+                            var hideTimer = new Timer { Interval = 3000 };
+                            hideTimer.Tick += (s, ev) =>
+                            {
+                                statusLabel.Visible = false;
+                                hideTimer.Stop();
+                            };
+                            hideTimer.Start();
+                        }
+                    }
                 }
             }
+            catch (TaskCanceledException) {}
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al buscar: {ex.Message}", "Error",
-                              MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (!_searchCts.IsCancellationRequested)
+                {
+                    statusLabel.Text = $"Error: {ex.Message}";
+                    statusLabel.Visible = true;
+                }
             }
         }
     }
