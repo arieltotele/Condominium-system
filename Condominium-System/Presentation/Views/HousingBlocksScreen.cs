@@ -280,7 +280,7 @@ namespace Condominium_System.Presentation.Views
 
                 bool shouldSearch = string.IsNullOrEmpty(searchTerm) ||
                                   searchTerm.All(char.IsDigit) ||
-                                  searchTerm.Length >= 2; // Búsqueda con mínimo 2 caracteres
+                                  searchTerm.Length >= 2;
 
                 if (shouldSearch)
                 {
