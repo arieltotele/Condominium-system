@@ -39,12 +39,15 @@
             toolTip1 = new ToolTip(components);
             panel1 = new Panel();
             pictureBox5 = new PictureBox();
+            statusStrip1 = new StatusStrip();
+            statusLabel = new ToolStripStatusLabel();
             LoginPNLUsername.SuspendLayout();
             CondominiumPNLBTNCreate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)FurnitureDTGData).BeginInit();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
+            statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -73,6 +76,7 @@
             FurnitureTBID.Name = "FurnitureTBID";
             FurnitureTBID.Size = new Size(228, 16);
             FurnitureTBID.TabIndex = 2;
+            FurnitureTBID.TextChanged += FurnitureTBID_TextChanged;
             // 
             // CondominiumPNLBTNCreate
             // 
@@ -143,11 +147,30 @@
             toolTip1.SetToolTip(pictureBox5, "Boton para buscar mobiliario.");
             pictureBox5.Click += FurniturePNLBTNSearch_Click;
             // 
+            // statusStrip1
+            // 
+            statusStrip1.Items.AddRange(new ToolStripItem[] { statusLabel });
+            statusStrip1.Location = new Point(0, 126);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(1017, 22);
+            statusStrip1.TabIndex = 42;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // statusLabel
+            // 
+            statusLabel.AutoSize = false;
+            statusLabel.ForeColor = Color.FromArgb(238, 210, 2);
+            statusLabel.Name = "statusLabel";
+            statusLabel.Size = new Size(1002, 17);
+            statusLabel.Spring = true;
+            statusLabel.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // FurnitureScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1017, 591);
+            Controls.Add(statusStrip1);
             Controls.Add(label1);
             Controls.Add(LoginPNLUsername);
             Controls.Add(CondominiumPNLBTNCreate);
@@ -164,6 +187,8 @@
             ((System.ComponentModel.ISupportInitialize)FurnitureDTGData).EndInit();
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -180,5 +205,7 @@
         private DataGridView FurnitureDTGData;
         private Panel panel1;
         private PictureBox pictureBox5;
+        private StatusStrip statusStrip1;
+        private ToolStripStatusLabel statusLabel;
     }
 }

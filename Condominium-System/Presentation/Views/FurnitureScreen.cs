@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Timer = System.Windows.Forms.Timer;
 
 namespace Condominium_System.Presentation.Views
 {
@@ -18,7 +19,11 @@ namespace Condominium_System.Presentation.Views
     {
         private readonly IFurnitureService _furnitureService;
         private readonly IServiceProvider _serviceProvider;
+
         private User currentUser;
+
+        private CancellationTokenSource _searchCts;
+        private DateTime _lastSearchTime;
 
         public FurnitureScreen(IFurnitureService furnitureService, IServiceProvider serviceProvider)
         {
@@ -26,6 +31,29 @@ namespace Condominium_System.Presentation.Views
             _furnitureService = furnitureService;
             currentUser = Session.CurrentUser;
             _serviceProvider = serviceProvider;
+            _searchCts = new CancellationTokenSource();
+
+            SetSearchTextBoxStyleAndBehavior();
+        }
+
+        private void SetSearchTextBoxStyleAndBehavior()
+        {
+            FurnitureTBID.Text = "Buscar por ID, nombre o detalle...";
+            FurnitureTBID.ForeColor = SystemColors.GrayText;
+            FurnitureTBID.Enter += (s, e) => {
+                if (FurnitureTBID.Text == "Buscar por ID, nombre o detalle...")
+                {
+                    FurnitureTBID.Text = "";
+                    FurnitureTBID.ForeColor = SystemColors.WindowText;
+                }
+            };
+            FurnitureTBID.Leave += (s, e) => {
+                if (string.IsNullOrWhiteSpace(FurnitureTBID.Text))
+                {
+                    FurnitureTBID.Text = "Buscar por ID, nombre o detalle...";
+                    FurnitureTBID.ForeColor = SystemColors.GrayText;
+                }
+            };
         }
 
         private async void FurnitureScreen_Load(object sender, EventArgs e)
@@ -35,7 +63,7 @@ namespace Condominium_System.Presentation.Views
 
             SetDataGridStyle();
             ConfigureFurnitureColumns();
-            
+
             await LoadDataToDataGrid();
         }
 
@@ -176,7 +204,7 @@ namespace Condominium_System.Presentation.Views
 
         private async void FurniturePNLBTNCreate_Click(object sender, EventArgs e)
         {
-            GoToUpsertScreen(false);            
+            GoToUpsertScreen(false);
         }
 
         private void GoToUpsertScreen(bool isToUpdate)
@@ -239,6 +267,67 @@ namespace Condominium_System.Presentation.Views
                 MessageBox.Show("El campo Id debe estar lleno correctamente.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 CleanForm();
             }
+        }
+
+        private async void FurnitureTBID_TextChanged(object sender, EventArgs e)
+        {
+            _searchCts?.Cancel();
+            _searchCts = new CancellationTokenSource();
+
+            try
+            {
+                string searchTerm = FurnitureTBID.Text.Trim();
+
+                await Task.Delay(500, _searchCts.Token);
+
+                bool shouldSearch = string.IsNullOrEmpty(searchTerm) || searchTerm.Length >= 2;
+
+                if (shouldSearch)
+                {
+                    var filteredFurniture = await _furnitureService.SearchFurnitureAsync(searchTerm);
+
+                    if (!_searchCts.IsCancellationRequested)
+                    {
+                        _lastSearchTime = DateTime.Now;
+
+                        this.Invoke((MethodInvoker)delegate {
+                            FurnitureDTGData.DataSource = filteredFurniture.ToList();
+
+                            if (!filteredFurniture.Any() && !string.IsNullOrEmpty(searchTerm))
+                            {
+                                ShowStatusMessage("No se encontró mobiliario", 3000);
+                            }
+                            else
+                            {
+                                statusLabel.Visible = false;
+                            }
+                        });
+                    }
+                }
+            }
+            catch (TaskCanceledException) { }
+            catch (Exception ex)
+            {
+                this.Invoke((MethodInvoker)delegate {
+                    if (!_searchCts.IsCancellationRequested)
+                    {
+                        ShowStatusMessage($"Error: {ex.Message}", 3000);
+                    }
+                });
+            }
+        }
+
+        private void ShowStatusMessage(string message, int durationMs)
+        {
+            statusLabel.Text = message;
+            statusLabel.Visible = true;
+
+            var timer = new Timer { Interval = durationMs };
+            timer.Tick += (s, e) => {
+                statusLabel.Visible = false;
+                timer.Stop();
+            };
+            timer.Start();
         }
     }
 }

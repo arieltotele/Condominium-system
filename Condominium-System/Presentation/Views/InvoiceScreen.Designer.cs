@@ -54,7 +54,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(12, 47);
+            label1.Location = new Point(12, 58);
             label1.Name = "label1";
             label1.Size = new Size(25, 21);
             label1.TabIndex = 42;
@@ -64,7 +64,7 @@
             // 
             LoginPNLUsername.BackColor = SystemColors.Window;
             LoginPNLUsername.Controls.Add(InvoiceTBID);
-            LoginPNLUsername.Location = new Point(12, 80);
+            LoginPNLUsername.Location = new Point(12, 91);
             LoginPNLUsername.Name = "LoginPNLUsername";
             LoginPNLUsername.Size = new Size(235, 24);
             LoginPNLUsername.TabIndex = 43;
@@ -83,7 +83,7 @@
             CondominiumPNLBTNCreate.BackColor = Color.MidnightBlue;
             CondominiumPNLBTNCreate.Controls.Add(label8);
             CondominiumPNLBTNCreate.Controls.Add(pictureBox3);
-            CondominiumPNLBTNCreate.Location = new Point(856, 63);
+            CondominiumPNLBTNCreate.Location = new Point(856, 74);
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 45;
@@ -129,7 +129,7 @@
             // 
             panel1.BackColor = Color.MidnightBlue;
             panel1.Controls.Add(pictureBox5);
-            panel1.Location = new Point(244, 80);
+            panel1.Location = new Point(244, 91);
             panel1.Name = "panel1";
             panel1.Size = new Size(26, 24);
             panel1.TabIndex = 46;
@@ -159,6 +159,7 @@
             // statusLabel
             // 
             statusLabel.AutoSize = false;
+            statusLabel.ForeColor = Color.FromArgb(238, 210, 2);
             statusLabel.Name = "statusLabel";
             statusLabel.Size = new Size(1002, 17);
             statusLabel.Spring = true;

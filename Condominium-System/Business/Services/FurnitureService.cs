@@ -27,6 +27,36 @@ namespace Condominium_System.Business.Services
             return await _furnitureRepository.GetByIdWithIncludesAsync(id, f => f.Housings);
         }
 
+        public async Task<IEnumerable<Furniture>> SearchFurnitureAsync(string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return await GetAllFurnituresAsync();
+            }
+
+            var results = new List<Furniture>();
+
+            if (searchTerm.All(char.IsDigit) && int.TryParse(searchTerm, out int id))
+            {
+                var furnitureById = await GetFurnitureByIdAsync(id);
+                if (furnitureById != null)
+                {
+                    results.Add(furnitureById);
+                }
+            }
+
+            var furnitureByNameOrDetail = await _furnitureRepository.FindAsync(f =>
+                f.Name.Contains(searchTerm) ||
+                f.Detail.Contains(searchTerm));
+
+            results.AddRange(furnitureByNameOrDetail);
+
+            return results
+                .DistinctBy(f => f.Id)
+                .OrderBy(f => f.Name)
+                .ToList();
+        }
+
         public async Task<Furniture> CreateFurnitureAsync(Furniture furniture)
         {
             await _furnitureRepository.AddAsync(furniture);
