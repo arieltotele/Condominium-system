@@ -60,22 +60,62 @@ namespace Condominium_System.Presentation.Views
         {
             try
             {
-                var blocks = await _blockService.GetAllBlocksAsync();
+                var blocks = (await _blockService.GetAllBlocksAsync()).ToList();
 
-                HousingCBBlock.DisplayMember = "Name";
-                HousingCBBlock.ValueMember = "Id";
-                HousingCBBlock.DataSource = blocks;
+                if (!blocks.Any())
+                {
+                    HousingCBBlock.DataSource = null;
+                    HousingCBBlock.Items.Clear();
+                    HousingCBBlock.Text = "No hay bloques registrados";
+                    HousingCBBlock.Enabled = false;
 
+                    MessageBox.Show("No se encontraron bloques registrados. Por favor, registre al menos un bloque.",
+                                  "Información",
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Information);
+
+                    if (this.Owner is HousingBlocksScreen owner)
+                    {
+                        owner.LoadDataToDataGrid();
+                    }
+                    this.Hide();
+                    return;
+                }
+
+                // Configuración normal cuando sí hay bloques
                 var placeholder = new Block { Id = 0, Name = "-- Seleccione un bloque --" };
                 var listWithPlaceholder = new List<Block> { placeholder };
                 listWithPlaceholder.AddRange(blocks);
+
+                HousingCBBlock.DisplayMember = "Name";
+                HousingCBBlock.ValueMember = "Id";
                 HousingCBBlock.DataSource = listWithPlaceholder;
+                HousingCBBlock.SelectedIndex = 0;
+                HousingCBBlock.Enabled = true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error cargando los bloques: {ex.Message}");
-            }
+                HousingCBBlock.DataSource = null;
+                HousingCBBlock.Items.Clear();
+                HousingCBBlock.Text = "Error al cargar bloques";
+                HousingCBBlock.Enabled = false;
 
+                MessageBox.Show($"Error cargando bloques: {ex.Message}",
+                              "Error",
+                              MessageBoxButtons.OK,
+                              MessageBoxIcon.Error);
+
+                // Cierra el modal también en caso de error
+                if (this.Owner is HousingBlocksScreen owner)
+                {
+                    owner.LoadDataToDataGrid();
+                }
+                this.Hide();
+            }
+            finally
+            {
+                HousingCBBlock.Refresh();
+            }
         }
 
         private void UpsertHousingScreen_Click(object sender, EventArgs e)

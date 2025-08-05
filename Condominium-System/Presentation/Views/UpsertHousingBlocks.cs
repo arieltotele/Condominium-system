@@ -96,6 +96,7 @@ namespace Condominium_System.Presentation.Views
                                       MessageBoxButtons.OK,
                                       MessageBoxIcon.Information);
 
+                        ((HousingBlocksScreen)this.Owner).LoadDataToDataGrid();
                         this.Hide();
 
                         return;

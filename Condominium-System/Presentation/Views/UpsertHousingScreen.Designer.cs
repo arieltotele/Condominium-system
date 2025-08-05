@@ -242,6 +242,7 @@
             Controls.Add(label2);
             Controls.Add(panel1);
             Name = "UpsertHousingScreen";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "UpsertHousingScreen";
             Load += UpsertHousingScreen_Load;
             Click += UpsertHousingScreen_Click;
