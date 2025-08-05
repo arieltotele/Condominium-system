@@ -5,6 +5,7 @@ using System.CodeDom.Compiler;
 using System.ComponentModel;
 using System.Data;
 using Microsoft.Extensions.DependencyInjection;
+using Timer = System.Windows.Forms.Timer;
 
 namespace Condominium_System.Presentation.Views
 {
@@ -16,12 +17,16 @@ namespace Condominium_System.Presentation.Views
 
         User currentUser;
 
+        private CancellationTokenSource _searchCts;
+        private DateTime _lastSearchTime;
+
         public TenantScreen(ITenantService tenantService, IServiceProvider serviceProvider)
         {
             InitializeComponent();
             _tenantService = tenantService;
             currentUser = Session.CurrentUser;
             _serviceProvider = serviceProvider;
+            _searchCts = new CancellationTokenSource();
         }
 
         private async void TenantScreen_Load(object sender, EventArgs e)
@@ -75,12 +80,12 @@ namespace Condominium_System.Presentation.Views
                     return;
                 }
 
-                if (relativeX < 26) // 🟢 Editar
+                if (relativeX < 26)
                 {
                     Session.TenantToUpsert = selectedTenant;
                     GoToUpsertScreen(true);
                 }
-                else if (relativeX >= 26 && relativeX < 52) // 🔴 Eliminar
+                else if (relativeX >= 26 && relativeX < 52)
                 {
                     var confirm = MessageBox.Show($"¿Deseas eliminar el inquilino '{selectedTenant.FirstName}'?",
                                                   "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -177,7 +182,7 @@ namespace Condominium_System.Presentation.Views
             TenantDTGData.Columns.Add(new DataGridViewTextBoxColumn
             {
                 DataPropertyName = "DocumentNumber",
-                HeaderText = "Cantidad de habitaciones",
+                HeaderText = "Cedula",
                 Name = "DocumentNumberColumn",
                 Width = 150
             });
@@ -289,12 +294,65 @@ namespace Condominium_System.Presentation.Views
             }
         }
 
-        private void TenantTBID_KeyPress(object sender, KeyPressEventArgs e)
+        private async void TenantTBID_TextChanged(object sender, EventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            _searchCts?.Cancel();
+            _searchCts = new CancellationTokenSource();
+
+            try
             {
-                e.Handled = true;
+                string searchTerm = TenantTBID.Text.Trim();
+
+                await Task.Delay(500, _searchCts.Token);
+
+                bool shouldSearch = string.IsNullOrEmpty(searchTerm) || searchTerm.Length >= 2;
+
+                if (shouldSearch)
+                {
+                    var filteredTenants = await _tenantService.SearchTenantsAsync(searchTerm);
+
+                    if (!_searchCts.IsCancellationRequested)
+                    {
+                        _lastSearchTime = DateTime.Now;
+
+                        this.Invoke((MethodInvoker)delegate {
+                            TenantDTGData.DataSource = filteredTenants.ToList();
+
+                            if (!filteredTenants.Any() && !string.IsNullOrEmpty(searchTerm))
+                            {
+                                ShowStatusMessage("No se encontraron inquilinos", 3000);
+                            }
+                            else
+                            {
+                                statusLabel.Visible = false;
+                            }
+                        });
+                    }
+                }
             }
+            catch (TaskCanceledException) { }
+            catch (Exception ex)
+            {
+                this.Invoke((MethodInvoker)delegate {
+                    if (!_searchCts.IsCancellationRequested)
+                    {
+                        ShowStatusMessage($"Error: {ex.Message}", 3000);
+                    }
+                });
+            }
+        }
+
+        private void ShowStatusMessage(string message, int durationMs)
+        {
+            statusLabel.Text = message;
+            statusLabel.Visible = true;
+
+            var timer = new Timer { Interval = durationMs };
+            timer.Tick += (s, e) => {
+                statusLabel.Visible = false;
+                timer.Stop();
+            };
+            timer.Start();
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Condominium_System.Business.Services
     {
         Task<IEnumerable<Housing>> GetAllHousingsAsync();
         Task<Housing> GetHousingByIdAsync(int id);
+        Task<IEnumerable<Housing>> SearchHousingsAsync(string searchTerm);
         Task<Housing> CreateHousingAsync(Housing housing);
         Task UpdateHousingAsync(Housing housing);
         Task DeleteHousingAsync(int id);

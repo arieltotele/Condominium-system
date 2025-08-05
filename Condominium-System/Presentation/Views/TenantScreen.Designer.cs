@@ -39,19 +39,22 @@
             BlockPNLID = new Panel();
             TenantTBID = new TextBox();
             toolTip1 = new ToolTip(components);
+            statusStrip1 = new StatusStrip();
+            statusLabel = new ToolStripStatusLabel();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             CondominiumPNLBTNCreate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)TenantDTGData).BeginInit();
             BlockPNLID.SuspendLayout();
+            statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.BackColor = Color.MidnightBlue;
             panel1.Controls.Add(pictureBox5);
-            panel1.Location = new Point(247, 66);
+            panel1.Location = new Point(244, 92);
             panel1.Name = "panel1";
             panel1.Size = new Size(26, 24);
             panel1.TabIndex = 46;
@@ -73,7 +76,7 @@
             CondominiumPNLBTNCreate.BackColor = Color.MidnightBlue;
             CondominiumPNLBTNCreate.Controls.Add(label8);
             CondominiumPNLBTNCreate.Controls.Add(pictureBox3);
-            CondominiumPNLBTNCreate.Location = new Point(859, 49);
+            CondominiumPNLBTNCreate.Location = new Point(856, 75);
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 45;
@@ -118,7 +121,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(15, 33);
+            label1.Location = new Point(12, 59);
             label1.Name = "label1";
             label1.Size = new Size(25, 21);
             label1.TabIndex = 42;
@@ -128,7 +131,7 @@
             // 
             BlockPNLID.BackColor = SystemColors.Window;
             BlockPNLID.Controls.Add(TenantTBID);
-            BlockPNLID.Location = new Point(15, 66);
+            BlockPNLID.Location = new Point(12, 92);
             BlockPNLID.Name = "BlockPNLID";
             BlockPNLID.Size = new Size(236, 24);
             BlockPNLID.TabIndex = 43;
@@ -140,13 +143,31 @@
             TenantTBID.Name = "TenantTBID";
             TenantTBID.Size = new Size(225, 16);
             TenantTBID.TabIndex = 2;
-            TenantTBID.KeyPress += TenantTBID_KeyPress;
+            TenantTBID.TextChanged += TenantTBID_TextChanged;
+            // 
+            // statusStrip1
+            // 
+            statusStrip1.Items.AddRange(new ToolStripItem[] { statusLabel });
+            statusStrip1.Location = new Point(0, 126);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(1017, 22);
+            statusStrip1.TabIndex = 47;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // statusLabel
+            // 
+            statusLabel.AutoSize = false;
+            statusLabel.Name = "statusLabel";
+            statusLabel.Size = new Size(1002, 17);
+            statusLabel.Spring = true;
+            statusLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // TenantScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1017, 591);
+            Controls.Add(statusStrip1);
             Controls.Add(panel1);
             Controls.Add(CondominiumPNLBTNCreate);
             Controls.Add(TenantDTGData);
@@ -164,6 +185,8 @@
             ((System.ComponentModel.ISupportInitialize)TenantDTGData).EndInit();
             BlockPNLID.ResumeLayout(false);
             BlockPNLID.PerformLayout();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -180,5 +203,7 @@
         private Panel BlockPNLID;
         private TextBox TenantTBID;
         private ToolTip toolTip1;
+        private StatusStrip statusStrip1;
+        private ToolStripStatusLabel statusLabel;
     }
 }

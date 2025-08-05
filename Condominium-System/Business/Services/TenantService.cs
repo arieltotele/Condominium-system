@@ -39,6 +39,43 @@ namespace Condominium_System.Business.Services
             );
         }
 
+        public async Task<IEnumerable<Tenant>> SearchTenantsAsync(string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return await GetAllAsync();
+            }
+
+            var results = new List<Tenant>();
+
+            if (searchTerm.All(char.IsDigit))
+            {
+                if (searchTerm.Length <= 9 && int.TryParse(searchTerm, out int id))
+                {
+                    var tenantById = await GetByIdAsync(id);
+                    if (tenantById != null)
+                    {
+                        results.Add(tenantById);
+                    }
+                }
+
+                var tenantsByDoc = await _tenantRepository.FindAsync(t =>
+                    t.DocumentNumber.Contains(searchTerm));
+
+                results.AddRange(tenantsByDoc);
+            }
+            else
+            {
+                var tenantsByName = await _tenantRepository.FindAsync(t =>
+                    t.FirstName.Contains(searchTerm) ||
+                    t.LastName.Contains(searchTerm));
+
+                results.AddRange(tenantsByName);
+            }
+
+            return results.DistinctBy(t => t.Id).ToList();        
+        }
+
         public async Task<Tenant> CreateAsync(Tenant tenant)
         {
             await _tenantRepository.AddAsync(tenant);
@@ -64,20 +101,16 @@ namespace Condominium_System.Business.Services
 
         public async Task<decimal> CalculateTotalServicesByTenantAsync(int tenantId)
         {
-            // Obtener el tenant con su vivienda
             var tenant = await _tenantRepository.GetByIdWithIncludesAsync(tenantId, t => t.Housing);
             if (tenant?.Housing == null) return 0;
 
-            // Obtener servicios de la vivienda con sus precios
             var housingServices = await _housingServiceRepository.FindAsync(
                 hs => hs.HousingId == tenant.HousingId && hs.IsActive,
-                false); // asNoTracking: false para posible actualización
+                false);
 
-            // Cargar los servicios relacionados
             var services = new List<Service>();
             foreach (var hs in housingServices)
             {
-                // Cargar el servicio para cada HousingService
                 await _housingServiceRepository.Context.Entry(hs)
                     .Reference(h => h.Service)
                     .LoadAsync();

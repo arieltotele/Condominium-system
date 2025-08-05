@@ -38,6 +38,25 @@ namespace Condominium_System.Business.Services
             );
         }
 
+        public async Task<IEnumerable<Housing>> SearchHousingsAsync(string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return await GetAllHousingsAsync();
+            }
+
+            if (searchTerm.All(char.IsDigit) && int.TryParse(searchTerm, out int id))
+            {
+                var housing = await GetHousingByIdAsync(id);
+                return housing != null ? new List<Housing> { housing } : Enumerable.Empty<Housing>();
+            }
+            else
+            {
+                return await _housingRepository.FindAsync(h =>
+                    h.Code.Contains(searchTerm));
+            }
+        }
+
         public async Task<Housing> CreateHousingAsync(Housing housing)
         {
             await _housingRepository.AddAsync(housing);
