@@ -82,7 +82,27 @@ namespace Condominium_System.Presentation.Views
         {
             try
             {
-                var houses = await _housingEntityService.GetAllHousingsAsync();
+                var houses = (await _housingEntityService.GetAllHousingsAsync()).ToList();
+
+                if (!houses.Any())
+                {
+                    TenantCBHouses.DataSource = null;
+                    TenantCBHouses.Items.Clear();
+                    TenantCBHouses.Text = "No hay viviendas registradas";
+                    TenantCBHouses.Enabled = false;
+
+                    MessageBox.Show("No se encontraron viviendas registradas. Por favor, registre al menos una vivienda.",
+                                  "Información",
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Information);
+
+                    if (this.Owner is TenantScreen owner)
+                    {
+                        owner.LoadDataToDataGrid();
+                    }
+                    this.Hide();
+                    return;
+                }
 
                 var placeholder = new Housing { Id = 0, Code = "-- Seleccione una vivienda --" };
                 var listWithPlaceholder = new List<Housing> { placeholder };
@@ -91,12 +111,31 @@ namespace Condominium_System.Presentation.Views
                 TenantCBHouses.DisplayMember = "Code";
                 TenantCBHouses.ValueMember = "Id";
                 TenantCBHouses.DataSource = listWithPlaceholder;
+                TenantCBHouses.SelectedIndex = 0;
+                TenantCBHouses.Enabled = true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error cargando las viviendas: {ex.Message}");
-            }
+                TenantCBHouses.DataSource = null;
+                TenantCBHouses.Items.Clear();
+                TenantCBHouses.Text = "Error al cargar viviendas";
+                TenantCBHouses.Enabled = false;
 
+                MessageBox.Show($"Error cargando viviendas: {ex.Message}",
+                              "Error",
+                              MessageBoxButtons.OK,
+                              MessageBoxIcon.Error);
+
+                if (this.Owner is TenantScreen owner)
+                {
+                    owner.LoadDataToDataGrid();
+                }
+                this.Hide();
+            }
+            finally
+            {
+                TenantCBHouses.Refresh();
+            }
         }
 
         private void UpsertPNLBTN_Click(object sender, EventArgs e)
