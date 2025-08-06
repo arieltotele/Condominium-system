@@ -163,7 +163,6 @@
             statusLabel.Name = "statusLabel";
             statusLabel.Size = new Size(1002, 17);
             statusLabel.Spring = true;
-            statusLabel.Text = "toolStripStatusLabel1";
             statusLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // IncidenceScreen

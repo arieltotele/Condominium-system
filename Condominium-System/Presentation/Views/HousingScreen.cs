@@ -259,34 +259,6 @@ namespace Condominium_System.Presentation.Views
             HousingTBID.Clear();
         }
 
-        private async void HousingPNLBTNDelete_Click(object sender, EventArgs e)
-        {
-            if (!String.IsNullOrEmpty(HousingTBID.Text))
-            {
-                var BlockToDelete = await _housingEntityService.GetHousingByIdAsync(Int32.Parse(HousingTBID.Text));
-
-                if (BlockToDelete != null)
-                {
-                    BlockToDelete.DeletedAt = DateTime.Now;
-
-                    await _housingEntityService.DeleteHousingAsync(Int32.Parse(HousingTBID.Text));
-
-                    MessageBox.Show("La vivienda ha sido borrada exitosamente.");
-
-                    await LoadDataToDataGrid();
-                    CleanFormHousing();
-                }
-                else
-                {
-                    MessageBox.Show("Vivienda no encontrada.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("El campo de Id debe de estar lleno.");
-            }
-        }
-
         private async void HousingTBID_TextChanged(object sender, EventArgs e)
         {
             _searchCts?.Cancel();
