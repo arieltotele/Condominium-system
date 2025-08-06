@@ -3,6 +3,7 @@ using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
 using System.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
+using Timer = System.Windows.Forms.Timer;
 
 namespace Condominium_System.Presentation.Views
 {
@@ -10,7 +11,11 @@ namespace Condominium_System.Presentation.Views
     {
         private readonly IServiceService _serviceService;
         private readonly IServiceProvider _serviceProvider;
+
         private User currentUser;
+
+        private CancellationTokenSource _searchCts;
+        private DateTime _lastSearchTime;
 
         public ServiceScreen(IServiceService serviceService, IServiceProvider serviceProvider)
         {
@@ -18,6 +23,29 @@ namespace Condominium_System.Presentation.Views
             _serviceService = serviceService;
             currentUser = Session.CurrentUser;
             _serviceProvider = serviceProvider;
+            _searchCts = new CancellationTokenSource();
+
+            SetSearchTextBoxStyleAndBehavior();
+        }
+
+        private void SetSearchTextBoxStyleAndBehavior()
+        {
+            ServiceTBID.Text = "Buscar por ID, nombre o detalle...";
+            ServiceTBID.ForeColor = SystemColors.GrayText;
+            ServiceTBID.Enter += (s, e) => {
+                if (ServiceTBID.Text == "Buscar por ID, nombre o detalle...")
+                {
+                    ServiceTBID.Text = "";
+                    ServiceTBID.ForeColor = SystemColors.WindowText;
+                }
+            };
+            ServiceTBID.Leave += (s, e) => {
+                if (string.IsNullOrWhiteSpace(ServiceTBID.Text))
+                {
+                    ServiceTBID.Text = "Buscar por ID, nombre o detalle...";
+                    ServiceTBID.ForeColor = SystemColors.GrayText;
+                }
+            };
         }
 
         private async void ServiceScreen_Load(object sender, EventArgs e)
@@ -29,6 +57,7 @@ namespace Condominium_System.Presentation.Views
             ConfigureServiceColumns();
             await LoadDataToDataGrid();
         }
+
 
         private void ServiceDTGData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
@@ -70,12 +99,12 @@ namespace Condominium_System.Presentation.Views
                     return;
                 }
 
-                if (relativeX < 26) // 🟢 Editar
+                if (relativeX < 26)
                 {
                     Session.ServiceToUpsert = selectedService;
                     GoToUpsertScreen(true);
                 }
-                else if (relativeX >= 26 && relativeX < 52) // 🔴 Eliminar
+                else if (relativeX >= 26 && relativeX < 52)
                 {
                     var confirm = MessageBox.Show($"¿Deseas eliminar el servicio '{selectedService.Name}'?",
                                                   "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -237,7 +266,7 @@ namespace Condominium_System.Presentation.Views
             else
             {
                 MessageBox.Show("El campo Id debe estar lleno correctamente.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                CleanForm(); 
+                CleanForm();
             }
         }
 
@@ -272,6 +301,67 @@ namespace Condominium_System.Presentation.Views
             {
                 MessageBox.Show("El campo ID debe estar lleno.");
             }
+        }
+
+        private async void ServiceTBID_TextChanged(object sender, EventArgs e)
+        {
+            _searchCts?.Cancel();
+            _searchCts = new CancellationTokenSource();
+
+            try
+            {
+                string searchTerm = ServiceTBID.Text.Trim();
+
+                await Task.Delay(500, _searchCts.Token);
+
+                bool shouldSearch = string.IsNullOrEmpty(searchTerm) || searchTerm.Length >= 2;
+
+                if (shouldSearch)
+                {
+                    var filteredServices = await _serviceService.SearchServicesAsync(searchTerm);
+
+                    if (!_searchCts.IsCancellationRequested)
+                    {
+                        _lastSearchTime = DateTime.Now;
+
+                        this.Invoke((MethodInvoker)delegate {
+                            ServiceDTGData.DataSource = filteredServices.ToList();
+
+                            if (!filteredServices.Any() && !string.IsNullOrEmpty(searchTerm))
+                            {
+                                ShowStatusMessage("No se encontraron servicios", 3000);
+                            }
+                            else
+                            {
+                                statusLabel.Visible = false;
+                            }
+                        });
+                    }
+                }
+            }
+            catch (TaskCanceledException) { }
+            catch (Exception ex)
+            {
+                this.Invoke((MethodInvoker)delegate {
+                    if (!_searchCts.IsCancellationRequested)
+                    {
+                        ShowStatusMessage($"Error: {ex.Message}", 3000);
+                    }
+                });
+            }
+        }
+
+        private void ShowStatusMessage(string message, int durationMs)
+        {
+            statusLabel.Text = message;
+            statusLabel.Visible = true;
+
+            var timer = new Timer { Interval = durationMs };
+            timer.Tick += (s, e) => {
+                statusLabel.Visible = false;
+                timer.Stop();
+            };
+            timer.Start();
         }
     }
 }
