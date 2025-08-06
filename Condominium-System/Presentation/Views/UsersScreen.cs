@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Timer = System.Windows.Forms.Timer;
 
 namespace Condominium_System.Presentation.Views
 {
@@ -20,7 +21,11 @@ namespace Condominium_System.Presentation.Views
         private readonly IUserService _userService;
         private readonly IServiceProvider _serviceProvider;
         private readonly ICondominiumService _condominiumService;
+
         User currentUser;
+
+        private CancellationTokenSource _searchCts;
+        private DateTime _lastSearchTime;
 
         public UsersScreen(IUserService userService, IServiceProvider serviceProvider, ICondominiumService condominiumService)
         {
@@ -28,7 +33,32 @@ namespace Condominium_System.Presentation.Views
             _userService = userService;
             _serviceProvider = serviceProvider;
             _condominiumService = condominiumService;
+
             currentUser = Session.CurrentUser;
+
+            _searchCts = new CancellationTokenSource();
+
+            SetSearchTextBoxStyleAndBehavior();
+        }
+
+        private void SetSearchTextBoxStyleAndBehavior()
+        {
+            UserTxtBxPId.Text = "Buscar por ID, nombre o usuario...";
+            UserTxtBxPId.ForeColor = SystemColors.GrayText;
+            UserTxtBxPId.Enter += (s, e) => {
+                if (UserTxtBxPId.Text == "Buscar por ID, nombre o usuario...")
+                {
+                    UserTxtBxPId.Text = "";
+                    UserTxtBxPId.ForeColor = SystemColors.WindowText;
+                }
+            };
+            UserTxtBxPId.Leave += (s, e) => {
+                if (string.IsNullOrWhiteSpace(UserTxtBxPId.Text))
+                {
+                    UserTxtBxPId.Text = "Buscar por ID, nombre o usuario...";
+                    UserTxtBxPId.ForeColor = SystemColors.GrayText;
+                }
+            };
         }
 
         private void UsersScreen_Load(object sender, EventArgs e)
@@ -39,7 +69,6 @@ namespace Condominium_System.Presentation.Views
             SetDataGridStyle();
             ConfigureUserColumns();
             LoadDataToDataGrid();
-            //SetComboBoxForTypeOfUsers();
         }
 
         private void UserDTGData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
@@ -82,12 +111,12 @@ namespace Condominium_System.Presentation.Views
                     return;
                 }
 
-                if (relativeX < 26) // 🟢 Editar
+                if (relativeX < 26)
                 {
                     Session.UserToUpsert = selectedUser;
                     GoToUpsertScreen(true);
                 }
-                else if (relativeX >= 26 && relativeX < 52) // 🔴 Eliminar
+                else if (relativeX >= 26 && relativeX < 52)
                 {
                     var confirm = MessageBox.Show($"¿Deseas eliminar el usuario '{selectedUser.Username}'?",
                                                   "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -211,44 +240,9 @@ namespace Condominium_System.Presentation.Views
             UIUtils.SetDataGridStyle(UserDTGData);
         }
 
-        //private void SetComboBoxForTypeOfUsers()
-        //{
-        //    var userTypes = new List<KeyValuePair<int, string>>
-        //    {
-        //        new KeyValuePair<int, string>(0, "-- Seleccione un tipo de usuario --"),
-        //        new KeyValuePair<int, string>(1, "Administrador"),
-        //        new KeyValuePair<int, string>(2, "Operario")
-        //    };
-
-        //    UserCbType.DataSource = userTypes;
-        //    UserCbType.DisplayMember = "Value";
-        //    UserCbType.ValueMember = "Key";
-        //    UserCbType.DropDownStyle = ComboBoxStyle.DropDownList;
-        //    UserCbType.SelectedIndex = 0;
-        //}
-
-        //private async Task LoadCondominiumsIntoComboBox()
-        //{
-        //    var condominiums = await _condominiumService.GetAllCondominiumsAsync();
-
-        //    UserTBCondominium.DisplayMember = "Name";
-        //    UserTBCondominium.ValueMember = "Id";
-        //    UserTBCondominium.DataSource = condominiums;
-
-        //    var placeholder = new Condominium { Id = 0, Name = "-- Seleccione un condominio --" };
-        //    var listWithPlaceholder = new List<Condominium> { placeholder };
-        //    listWithPlaceholder.AddRange(condominiums);
-        //    UserTBCondominium.DataSource = listWithPlaceholder;
-       // }
-
         private void UserBTNCreate_Click(object sender, EventArgs e)
         {
             GoToUpsertScreen(false);
-
-            //var signUpScreen = _serviceProvider.GetRequiredService<SignUpScreen>();
-            //signUpScreen.UserCreated += (s, ev) => LoadDataToDataGrid();
-
-            //signUpScreen.Show();
         }
 
         public async void LoadDataToDataGrid()
@@ -296,163 +290,73 @@ namespace Condominium_System.Presentation.Views
                 MessageBox.Show("El campo Id debe estar lleno correctamente.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 CleanForm();
             }
-            //if (!String.IsNullOrEmpty(UserTxtBxPId.Text))
-            //{
-            //    try
-            //    {
-            //        var UserFound = await _userService.GetByIdAsync(Int32.Parse(UserTxtBxPId.Text));
-            //        if (UserFound != null)
-            //        {
-            //            UserTxtBxPId.Text = UserFound.Id.ToString();
-            //            UserTxtBxPName.Text = UserFound.FirstName;
-            //            UserTxtBxPLastname.Text = UserFound.LastName;
-            //            UserMskTbDocumentation.Text = UserFound.DocumentNumber;
-            //            UserTbPassword.Text = UserFound.Password;
-            //            UserTxtBxPUsername.Text = UserFound.Username;
-            //            UserMskTbContactNumber.Text = UserFound.PhoneNumber;
-
-            //            await LoadCondominiumsIntoComboBox();
-
-            //            UserTBCondominium.SelectedValue = UserFound.CondominiumId;
-
-            //            if (UserFound.Type == "Administrador")
-            //                UserCbType.SelectedValue = 1;
-            //            else if (UserFound.Type == "Operario")
-            //                UserCbType.SelectedValue = 2;
-            //            else
-            //                UserCbType.SelectedValue = 0;
-
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Usuario no encontrado.");
-            //        }
-
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show($"Error buscando usuario: {ex.Message}");
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("El campo Id debe de estar lleno correctamente.");
-            //}
-        }
-
-        private async void UserBTNUpdate_Click(object sender, EventArgs e)
-        {
-            //if (FormIsCorrectToUpdate())
-            //{
-            //    try
-            //    {
-            //        var UserToUpdate = await _userService.GetByIdAsync(Int32.Parse(UserTxtBxPId.Text));
-
-            //        if (UserToUpdate != null)
-            //        {
-            //            UserToUpdate.Id = int.Parse(UserTxtBxPId.Text);
-            //            UserToUpdate.FirstName = UserTxtBxPName.Text;
-            //            UserToUpdate.LastName = UserTxtBxPLastname.Text;
-            //            UserToUpdate.DocumentNumber = UserMskTbDocumentation.Text;
-            //            UserToUpdate.Password = UserTbPassword.Text;
-            //            UserToUpdate.Username = UserTxtBxPUsername.Text;
-            //            UserToUpdate.PhoneNumber = UserMskTbContactNumber.Text;
-            //            UserToUpdate.CondominiumId = (int)UserTBCondominium.SelectedValue;
-            //            UserToUpdate.Type = UserCbType.Text;
-
-            //            await _userService.UpdateAsync(UserToUpdate);
-
-            //            MessageBox.Show("El usuario ha sido actualizado con exito");
-            //            LoadDataToDataGrid();
-            //            CleanForm();
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("usuario no encontrado.");
-            //            return;
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show($"Error guardando usuario: {ex.Message}");
-            //    }
-
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Todos los campos deben ser completados correctamente.");
-            //}
         }
 
         private void CleanForm()
         {
             UserTxtBxPId.Clear();
             LoadDataToDataGrid();
-            //UserTxtBxPName.Clear();
-            //UserTxtBxPLastname.Clear();
-            //UserTxtBxPUsername.Clear();
-            //UserMskTbDocumentation.Clear();
-            //UserTbPassword.Clear();
-            //UserMskTbContactNumber.Clear();
-
-            //if (UserCbType.Items.Count > 0)
-            //    UserCbType.SelectedIndex = 0;
-
-            //if (UserTBCondominium.Items.Count > 0)
-            //    UserTBCondominium.SelectedIndex = 0;
         }
 
-        //public bool FormIsCorrectToUpdate()
-        //{
-        //    bool isTypeValid = int.TryParse(UserCbType.SelectedValue?.ToString(), out int typeId) && typeId != 0;
-        //    bool isCondoValid = int.TryParse(UserTBCondominium.SelectedValue?.ToString(), out int condoId) && condoId != 0;
-
-        //    return !(
-        //       string.IsNullOrEmpty(UserTxtBxPId.Text) ||
-        //       string.IsNullOrEmpty(UserTxtBxPName.Text) ||
-        //       string.IsNullOrEmpty(UserTxtBxPLastname.Text) ||
-        //       string.IsNullOrEmpty(UserTxtBxPUsername.Text) ||
-        //       string.IsNullOrEmpty(UserMskTbDocumentation.Text) ||
-        //       string.IsNullOrEmpty(UserTbPassword.Text) ||
-        //       string.IsNullOrEmpty(UserMskTbContactNumber.Text) ||
-        //       !isTypeValid ||
-        //       !isCondoValid ||
-        //       UserMskTbContactNumber.Text.Trim().Length != 10 ||
-        //       UserMskTbDocumentation.Text.Trim().Length != 11
-        //   );
-        //}
-
-        private async void UserBTNDelete_Click(object sender, EventArgs e)
+        private async void UserTxtBxPId_TextChanged(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(UserTxtBxPId.Text))
+            _searchCts?.Cancel();
+            _searchCts = new CancellationTokenSource();
+
+            try
             {
+                string searchTerm = UserTxtBxPId.Text.Trim();
 
-                if (currentUser.Id == Int32.Parse(UserTxtBxPId.Text))
+                await Task.Delay(500, _searchCts.Token);
+
+                bool shouldSearch = string.IsNullOrEmpty(searchTerm) || searchTerm.Length >= 2;
+
+                if (shouldSearch)
                 {
-                    MessageBox.Show("No puede elimiarse a sí mismo del sistema.");
-                    CleanForm();
-                    return;
-                }
+                    var filteredUsers = await _userService.SearchUsersAsync(searchTerm);
 
-                var UserToDelete = await _userService.GetByIdAsync(Int32.Parse(UserTxtBxPId.Text));
+                    if (!_searchCts.IsCancellationRequested)
+                    {
+                        _lastSearchTime = DateTime.Now;
 
-                if (UserToDelete != null)
-                {
-                    await _userService.DeleteAsync(Int32.Parse(UserTxtBxPId.Text));
-                    MessageBox.Show("El usuario ha sido borrado con exitosamente.");
-                    LoadDataToDataGrid();
-                    CleanForm();
+                        this.Invoke((MethodInvoker)delegate {
+                            UserDTGData.DataSource = filteredUsers.ToList();
 
-                }
-                else
-                {
-                    MessageBox.Show("Usuario no encontrado.");
+                            if (!filteredUsers.Any() && !string.IsNullOrEmpty(searchTerm))
+                            {
+                                ShowStatusMessage("No se encontraron usuarios", 3000);
+                            }
+                            else
+                            {
+                                statusLabel.Visible = false;
+                            }
+                        });
+                    }
                 }
             }
-            else
+            catch (TaskCanceledException) { }
+            catch (Exception ex)
             {
-                MessageBox.Show("El campo de Id debe de estar lleno.");
+                this.Invoke((MethodInvoker)delegate {
+                    if (!_searchCts.IsCancellationRequested)
+                    {
+                        ShowStatusMessage($"Error: {ex.Message}", 3000);
+                    }
+                });
             }
+        }
+
+        private void ShowStatusMessage(string message, int durationMs)
+        {
+            statusLabel.Text = message;
+            statusLabel.Visible = true;
+
+            var timer = new Timer { Interval = durationMs };
+            timer.Tick += (s, e) => {
+                statusLabel.Visible = false;
+                timer.Stop();
+            };
+            timer.Start();
         }
     }
 }

@@ -159,6 +159,7 @@
             // statusLabel
             // 
             statusLabel.AutoSize = false;
+            statusLabel.ForeColor = Color.FromArgb(238, 210, 2);
             statusLabel.Name = "statusLabel";
             statusLabel.Size = new Size(1002, 17);
             statusLabel.Spring = true;

@@ -11,6 +11,7 @@ namespace Condominium_System.Business.Services
     {
         Task<IEnumerable<User>> GetAllAsync();
         Task<User> GetByIdAsync(int id);
+        Task<IEnumerable<User>> SearchUsersAsync(string searchTerm);
         Task<bool> UsernameExistsAsync(string username, int? excludedUserId = null);
         Task<User> CreateAsync(User user);
         Task UpdateAsync(User user);

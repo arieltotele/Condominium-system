@@ -23,7 +23,17 @@ namespace Condominium_System.Presentation.Views
             _serviceService = serviceService;
             currentUser = Session.CurrentUser;
             _serviceProvider = serviceProvider;
-            _searchCts = new CancellationTokenSource();
+            _searchCts = new CancellationTokenSource();            
+        }        
+
+        private async void ServiceScreen_Load(object sender, EventArgs e)
+        {
+            ServiceDTGData.CellPainting += ServiceDTGData_CellPainting;
+            ServiceDTGData.CellClick += ServiceDTGData_CellClick;
+
+            SetDataGridStyle();
+            ConfigureServiceColumns();
+            await LoadDataToDataGrid();
 
             SetSearchTextBoxStyleAndBehavior();
         }
@@ -46,16 +56,6 @@ namespace Condominium_System.Presentation.Views
                     ServiceTBID.ForeColor = SystemColors.GrayText;
                 }
             };
-        }
-
-        private async void ServiceScreen_Load(object sender, EventArgs e)
-        {
-            ServiceDTGData.CellPainting += ServiceDTGData_CellPainting;
-            ServiceDTGData.CellClick += ServiceDTGData_CellClick;
-
-            SetDataGridStyle();
-            ConfigureServiceColumns();
-            await LoadDataToDataGrid();
         }
 
 
@@ -270,39 +270,6 @@ namespace Condominium_System.Presentation.Views
             }
         }
 
-        private async void ServicePNLBTNDelete_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(ServiceTBID.Text))
-            {
-                try
-                {
-                    var service = await _serviceService.GetByIdAsync(int.Parse(ServiceTBID.Text));
-
-                    if (service != null)
-                    {
-                        service.DeletedAt = DateTime.Now;
-                        await _serviceService.DeleteAsync(service.Id);
-
-                        MessageBox.Show("El servicio ha sido eliminado correctamente.");
-                        await LoadDataToDataGrid();
-                        CleanForm();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Servicio no encontrado.");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error al eliminar el servicio: {ex.Message}");
-                }
-            }
-            else
-            {
-                MessageBox.Show("El campo ID debe estar lleno.");
-            }
-        }
-
         private async void ServiceTBID_TextChanged(object sender, EventArgs e)
         {
             _searchCts?.Cancel();
@@ -324,30 +291,37 @@ namespace Condominium_System.Presentation.Views
                     {
                         _lastSearchTime = DateTime.Now;
 
-                        this.Invoke((MethodInvoker)delegate {
-                            ServiceDTGData.DataSource = filteredServices.ToList();
+                        // Verificar si el control está creado antes de invocar
+                        if (ServiceDTGData.IsHandleCreated)
+                        {
+                            ServiceDTGData.Invoke((MethodInvoker)delegate {
+                                ServiceDTGData.DataSource = filteredServices.ToList();
 
-                            if (!filteredServices.Any() && !string.IsNullOrEmpty(searchTerm))
-                            {
-                                ShowStatusMessage("No se encontraron servicios", 3000);
-                            }
-                            else
-                            {
-                                statusLabel.Visible = false;
-                            }
-                        });
+                                if (!filteredServices.Any() && !string.IsNullOrEmpty(searchTerm))
+                                {
+                                    ShowStatusMessage("No se encontraron servicios", 3000);
+                                }
+                                else
+                                {
+                                    statusLabel.Visible = false;
+                                }
+                            });
+                        }
                     }
                 }
             }
             catch (TaskCanceledException) { }
             catch (Exception ex)
             {
-                this.Invoke((MethodInvoker)delegate {
-                    if (!_searchCts.IsCancellationRequested)
-                    {
-                        ShowStatusMessage($"Error: {ex.Message}", 3000);
-                    }
-                });
+                if (ServiceDTGData.IsHandleCreated)
+                {
+                    ServiceDTGData.Invoke((MethodInvoker)delegate {
+                        if (!_searchCts.IsCancellationRequested)
+                        {
+                            ShowStatusMessage($"Error: {ex.Message}", 3000);
+                        }
+                    });
+                }
             }
         }
 

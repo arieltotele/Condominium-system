@@ -39,19 +39,22 @@
             toolTip1 = new ToolTip(components);
             panel1 = new Panel();
             pictureBox5 = new PictureBox();
+            statusStrip1 = new StatusStrip();
+            statusLabel = new ToolStripStatusLabel();
             LoginPNLUsername.SuspendLayout();
             CondominiumPNLBTNCreate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)UserDTGData).BeginInit();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
+            statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(12, 29);
+            label1.Location = new Point(12, 54);
             label1.Name = "label1";
             label1.Size = new Size(25, 21);
             label1.TabIndex = 37;
@@ -61,7 +64,7 @@
             // 
             LoginPNLUsername.BackColor = SystemColors.Window;
             LoginPNLUsername.Controls.Add(UserTxtBxPId);
-            LoginPNLUsername.Location = new Point(12, 62);
+            LoginPNLUsername.Location = new Point(12, 87);
             LoginPNLUsername.Name = "LoginPNLUsername";
             LoginPNLUsername.Size = new Size(235, 24);
             LoginPNLUsername.TabIndex = 38;
@@ -73,13 +76,14 @@
             UserTxtBxPId.Name = "UserTxtBxPId";
             UserTxtBxPId.Size = new Size(228, 16);
             UserTxtBxPId.TabIndex = 2;
+            UserTxtBxPId.TextChanged += UserTxtBxPId_TextChanged;
             // 
             // CondominiumPNLBTNCreate
             // 
             CondominiumPNLBTNCreate.BackColor = Color.MidnightBlue;
             CondominiumPNLBTNCreate.Controls.Add(label8);
             CondominiumPNLBTNCreate.Controls.Add(pictureBox3);
-            CondominiumPNLBTNCreate.Location = new Point(856, 45);
+            CondominiumPNLBTNCreate.Location = new Point(856, 70);
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 40;
@@ -125,7 +129,7 @@
             // 
             panel1.BackColor = Color.MidnightBlue;
             panel1.Controls.Add(pictureBox5);
-            panel1.Location = new Point(244, 62);
+            panel1.Location = new Point(244, 87);
             panel1.Name = "panel1";
             panel1.Size = new Size(26, 24);
             panel1.TabIndex = 41;
@@ -143,11 +147,30 @@
             toolTip1.SetToolTip(pictureBox5, "Boton para buscar un usuario.");
             pictureBox5.Click += UserBTNSearch_Click;
             // 
+            // statusStrip1
+            // 
+            statusStrip1.Items.AddRange(new ToolStripItem[] { statusLabel });
+            statusStrip1.Location = new Point(0, 126);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(1017, 22);
+            statusStrip1.TabIndex = 42;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // statusLabel
+            // 
+            statusLabel.AutoSize = false;
+            statusLabel.ForeColor = Color.FromArgb(238, 210, 2);
+            statusLabel.Name = "statusLabel";
+            statusLabel.Size = new Size(1002, 17);
+            statusLabel.Spring = true;
+            statusLabel.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // UsersScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1017, 591);
+            Controls.Add(statusStrip1);
             Controls.Add(label1);
             Controls.Add(LoginPNLUsername);
             Controls.Add(CondominiumPNLBTNCreate);
@@ -164,6 +187,8 @@
             ((System.ComponentModel.ISupportInitialize)UserDTGData).EndInit();
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -180,5 +205,7 @@
         private DataGridView UserDTGData;
         private Panel panel1;
         private PictureBox pictureBox5;
+        private StatusStrip statusStrip1;
+        private ToolStripStatusLabel statusLabel;
     }
 }

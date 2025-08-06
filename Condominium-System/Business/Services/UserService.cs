@@ -27,6 +27,38 @@ namespace Condominium_System.Business.Services
             return await _userRepository.GetByIdWithIncludesAsync(id, u => u.Condominium);
         }
 
+        public async Task<IEnumerable<User>> SearchUsersAsync(string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return await GetAllAsync();
+            }
+
+            var results = new List<User>();
+
+            if (searchTerm.All(char.IsDigit) && int.TryParse(searchTerm, out int id))
+            {
+                var userById = await GetByIdAsync(id);
+                if (userById != null)
+                {
+                    results.Add(userById);
+                }
+            }
+
+            var usersByCriteria = await _userRepository.FindAsync(u =>
+                (u.FirstName + " " + u.LastName).Contains(searchTerm) ||
+                u.Username.Contains(searchTerm) ||
+                u.DocumentNumber.Contains(searchTerm));
+
+            results.AddRange(usersByCriteria);
+
+            return results
+                .DistinctBy(u => u.Id)
+                .OrderBy(u => u.FirstName)
+                .ThenBy(u => u.LastName)
+                .ToList();
+        }
+
         public async Task<User> CreateAsync(User user)
         {
             await _userRepository.AddAsync(user);
