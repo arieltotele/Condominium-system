@@ -1,6 +1,9 @@
-﻿using Condominium_System.Business.Services;
+﻿using Condominium.System.Reports.Library.Reports;
+using Condominium_System.Business.Services;
 using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -8,10 +11,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Forms;
 using Timer = System.Windows.Forms.Timer;
 
@@ -284,7 +289,8 @@ namespace Condominium_System.Presentation.Views
 
                     if (!_searchCts.IsCancellationRequested)
                     {
-                        this.Invoke((MethodInvoker)delegate {
+                        this.Invoke((MethodInvoker)delegate
+                        {
                             CondominiumDTGData.DataSource = results.ToList();
 
                             if (!results.Any() && !string.IsNullOrEmpty(searchTerm))
@@ -302,7 +308,8 @@ namespace Condominium_System.Presentation.Views
             catch (TaskCanceledException) { }
             catch (Exception ex)
             {
-                this.Invoke((MethodInvoker)delegate {
+                this.Invoke((MethodInvoker)delegate
+                {
                     if (!_searchCts.IsCancellationRequested)
                     {
                         ShowStatusMessage($"Error: {ex.Message}", 3000);
@@ -317,11 +324,27 @@ namespace Condominium_System.Presentation.Views
             statusLabel.Visible = true;
 
             var timer = new Timer { Interval = durationMs };
-            timer.Tick += (s, e) => {
+            timer.Tick += (s, e) =>
+            {
                 statusLabel.Visible = false;
                 timer.Stop();
             };
             timer.Start();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //try
+            //{
+            //    int id = Convert.ToInt32(1028);
+            //    string nombre = "CONDMINIO ADA";
+
+            //    ReportService.ShowCondominiumReport(id, nombre);
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show($"Error: {ex.Message}");
+            //}
         }
     }
 }

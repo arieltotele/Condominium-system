@@ -8,6 +8,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <ReferencePath>C:\Program Files (x86)\SAP BusinessObjects\Crystal Reports for .NET Framework 4.0\Common\SAP BusinessObjects Enterprise XI 4.0\win64_x64\dotnet\</ReferencePath>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -37,9 +38,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CrystalDecisions.CrystalReports.Engine" Version="1.0.0" />
-    <PackageReference Include="CrystalDecisions.ReportSource" Version="1.0.0" />
-    <PackageReference Include="CrystalDecisions.Shared" Version="1.0.0" />
+    <PackageReference Include="CrystalReports.Engine" Version="13.0.4003">
+      <Private>True</Private>
+    </PackageReference>
+    <PackageReference Include="CrystalReports.ReportSource" Version="13.0.4003">
+      <Private>True</Private>
+    </PackageReference>
+    <PackageReference Include="CrystalReports.Shared" Version="13.0.4003">
+      <Private>True</Private>
+    </PackageReference>
+    <PackageReference Include="CrystalReports.Windows.Forms" Version="13.0.4003">
+      <Private>True</Private>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.6" />
@@ -56,6 +66,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Condominium.System.Reports.Library\Condominium.System.Reports.Library.csproj" />
   </ItemGroup>
 
   <ItemGroup>

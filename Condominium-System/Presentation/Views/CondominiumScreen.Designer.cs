@@ -42,6 +42,7 @@
             statusStrip1 = new StatusStrip();
             statusLabel = new ToolStripStatusLabel();
             contextMenuStrip1 = new ContextMenuStrip(components);
+            button1 = new Button();
             LoginPNLUsername.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)CondominiumDTGData).BeginInit();
             CondominiumPNLBTNCreate.SuspendLayout();
@@ -172,11 +173,22 @@
             contextMenuStrip1.Name = "contextMenuStrip1";
             contextMenuStrip1.Size = new Size(61, 4);
             // 
+            // button1
+            // 
+            button1.Location = new Point(603, 87);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 38;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // CondominiumScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1017, 591);
+            Controls.Add(button1);
             Controls.Add(statusStrip1);
             Controls.Add(panel1);
             Controls.Add(CondominiumPNLBTNCreate);
@@ -215,5 +227,6 @@
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel statusLabel;
         private ContextMenuStrip contextMenuStrip1;
+        private Button button1;
     }
 }
