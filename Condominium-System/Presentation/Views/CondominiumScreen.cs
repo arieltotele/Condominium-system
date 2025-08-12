@@ -3,6 +3,7 @@ using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
 using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
+using FastReport;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -333,7 +334,96 @@ namespace Condominium_System.Presentation.Views
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            try
+            {
+                // Obtener los datos actuales del DataGridView
+                var dataSource = CondominiumDTGData.DataSource;
+
+                if (dataSource == null)
+                {
+                    MessageBox.Show("No hay datos para generar el reporte.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Solución para CS0433: Especificar el espacio de nombres completo para 'Report' de FastReport.
+                // Reemplaza la línea problemática:
+                FastReport.Report report = new FastReport.Report();
+
+                // Cargar el diseño del reporte
+                string reportPath = Path.Combine(Application.StartupPath, "Reports", "Condominiums.frx");
+
+                if (!File.Exists(reportPath))
+                {
+                    MessageBox.Show("No se encontró el archivo de reporte.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                report.Load(reportPath);
+
+                // Convertir los datos a DataTable
+                DataTable dataTable = ConvertToDataTable(dataSource);
+
+                // Registrar los datos en el reporte
+                report.RegisterData(dataTable, "Condominiums");
+
+                // Configurar parámetros si es necesario
+                report.SetParameterValue("FechaGeneracion", DateTime.Now.ToString("g"));
+                report.SetParameterValue("UsuarioGenerador", currentUser?.Username ?? "Sistema");
+
+                // Mostrar el visor personalizado
+                using (var viewerForm = new ReportViewerForm(report))
+                {
+                    viewerForm.ShowDialog();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al generar el reporte: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private DataTable ConvertToDataTable(object dataSource)
+        {
+            DataTable dataTable = new DataTable();
+
+            if (dataSource is BindingSource bindingSource)
+            {
+                dataSource = bindingSource.List;
+            }
+
+            if (dataSource is IEnumerable<Condominium> condominiums)
+            {
+                // Crear columnas basadas en las propiedades de Condominium
+                dataTable.Columns.Add("Id", typeof(int));
+                dataTable.Columns.Add("Name", typeof(string));
+                dataTable.Columns.Add("Address", typeof(string));
+                dataTable.Columns.Add("ReceptionContactNumber", typeof(string));
+                dataTable.Columns.Add("BlockCount", typeof(int));
+                dataTable.Columns.Add("Author", typeof(string));
+                dataTable.Columns.Add("CreatedAt", typeof(DateTime));
+                dataTable.Columns.Add("IsActive", typeof(bool));
+
+                // Llenar el DataTable
+                foreach (var condominium in condominiums)
+                {
+                    dataTable.Rows.Add(
+                        condominium.Id,
+                        condominium.Name,
+                        condominium.Address,
+                        condominium.ReceptionContactNumber,
+                        condominium.BlockCount,
+                        condominium.Author,
+                        condominium.CreatedAt,
+                        condominium.IsActive
+                    );
+                }
+            }
+            else if (dataSource is List<Condominium> list)
+            {
+                return ConvertToDataTable(list.AsEnumerable());
+            }
+
+            return dataTable;
         }
     }
 }
