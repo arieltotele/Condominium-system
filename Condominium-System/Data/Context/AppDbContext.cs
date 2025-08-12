@@ -14,7 +14,7 @@ namespace Condominium_System.Data.Context
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<Condominium> Condominiums { get; set; }
+        public DbSet<Data.Entities.Condominium> Condominiums { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Block> Blocks { get; set; }
         public DbSet<Housing> Housings { get; set; }
@@ -37,7 +37,7 @@ namespace Condominium_System.Data.Context
 
             // ========= Uniques =========
 
-            modelBuilder.Entity<Condominium>()
+            modelBuilder.Entity<Entities.Condominium>()
                 .HasIndex(c => c.Name)
                 .IsUnique();
 

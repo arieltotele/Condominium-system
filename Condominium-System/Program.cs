@@ -37,7 +37,7 @@ namespace Condominium_System
             services.AddScoped<IRepositoryWithId<User>, RepositoryWithId<User>>();
 
             services.AddScoped<ICondominiumService, CondominiumService>();
-            services.AddScoped<IRepositoryWithId<Condominium>, RepositoryWithId<Condominium>>();
+            services.AddScoped<IRepositoryWithId<Data.Entities.Condominium>, RepositoryWithId<Data.Entities.Condominium>>();
 
             services.AddScoped<IBlockService, BlockService>();
             services.AddScoped<IRepositoryWithId<Block>, RepositoryWithId<Block>>();

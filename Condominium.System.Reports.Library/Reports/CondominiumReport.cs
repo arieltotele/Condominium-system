@@ -10,12 +10,13 @@
 
 namespace Condominium.System.Reports.Library.Reports {
     using System;
-    using System.ComponentModel;
     using CrystalDecisions.Shared;
     using CrystalDecisions.ReportSource;
     using CrystalDecisions.CrystalReports.Engine;
-    
-    
+    using global::System.ComponentModel;
+    using global::System.Drawing;
+    using global::System;
+
     public class CondominiumReport : ReportClass {
         
         public CondominiumReport() {
@@ -49,7 +50,7 @@ namespace Condominium.System.Reports.Library.Reports {
         }
         
         [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        [DesignerSerializationVisibilityAttribute(DesignerSerializationVisibility.Hidden)]
         public CrystalDecisions.CrystalReports.Engine.Section Section1 {
             get {
                 return this.ReportDefinition.Sections[0];
@@ -57,7 +58,7 @@ namespace Condominium.System.Reports.Library.Reports {
         }
         
         [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        [DesignerSerializationVisibilityAttribute(DesignerSerializationVisibility.Hidden)]
         public CrystalDecisions.CrystalReports.Engine.Section Section2 {
             get {
                 return this.ReportDefinition.Sections[1];
@@ -65,7 +66,7 @@ namespace Condominium.System.Reports.Library.Reports {
         }
         
         [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        [DesignerSerializationVisibilityAttribute(DesignerSerializationVisibility.Hidden)]
         public CrystalDecisions.CrystalReports.Engine.Section Section3 {
             get {
                 return this.ReportDefinition.Sections[2];
@@ -73,7 +74,7 @@ namespace Condominium.System.Reports.Library.Reports {
         }
         
         [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        [DesignerSerializationVisibilityAttribute(DesignerSerializationVisibility.Hidden)]
         public CrystalDecisions.CrystalReports.Engine.Section Section4 {
             get {
                 return this.ReportDefinition.Sections[3];
@@ -81,7 +82,7 @@ namespace Condominium.System.Reports.Library.Reports {
         }
         
         [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        [DesignerSerializationVisibilityAttribute(DesignerSerializationVisibility.Hidden)]
         public CrystalDecisions.CrystalReports.Engine.Section Section5 {
             get {
                 return this.ReportDefinition.Sections[4];
@@ -89,14 +90,14 @@ namespace Condominium.System.Reports.Library.Reports {
         }
     }
     
-    [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
+    [ToolboxBitmapAttribute(typeof(ExportOptions), "report.bmp")]
     public class CachedCondominiumReport : Component, ICachedReport {
         
         public CachedCondominiumReport() {
         }
         
         [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        [DesignerSerializationVisibilityAttribute(DesignerSerializationVisibility.Hidden)]
         public virtual bool IsCacheable {
             get {
                 return true;
@@ -107,7 +108,7 @@ namespace Condominium.System.Reports.Library.Reports {
         }
         
         [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        [DesignerSerializationVisibilityAttribute(DesignerSerializationVisibility.Hidden)]
         public virtual bool ShareDBLogonInfo {
             get {
                 return false;
@@ -118,8 +119,8 @@ namespace Condominium.System.Reports.Library.Reports {
         }
         
         [Browsable(false)]
-        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public virtual System.TimeSpan CacheTimeOut {
+        [DesignerSerializationVisibilityAttribute(DesignerSerializationVisibility.Hidden)]
+        public virtual TimeSpan CacheTimeOut {
             get {
                 return CachedReportConstants.DEFAULT_TIMEOUT;
             }
@@ -127,7 +128,9 @@ namespace Condominium.System.Reports.Library.Reports {
                 // 
             }
         }
-        
+
+        TimeSpan ICachedReport.CacheTimeOut { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
             CondominiumReport rpt = new CondominiumReport();
             rpt.Site = this.Site;
@@ -142,11 +145,11 @@ namespace Condominium.System.Reports.Library.Reports {
             // // Returning key == null causes the default cache key to
             // // be generated.
             // 
-            // key = RequestContext.BuildCompleteCacheKey(
-            //     request,
-            //     null,       // sReportFilename
-            //     this.GetType(),
-            //     this.ShareDBLogonInfo );
+            key = RequestContext.BuildCompleteCacheKey(
+                request,
+                null,       // sReportFilename
+                this.GetType(),
+                this.ShareDBLogonInfo);
             return key;
         }
     }

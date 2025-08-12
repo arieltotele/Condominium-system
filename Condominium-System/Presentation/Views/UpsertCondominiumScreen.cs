@@ -132,7 +132,7 @@ namespace Condominium_System.Presentation.Views
             {
                 try
                 {
-                    var NewCondominium = new Condominium()
+                    var NewCondominium = new Data.Entities.Condominium()
                     {
                         Name = UpsertTIName.Text.Trim().ToUpper(),
                         Address = UpsertTIAddress.Text.Trim().ToUpper(),

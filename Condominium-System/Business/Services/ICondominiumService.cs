@@ -9,11 +9,11 @@ namespace Condominium_System.Business.Services
 {
     public interface ICondominiumService
     {
-        Task<IEnumerable<Condominium>> GetAllCondominiumsAsync();
-        Task<Condominium> GetCondominiumByIdAsync(int id);
-        Task<IEnumerable<Condominium>> SearchCondominiumsAsync(string searchTerm);
-        Task<Condominium> CreateCondominiumAsync(Condominium condominium);
-        Task UpdateCondominiumAsync(Condominium condominium);
+        Task<IEnumerable<Data.Entities.Condominium>> GetAllCondominiumsAsync();
+        Task<Data.Entities.Condominium> GetCondominiumByIdAsync(int id);
+        Task<IEnumerable<Data.Entities.Condominium>> SearchCondominiumsAsync(string searchTerm);
+        Task<Data.Entities.Condominium> CreateCondominiumAsync(Data.Entities.Condominium condominium);
+        Task UpdateCondominiumAsync(Condominium_System.Data.Entities.Condominium condominium);
         Task DeleteCondominiumAsync(int id);
     }
 }

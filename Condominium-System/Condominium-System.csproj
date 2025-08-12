@@ -69,10 +69,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Condominium.System.Reports.Library\Condominium.System.Reports.Library.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Presentation\Reports\CondominiumReport.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

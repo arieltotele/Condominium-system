@@ -1,10 +1,8 @@
-﻿using Condominium.System.Reports.Library.Reports;
-using Condominium_System.Business.Services;
+﻿using Condominium_System.Business.Services;
 using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
 using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -15,6 +13,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms;
@@ -57,7 +56,7 @@ namespace Condominium_System.Presentation.Views
             try
             {
                 var listCondominium = await _condominiumService.GetAllCondominiumsAsync();
-                var bindingList = new BindingList<Condominium>((List<Condominium>)(IEnumerable<Condominium>)listCondominium);
+                var bindingList = new BindingList<Condominium_System.Data.Entities.Condominium>((List<Condominium_System.Data.Entities.Condominium>)(IEnumerable<Condominium_System.Data.Entities.Condominium>)listCondominium);
                 var source = new BindingSource(bindingList, null);
                 CondominiumDTGData.DataSource = source;
 
@@ -159,7 +158,7 @@ namespace Condominium_System.Presentation.Views
                 int relativeX = clickPosition.X - cellBounds.Left;
 
                 var selectedRow = CondominiumDTGData.Rows[e.RowIndex];
-                var selectedFurniture = selectedRow.DataBoundItem as Condominium;
+                var selectedFurniture = selectedRow.DataBoundItem as Condominium_System.Data.Entities.Condominium;
 
                 if (selectedFurniture == null)
                 {
@@ -204,7 +203,7 @@ namespace Condominium_System.Presentation.Views
                     return;
                 }
 
-                var selectedCondominium = CondominiumDTGData.CurrentRow.DataBoundItem as Condominium;
+                var selectedCondominium = CondominiumDTGData.CurrentRow.DataBoundItem as Condominium_System.Data.Entities.Condominium;
                 if (selectedCondominium == null)
                 {
                     MessageBox.Show("Error al obtener el condominio seleccionado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -240,7 +239,7 @@ namespace Condominium_System.Presentation.Views
 
                     if (condominiumFound != null)
                     {
-                        CondominiumDTGData.DataSource = new List<Condominium> { condominiumFound };
+                        CondominiumDTGData.DataSource = new List<Condominium_System.Data.Entities.Condominium> { condominiumFound };
                     }
                     else
                     {
@@ -334,17 +333,7 @@ namespace Condominium_System.Presentation.Views
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    int id = Convert.ToInt32(1028);
-            //    string nombre = "CONDMINIO ADA";
-
-            //    ReportService.ShowCondominiumReport(id, nombre);
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"Error: {ex.Message}");
-            //}
+            
         }
     }
 }

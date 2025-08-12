@@ -16,26 +16,29 @@ namespace Condominium.System.Reports.Library.Reports
         {
             try
             {
+                Console.WriteLine($"Ruta actual: {Directory.GetCurrentDirectory()}");
+                Console.WriteLine($"Intentando cargar reporte desde: {GetReportPath("CondominiumReport.rpt")}");
+
                 var report = new ReportDocument();
                 string reportPath = GetReportPath("CondominiumReport.rpt");
 
-                if (!File.Exists(reportPath))
-                    throw new FileNotFoundException($"No se encontró el reporte en: {reportPath}");
+                Console.WriteLine($"¿Existe el archivo?: {File.Exists(reportPath)}");
 
-                report.Load(reportPath);
-
-                report.SetParameterValue("@CondominiumId", condominiumId);
+                report.Load(reportPath); // Punto de fallo común 1
+                report.SetParameterValue("@CondominiumId", condominiumId); // Punto de fallo 2
                 report.SetParameterValue("@CondominiumName", condominiumName);
 
                 using (var viewer = new ReportViewerForm())
                 {
-                    viewer.LoadReport(report);
+                    viewer.LoadReport(report); // Punto de fallo 3
                     viewer.ShowDialog();
                 }
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error al generar el reporte", ex);
+                // Log detallado
+                File.AppendAllText("report_errors.log", $"[{DateTime.Now}] ERROR: {ex}\n\n");
+                throw; // Relanza para manejo en la UI
             }
         }
 

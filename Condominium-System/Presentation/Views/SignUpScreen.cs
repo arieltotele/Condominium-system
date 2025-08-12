@@ -119,7 +119,7 @@ namespace Condominium_System.Presentation.Views
                     return;
                 }
 
-                var placeholder = new Condominium
+                var placeholder = new Data.Entities.Condominium
                 {
                     Id = 0,
                     Name = "-- Seleccione un condominio --",
@@ -127,7 +127,7 @@ namespace Condominium_System.Presentation.Views
                     ReceptionContactNumber = string.Empty
                 };
 
-                var condominiumList = new List<Condominium> { placeholder };
+                var condominiumList = new List<Data.Entities.Condominium> { placeholder };
                 condominiumList.AddRange(condominiums);
 
                 SignUpComboBxCondominium.DataSource = condominiumList;

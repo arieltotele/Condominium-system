@@ -10,24 +10,24 @@ namespace Condominium_System.Business.Services
 {
     public class CondominiumService : ICondominiumService
     {
-        private readonly IRepositoryWithId<Condominium> _condominiumRepository;
+        private readonly IRepositoryWithId<Condominium_System.Data.Entities.Condominium> _condominiumRepository;
 
-        public CondominiumService(IRepositoryWithId<Condominium> condominiumRepository)
+        public CondominiumService(IRepositoryWithId<Condominium_System.Data.Entities.Condominium> condominiumRepository)
         {
             _condominiumRepository = condominiumRepository;
         }
 
-        public async Task<IEnumerable<Condominium>> GetAllCondominiumsAsync()
+        public async Task<IEnumerable<Condominium_System.Data.Entities.Condominium>> GetAllCondominiumsAsync()
         {
             return await _condominiumRepository.GetAllWithIncludesAsync(c => c.Users, c => c.Blocks);
         }
 
-        public async Task<Condominium> GetCondominiumByIdAsync(int id)
+        public async Task<Condominium_System.Data.Entities.Condominium> GetCondominiumByIdAsync(int id)
         {
             return await _condominiumRepository.GetByIdWithIncludesAsync(id, c => c.Users, c => c.Blocks);
         }
 
-        public async Task<IEnumerable<Condominium>> SearchCondominiumsAsync(string searchTerm)
+        public async Task<IEnumerable<Condominium_System.Data.Entities.Condominium>> SearchCondominiumsAsync(string searchTerm)
         {
             if (string.IsNullOrWhiteSpace(searchTerm))
             {
@@ -38,7 +38,7 @@ namespace Condominium_System.Business.Services
             {
                 // Búsqueda por ID - Usamos GetByIdAsync que ya incluye la verificación IsActive
                 var condominium = await _condominiumRepository.GetByIdAsync(id);
-                return condominium != null ? new List<Condominium> { condominium } : Enumerable.Empty<Condominium>();
+                return condominium != null ? new List<Condominium_System.Data.Entities.Condominium> { condominium } : Enumerable.Empty<Condominium_System.Data.Entities.Condominium>();
             }
             else
             {
@@ -47,14 +47,14 @@ namespace Condominium_System.Business.Services
             }
         }
 
-        public async Task<Condominium> CreateCondominiumAsync(Condominium condominium)
+        public async Task<Condominium_System.Data.Entities.Condominium> CreateCondominiumAsync(Condominium_System.Data.Entities.Condominium condominium)
         {
             await _condominiumRepository.AddAsync(condominium);
             await _condominiumRepository.SaveChangesAsync();
             return condominium;
         }
 
-        public async Task UpdateCondominiumAsync(Condominium condominium)
+        public async Task UpdateCondominiumAsync(Condominium_System.Data.Entities.Condominium condominium)
         {
             _condominiumRepository.Update(condominium);
             await _condominiumRepository.SaveChangesAsync();
