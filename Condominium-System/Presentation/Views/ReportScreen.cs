@@ -16,10 +16,12 @@ namespace Condominium_System.Presentation.Views
     public partial class ReportScreen : Form
     {
         private readonly ICondominiumService _condominiumService;
-        public ReportScreen(ICondominiumService condominiumService)
+        private readonly IBlockService _blockService;
+        public ReportScreen(ICondominiumService condominiumService, IBlockService blockService)
         {
             InitializeComponent();
             _condominiumService = condominiumService;
+            _blockService = blockService;
         }
 
         private void ReportScreen_Load(object sender, EventArgs e)
@@ -55,6 +57,16 @@ namespace Condominium_System.Presentation.Views
 
                             var viewer = new ReportViewerForm(report);
                             viewer.Show();
+                            break;
+
+                        case 2:
+                            var blocks = await _blockService.GetAllBlocksAsync();
+
+                            report.Load("Presentation/Reports/BlockReport.frx");
+                            report.RegisterData(blocks, "Block");
+
+                            var viewerBlock = new ReportViewerForm(report);
+                            viewerBlock.Show();
                             break;
                     }
                 }
