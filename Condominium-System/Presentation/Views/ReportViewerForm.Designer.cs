@@ -34,8 +34,9 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(818, 683);
             Name = "ReportViewerForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "ReportViewerForm";
             ResumeLayout(false);
         }

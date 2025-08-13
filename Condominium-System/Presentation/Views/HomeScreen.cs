@@ -122,8 +122,14 @@ namespace Condominium_System.Presentation.Views
                     OpenServiceScreen();
                     break;
 
+                case "HomeScreenPNLReport":
+                    HomeScreenLBLTitle.Text = "Reporte";
+                    var reportScreen = _serviceProvider.GetRequiredService<ReportScreen>();
+                    LoadFormInPanel(reportScreen);
+                    break;
+
                 case "HomeScreenPNLUsers":
-                    HomeScreenLBLTitle.Text = "Usuarios";
+                    HomeScreenLBLTitle.Text = "Usuario";
                     var userScreen = _serviceProvider.GetRequiredService<UsersScreen>();
                     LoadFormInPanel(userScreen);
                     break;

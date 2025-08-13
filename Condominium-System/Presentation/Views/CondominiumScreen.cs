@@ -271,7 +271,7 @@ namespace Condominium_System.Presentation.Views
 
                 bool shouldSearch = string.IsNullOrEmpty(searchTerm) ||
                                   searchTerm.All(char.IsDigit) ||
-                                  searchTerm.Length >= 2; // Cambiado a 2 caracteres mínimo para búsqueda
+                                  searchTerm.Length >= 2;
 
                 if (shouldSearch)
                 {
@@ -326,18 +326,13 @@ namespace Condominium_System.Presentation.Views
         {
             try
             {
-                // 1. Obtener datos
+
                 var condominiums = await _condominiumService.GetAllCondominiumsAsync();
 
-                // 2. Crear y configurar el reporte
                 var report = new Report();
                 report.Load("Presentation/Reports/CondominiumReport.frx");
                 report.RegisterData(condominiums, "Condominium");
 
-                // Asegúrate que en el diseñador .frx la fuente de datos se llame igual
-                // y que la opción "Enabled" esté activada para esa tabla.
-
-                // 3. Abrir el visor
                 var viewer = new ReportViewerForm(report);
                 viewer.Show();
             }
