@@ -1,8 +1,6 @@
 ﻿using Condominium_System.Business.Services;
 using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
-using CrystalDecisions.CrystalReports.Engine;
-using CrystalDecisions.Shared;
 using FastReport;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -10,14 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Windows.Forms;
 using Timer = System.Windows.Forms.Timer;
 
 namespace Condominium_System.Presentation.Views
@@ -332,98 +322,29 @@ namespace Condominium_System.Presentation.Views
             timer.Start();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             try
             {
-                // Obtener los datos actuales del DataGridView
-                var dataSource = CondominiumDTGData.DataSource;
+                // 1. Obtener datos
+                var condominiums = await _condominiumService.GetAllCondominiumsAsync();
 
-                if (dataSource == null)
-                {
-                    MessageBox.Show("No hay datos para generar el reporte.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                // 2. Crear y configurar el reporte
+                var report = new Report();
+                report.Load("Presentation/Reports/CondominiumReport.frx");
+                report.RegisterData(condominiums, "Condominium");
 
-                // Solución para CS0433: Especificar el espacio de nombres completo para 'Report' de FastReport.
-                // Reemplaza la línea problemática:
-                FastReport.Report report = new FastReport.Report();
+                // Asegúrate que en el diseñador .frx la fuente de datos se llame igual
+                // y que la opción "Enabled" esté activada para esa tabla.
 
-                // Cargar el diseño del reporte
-                string reportPath = Path.Combine(Application.StartupPath, "Reports", "Condominiums.frx");
-
-                if (!File.Exists(reportPath))
-                {
-                    MessageBox.Show("No se encontró el archivo de reporte.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                report.Load(reportPath);
-
-                // Convertir los datos a DataTable
-                DataTable dataTable = ConvertToDataTable(dataSource);
-
-                // Registrar los datos en el reporte
-                report.RegisterData(dataTable, "Condominiums");
-
-                // Configurar parámetros si es necesario
-                report.SetParameterValue("FechaGeneracion", DateTime.Now.ToString("g"));
-                report.SetParameterValue("UsuarioGenerador", currentUser?.Username ?? "Sistema");
-
-                // Mostrar el visor personalizado
-                using (var viewerForm = new ReportViewerForm(report))
-                {
-                    viewerForm.ShowDialog();
-                }
+                // 3. Abrir el visor
+                var viewer = new ReportViewerForm(report);
+                viewer.Show();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al generar el reporte: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error generando reporte: {ex.Message}");
             }
-        }
-
-        private DataTable ConvertToDataTable(object dataSource)
-        {
-            DataTable dataTable = new DataTable();
-
-            if (dataSource is BindingSource bindingSource)
-            {
-                dataSource = bindingSource.List;
-            }
-
-            if (dataSource is IEnumerable<Condominium> condominiums)
-            {
-                // Crear columnas basadas en las propiedades de Condominium
-                dataTable.Columns.Add("Id", typeof(int));
-                dataTable.Columns.Add("Name", typeof(string));
-                dataTable.Columns.Add("Address", typeof(string));
-                dataTable.Columns.Add("ReceptionContactNumber", typeof(string));
-                dataTable.Columns.Add("BlockCount", typeof(int));
-                dataTable.Columns.Add("Author", typeof(string));
-                dataTable.Columns.Add("CreatedAt", typeof(DateTime));
-                dataTable.Columns.Add("IsActive", typeof(bool));
-
-                // Llenar el DataTable
-                foreach (var condominium in condominiums)
-                {
-                    dataTable.Rows.Add(
-                        condominium.Id,
-                        condominium.Name,
-                        condominium.Address,
-                        condominium.ReceptionContactNumber,
-                        condominium.BlockCount,
-                        condominium.Author,
-                        condominium.CreatedAt,
-                        condominium.IsActive
-                    );
-                }
-            }
-            else if (dataSource is List<Condominium> list)
-            {
-                return ConvertToDataTable(list.AsEnumerable());
-            }
-
-            return dataTable;
         }
     }
 }

@@ -7,17 +7,20 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <ReferencePath>C:\Program Files (x86)\SAP BusinessObjects\Crystal Reports for .NET Framework 4.0\Common\SAP BusinessObjects Enterprise XI 4.0\win64_x64\dotnet\</ReferencePath>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Presentation\Reports\CondominiumReport.frx" />
     <None Remove="Resources\add-user.png" />
     <None Remove="Resources\back.png" />
     <None Remove="Resources\user.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Presentation\Reports\CondominiumReport.frx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\add-user.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -50,10 +53,7 @@
     <PackageReference Include="CrystalReports.Windows.Forms" Version="13.0.4003">
       <Private>True</Private>
     </PackageReference>
-    <PackageReference Include="FastReport.Data.Excel" Version="2025.2.8" />
-    <PackageReference Include="FastReport.Data.MsSql" Version="2025.2.8" />
     <PackageReference Include="FastReport.Net.Demo" Version="2025.2.8" />
-    <PackageReference Include="FastReport.OpenSource" Version="2025.2.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="9.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.6" />
@@ -77,8 +77,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="FastReport">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Fast Reports\.NET\2025.2.8\FastReport .NET WinForms Pack Trial\WinForms\FastReport.dll</HintPath>
+    </Reference>
     <Reference Include="FastReport.Compat">
       <HintPath>..\..\..\..\Downloads\FastReport.Community.2025.2.0\FastReport.Compat.dll</HintPath>
+    </Reference>
+    <Reference Include="FastReport.VSDesign">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Fast Reports\.NET\2025.2.8\FastReport .NET WinForms Pack Trial\WinForms\FastReport.VSDesign.dll</HintPath>
     </Reference>
   </ItemGroup>
 
