@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="08/13/2025 15:35:28" ReportInfo.Modified="08/14/2025 09:58:22" ReportInfo.CreatorVersion="2025.2.0.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="08/13/2025 15:35:28" ReportInfo.Modified="08/14/2025 11:44:31" ReportInfo.CreatorVersion="2025.2.0.0">
   <ScriptText>using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,7 +22,7 @@ namespace FastReport
 }
 </ScriptText>
   <Dictionary>
-    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFyVMFQFgloOWr5TX5FL1ZFJR271AOOetRIvM3i7KrbUVrMfFjj7YnJgsFKiVsWMPFnraJusK+kxm9GxDcrOaJoj0cxWx2sBQO918wvcoPmcUQ/pcLpUdFbAoSPrqvN9Wp">
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFyVMFQFgloOWr5TX5FL1ZFJR271AOOetRIvM3i7KrbUVrMfFjj7YnJgsFKiVsWMPFnraJusK+kxm9GxDcrOaJoj0cxWx2sBQO918wvcoPmcX1pTwcTuP88lfoeiB+C9ga">
       <TableDataSource Name="Blocks" DataType="System.Int32" Enabled="true" TableName="Blocks">
         <Column Name="Id" DataType="System.Int32"/>
         <Column Name="Name" DataType="System.String"/>
@@ -46,16 +46,16 @@ namespace FastReport
       <TextObject Name="Text14" Left="567" Top="132.3" Width="94.5" Height="18.9" Text="[Date]" Font="Arial, 10pt"/>
       <TextObject Name="Text16" Left="567" Top="160.65" Width="141.75" Height="18.9" Text="Santo Domingo, D.N" Font="Arial, 10pt"/>
     </ReportTitleBand>
-    <PageHeaderBand Name="PageHeader1" Top="191.67" Width="718.2" Height="37.8">
+    <PageHeaderBand Name="PageHeader1" Top="191.29" Width="718.2" Height="37.8">
       <ShapeObject Name="Shape2" Width="727.65" Height="37.8" Fill.Color="Black"/>
       <TextObject Name="Text2" Left="9.45" Top="9.45" Width="103.95" Height="18.9" Border.Color="White" Text="Identificación" Font="Arial, 10pt" TextFill.Color="White"/>
       <TextObject Name="Text4" Left="113.4" Top="9.45" Width="94.5" Height="18.9" Text="Nombre" Font="Arial, 10pt" TextFill.Color="White"/>
-      <TextObject Name="Text6" Left="207.9" Top="9.45" Width="103.95" Height="18.9" Text="Caracteristicas" Font="Arial, 10pt" TextFill.Color="White"/>
+      <TextObject Name="Text6" Left="207.9" Top="9.45" Width="103.95" Height="18.9" Text="Carácteristicas" Font="Arial, 10pt" TextFill.Color="White"/>
       <TextObject Name="Text8" Left="340.2" Top="9.45" Width="94.5" Height="18.9" Text="Tipos de casa" Font="Arial, 10pt" TextFill.Color="White"/>
       <TextObject Name="Text10" Left="444.15" Top="9.45" Width="103.95" Height="18.9" Text="Cant. de Casas&#13;&#10;" Font="Arial, 10pt" TextFill.Color="White"/>
-      <TextObject Name="Text12" Left="567" Top="9.45" Width="94.5" Height="18.9" Text="Direccion" Font="Arial, 10pt" TextFill.Color="White"/>
+      <TextObject Name="Text12" Left="567" Top="9.45" Width="94.5" Height="18.9" Text="Dirección" Font="Arial, 10pt" TextFill.Color="White"/>
     </PageHeaderBand>
-    <DataBand Name="Data1" Top="232.13" Width="718.2" Height="37.8" DataSource="Blocks">
+    <DataBand Name="Data1" Top="231.37" Width="718.2" Height="37.8" DataSource="Blocks">
       <TextObject Name="Text1" Left="9.45" Top="9.45" Width="75.6" Height="18.9" Text="[Blocks.Id]" Font="Arial, 10pt"/>
       <TextObject Name="Text3" Left="113.4" Top="9.45" Width="94.5" Height="18.9" Text="[Blocks.Name]" Font="Arial, 10pt"/>
       <TextObject Name="Text5" Left="207.9" Top="9.45" Width="122.85" Height="18.9" Text="[Blocks.Feature]" Font="Arial, 10pt"/>
@@ -64,7 +64,7 @@ namespace FastReport
       <TextObject Name="Text11" Left="567" Top="9.45" Width="113.4" Height="18.9" Text="[Blocks.Address]" Font="Arial, 10pt"/>
       <LineObject Name="Line1" Width="727.65" Diagonal="true"/>
     </DataBand>
-    <PageFooterBand Name="PageFooter1" Top="272.6" Width="718.2" Height="28.35">
+    <PageFooterBand Name="PageFooter1" Top="271.46" Width="718.2" Height="28.35">
       <TextObject Name="Text17" Left="652.05" Top="9.45" Width="56.7" Height="18.9" Text="[Page]" Font="Arial, 10pt"/>
     </PageFooterBand>
   </ReportPage>

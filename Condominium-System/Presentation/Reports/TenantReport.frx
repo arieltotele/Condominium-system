@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="08/14/2025 08:35:45" ReportInfo.Modified="08/14/2025 08:47:57" ReportInfo.CreatorVersion="2025.2.0.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="08/14/2025 08:35:45" ReportInfo.Modified="08/14/2025 11:52:32" ReportInfo.CreatorVersion="2025.2.0.0">
   <ScriptText>using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,7 +22,7 @@ namespace FastReport
 }
 </ScriptText>
   <Dictionary>
-    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFyVMFQFgloOWr5TX5FL1ZFJR271AOOetRIvM3i7KrbUVrMfFjj7YnJgsFKiVsWMPFnraJusK+kxm9GxDcrOaJoj0cxWx2sBQO918wvcoPmcVXwQ3R+BQ6uNf3PJTbX2o/">
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFyVMFQFgloOWr5TX5FL1ZFJR271AOOetRIvM3i7KrbUVrMfFjj7YnJgsFKiVsWMPFnraJusK+kxm9GxDcrOaJoj0cxWx2sBQO918wvcoPmcUiBRTvZYsTGdBDsC4r7nRl">
       <TableDataSource Name="Tenants" DataType="System.Int32" Enabled="true" TableName="Tenants">
         <Column Name="Id" DataType="System.Int32"/>
         <Column Name="FirstName" DataType="System.String"/>
@@ -48,25 +48,23 @@ namespace FastReport
       <TextObject Name="Text14" Left="567" Top="122.85" Width="94.5" Height="18.9" Text="[Date]" Font="Arial, 10pt"/>
       <TextObject Name="Text16" Left="567" Top="151.2" Width="141.75" Height="18.9" Text="Santo Domingo, D.N" Font="Arial, 10pt"/>
     </ReportTitleBand>
-    <PageHeaderBand Name="PageHeader1" Top="182.75" Width="718.2" Height="56.7" Guides="28.35">
+    <PageHeaderBand Name="PageHeader1" Top="183.55" Width="718.2" Height="56.7" Guides="28.35">
       <ShapeObject Name="Shape2" Top="9.45" Width="727.65" Height="37.8" Fill.Color="Black"/>
-      <TextObject Name="Text1" Left="9.45" Top="18.9" Width="94.5" Height="18.9" Border.Color="White" Text="Id" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
-      <TextObject Name="Text2" Left="113.4" Top="18.9" Width="94.5" Height="18.9" Border.Color="White" Text="Nombre" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
-      <TextObject Name="Text3" Left="226.8" Top="18.9" Width="94.5" Height="18.9" Border.Color="White" Text="Apellido" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text1" Left="9.45" Top="18.9" Width="103.95" Height="18.9" Border.Color="White" Text="Identificación" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text2" Left="122.85" Top="18.9" Width="198.45" Height="18.9" Border.Color="White" Text="Nombre completo" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
       <TextObject Name="Text4" Left="340.2" Top="18.9" Width="160.65" Height="18.9" Border.Color="White" Text="Número de Documento" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
       <TextObject Name="Text5" Left="510.3" Top="18.9" Width="94.5" Height="18.9" Border.Color="White" Text="Contacto" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
-      <TextObject Name="Text6" Left="623.7" Top="18.9" Width="94.5" Height="18.9" Border.Color="White" Text="Sexo" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text6" Left="614.25" Top="18.9" Width="94.5" Height="18.9" Border.Color="White" Text="Sexo" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
     </PageHeaderBand>
-    <DataBand Name="Data1" Top="242.65" Width="718.2" Height="37.8" DataSource="Tenants">
+    <DataBand Name="Data1" Top="244.25" Width="718.2" Height="37.8" DataSource="Tenants">
       <TextObject Name="Text17" Left="9.45" Top="9.45" Width="94.5" Height="18.9" Border.Color="White" Text="[Tenants.Id]" Font="Arial, 10pt"/>
-      <TextObject Name="Text18" Left="113.4" Top="9.45" Width="94.5" Height="18.9" Border.Color="White" Text="[Tenants.FirstName]" Font="Arial, 10pt"/>
-      <TextObject Name="Text19" Left="226.8" Top="9.45" Width="94.5" Height="18.9" Border.Color="White" Text="[Tenants.LastName]" Font="Arial, 10pt"/>
+      <TextObject Name="Text18" Left="122.85" Top="9.45" Width="198.45" Height="18.9" Border.Color="White" Text="[Tenants.FirstName] [Tenants.LastName]" Font="Arial, 10pt"/>
       <TextObject Name="Text20" Left="340.2" Top="9.45" Width="94.5" Height="18.9" Border.Color="White" Text="[Tenants.DocumentNumber]" Font="Arial, 10pt"/>
       <TextObject Name="Text21" Left="510.3" Top="9.45" Width="94.5" Height="18.9" Border.Color="White" Text="[Tenants.PhoneNumber]" Font="Arial, 10pt"/>
-      <TextObject Name="Text22" Left="623.7" Top="9.45" Width="94.5" Height="18.9" Border.Color="White" Text="[Tenants.Gender]" Font="Arial, 10pt"/>
+      <TextObject Name="Text22" Left="614.25" Top="9.45" Width="94.5" Height="18.9" Border.Color="White" Text="[Tenants.Gender]" Font="Arial, 10pt"/>
     </DataBand>
-    <PageFooterBand Name="PageFooter1" Top="283.65" Width="718.2" Height="37.8">
-      <TextObject Name="Text23" Left="652.05" Top="18.9" Width="66.15" Height="18.9" Border.Color="White" Text="[PageN]" Font="Arial, 10pt"/>
+    <PageFooterBand Name="PageFooter1" Top="286.05" Width="718.2" Height="37.8">
+      <TextObject Name="Text23" Left="652.05" Top="18.9" Width="56.7" Height="18.9" Text="[Page]" Font="Arial, 10pt"/>
     </PageFooterBand>
   </ReportPage>
 </Report>

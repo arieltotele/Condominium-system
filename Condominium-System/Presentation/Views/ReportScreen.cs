@@ -22,8 +22,12 @@ namespace Condominium_System.Presentation.Views
         private readonly IIncidentService _incidenceService;
         private readonly IInvoiceService _invoiceService;
         private readonly IFurnitureService _furnitureService;
+        private readonly IServiceService _serviceService;
+        private readonly IUserService _userService;
+
         public ReportScreen(ICondominiumService condominiumService, IBlockService blockService, IHousingEntityService housingEntityService,
-            ITenantService tenantService, IIncidentService incidenceService, IInvoiceService invoiceService, IFurnitureService furnitureService)
+            ITenantService tenantService, IIncidentService incidenceService, IInvoiceService invoiceService, IFurnitureService furnitureService,
+            IServiceService serviceService, IUserService userService)
         {
             InitializeComponent();
             _condominiumService = condominiumService;
@@ -33,6 +37,8 @@ namespace Condominium_System.Presentation.Views
             _incidenceService = incidenceService;
             _invoiceService = invoiceService;
             _furnitureService = furnitureService;
+            _serviceService = serviceService;
+            _userService = userService;
         }
 
         private void ReportScreen_Load(object sender, EventArgs e)
@@ -44,7 +50,7 @@ namespace Condominium_System.Presentation.Views
         {
             var serviceTypes = new List<string> { "-- Seleccione una entidad --",
                 "Condominio", "Bloque", "Vivienda", "Inquilino", "Incidencia",
-                "Factura", "Mobiliario", "Servicios", "Reporte", "Usuarios"};
+                "Factura", "Mobiliario", "Servicios", "Usuarios"};
             ReportComboBxEntities.DataSource = serviceTypes;
             ReportComboBxEntities.DropDownStyle = ComboBoxStyle.DropDownList;
             ReportComboBxEntities.SelectedIndex = 0;
@@ -127,6 +133,26 @@ namespace Condominium_System.Presentation.Views
 
                             var viewerFurniture = new ReportViewerForm(report);
                             viewerFurniture.Show();
+                            break;
+
+                        case 8:
+                            var service = await _serviceService.GetAllAsync();
+
+                            report.Load("Presentation/Reports/ServiceReport.frx");
+                            report.RegisterData(service, "Service");
+
+                            var viewerService = new ReportViewerForm(report);
+                            viewerService.Show();
+                            break;
+
+                        case 9:
+                            var user = await _userService.GetAllAsync();
+
+                            report.Load("Presentation/Reports/UserReport.frx");
+                            report.RegisterData(user, "User");
+
+                            var viewerUser = new ReportViewerForm(report);
+                            viewerUser.Show();
                             break;
                     }
                 }
