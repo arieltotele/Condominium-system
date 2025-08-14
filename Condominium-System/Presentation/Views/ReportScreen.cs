@@ -20,8 +20,10 @@ namespace Condominium_System.Presentation.Views
         private readonly IHousingEntityService _housingEntityService;
         private readonly ITenantService _tenantService;
         private readonly IIncidentService _incidenceService;
+        private readonly IInvoiceService _invoiceService;
+        private readonly IFurnitureService _furnitureService;
         public ReportScreen(ICondominiumService condominiumService, IBlockService blockService, IHousingEntityService housingEntityService,
-            ITenantService tenantService, IIncidentService incidenceService)
+            ITenantService tenantService, IIncidentService incidenceService, IInvoiceService invoiceService, IFurnitureService furnitureService)
         {
             InitializeComponent();
             _condominiumService = condominiumService;
@@ -29,6 +31,8 @@ namespace Condominium_System.Presentation.Views
             _housingEntityService = housingEntityService;
             _tenantService = tenantService;
             _incidenceService = incidenceService;
+            _invoiceService = invoiceService;
+            _furnitureService = furnitureService;
         }
 
         private void ReportScreen_Load(object sender, EventArgs e)
@@ -104,6 +108,27 @@ namespace Condominium_System.Presentation.Views
                             var viewerIncidence = new ReportViewerForm(report);
                             viewerIncidence.Show();
                             break;
+
+                        case 6:
+                            var invoice = await _invoiceService.GetAllAsync();
+
+                            report.Load("Presentation/Reports/InvoiceReport.frx");
+                            report.RegisterData(invoice, "Invoice");
+
+                            var viewerInvoice = new ReportViewerForm(report);
+                            viewerInvoice.Show();
+                            break;
+
+                        case 7:
+                            var furniture = await _furnitureService.GetAllFurnituresAsync();
+
+                            report.Load("Presentation/Reports/Furniture.frx");
+                            report.RegisterData(furniture, "Furniture");
+
+                            var viewerFurniture = new ReportViewerForm(report);
+                            viewerFurniture.Show();
+                            break;
+
                     }
                 }
                 catch (Exception ex)
