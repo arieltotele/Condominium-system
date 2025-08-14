@@ -42,7 +42,9 @@
             statusStrip1 = new StatusStrip();
             statusLabel = new ToolStripStatusLabel();
             contextMenuStrip1 = new ContextMenuStrip(components);
-            button1 = new Button();
+            panel2 = new Panel();
+            label2 = new Label();
+            pictureBox1 = new PictureBox();
             LoginPNLUsername.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)CondominiumDTGData).BeginInit();
             CondominiumPNLBTNCreate.SuspendLayout();
@@ -50,6 +52,8 @@
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             statusStrip1.SuspendLayout();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -173,22 +177,46 @@
             contextMenuStrip1.Name = "contextMenuStrip1";
             contextMenuStrip1.Size = new Size(61, 4);
             // 
-            // button1
+            // panel2
             // 
-            button1.Location = new Point(603, 87);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 38;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            panel2.BackColor = Color.MidnightBlue;
+            panel2.Controls.Add(label2);
+            panel2.Controls.Add(pictureBox1);
+            panel2.Location = new Point(594, 74);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(169, 41);
+            panel2.TabIndex = 56;
+            panel2.Click += GenerateReportFromFilteredData_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(39, 12);
+            label2.Name = "label2";
+            label2.Size = new Size(125, 21);
+            label2.TabIndex = 1;
+            label2.Text = "Generar Reporte";
+            label2.Click += GenerateReportFromFilteredData_Click;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.export_white;
+            pictureBox1.Location = new Point(3, 12);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(30, 19);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
+            pictureBox1.Click += GenerateReportFromFilteredData_Click;
             // 
             // CondominiumScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1017, 591);
-            Controls.Add(button1);
+            Controls.Add(panel2);
             Controls.Add(statusStrip1);
             Controls.Add(panel1);
             Controls.Add(CondominiumPNLBTNCreate);
@@ -208,6 +236,9 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -227,6 +258,8 @@
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel statusLabel;
         private ContextMenuStrip contextMenuStrip1;
-        private Button button1;
+        private Panel panel2;
+        private Label label2;
+        private PictureBox pictureBox1;
     }
 }

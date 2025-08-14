@@ -47,7 +47,7 @@ namespace Condominium_System.Presentation.Views
             try
             {
                 var listCondominium = await _condominiumService.GetAllCondominiumsAsync();
-                var bindingList = new BindingList<Condominium_System.Data.Entities.Condominium>((List<Condominium_System.Data.Entities.Condominium>)(IEnumerable<Condominium_System.Data.Entities.Condominium>)listCondominium);
+                var bindingList = new BindingList<Condominium>((List<Condominium>)(IEnumerable<Condominium>)listCondominium);
                 var source = new BindingSource(bindingList, null);
                 CondominiumDTGData.DataSource = source;
 
@@ -149,7 +149,7 @@ namespace Condominium_System.Presentation.Views
                 int relativeX = clickPosition.X - cellBounds.Left;
 
                 var selectedRow = CondominiumDTGData.Rows[e.RowIndex];
-                var selectedFurniture = selectedRow.DataBoundItem as Condominium_System.Data.Entities.Condominium;
+                var selectedFurniture = selectedRow.DataBoundItem as Condominium;
 
                 if (selectedFurniture == null)
                 {
@@ -194,7 +194,7 @@ namespace Condominium_System.Presentation.Views
                     return;
                 }
 
-                var selectedCondominium = CondominiumDTGData.CurrentRow.DataBoundItem as Condominium_System.Data.Entities.Condominium;
+                var selectedCondominium = CondominiumDTGData.CurrentRow.DataBoundItem as Condominium;
                 if (selectedCondominium == null)
                 {
                     MessageBox.Show("Error al obtener el condominio seleccionado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -230,7 +230,7 @@ namespace Condominium_System.Presentation.Views
 
                     if (condominiumFound != null)
                     {
-                        CondominiumDTGData.DataSource = new List<Condominium_System.Data.Entities.Condominium> { condominiumFound };
+                        CondominiumDTGData.DataSource = new List<Condominium> { condominiumFound };
                     }
                     else
                     {
@@ -324,13 +324,47 @@ namespace Condominium_System.Presentation.Views
 
         private async void button1_Click(object sender, EventArgs e)
         {
+            //try
+            //{
+
+            //    var condominiums = await _condominiumService.GetAllCondominiumsAsync();
+
+            //    var report = new Report();
+            //    report.Load("Presentation/Reports/CondominiumReport.frx");
+            //    report.RegisterData(condominiums, "Condominium");
+
+            //    var viewer = new ReportViewerForm(report);
+            //    viewer.Show();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show($"Error generando reporte: {ex.Message}");
+            //}
+        }
+
+        private async void GenerateReportFromFilteredData_Click(object sender, EventArgs e)
+        {
             try
             {
+                var bindingSource = CondominiumDTGData.DataSource as BindingSource;
+                if (bindingSource == null)
+                {
+                    MessageBox.Show("No hay datos para generar el informe.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-                var condominiums = await _condominiumService.GetAllCondominiumsAsync();
+                var condominiums = bindingSource.DataSource as IEnumerable<Condominium>;
+
+                if (condominiums == null || !condominiums.Any())
+                {
+                    MessageBox.Show("No se encontraron condominios para el informe.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
                 var report = new Report();
-                report.Load("Presentation/Reports/CondominiumReport.frx");
+                report.Load("Presentation/Reports/Filtered Reports/CondominiumReportFiltered.frx");
+
+                // Registrar los datos obtenidos del DataGridView
                 report.RegisterData(condominiums, "Condominium");
 
                 var viewer = new ReportViewerForm(report);
@@ -338,7 +372,7 @@ namespace Condominium_System.Presentation.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error generando reporte: {ex.Message}");
+                MessageBox.Show($"Error generando reporte: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
