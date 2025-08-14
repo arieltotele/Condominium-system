@@ -122,13 +122,12 @@ namespace Condominium_System.Presentation.Views
                         case 7:
                             var furniture = await _furnitureService.GetAllFurnituresAsync();
 
-                            report.Load("Presentation/Reports/Furniture.frx");
+                            report.Load("Presentation/Reports/FurnitureReport.frx");
                             report.RegisterData(furniture, "Furniture");
 
                             var viewerFurniture = new ReportViewerForm(report);
                             viewerFurniture.Show();
                             break;
-
                     }
                 }
                 catch (Exception ex)
