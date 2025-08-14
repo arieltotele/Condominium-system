@@ -1,17 +1,5 @@
-﻿using Condominium_System.Business.Models;
-using Condominium_System.Business.Services;
-using Condominium_System.Data.Entities;
-using Condominium_System.Helpers;
+﻿using Condominium_System.Business.Services;
 using FastReport;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Condominium_System.Presentation.Views
 {
