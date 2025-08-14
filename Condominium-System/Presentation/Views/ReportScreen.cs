@@ -1,5 +1,7 @@
-﻿using Condominium_System.Business.Services;
+﻿using Condominium_System.Business.Models;
+using Condominium_System.Business.Services;
 using Condominium_System.Data.Entities;
+using Condominium_System.Helpers;
 using FastReport;
 using System;
 using System.Collections.Generic;
@@ -58,114 +60,88 @@ namespace Condominium_System.Presentation.Views
 
         private async void GenerateReportBTN_Click(object sender, EventArgs e)
         {
-            if (FormIsCorrect())
-            {
-                try
-                {
-                    var report = new Report();
-                    switch (ReportComboBxEntities.SelectedIndex)
-                    {
-                        case 1:
-                            var condominiums = await _condominiumService.GetAllCondominiumsAsync();
-                                                        
-                            report.Load("Presentation/Reports/CondominiumReport.frx");
-                            report.RegisterData(condominiums, "Condominium");
-
-                            var viewer = new ReportViewerForm(report);
-                            viewer.Show();
-                            break;
-
-                        case 2:
-                            var blocks = await _blockService.GetAllBlocksAsync();
-
-                            report.Load("Presentation/Reports/BlockReport.frx");
-                            report.RegisterData(blocks, "Block");
-
-                            var viewerBlock = new ReportViewerForm(report);
-                            viewerBlock.Show();
-                            break;
-
-                        case 3:
-                            var houses = await _housingEntityService.GetAllHousingsAsync();
-
-                            report.Load("Presentation/Reports/HousingReport.frx");
-                            report.RegisterData(houses, "Housing");
-
-                            var viewerHouses = new ReportViewerForm(report);
-                            viewerHouses.Show();
-                            break;
-
-                        case 4:
-                            var tenants = await _tenantService.GetAllAsync();
-
-                            report.Load("Presentation/Reports/TenantReport.frx");
-                            report.RegisterData(tenants, "Housing");
-
-                            var viewerTenants = new ReportViewerForm(report);
-                            viewerTenants.Show();
-                            break;
-
-                        case 5:
-                            var incidence = await _incidenceService.GetAllAsync();
-
-                            report.Load("Presentation/Reports/IncidenceReport.frx");
-                            report.RegisterData(incidence, "Incidence");
-
-                            var viewerIncidence = new ReportViewerForm(report);
-                            viewerIncidence.Show();
-                            break;
-
-                        case 6:
-                            var invoice = await _invoiceService.GetAllAsync();
-
-                            report.Load("Presentation/Reports/InvoiceReport.frx");
-                            report.RegisterData(invoice, "Invoice");
-
-                            var viewerInvoice = new ReportViewerForm(report);
-                            viewerInvoice.Show();
-                            break;
-
-                        case 7:
-                            var furniture = await _furnitureService.GetAllFurnituresAsync();
-
-                            report.Load("Presentation/Reports/FurnitureReport.frx");
-                            report.RegisterData(furniture, "Furniture");
-
-                            var viewerFurniture = new ReportViewerForm(report);
-                            viewerFurniture.Show();
-                            break;
-
-                        case 8:
-                            var service = await _serviceService.GetAllAsync();
-
-                            report.Load("Presentation/Reports/ServiceReport.frx");
-                            report.RegisterData(service, "Service");
-
-                            var viewerService = new ReportViewerForm(report);
-                            viewerService.Show();
-                            break;
-
-                        case 9:
-                            var user = await _userService.GetAllAsync();
-
-                            report.Load("Presentation/Reports/UserReport.frx");
-                            report.RegisterData(user, "User");
-
-                            var viewerUser = new ReportViewerForm(report);
-                            viewerUser.Show();
-                            break;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error guardando servicio: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    CleanForm();
-                }
-            }
-            else
+            if (!FormIsCorrect())
             {
                 MessageBox.Show("Debe de seleccionar una opcion valida.");
+                return;
             }
+
+            try
+            {
+                switch (ReportComboBxEntities.SelectedIndex)
+                {
+                    case 1:
+                        await ShowReportAsync("Presentation/Reports/CondominiumReport.frx",
+                            await _condominiumService.GetAllCondominiumsAsync(),
+                            "Condominium");
+                        break;
+
+                    case 2:
+                        await ShowReportAsync("Presentation/Reports/BlockReport.frx",
+                            await _blockService.GetAllBlocksAsync(),
+                            "Block");
+                        break;
+
+                    case 3:
+                        await ShowReportAsync("Presentation/Reports/HousingReport.frx",
+                            await _housingEntityService.GetAllHousingsAsync(),
+                            "Housing");
+                        break;
+
+                    case 4:
+                        await ShowReportAsync("Presentation/Reports/TenantReport.frx",
+                            await _tenantService.GetAllAsync(),
+                            "Housing");
+                        break;
+
+                    case 5:
+                        await ShowReportAsync("Presentation/Reports/IncidenceReport.frx",
+                            await _incidenceService.GetAllAsync(),
+                            "Incidence");
+                        break;
+
+                    case 6:
+                        await ShowReportAsync("Presentation/Reports/InvoiceReport.frx",
+                            await _invoiceService.GetAllAsync(),
+                            "Invoice");
+                        break;
+
+                    case 7:
+                        await ShowReportAsync("Presentation/Reports/FurnitureReport.frx",
+                            await _furnitureService.GetAllFurnituresAsync(),
+                            "Furniture");
+                        break;
+
+                    case 8:
+                        await ShowReportAsync("Presentation/Reports/ServiceReport.frx",
+                            await _serviceService.GetAllAsync(),
+                            "Service");
+                        break;
+
+                    case 9:
+                        await ShowReportAsync("Presentation/Reports/UserReport.frx",
+                            await _userService.GetAllAsync(),
+                            "User");
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error generando reporte: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                CleanForm();
+            }
+        }
+
+        private Task ShowReportAsync<T>(string reportPath, IEnumerable<T> data, string dataName)
+        {
+            var report = new Report();
+            report.Load(reportPath);
+            report.RegisterData(data, dataName);
+
+            var viewer = new ReportViewerForm(report);
+            viewer.Show();
+
+            return Task.CompletedTask;
         }
 
         private async void CleanForm()
