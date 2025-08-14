@@ -17,11 +17,18 @@ namespace Condominium_System.Presentation.Views
     {
         private readonly ICondominiumService _condominiumService;
         private readonly IBlockService _blockService;
-        public ReportScreen(ICondominiumService condominiumService, IBlockService blockService)
+        private readonly IHousingEntityService _housingEntityService;
+        private readonly ITenantService _tenantService;
+        private readonly IIncidentService _incidenceService;
+        public ReportScreen(ICondominiumService condominiumService, IBlockService blockService, IHousingEntityService housingEntityService,
+            ITenantService tenantService, IIncidentService incidenceService)
         {
             InitializeComponent();
             _condominiumService = condominiumService;
             _blockService = blockService;
+            _housingEntityService = housingEntityService;
+            _tenantService = tenantService;
+            _incidenceService = incidenceService;
         }
 
         private void ReportScreen_Load(object sender, EventArgs e)
@@ -46,7 +53,6 @@ namespace Condominium_System.Presentation.Views
                 try
                 {
                     var report = new Report();
-                    var a = ReportComboBxEntities.SelectedIndex;
                     switch (ReportComboBxEntities.SelectedIndex)
                     {
                         case 1:
@@ -67,6 +73,36 @@ namespace Condominium_System.Presentation.Views
 
                             var viewerBlock = new ReportViewerForm(report);
                             viewerBlock.Show();
+                            break;
+
+                        case 3:
+                            var houses = await _housingEntityService.GetAllHousingsAsync();
+
+                            report.Load("Presentation/Reports/HousingReport.frx");
+                            report.RegisterData(houses, "Housing");
+
+                            var viewerHouses = new ReportViewerForm(report);
+                            viewerHouses.Show();
+                            break;
+
+                        case 4:
+                            var tenants = await _tenantService.GetAllAsync();
+
+                            report.Load("Presentation/Reports/TenantReport.frx");
+                            report.RegisterData(tenants, "Housing");
+
+                            var viewerTenants = new ReportViewerForm(report);
+                            viewerTenants.Show();
+                            break;
+
+                        case 5:
+                            var incidence = await _incidenceService.GetAllAsync();
+
+                            report.Load("Presentation/Reports/IncidenceReport.frx");
+                            report.RegisterData(incidence, "Incidence");
+
+                            var viewerIncidence = new ReportViewerForm(report);
+                            viewerIncidence.Show();
                             break;
                     }
                 }
