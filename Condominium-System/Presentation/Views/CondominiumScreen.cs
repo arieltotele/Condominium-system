@@ -322,65 +322,44 @@ namespace Condominium_System.Presentation.Views
             timer.Start();
         }
 
-        private async void GenerateReportFromFilteredData_Click(object sender, EventArgs e)
+        private void GenerateReportFromFilteredData_Click(object sender, EventArgs e)
         {
-            //    try
-            //    {
-            //        var bindingSource = CondominiumDTGData.DataSource as BindingSource;
-            //        if (bindingSource == null)
-            //        {
-            //            MessageBox.Show("No hay datos para generar el informe.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //            return;
-            //        }
-
-            //        var condominiums = bindingSource.DataSource as IEnumerable<Condominium>;
-
-            //        if (condominiums == null || !condominiums.Any())
-            //        {
-            //            MessageBox.Show("No se encontraron condominios para el informe.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //            return;
-            //        }
-
-            //        var report = new Report();
-            //        report.Load("Presentation/Reports/Filtered Reports/CondominiumReportFiltered.frx");
-
-            //        // Registrar los datos obtenidos del DataGridView
-            //        report.GetDataSource("Condominiums").Enabled = true;
-            //        report.RegisterData(condominiums, "Condominiums");
-
-            //        var viewer = new ReportViewerForm(report);
-            //        viewer.Show();
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show($"Error generando reporte: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    }
-
-            var bindingSource = CondominiumDTGData.DataSource as BindingSource;
-            if (bindingSource == null)
+            try
             {
-                MessageBox.Show("No hay datos para generar el informe.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                IEnumerable<Condominium> condominiums = null;
+
+                if (CondominiumDTGData.DataSource is BindingSource bindingSource)
+                {
+                    condominiums = bindingSource.DataSource as IEnumerable<Condominium>;
+                }
+                else if (CondominiumDTGData.DataSource is IEnumerable<Condominium> list)
+                {
+                    condominiums = list;
+                }
+
+                if (condominiums == null || !condominiums.Any())
+                {
+                    MessageBox.Show("No se encontraron condominios para el informe.",
+                                    "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var report = new Report();
+                report.Load("Presentation/Reports/Filtered Reports/CondominiumReportFiltered.frx");
+
+                // Registrar datos
+                report.RegisterData(condominiums.ToList(), "Condominiums");
+                report.GetDataSource("Condominiums").Enabled = true;
+
+                // Mostrar en visor
+                var viewer = new ReportViewerForm(report);
+                viewer.Show();
             }
-
-            var condominiums = bindingSource.DataSource as IEnumerable<Condominium>;
-
-            if (condominiums == null || !condominiums.Any())
+            catch (Exception ex)
             {
-                MessageBox.Show("No se encontraron condominios para el informe.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                MessageBox.Show($"Error generando reporte: {ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            var report = new Report();
-            report.Load("Presentation/Reports/Filtered Reports/CondominiumReportFiltered.frx");
-
-            // Pasas tu lista
-            report.RegisterData(condominiums.ToList(), "Condominiums");
-            report.GetDataSource("Condominiums").Enabled = true;
-
-            // Lo mandas al visor
-            var viewer = new ReportViewerForm(report);
-            viewer.Show();
-
         }
 
     }
