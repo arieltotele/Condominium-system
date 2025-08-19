@@ -4,6 +4,7 @@ using Condominium_System.Helpers;
 using System.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
 using Timer = System.Windows.Forms.Timer;
+using FastReport;
 
 namespace Condominium_System.Presentation.Views
 {
@@ -23,8 +24,8 @@ namespace Condominium_System.Presentation.Views
             _serviceService = serviceService;
             currentUser = Session.CurrentUser;
             _serviceProvider = serviceProvider;
-            _searchCts = new CancellationTokenSource();            
-        }        
+            _searchCts = new CancellationTokenSource();
+        }
 
         private async void ServiceScreen_Load(object sender, EventArgs e)
         {
@@ -42,14 +43,16 @@ namespace Condominium_System.Presentation.Views
         {
             ServiceTBID.Text = "Buscar por ID, nombre o detalle...";
             ServiceTBID.ForeColor = SystemColors.GrayText;
-            ServiceTBID.Enter += (s, e) => {
+            ServiceTBID.Enter += (s, e) =>
+            {
                 if (ServiceTBID.Text == "Buscar por ID, nombre o detalle...")
                 {
                     ServiceTBID.Text = "";
                     ServiceTBID.ForeColor = SystemColors.WindowText;
                 }
             };
-            ServiceTBID.Leave += (s, e) => {
+            ServiceTBID.Leave += (s, e) =>
+            {
                 if (string.IsNullOrWhiteSpace(ServiceTBID.Text))
                 {
                     ServiceTBID.Text = "Buscar por ID, nombre o detalle...";
@@ -291,10 +294,10 @@ namespace Condominium_System.Presentation.Views
                     {
                         _lastSearchTime = DateTime.Now;
 
-                        // Verificar si el control está creado antes de invocar
                         if (ServiceDTGData.IsHandleCreated)
                         {
-                            ServiceDTGData.Invoke((MethodInvoker)delegate {
+                            ServiceDTGData.Invoke((MethodInvoker)delegate
+                            {
                                 ServiceDTGData.DataSource = filteredServices.ToList();
 
                                 if (!filteredServices.Any() && !string.IsNullOrEmpty(searchTerm))
@@ -315,7 +318,8 @@ namespace Condominium_System.Presentation.Views
             {
                 if (ServiceDTGData.IsHandleCreated)
                 {
-                    ServiceDTGData.Invoke((MethodInvoker)delegate {
+                    ServiceDTGData.Invoke((MethodInvoker)delegate
+                    {
                         if (!_searchCts.IsCancellationRequested)
                         {
                             ShowStatusMessage($"Error: {ex.Message}", 3000);
@@ -331,11 +335,50 @@ namespace Condominium_System.Presentation.Views
             statusLabel.Visible = true;
 
             var timer = new Timer { Interval = durationMs };
-            timer.Tick += (s, e) => {
+            timer.Tick += (s, e) =>
+            {
                 statusLabel.Visible = false;
                 timer.Stop();
             };
             timer.Start();
+        }
+
+        private void GenerateServiceReportFromFilteredData_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                IEnumerable<Service> services = null;
+
+                if (ServiceDTGData.DataSource is BindingSource bindingSource)
+                {
+                    services = bindingSource.DataSource as IEnumerable<Service>;
+                }
+                else if (ServiceDTGData.DataSource is IEnumerable<Service> list)
+                {
+                    services = list;
+                }
+
+                if (services == null || !services.Any())
+                {
+                    MessageBox.Show("No se encontraron servicios para el informe.",
+                                    "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var report = new Report();
+                report.Load("Presentation/Reports/Filtered Reports/ServiceReportFiltered.frx");
+
+                report.RegisterData(services.ToList(), "Services");
+                report.GetDataSource("Services").Enabled = true;
+
+                var viewer = new ReportViewerForm(report);
+                viewer.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error generando reporte: {ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

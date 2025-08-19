@@ -1,6 +1,7 @@
 ﻿using Condominium_System.Business.Services;
 using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
+using FastReport;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -40,14 +41,16 @@ namespace Condominium_System.Presentation.Views
         {
             FurnitureTBID.Text = "Buscar por ID, nombre o detalle...";
             FurnitureTBID.ForeColor = SystemColors.GrayText;
-            FurnitureTBID.Enter += (s, e) => {
+            FurnitureTBID.Enter += (s, e) =>
+            {
                 if (FurnitureTBID.Text == "Buscar por ID, nombre o detalle...")
                 {
                     FurnitureTBID.Text = "";
                     FurnitureTBID.ForeColor = SystemColors.WindowText;
                 }
             };
-            FurnitureTBID.Leave += (s, e) => {
+            FurnitureTBID.Leave += (s, e) =>
+            {
                 if (string.IsNullOrWhiteSpace(FurnitureTBID.Text))
                 {
                     FurnitureTBID.Text = "Buscar por ID, nombre o detalle...";
@@ -290,7 +293,8 @@ namespace Condominium_System.Presentation.Views
                     {
                         _lastSearchTime = DateTime.Now;
 
-                        this.Invoke((MethodInvoker)delegate {
+                        this.Invoke((MethodInvoker)delegate
+                        {
                             FurnitureDTGData.DataSource = filteredFurniture.ToList();
 
                             if (!filteredFurniture.Any() && !string.IsNullOrEmpty(searchTerm))
@@ -308,7 +312,8 @@ namespace Condominium_System.Presentation.Views
             catch (TaskCanceledException) { }
             catch (Exception ex)
             {
-                this.Invoke((MethodInvoker)delegate {
+                this.Invoke((MethodInvoker)delegate
+                {
                     if (!_searchCts.IsCancellationRequested)
                     {
                         ShowStatusMessage($"Error: {ex.Message}", 3000);
@@ -323,11 +328,50 @@ namespace Condominium_System.Presentation.Views
             statusLabel.Visible = true;
 
             var timer = new Timer { Interval = durationMs };
-            timer.Tick += (s, e) => {
+            timer.Tick += (s, e) =>
+            {
                 statusLabel.Visible = false;
                 timer.Stop();
             };
             timer.Start();
+        }
+
+        private void GenerateFurnitureReportFromFilteredData_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                IEnumerable<Furniture> furnitures = null;
+
+                if (FurnitureDTGData.DataSource is BindingSource bindingSource)
+                {
+                    furnitures = bindingSource.DataSource as IEnumerable<Furniture>;
+                }
+                else if (FurnitureDTGData.DataSource is IEnumerable<Furniture> list)
+                {
+                    furnitures = list;
+                }
+
+                if (furnitures == null || !furnitures.Any())
+                {
+                    MessageBox.Show("No se encontraron mobiliarios para el informe.",
+                                    "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var report = new Report();
+                report.Load("Presentation/Reports/Filtered Reports/FurnitureReportFiltered.frx");
+
+                report.RegisterData(furnitures.ToList(), "Furnitures");
+                report.GetDataSource("Furnitures").Enabled = true;
+
+                var viewer = new ReportViewerForm(report);
+                viewer.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error generando reporte: {ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
