@@ -29,15 +29,11 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            label1 = new Label();
-            LoginPNLUsername = new Panel();
-            CondominiumTIId = new TextBox();
             CondominiumDTGData = new DataGridView();
             CondominiumPNLBTNCreate = new Panel();
             label8 = new Label();
             pictureBox3 = new PictureBox();
             toolTip1 = new ToolTip(components);
-            panel1 = new Panel();
             pictureBox5 = new PictureBox();
             statusStrip1 = new StatusStrip();
             statusLabel = new ToolStripStatusLabel();
@@ -45,50 +41,27 @@
             panel2 = new Panel();
             label2 = new Label();
             pictureBox1 = new PictureBox();
-            LoginPNLUsername.SuspendLayout();
+            panel1 = new Panel();
+            label1 = new Label();
+            BlockPNLID = new Panel();
+            CondominiumTIId = new TextBox();
             ((System.ComponentModel.ISupportInitialize)CondominiumDTGData).BeginInit();
             CondominiumPNLBTNCreate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
-            panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             statusStrip1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panel1.SuspendLayout();
+            BlockPNLID.SuspendLayout();
             SuspendLayout();
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(12, 58);
-            label1.Name = "label1";
-            label1.Size = new Size(25, 21);
-            label1.TabIndex = 9;
-            label1.Text = "ID";
-            // 
-            // LoginPNLUsername
-            // 
-            LoginPNLUsername.BackColor = SystemColors.Window;
-            LoginPNLUsername.Controls.Add(CondominiumTIId);
-            LoginPNLUsername.Location = new Point(12, 91);
-            LoginPNLUsername.Name = "LoginPNLUsername";
-            LoginPNLUsername.Size = new Size(235, 24);
-            LoginPNLUsername.TabIndex = 10;
-            // 
-            // CondominiumTIId
-            // 
-            CondominiumTIId.BorderStyle = BorderStyle.None;
-            CondominiumTIId.Location = new Point(4, 3);
-            CondominiumTIId.Name = "CondominiumTIId";
-            CondominiumTIId.Size = new Size(228, 16);
-            CondominiumTIId.TabIndex = 2;
-            CondominiumTIId.TextChanged += CondominiumTIId_TextChanged;
             // 
             // CondominiumDTGData
             // 
             CondominiumDTGData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             CondominiumDTGData.Dock = DockStyle.Bottom;
             CondominiumDTGData.Location = new Point(0, 148);
+            CondominiumDTGData.Margin = new Padding(0);
             CondominiumDTGData.Name = "CondominiumDTGData";
             CondominiumDTGData.Size = new Size(1017, 443);
             CondominiumDTGData.TabIndex = 19;
@@ -99,7 +72,7 @@
             CondominiumPNLBTNCreate.BackColor = Color.MidnightBlue;
             CondominiumPNLBTNCreate.Controls.Add(label8);
             CondominiumPNLBTNCreate.Controls.Add(pictureBox3);
-            CondominiumPNLBTNCreate.Location = new Point(856, 74);
+            CondominiumPNLBTNCreate.Location = new Point(872, 82);
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 35;
@@ -131,31 +104,21 @@
             toolTip1.SetToolTip(pictureBox3, "Crear un nuevo condominio.");
             pictureBox3.Click += CondominiumBTNCreate_Click;
             // 
-            // panel1
-            // 
-            panel1.BackColor = Color.MidnightBlue;
-            panel1.Controls.Add(pictureBox5);
-            panel1.Location = new Point(244, 91);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(26, 24);
-            panel1.TabIndex = 36;
-            toolTip1.SetToolTip(panel1, "Boton para buscar un condominio.");
-            panel1.Click += CondominiumBTNSearch_Click;
-            // 
             // pictureBox5
             // 
             pictureBox5.Image = Properties.Resources.search_white;
-            pictureBox5.Location = new Point(1, 3);
+            pictureBox5.Location = new Point(3, 3);
+            pictureBox5.Margin = new Padding(0, 0, 0, 0);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(22, 18);
             pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox5.TabIndex = 0;
             pictureBox5.TabStop = false;
-            toolTip1.SetToolTip(pictureBox5, "Boton para buscar un condominio.");
-            pictureBox5.Click += CondominiumBTNSearch_Click;
+            toolTip1.SetToolTip(pictureBox5, "Buscar condominio.");
             // 
             // statusStrip1
             // 
+            statusStrip1.GripMargin = new Padding(0);
             statusStrip1.Items.AddRange(new ToolStripItem[] { statusLabel });
             statusStrip1.Location = new Point(0, 126);
             statusStrip1.Name = "statusStrip1";
@@ -167,8 +130,9 @@
             // 
             statusLabel.AutoSize = false;
             statusLabel.ForeColor = Color.FromArgb(238, 210, 2);
+            statusLabel.Margin = new Padding(0);
             statusLabel.Name = "statusLabel";
-            statusLabel.Size = new Size(1002, 17);
+            statusLabel.Size = new Size(1002, 22);
             statusLabel.Spring = true;
             statusLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -179,10 +143,11 @@
             // 
             // panel2
             // 
-            panel2.BackColor = Color.MidnightBlue;
+            panel2.BackColor = Color.Red;
             panel2.Controls.Add(label2);
             panel2.Controls.Add(pictureBox1);
-            panel2.Location = new Point(594, 74);
+            panel2.ForeColor = SystemColors.ControlText;
+            panel2.Location = new Point(665, 82);
             panel2.Name = "panel2";
             panel2.Size = new Size(169, 41);
             panel2.TabIndex = 56;
@@ -211,55 +176,93 @@
             pictureBox1.TabStop = false;
             pictureBox1.Click += GenerateReportFromFilteredData_Click;
             // 
+            // panel1
+            // 
+            panel1.BackColor = Color.MidnightBlue;
+            panel1.Controls.Add(pictureBox5);
+            panel1.Location = new Point(244, 95);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(26, 24);
+            panel1.TabIndex = 59;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 12F);
+            label1.Location = new Point(12, 62);
+            label1.Margin = new Padding(0, 0, 0, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(25, 21);
+            label1.TabIndex = 57;
+            label1.Text = "ID";
+            // 
+            // BlockPNLID
+            // 
+            BlockPNLID.BackColor = SystemColors.Window;
+            BlockPNLID.Controls.Add(CondominiumTIId);
+            BlockPNLID.Location = new Point(12, 95);
+            BlockPNLID.Name = "BlockPNLID";
+            BlockPNLID.Size = new Size(236, 24);
+            BlockPNLID.TabIndex = 58;
+            // 
+            // CondominiumTIId
+            // 
+            CondominiumTIId.BorderStyle = BorderStyle.None;
+            CondominiumTIId.Location = new Point(4, 3);
+            CondominiumTIId.Margin = new Padding(0, 0, 0, 0);
+            CondominiumTIId.Name = "CondominiumTIId";
+            CondominiumTIId.Size = new Size(225, 16);
+            CondominiumTIId.TabIndex = 2;
+            CondominiumTIId.TextChanged += CondominiumTIId_TextChanged;
+            // 
             // CondominiumScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1017, 591);
+            Controls.Add(panel1);
+            Controls.Add(label1);
+            Controls.Add(BlockPNLID);
             Controls.Add(panel2);
             Controls.Add(statusStrip1);
-            Controls.Add(panel1);
             Controls.Add(CondominiumPNLBTNCreate);
             Controls.Add(CondominiumDTGData);
-            Controls.Add(label1);
-            Controls.Add(LoginPNLUsername);
             Name = "CondominiumScreen";
             Text = "CondominuiumScreen";
             Load += CondominuiumScreen_Load;
-            LoginPNLUsername.ResumeLayout(false);
-            LoginPNLUsername.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)CondominiumDTGData).EndInit();
             CondominiumPNLBTNCreate.ResumeLayout(false);
             CondominiumPNLBTNCreate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
-            panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panel1.ResumeLayout(false);
+            BlockPNLID.ResumeLayout(false);
+            BlockPNLID.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private Label label1;
-        private Panel LoginPNLUsername;
-        private TextBox CondominiumTIId;
         private DataGridView CondominiumDTGData;
         private Panel CondominiumPNLBTNCreate;
         private Label label8;
         private PictureBox pictureBox3;
         private ToolTip toolTip1;
-        private Panel panel1;
-        private PictureBox pictureBox5;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel statusLabel;
         private ContextMenuStrip contextMenuStrip1;
         private Panel panel2;
         private Label label2;
         private PictureBox pictureBox1;
+        private Panel panel1;
+        private PictureBox pictureBox5;
+        private Label label1;
+        private Panel BlockPNLID;
+        private TextBox CondominiumTIId;
     }
 }

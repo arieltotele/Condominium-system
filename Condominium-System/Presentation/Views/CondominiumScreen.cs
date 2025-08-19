@@ -32,7 +32,7 @@ namespace Condominium_System.Presentation.Views
 
         private void CondominuiumScreen_Load(object sender, EventArgs e)
         {
-            UIUtils.RoundPanelCorners(CondominiumPNLBTNCreate, 10);
+           //IUtils.RoundPanelCorners(CondominiumPNLBTNCreate, 10);
 
             CondominiumDTGData.CellPainting += CondominiumDTGData_CellPainting;
             CondominiumDTGData.CellClick += CondominiumDTGData_CellClick;
