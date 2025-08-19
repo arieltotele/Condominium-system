@@ -25,7 +25,8 @@ namespace Condominium_System.Presentation.Views
             this.Controls.Add(preview);
 
             _report.Preview = preview;
-            _report.Show();
+            _report.Prepare();
+            _report.ShowPrepared();
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
