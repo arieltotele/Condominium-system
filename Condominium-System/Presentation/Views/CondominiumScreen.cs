@@ -322,7 +322,7 @@ namespace Condominium_System.Presentation.Views
             timer.Start();
         }
 
-        private void GenerateReportFromFilteredData_Click(object sender, EventArgs e)
+        private void GenerateCondominiumReportFromFilteredData_Click(object sender, EventArgs e)
         {
             try
             {
@@ -361,6 +361,5 @@ namespace Condominium_System.Presentation.Views
                                 "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
     }
 }

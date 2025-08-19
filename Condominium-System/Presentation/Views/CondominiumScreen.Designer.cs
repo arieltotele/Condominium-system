@@ -108,7 +108,7 @@
             // 
             pictureBox5.Image = Properties.Resources.search_white;
             pictureBox5.Location = new Point(3, 3);
-            pictureBox5.Margin = new Padding(0, 0, 0, 0);
+            pictureBox5.Margin = new Padding(0);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(22, 18);
             pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
@@ -143,15 +143,15 @@
             // 
             // panel2
             // 
-            panel2.BackColor = Color.Red;
+            panel2.BackColor = Color.Crimson;
             panel2.Controls.Add(label2);
             panel2.Controls.Add(pictureBox1);
             panel2.ForeColor = SystemColors.ControlText;
-            panel2.Location = new Point(665, 82);
+            panel2.Location = new Point(681, 82);
             panel2.Name = "panel2";
             panel2.Size = new Size(169, 41);
             panel2.TabIndex = 56;
-            panel2.Click += GenerateReportFromFilteredData_Click;
+            panel2.Click += GenerateCondominiumReportFromFilteredData_Click;
             // 
             // label2
             // 
@@ -163,7 +163,7 @@
             label2.Size = new Size(125, 21);
             label2.TabIndex = 1;
             label2.Text = "Generar Reporte";
-            label2.Click += GenerateReportFromFilteredData_Click;
+            label2.Click += GenerateCondominiumReportFromFilteredData_Click;
             // 
             // pictureBox1
             // 
@@ -174,7 +174,7 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
-            pictureBox1.Click += GenerateReportFromFilteredData_Click;
+            pictureBox1.Click += GenerateCondominiumReportFromFilteredData_Click;
             // 
             // panel1
             // 
@@ -190,7 +190,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
             label1.Location = new Point(12, 62);
-            label1.Margin = new Padding(0, 0, 0, 0);
+            label1.Margin = new Padding(0);
             label1.Name = "label1";
             label1.Size = new Size(25, 21);
             label1.TabIndex = 57;
@@ -209,7 +209,7 @@
             // 
             CondominiumTIId.BorderStyle = BorderStyle.None;
             CondominiumTIId.Location = new Point(4, 3);
-            CondominiumTIId.Margin = new Padding(0, 0, 0, 0);
+            CondominiumTIId.Margin = new Padding(0);
             CondominiumTIId.Name = "CondominiumTIId";
             CondominiumTIId.Size = new Size(225, 16);
             CondominiumTIId.TabIndex = 2;
