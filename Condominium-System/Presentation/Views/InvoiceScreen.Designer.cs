@@ -181,7 +181,6 @@
             Name = "InvoiceScreen";
             Text = "InvoiceScreen";
             Load += InvoiceScreen_Load;
-            Click += GenerateInvoiceReportFromFilteredData_Click;
             LoginPNLUsername.ResumeLayout(false);
             LoginPNLUsername.PerformLayout();
             CondominiumPNLBTNCreate.ResumeLayout(false);

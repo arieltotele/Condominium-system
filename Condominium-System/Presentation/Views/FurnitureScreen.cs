@@ -33,30 +33,6 @@ namespace Condominium_System.Presentation.Views
             currentUser = Session.CurrentUser;
             _serviceProvider = serviceProvider;
             _searchCts = new CancellationTokenSource();
-
-            SetSearchTextBoxStyleAndBehavior();
-        }
-
-        private void SetSearchTextBoxStyleAndBehavior()
-        {
-            FurnitureTBID.Text = "Buscar por ID, nombre o detalle...";
-            FurnitureTBID.ForeColor = SystemColors.GrayText;
-            FurnitureTBID.Enter += (s, e) =>
-            {
-                if (FurnitureTBID.Text == "Buscar por ID, nombre o detalle...")
-                {
-                    FurnitureTBID.Text = "";
-                    FurnitureTBID.ForeColor = SystemColors.WindowText;
-                }
-            };
-            FurnitureTBID.Leave += (s, e) =>
-            {
-                if (string.IsNullOrWhiteSpace(FurnitureTBID.Text))
-                {
-                    FurnitureTBID.Text = "Buscar por ID, nombre o detalle...";
-                    FurnitureTBID.ForeColor = SystemColors.GrayText;
-                }
-            };
         }
 
         private async void FurnitureScreen_Load(object sender, EventArgs e)
@@ -68,6 +44,30 @@ namespace Condominium_System.Presentation.Views
             ConfigureFurnitureColumns();
 
             await LoadDataToDataGrid();
+
+            SetSearchTextBoxStyleAndBehavior();
+        }
+
+        private void SetSearchTextBoxStyleAndBehavior()
+        {
+            FurnitureTBID.Text = "Criterio de busqueda";
+            FurnitureTBID.ForeColor = SystemColors.GrayText;
+            FurnitureTBID.Enter += (s, e) =>
+            {
+                if (FurnitureTBID.Text == "Criterio de busqueda")
+                {
+                    FurnitureTBID.Text = "";
+                    FurnitureTBID.ForeColor = SystemColors.WindowText;
+                }
+            };
+            FurnitureTBID.Leave += (s, e) =>
+            {
+                if (string.IsNullOrWhiteSpace(FurnitureTBID.Text))
+                {
+                    FurnitureTBID.Text = "Criterio de busqueda";
+                    FurnitureTBID.ForeColor = SystemColors.GrayText;
+                }
+            };
         }
 
         private void FurnitureDTGData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)

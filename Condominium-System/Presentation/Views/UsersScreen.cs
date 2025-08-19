@@ -44,11 +44,11 @@ namespace Condominium_System.Presentation.Views
 
         private void SetSearchTextBoxStyleAndBehavior()
         {
-            UserTxtBxPId.Text = "Buscar por ID, nombre o usuario...";
+            UserTxtBxPId.Text = "Criterio de busqueda";
             UserTxtBxPId.ForeColor = SystemColors.GrayText;
             UserTxtBxPId.Enter += (s, e) =>
             {
-                if (UserTxtBxPId.Text == "Buscar por ID, nombre o usuario...")
+                if (UserTxtBxPId.Text == "Criterio de busqueda")
                 {
                     UserTxtBxPId.Text = "";
                     UserTxtBxPId.ForeColor = SystemColors.WindowText;
@@ -58,7 +58,7 @@ namespace Condominium_System.Presentation.Views
             {
                 if (string.IsNullOrWhiteSpace(UserTxtBxPId.Text))
                 {
-                    UserTxtBxPId.Text = "Buscar por ID, nombre o usuario...";
+                    UserTxtBxPId.Text = "Criterio de busqueda";
                     UserTxtBxPId.ForeColor = SystemColors.GrayText;
                 }
             };
