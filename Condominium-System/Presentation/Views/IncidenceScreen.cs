@@ -1,6 +1,7 @@
 ﻿using Condominium_System.Business.Services;
 using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
+using FastReport;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,28 @@ namespace Condominium_System.Presentation.Views
             SetDataGridStyle();
             ConfigureIncidenceColumns();
             await LoadDataToDataGrid();
+
+            SetSearchTextBoxStyleAndBehavior();
+        }
+
+        private void SetSearchTextBoxStyleAndBehavior()
+        {
+            IncidenceTBID.Text = "Criterio de busqueda";
+            IncidenceTBID.ForeColor = SystemColors.GrayText;
+            IncidenceTBID.Enter += (s, e) => {
+                if (IncidenceTBID.Text == "Criterio de busqueda")
+                {
+                    IncidenceTBID.Text = "";
+                    IncidenceTBID.ForeColor = SystemColors.WindowText;
+                }
+            };
+            IncidenceTBID.Leave += (s, e) => {
+                if (string.IsNullOrWhiteSpace(IncidenceTBID.Text))
+                {
+                    IncidenceTBID.Text = "Criterio de busqueda";
+                    IncidenceTBID.ForeColor = SystemColors.GrayText;
+                }
+            };
         }
 
         private void IncidenceDTGData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
@@ -288,7 +311,7 @@ namespace Condominium_System.Presentation.Views
                     }
                 }
             }
-            catch (TaskCanceledException) {}
+            catch (TaskCanceledException) { }
             catch (Exception ex)
             {
                 if (!_searchCts.IsCancellationRequested)
@@ -296,6 +319,44 @@ namespace Condominium_System.Presentation.Views
                     statusLabel.Text = $"Error: {ex.Message}";
                     statusLabel.Visible = true;
                 }
+            }
+        }
+
+        private void GenerateIncidenceReportFromFilteredData_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                IEnumerable<Incident> incidents = null;
+
+                if (IncidenceDTGData.DataSource is BindingSource bindingSource)
+                {
+                    incidents = bindingSource.DataSource as IEnumerable<Incident>;
+                }
+                else if (IncidenceDTGData.DataSource is IEnumerable<Incident> list)
+                {
+                    incidents = list;
+                }
+
+                if (incidents == null || !incidents.Any())
+                {
+                    MessageBox.Show("No se encontraron incidencias para el informe.",
+                                    "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var report = new Report();
+                report.Load("Presentation/Reports/Filtered Reports/IncidenceReportFiltered.frx");
+
+                report.RegisterData(incidents.ToList(), "Incidents");
+                report.GetDataSource("Incidents").Enabled = true;
+
+                var viewer = new ReportViewerForm(report);
+                viewer.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error generando reporte: {ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

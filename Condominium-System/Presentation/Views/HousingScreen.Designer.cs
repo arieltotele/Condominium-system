@@ -29,13 +29,10 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            panel1 = new Panel();
-            pictureBox5 = new PictureBox();
             CondominiumPNLBTNCreate = new Panel();
             label8 = new Label();
             pictureBox3 = new PictureBox();
             HousingDTGData = new DataGridView();
-            label1 = new Label();
             BlockPNLID = new Panel();
             HousingTBID = new TextBox();
             toolTip1 = new ToolTip(components);
@@ -44,8 +41,6 @@
             panel2 = new Panel();
             label2 = new Label();
             pictureBox1 = new PictureBox();
-            panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             CondominiumPNLBTNCreate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)HousingDTGData).BeginInit();
@@ -55,33 +50,12 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
-            // panel1
-            // 
-            panel1.BackColor = Color.MidnightBlue;
-            panel1.Controls.Add(pictureBox5);
-            panel1.Location = new Point(244, 86);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(26, 24);
-            panel1.TabIndex = 46;
-            // 
-            // pictureBox5
-            // 
-            pictureBox5.Image = Properties.Resources.search_white;
-            pictureBox5.Location = new Point(3, 3);
-            pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(22, 18);
-            pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox5.TabIndex = 0;
-            pictureBox5.TabStop = false;
-            toolTip1.SetToolTip(pictureBox5, "Buscar vivienda.");
-            pictureBox5.Click += HousingPNLBTNSearch_Click;
-            // 
             // CondominiumPNLBTNCreate
             // 
             CondominiumPNLBTNCreate.BackColor = Color.MidnightBlue;
             CondominiumPNLBTNCreate.Controls.Add(label8);
             CondominiumPNLBTNCreate.Controls.Add(pictureBox3);
-            CondominiumPNLBTNCreate.Location = new Point(856, 69);
+            CondominiumPNLBTNCreate.Location = new Point(858, 69);
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 45;
@@ -122,16 +96,6 @@
             HousingDTGData.Size = new Size(1017, 443);
             HousingDTGData.TabIndex = 44;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(12, 53);
-            label1.Name = "label1";
-            label1.Size = new Size(25, 21);
-            label1.TabIndex = 42;
-            label1.Text = "ID";
-            // 
             // BlockPNLID
             // 
             BlockPNLID.BackColor = SystemColors.Window;
@@ -170,11 +134,11 @@
             // 
             // panel2
             // 
-            panel2.BackColor = Color.Crimson;
+            panel2.BackColor = Color.DarkGreen;
             panel2.Controls.Add(label2);
             panel2.Controls.Add(pictureBox1);
             panel2.ForeColor = SystemColors.ControlText;
-            panel2.Location = new Point(667, 69);
+            panel2.Location = new Point(669, 69);
             panel2.Name = "panel2";
             panel2.Size = new Size(169, 41);
             panel2.TabIndex = 57;
@@ -210,16 +174,12 @@
             ClientSize = new Size(1017, 591);
             Controls.Add(panel2);
             Controls.Add(statusStrip1);
-            Controls.Add(panel1);
             Controls.Add(CondominiumPNLBTNCreate);
             Controls.Add(HousingDTGData);
-            Controls.Add(label1);
             Controls.Add(BlockPNLID);
             Name = "HousingScreen";
             Text = "HousingScreen";
             Load += HousingScreen_Load;
-            panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             CondominiumPNLBTNCreate.ResumeLayout(false);
             CondominiumPNLBTNCreate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
@@ -236,14 +196,10 @@
         }
 
         #endregion
-
-        private Panel panel1;
-        private PictureBox pictureBox5;
         private Panel CondominiumPNLBTNCreate;
         private Label label8;
         private PictureBox pictureBox3;
         private DataGridView HousingDTGData;
-        private Label label1;
         private Panel BlockPNLID;
         private TextBox HousingTBID;
         private ToolTip toolTip1;

@@ -34,25 +34,20 @@
             label8 = new Label();
             pictureBox3 = new PictureBox();
             toolTip1 = new ToolTip(components);
-            pictureBox5 = new PictureBox();
             statusStrip1 = new StatusStrip();
             statusLabel = new ToolStripStatusLabel();
             contextMenuStrip1 = new ContextMenuStrip(components);
             panel2 = new Panel();
             label2 = new Label();
             pictureBox1 = new PictureBox();
-            panel1 = new Panel();
-            label1 = new Label();
             BlockPNLID = new Panel();
             CondominiumTIId = new TextBox();
             ((System.ComponentModel.ISupportInitialize)CondominiumDTGData).BeginInit();
             CondominiumPNLBTNCreate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             statusStrip1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            panel1.SuspendLayout();
             BlockPNLID.SuspendLayout();
             SuspendLayout();
             // 
@@ -104,18 +99,6 @@
             toolTip1.SetToolTip(pictureBox3, "Crear un nuevo condominio.");
             pictureBox3.Click += CondominiumBTNCreate_Click;
             // 
-            // pictureBox5
-            // 
-            pictureBox5.Image = Properties.Resources.search_white;
-            pictureBox5.Location = new Point(3, 3);
-            pictureBox5.Margin = new Padding(0);
-            pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(22, 18);
-            pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox5.TabIndex = 0;
-            pictureBox5.TabStop = false;
-            toolTip1.SetToolTip(pictureBox5, "Buscar condominio.");
-            // 
             // statusStrip1
             // 
             statusStrip1.GripMargin = new Padding(0);
@@ -143,7 +126,7 @@
             // 
             // panel2
             // 
-            panel2.BackColor = Color.Crimson;
+            panel2.BackColor = Color.DarkGreen;
             panel2.Controls.Add(label2);
             panel2.Controls.Add(pictureBox1);
             panel2.ForeColor = SystemColors.ControlText;
@@ -176,26 +159,6 @@
             pictureBox1.TabStop = false;
             pictureBox1.Click += GenerateCondominiumReportFromFilteredData_Click;
             // 
-            // panel1
-            // 
-            panel1.BackColor = Color.MidnightBlue;
-            panel1.Controls.Add(pictureBox5);
-            panel1.Location = new Point(244, 95);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(26, 24);
-            panel1.TabIndex = 59;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(12, 62);
-            label1.Margin = new Padding(0);
-            label1.Name = "label1";
-            label1.Size = new Size(25, 21);
-            label1.TabIndex = 57;
-            label1.Text = "ID";
-            // 
             // BlockPNLID
             // 
             BlockPNLID.BackColor = SystemColors.Window;
@@ -220,8 +183,6 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1017, 591);
-            Controls.Add(panel1);
-            Controls.Add(label1);
             Controls.Add(BlockPNLID);
             Controls.Add(panel2);
             Controls.Add(statusStrip1);
@@ -234,13 +195,11 @@
             CondominiumPNLBTNCreate.ResumeLayout(false);
             CondominiumPNLBTNCreate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            panel1.ResumeLayout(false);
             BlockPNLID.ResumeLayout(false);
             BlockPNLID.PerformLayout();
             ResumeLayout(false);
@@ -259,9 +218,6 @@
         private Panel panel2;
         private Label label2;
         private PictureBox pictureBox1;
-        private Panel panel1;
-        private PictureBox pictureBox5;
-        private Label label1;
         private Panel BlockPNLID;
         private TextBox CondominiumTIId;
     }

@@ -29,47 +29,26 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            panel1 = new Panel();
-            pictureBox5 = new PictureBox();
             CondominiumPNLBTNCreate = new Panel();
             label8 = new Label();
             pictureBox3 = new PictureBox();
             TenantDTGData = new DataGridView();
-            label1 = new Label();
             BlockPNLID = new Panel();
             TenantTBID = new TextBox();
             toolTip1 = new ToolTip(components);
             statusStrip1 = new StatusStrip();
             statusLabel = new ToolStripStatusLabel();
-            panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
+            panel2 = new Panel();
+            label2 = new Label();
+            pictureBox1 = new PictureBox();
             CondominiumPNLBTNCreate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)TenantDTGData).BeginInit();
             BlockPNLID.SuspendLayout();
             statusStrip1.SuspendLayout();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
-            // 
-            // panel1
-            // 
-            panel1.BackColor = Color.MidnightBlue;
-            panel1.Controls.Add(pictureBox5);
-            panel1.Location = new Point(244, 92);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(26, 24);
-            panel1.TabIndex = 46;
-            // 
-            // pictureBox5
-            // 
-            pictureBox5.Image = Properties.Resources.search_white;
-            pictureBox5.Location = new Point(3, 3);
-            pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(22, 18);
-            pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox5.TabIndex = 0;
-            pictureBox5.TabStop = false;
-            toolTip1.SetToolTip(pictureBox5, "Buscar inquilino y mostrarlo en la tabla.");
-            pictureBox5.Click += TenantPNLBTNSearch_Click;
             // 
             // CondominiumPNLBTNCreate
             // 
@@ -117,16 +96,6 @@
             TenantDTGData.Size = new Size(1017, 443);
             TenantDTGData.TabIndex = 44;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(12, 59);
-            label1.Name = "label1";
-            label1.Size = new Size(25, 21);
-            label1.TabIndex = 42;
-            label1.Text = "ID";
-            // 
             // BlockPNLID
             // 
             BlockPNLID.BackColor = SystemColors.Window;
@@ -141,7 +110,7 @@
             TenantTBID.BorderStyle = BorderStyle.None;
             TenantTBID.Location = new Point(4, 3);
             TenantTBID.Name = "TenantTBID";
-            TenantTBID.Size = new Size(225, 16);
+            TenantTBID.Size = new Size(229, 16);
             TenantTBID.TabIndex = 2;
             TenantTBID.TextChanged += TenantTBID_TextChanged;
             // 
@@ -162,23 +131,55 @@
             statusLabel.Spring = true;
             statusLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
+            // panel2
+            // 
+            panel2.BackColor = Color.DarkGreen;
+            panel2.Controls.Add(label2);
+            panel2.Controls.Add(pictureBox1);
+            panel2.ForeColor = SystemColors.ControlText;
+            panel2.Location = new Point(665, 75);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(169, 41);
+            panel2.TabIndex = 57;
+            panel2.Click += GenerateTenantReportFromFilteredData_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(39, 12);
+            label2.Name = "label2";
+            label2.Size = new Size(125, 21);
+            label2.TabIndex = 1;
+            label2.Text = "Generar Reporte";
+            label2.Click += GenerateTenantReportFromFilteredData_Click;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.export_white;
+            pictureBox1.Location = new Point(3, 12);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(30, 19);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
+            pictureBox1.Click += GenerateTenantReportFromFilteredData_Click;
+            // 
             // TenantScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1017, 591);
+            Controls.Add(panel2);
             Controls.Add(statusStrip1);
-            Controls.Add(panel1);
             Controls.Add(CondominiumPNLBTNCreate);
             Controls.Add(TenantDTGData);
-            Controls.Add(label1);
             Controls.Add(BlockPNLID);
             Name = "TenantScreen";
             Text = "TenantScreen";
             toolTip1.SetToolTip(this, "Agregar inquilino.");
             Load += TenantScreen_Load;
-            panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             CondominiumPNLBTNCreate.ResumeLayout(false);
             CondominiumPNLBTNCreate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
@@ -187,23 +188,25 @@
             BlockPNLID.PerformLayout();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private Panel panel1;
-        private PictureBox pictureBox5;
         private Panel CondominiumPNLBTNCreate;
         private Label label8;
         private PictureBox pictureBox3;
         private DataGridView TenantDTGData;
-        private Label label1;
         private Panel BlockPNLID;
         private TextBox TenantTBID;
         private ToolTip toolTip1;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel statusLabel;
+        private Panel panel2;
+        private Label label2;
+        private PictureBox pictureBox1;
     }
 }

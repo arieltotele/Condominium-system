@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            label1 = new Label();
             LoginPNLUsername = new Panel();
             UserTxtBxPId = new TextBox();
             CondominiumPNLBTNCreate = new Panel();
@@ -37,28 +36,14 @@
             pictureBox3 = new PictureBox();
             UserDTGData = new DataGridView();
             toolTip1 = new ToolTip(components);
-            panel1 = new Panel();
-            pictureBox5 = new PictureBox();
             statusStrip1 = new StatusStrip();
             statusLabel = new ToolStripStatusLabel();
             LoginPNLUsername.SuspendLayout();
             CondominiumPNLBTNCreate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)UserDTGData).BeginInit();
-            panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             statusStrip1.SuspendLayout();
             SuspendLayout();
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(12, 54);
-            label1.Name = "label1";
-            label1.Size = new Size(25, 21);
-            label1.TabIndex = 37;
-            label1.Text = "ID";
             // 
             // LoginPNLUsername
             // 
@@ -125,28 +110,6 @@
             UserDTGData.TabIndex = 39;
             toolTip1.SetToolTip(UserDTGData, "Usuarios almacenados en la Base de Datos.");
             // 
-            // panel1
-            // 
-            panel1.BackColor = Color.MidnightBlue;
-            panel1.Controls.Add(pictureBox5);
-            panel1.Location = new Point(244, 87);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(26, 24);
-            panel1.TabIndex = 41;
-            toolTip1.SetToolTip(panel1, "Boton para buscar un usuario.");
-            // 
-            // pictureBox5
-            // 
-            pictureBox5.Image = Properties.Resources.search_white;
-            pictureBox5.Location = new Point(1, 3);
-            pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(22, 18);
-            pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox5.TabIndex = 0;
-            pictureBox5.TabStop = false;
-            toolTip1.SetToolTip(pictureBox5, "Boton para buscar un usuario.");
-            pictureBox5.Click += UserBTNSearch_Click;
-            // 
             // statusStrip1
             // 
             statusStrip1.Items.AddRange(new ToolStripItem[] { statusLabel });
@@ -171,11 +134,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1017, 591);
             Controls.Add(statusStrip1);
-            Controls.Add(label1);
             Controls.Add(LoginPNLUsername);
             Controls.Add(CondominiumPNLBTNCreate);
             Controls.Add(UserDTGData);
-            Controls.Add(panel1);
             Name = "UsersScreen";
             Text = "UsersScreen";
             Load += UsersScreen_Load;
@@ -185,8 +146,6 @@
             CondominiumPNLBTNCreate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)UserDTGData).EndInit();
-            panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             ResumeLayout(false);
@@ -194,8 +153,6 @@
         }
 
         #endregion
-
-        private Label label1;
         private Panel LoginPNLUsername;
         private TextBox UserTxtBxPId;
         private Panel CondominiumPNLBTNCreate;
@@ -203,8 +160,6 @@
         private ToolTip toolTip1;
         private PictureBox pictureBox3;
         private DataGridView UserDTGData;
-        private Panel panel1;
-        private PictureBox pictureBox5;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel statusLabel;
     }

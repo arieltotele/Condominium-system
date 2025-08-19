@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Timer = System.Windows.Forms.Timer;
+using FastReport;
 
 namespace Condominium_System.Presentation.Views
 {
@@ -38,6 +39,28 @@ namespace Condominium_System.Presentation.Views
             SetDataGridStyle();
             ConfigureHousingColumns();
             await LoadDataToDataGrid();
+
+            SetSearchTextBoxStyleAndBehavior();
+        }
+
+        private void SetSearchTextBoxStyleAndBehavior()
+        {
+            TenantTBID.Text = "Criterio de busqueda";
+            TenantTBID.ForeColor = SystemColors.GrayText;
+            TenantTBID.Enter += (s, e) => {
+                if (TenantTBID.Text == "Criterio de busqueda")
+                {
+                    TenantTBID.Text = "";
+                    TenantTBID.ForeColor = SystemColors.WindowText;
+                }
+            };
+            TenantTBID.Leave += (s, e) => {
+                if (string.IsNullOrWhiteSpace(TenantTBID.Text))
+                {
+                    TenantTBID.Text = "Criterio de busqueda";
+                    TenantTBID.ForeColor = SystemColors.GrayText;
+                }
+            };
         }
 
         private void TenantDTGData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
@@ -315,7 +338,8 @@ namespace Condominium_System.Presentation.Views
                     {
                         _lastSearchTime = DateTime.Now;
 
-                        this.Invoke((MethodInvoker)delegate {
+                        this.Invoke((MethodInvoker)delegate
+                        {
                             TenantDTGData.DataSource = filteredTenants.ToList();
 
                             if (!filteredTenants.Any() && !string.IsNullOrEmpty(searchTerm))
@@ -333,7 +357,8 @@ namespace Condominium_System.Presentation.Views
             catch (TaskCanceledException) { }
             catch (Exception ex)
             {
-                this.Invoke((MethodInvoker)delegate {
+                this.Invoke((MethodInvoker)delegate
+                {
                     if (!_searchCts.IsCancellationRequested)
                     {
                         ShowStatusMessage($"Error: {ex.Message}", 3000);
@@ -348,11 +373,50 @@ namespace Condominium_System.Presentation.Views
             statusLabel.Visible = true;
 
             var timer = new Timer { Interval = durationMs };
-            timer.Tick += (s, e) => {
+            timer.Tick += (s, e) =>
+            {
                 statusLabel.Visible = false;
                 timer.Stop();
             };
             timer.Start();
+        }
+
+        private void GenerateTenantReportFromFilteredData_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                IEnumerable<Tenant> tenants = null;
+
+                if (TenantDTGData.DataSource is BindingSource bindingSource)
+                {
+                    tenants = bindingSource.DataSource as IEnumerable<Tenant>;
+                }
+                else if (TenantDTGData.DataSource is IEnumerable<Tenant> list)
+                {
+                    tenants = list;
+                }
+
+                if (tenants == null || !tenants.Any())
+                {
+                    MessageBox.Show("No se encontraron inquilinos para el informe.",
+                                    "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var report = new Report();
+                report.Load("Presentation/Reports/Filtered Reports/TenantReportFiltered.frx");
+
+                report.RegisterData(tenants.ToList(), "Tenants");
+                report.GetDataSource("Tenants").Enabled = true;
+
+                var viewer = new ReportViewerForm(report);
+                viewer.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error generando reporte: {ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

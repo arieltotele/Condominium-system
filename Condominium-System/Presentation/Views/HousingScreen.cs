@@ -37,6 +37,28 @@ namespace Condominium_System.Presentation.Views
             SetDataGridStyle();
             ConfigureHousingColumns();
             await LoadDataToDataGrid();
+
+            SetSearchTextBoxStyleAndBehavior();
+        }
+
+        private void SetSearchTextBoxStyleAndBehavior()
+        {
+            HousingTBID.Text = "Criterio de busqueda";
+            HousingTBID.ForeColor = SystemColors.GrayText;
+            HousingTBID.Enter += (s, e) => {
+                if (HousingTBID.Text == "Criterio de busqueda")
+                {
+                    HousingTBID.Text = "";
+                    HousingTBID.ForeColor = SystemColors.WindowText;
+                }
+            };
+            HousingTBID.Leave += (s, e) => {
+                if (string.IsNullOrWhiteSpace(HousingTBID.Text))
+                {
+                    HousingTBID.Text = "Criterio de busqueda";
+                    HousingTBID.ForeColor = SystemColors.GrayText;
+                }
+            };
         }
 
         private void HousingDTGData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)

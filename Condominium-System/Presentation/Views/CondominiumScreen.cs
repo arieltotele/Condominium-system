@@ -40,6 +40,28 @@ namespace Condominium_System.Presentation.Views
             SetDataGridStyle();
             ConfigureCondominiumColumns();
             LoadDataToDataGrid();
+
+            SetSearchTextBoxStyleAndBehavior();
+        }
+
+        private void SetSearchTextBoxStyleAndBehavior()
+        {
+            CondominiumTIId.Text = "Criterio de busqueda";
+            CondominiumTIId.ForeColor = SystemColors.GrayText;
+            CondominiumTIId.Enter += (s, e) => {
+                if (CondominiumTIId.Text == "Criterio de busqueda")
+                {
+                    CondominiumTIId.Text = "";
+                    CondominiumTIId.ForeColor = SystemColors.WindowText;
+                }
+            };
+            CondominiumTIId.Leave += (s, e) => {
+                if (string.IsNullOrWhiteSpace(CondominiumTIId.Text))
+                {
+                    CondominiumTIId.Text = "Criterio de busqueda";
+                    CondominiumTIId.ForeColor = SystemColors.GrayText;
+                }
+            };
         }
 
         public async void LoadDataToDataGrid()
@@ -347,11 +369,9 @@ namespace Condominium_System.Presentation.Views
                 var report = new Report();
                 report.Load("Presentation/Reports/Filtered Reports/CondominiumReportFiltered.frx");
 
-                // Registrar datos
                 report.RegisterData(condominiums.ToList(), "Condominiums");
                 report.GetDataSource("Condominiums").Enabled = true;
 
-                // Mostrar en visor
                 var viewer = new ReportViewerForm(report);
                 viewer.Show();
             }

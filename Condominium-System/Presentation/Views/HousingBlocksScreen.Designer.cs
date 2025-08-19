@@ -29,13 +29,10 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            panel1 = new Panel();
-            pictureBox5 = new PictureBox();
             CondominiumPNLBTNCreate = new Panel();
             label8 = new Label();
             pictureBox3 = new PictureBox();
             BlockDTGData = new DataGridView();
-            label1 = new Label();
             BlockPNLID = new Panel();
             BlockTBID = new TextBox();
             toolTip1 = new ToolTip(components);
@@ -44,8 +41,6 @@
             panel2 = new Panel();
             label2 = new Label();
             pictureBox1 = new PictureBox();
-            panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             CondominiumPNLBTNCreate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)BlockDTGData).BeginInit();
@@ -54,27 +49,6 @@
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
-            // 
-            // panel1
-            // 
-            panel1.BackColor = Color.MidnightBlue;
-            panel1.Controls.Add(pictureBox5);
-            panel1.Location = new Point(247, 99);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(26, 24);
-            panel1.TabIndex = 41;
-            // 
-            // pictureBox5
-            // 
-            pictureBox5.Image = Properties.Resources.search_white;
-            pictureBox5.Location = new Point(3, 3);
-            pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(22, 18);
-            pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox5.TabIndex = 0;
-            pictureBox5.TabStop = false;
-            toolTip1.SetToolTip(pictureBox5, "Buscar bloque.");
-            pictureBox5.Click += BlockPNLBTNSearch_Click;
             // 
             // CondominiumPNLBTNCreate
             // 
@@ -122,16 +96,6 @@
             BlockDTGData.Size = new Size(1017, 443);
             BlockDTGData.TabIndex = 39;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(15, 66);
-            label1.Name = "label1";
-            label1.Size = new Size(25, 21);
-            label1.TabIndex = 37;
-            label1.Text = "ID";
-            // 
             // BlockPNLID
             // 
             BlockPNLID.BackColor = SystemColors.Window;
@@ -170,7 +134,7 @@
             // 
             // panel2
             // 
-            panel2.BackColor = Color.Crimson;
+            panel2.BackColor = Color.DarkGreen;
             panel2.Controls.Add(label2);
             panel2.Controls.Add(pictureBox1);
             panel2.ForeColor = SystemColors.ControlText;
@@ -210,17 +174,13 @@
             ClientSize = new Size(1017, 591);
             Controls.Add(panel2);
             Controls.Add(statusStrip1);
-            Controls.Add(panel1);
             Controls.Add(CondominiumPNLBTNCreate);
             Controls.Add(BlockDTGData);
-            Controls.Add(label1);
             Controls.Add(BlockPNLID);
             Name = "HousingBlocksScreen";
             Text = "HousingBlocksScreen";
             toolTip1.SetToolTip(this, "Agregar bloque.");
             Load += HousingBlocksScreen_Load;
-            panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             CondominiumPNLBTNCreate.ResumeLayout(false);
             CondominiumPNLBTNCreate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
@@ -237,14 +197,10 @@
         }
 
         #endregion
-
-        private Panel panel1;
-        private PictureBox pictureBox5;
         private Panel CondominiumPNLBTNCreate;
         private Label label8;
         private PictureBox pictureBox3;
         private DataGridView BlockDTGData;
-        private Label label1;
         private Panel BlockPNLID;
         private TextBox BlockTBID;
         private ToolTip toolTip1;
