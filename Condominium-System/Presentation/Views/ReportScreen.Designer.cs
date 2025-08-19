@@ -69,7 +69,7 @@
             // 
             // CondominiumPNLBTNCreate
             // 
-            CondominiumPNLBTNCreate.BackColor = Color.MidnightBlue;
+            CondominiumPNLBTNCreate.BackColor = Color.DarkGreen;
             CondominiumPNLBTNCreate.Controls.Add(label8);
             CondominiumPNLBTNCreate.Controls.Add(pictureBox3);
             CondominiumPNLBTNCreate.Location = new Point(694, 159);
