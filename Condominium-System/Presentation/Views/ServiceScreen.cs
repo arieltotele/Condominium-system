@@ -18,6 +18,8 @@ namespace Condominium_System.Presentation.Views
         private CancellationTokenSource _searchCts;
         private DateTime _lastSearchTime;
 
+        private bool _isLoaded = false;
+
         public ServiceScreen(IServiceService serviceService, IServiceProvider serviceProvider)
         {
             InitializeComponent();
@@ -37,6 +39,8 @@ namespace Condominium_System.Presentation.Views
             await LoadDataToDataGrid();
 
             SetSearchTextBoxStyleAndBehavior();
+
+            _isLoaded = true;
         }
 
         private void SetSearchTextBoxStyleAndBehavior()
@@ -275,6 +279,8 @@ namespace Condominium_System.Presentation.Views
 
         private async void ServiceTBID_TextChanged(object sender, EventArgs e)
         {
+            if (!_isLoaded) return;
+
             _searchCts?.Cancel();
             _searchCts = new CancellationTokenSource();
 
@@ -296,7 +302,7 @@ namespace Condominium_System.Presentation.Views
 
                         if (ServiceDTGData.IsHandleCreated)
                         {
-                            ServiceDTGData.Invoke((MethodInvoker)delegate
+                            ServiceDTGData.BeginInvoke((MethodInvoker)delegate
                             {
                                 ServiceDTGData.DataSource = filteredServices.ToList();
 

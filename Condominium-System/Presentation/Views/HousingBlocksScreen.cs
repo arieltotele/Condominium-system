@@ -28,7 +28,7 @@ namespace Condominium_System.Presentation.Views
         private CancellationTokenSource _searchCts;
         private DateTime _lastSearchTime;
 
-
+        private bool _isLoaded = false;
         public HousingBlocksScreen(IBlockService blockService, ICondominiumService condominiumService, IServiceProvider serviceProvider)
         {
             InitializeComponent();
@@ -49,6 +49,8 @@ namespace Condominium_System.Presentation.Views
             LoadDataToDataGrid();
 
             SetSearchTextBoxStyleAndBehavior();
+
+            _isLoaded = true;
         }
 
         private void SetSearchTextBoxStyleAndBehavior()
@@ -292,6 +294,8 @@ namespace Condominium_System.Presentation.Views
 
         private async void BlockTBID_TextChanged(object sender, EventArgs e)
         {
+            if (!_isLoaded) return;
+
             _searchCts?.Cancel();
             _searchCts = new CancellationTokenSource();
 
@@ -309,17 +313,15 @@ namespace Condominium_System.Presentation.Views
                 {
                     var filteredBlocks = await _blockService.SearchBlocksAsync(searchTerm);
 
-                    if (!_searchCts.IsCancellationRequested)
+                    if (BlockDTGData.IsHandleCreated)
                     {
-                        _lastSearchTime = DateTime.Now;
-
-                        this.Invoke((MethodInvoker)delegate
+                        BlockDTGData.BeginInvoke((MethodInvoker)delegate
                         {
                             BlockDTGData.DataSource = filteredBlocks.ToList();
 
                             if (!filteredBlocks.Any() && !string.IsNullOrEmpty(searchTerm))
                             {
-                                ShowStatusMessage("No se encontraron bloques", 3000);
+                                ShowStatusMessage("No se encontraron servicios", 3000);
                             }
                             else
                             {
@@ -327,6 +329,7 @@ namespace Condominium_System.Presentation.Views
                             }
                         });
                     }
+
                 }
             }
             catch (TaskCanceledException) { }

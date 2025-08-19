@@ -21,6 +21,8 @@ namespace Condominium_System.Presentation.Views
         private CancellationTokenSource _searchCts;
         private DateTime _lastSearchTime;
 
+        private bool _isLoaded = false;
+
         public TenantScreen(ITenantService tenantService, IServiceProvider serviceProvider)
         {
             InitializeComponent();
@@ -41,6 +43,8 @@ namespace Condominium_System.Presentation.Views
             await LoadDataToDataGrid();
 
             SetSearchTextBoxStyleAndBehavior();
+
+            _isLoaded = true;
         }
 
         private void SetSearchTextBoxStyleAndBehavior()
@@ -319,6 +323,8 @@ namespace Condominium_System.Presentation.Views
 
         private async void TenantTBID_TextChanged(object sender, EventArgs e)
         {
+            if (!_isLoaded) return;
+
             _searchCts?.Cancel();
             _searchCts = new CancellationTokenSource();
 
@@ -334,17 +340,15 @@ namespace Condominium_System.Presentation.Views
                 {
                     var filteredTenants = await _tenantService.SearchTenantsAsync(searchTerm);
 
-                    if (!_searchCts.IsCancellationRequested)
+                    if (TenantDTGData.IsHandleCreated)
                     {
-                        _lastSearchTime = DateTime.Now;
-
-                        this.Invoke((MethodInvoker)delegate
+                        TenantDTGData.BeginInvoke((MethodInvoker)delegate
                         {
                             TenantDTGData.DataSource = filteredTenants.ToList();
 
                             if (!filteredTenants.Any() && !string.IsNullOrEmpty(searchTerm))
                             {
-                                ShowStatusMessage("No se encontraron inquilinos", 3000);
+                                ShowStatusMessage("No se encontraron servicios", 3000);
                             }
                             else
                             {
