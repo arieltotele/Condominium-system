@@ -1,6 +1,7 @@
 ﻿using Condominium_System.Business.Services;
 using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
+using FastReport;
 using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
 using Timer = System.Windows.Forms.Timer;
@@ -35,7 +36,7 @@ namespace Condominium_System.Presentation.Views
 
             SetDataGridStyle();
             ConfigureHousingColumns();
-            await LoadDataToDataGrid();           
+            await LoadDataToDataGrid();
         }
 
         private void HousingDTGData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
@@ -282,7 +283,8 @@ namespace Condominium_System.Presentation.Views
                     {
                         _lastSearchTime = DateTime.Now;
 
-                        this.Invoke((MethodInvoker)delegate {
+                        this.Invoke((MethodInvoker)delegate
+                        {
                             HousingDTGData.DataSource = filteredHousings.ToList();
 
                             if (!filteredHousings.Any() && !string.IsNullOrEmpty(searchTerm))
@@ -300,7 +302,8 @@ namespace Condominium_System.Presentation.Views
             catch (TaskCanceledException) { }
             catch (Exception ex)
             {
-                this.Invoke((MethodInvoker)delegate {
+                this.Invoke((MethodInvoker)delegate
+                {
                     if (!_searchCts.IsCancellationRequested)
                     {
                         ShowStatusMessage($"Error: {ex.Message}", 3000);
@@ -315,11 +318,50 @@ namespace Condominium_System.Presentation.Views
             statusLabel.Visible = true;
 
             var timer = new Timer { Interval = durationMs };
-            timer.Tick += (s, e) => {
+            timer.Tick += (s, e) =>
+            {
                 statusLabel.Visible = false;
                 timer.Stop();
             };
             timer.Start();
+        }
+
+        private void GenerateHousingReportFromFilteredData_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                IEnumerable<Housing> housings = null;
+
+                if (HousingDTGData.DataSource is BindingSource bindingSource)
+                {
+                    housings = bindingSource.DataSource as IEnumerable<Housing>;
+                }
+                else if (HousingDTGData.DataSource is IEnumerable<Housing> list)
+                {
+                    housings = list;
+                }
+
+                if (housings == null || !housings.Any())
+                {
+                    MessageBox.Show("No se encontraron viviendas para el informe.",
+                                    "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var report = new Report();
+                report.Load("Presentation/Reports/Filtered Reports/HousingReportFiltered.frx");
+
+                report.RegisterData(housings.ToList(), "Housings");
+                report.GetDataSource("Housings").Enabled = true;
+
+                var viewer = new ReportViewerForm(report);
+                viewer.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error generando reporte: {ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

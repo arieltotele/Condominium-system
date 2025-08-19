@@ -38,6 +38,9 @@
     <Content Include="Presentation\Reports\Filtered Reports\CondominiumReportFiltered.frx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Presentation\Reports\Filtered Reports\HousingReportFiltered.frx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Presentation\Reports\FurnitureReport.frx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
