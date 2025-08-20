@@ -58,6 +58,7 @@
             LoginPNLUsername.Name = "LoginPNLUsername";
             LoginPNLUsername.Size = new Size(235, 24);
             LoginPNLUsername.TabIndex = 43;
+            toolTip1.SetToolTip(LoginPNLUsername, "Buscar facturas basado en criterios.");
             // 
             // InvoiceTBID
             // 
@@ -66,6 +67,7 @@
             InvoiceTBID.Name = "InvoiceTBID";
             InvoiceTBID.Size = new Size(228, 16);
             InvoiceTBID.TabIndex = 2;
+            toolTip1.SetToolTip(InvoiceTBID, "Buscar facturas basado en criterios.");
             InvoiceTBID.TextChanged += InvoiceTBID_TextChanged;
             // 
             // CondominiumPNLBTNCreate
@@ -77,7 +79,7 @@
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 45;
-            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Crear un nuevo condominio.");
+            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Crear una nueva factura.");
             CondominiumPNLBTNCreate.Click += InvoicePNLBTNCreate_Click;
             // 
             // label8
@@ -90,7 +92,7 @@
             label8.Size = new Size(56, 21);
             label8.TabIndex = 1;
             label8.Text = "Nuevo";
-            toolTip1.SetToolTip(label8, "Crear un nuevo condominio.");
+            toolTip1.SetToolTip(label8, "Crear una nueva factura.");
             label8.Click += InvoicePNLBTNCreate_Click;
             // 
             // pictureBox3
@@ -102,7 +104,7 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
-            toolTip1.SetToolTip(pictureBox3, "Crear un nuevo condominio.");
+            toolTip1.SetToolTip(pictureBox3, "Crear una nueva factura.");
             pictureBox3.Click += InvoicePNLBTNCreate_Click;
             // 
             // InvoiceDTGData
@@ -143,6 +145,7 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(169, 41);
             panel2.TabIndex = 57;
+            toolTip1.SetToolTip(panel2, "Generar reporte de las facturas.");
             panel2.Click += GenerateInvoiceReportFromFilteredData_Click;
             // 
             // label2
@@ -155,6 +158,7 @@
             label2.Size = new Size(125, 21);
             label2.TabIndex = 1;
             label2.Text = "Generar Reporte";
+            toolTip1.SetToolTip(label2, "Generar reporte de las facturas.");
             label2.Click += GenerateInvoiceReportFromFilteredData_Click;
             // 
             // pictureBox1
@@ -166,6 +170,7 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Generar reporte de las facturas.");
             pictureBox1.Click += GenerateInvoiceReportFromFilteredData_Click;
             // 
             // InvoiceScreen
@@ -180,6 +185,7 @@
             Controls.Add(InvoiceDTGData);
             Name = "InvoiceScreen";
             Text = "InvoiceScreen";
+            toolTip1.SetToolTip(this, "Crear una nueva factura.");
             Load += InvoiceScreen_Load;
             LoginPNLUsername.ResumeLayout(false);
             LoginPNLUsername.PerformLayout();

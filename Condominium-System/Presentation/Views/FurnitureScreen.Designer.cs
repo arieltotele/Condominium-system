@@ -58,6 +58,7 @@
             LoginPNLUsername.Name = "LoginPNLUsername";
             LoginPNLUsername.Size = new Size(235, 24);
             LoginPNLUsername.TabIndex = 38;
+            toolTip1.SetToolTip(LoginPNLUsername, "Buscar mobiliarios basado en criterios.");
             // 
             // FurnitureTBID
             // 
@@ -66,6 +67,7 @@
             FurnitureTBID.Name = "FurnitureTBID";
             FurnitureTBID.Size = new Size(228, 16);
             FurnitureTBID.TabIndex = 2;
+            toolTip1.SetToolTip(FurnitureTBID, "Buscar mobiliarios basado en criterios.");
             FurnitureTBID.TextChanged += FurnitureTBID_TextChanged;
             // 
             // CondominiumPNLBTNCreate
@@ -143,6 +145,7 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(169, 41);
             panel2.TabIndex = 57;
+            toolTip1.SetToolTip(panel2, "Generar reportes de los mobiliarios.");
             panel2.Click += GenerateFurnitureReportFromFilteredData_Click;
             // 
             // label2
@@ -155,6 +158,7 @@
             label2.Size = new Size(125, 21);
             label2.TabIndex = 1;
             label2.Text = "Generar Reporte";
+            toolTip1.SetToolTip(label2, "Generar reportes de los mobiliarios.");
             label2.Click += GenerateFurnitureReportFromFilteredData_Click;
             // 
             // pictureBox1
@@ -166,6 +170,7 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Generar reportes de los mobiliarios.");
             pictureBox1.Click += GenerateFurnitureReportFromFilteredData_Click;
             // 
             // FurnitureScreen
@@ -180,6 +185,7 @@
             Controls.Add(FurnitureDTGData);
             Name = "FurnitureScreen";
             Text = "FurnitureScreen";
+            toolTip1.SetToolTip(this, "Generar reportes de los mobiliarios.");
             Load += FurnitureScreen_Load;
             LoginPNLUsername.ResumeLayout(false);
             LoginPNLUsername.PerformLayout();

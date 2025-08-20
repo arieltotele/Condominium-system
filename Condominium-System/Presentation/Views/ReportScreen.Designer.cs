@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             label6 = new Label();
             panel5 = new Panel();
             ReportComboBxEntities = new ComboBox();
             CondominiumPNLBTNCreate = new Panel();
             label8 = new Label();
             pictureBox3 = new PictureBox();
+            toolTip1 = new ToolTip(components);
             panel5.SuspendLayout();
             CondominiumPNLBTNCreate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -57,6 +59,7 @@
             panel5.Name = "panel5";
             panel5.Size = new Size(394, 30);
             panel5.TabIndex = 54;
+            toolTip1.SetToolTip(panel5, "Seleccionar una entidad para el reporte.");
             // 
             // ReportComboBxEntities
             // 
@@ -66,6 +69,7 @@
             ReportComboBxEntities.Name = "ReportComboBxEntities";
             ReportComboBxEntities.Size = new Size(385, 23);
             ReportComboBxEntities.TabIndex = 0;
+            toolTip1.SetToolTip(ReportComboBxEntities, "Seleccionar una entidad para el reporte.");
             // 
             // CondominiumPNLBTNCreate
             // 
@@ -76,6 +80,7 @@
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(169, 41);
             CondominiumPNLBTNCreate.TabIndex = 55;
+            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Generar reporte de la entidad seleccionada.");
             CondominiumPNLBTNCreate.Click += GenerateReportBTN_Click;
             // 
             // label8
@@ -88,6 +93,7 @@
             label8.Size = new Size(125, 21);
             label8.TabIndex = 1;
             label8.Text = "Generar Reporte";
+            toolTip1.SetToolTip(label8, "Generar reporte de la entidad seleccionada.");
             label8.Click += GenerateReportBTN_Click;
             // 
             // pictureBox3
@@ -99,6 +105,7 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
+            toolTip1.SetToolTip(pictureBox3, "Generar reporte de la entidad seleccionada.");
             pictureBox3.Click += GenerateReportBTN_Click;
             // 
             // ReportScreen
@@ -128,5 +135,6 @@
         private Panel CondominiumPNLBTNCreate;
         private Label label8;
         private PictureBox pictureBox3;
+        private ToolTip toolTip1;
     }
 }

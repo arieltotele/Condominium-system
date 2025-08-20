@@ -58,6 +58,7 @@
             LoginPNLUsername.Name = "LoginPNLUsername";
             LoginPNLUsername.Size = new Size(235, 24);
             LoginPNLUsername.TabIndex = 38;
+            toolTip1.SetToolTip(LoginPNLUsername, "Buscar usuarios basado en criterios.");
             // 
             // UserTxtBxPId
             // 
@@ -66,6 +67,7 @@
             UserTxtBxPId.Name = "UserTxtBxPId";
             UserTxtBxPId.Size = new Size(228, 16);
             UserTxtBxPId.TabIndex = 2;
+            toolTip1.SetToolTip(UserTxtBxPId, "Buscar usuarios basado en criterios.");
             UserTxtBxPId.TextChanged += UserTxtBxPId_TextChanged;
             // 
             // CondominiumPNLBTNCreate
@@ -143,6 +145,7 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(169, 41);
             panel2.TabIndex = 57;
+            toolTip1.SetToolTip(panel2, "Generar reporte de usuarios.");
             panel2.Click += GenerateUserReportFromFilteredData_Click;
             // 
             // label2
@@ -155,6 +158,7 @@
             label2.Size = new Size(125, 21);
             label2.TabIndex = 1;
             label2.Text = "Generar Reporte";
+            toolTip1.SetToolTip(label2, "Generar reporte de usuarios.");
             label2.Click += GenerateUserReportFromFilteredData_Click;
             // 
             // pictureBox1
@@ -166,6 +170,7 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Generar reporte de usuarios.");
             pictureBox1.Click += GenerateUserReportFromFilteredData_Click;
             // 
             // UsersScreen
@@ -180,6 +185,7 @@
             Controls.Add(UserDTGData);
             Name = "UsersScreen";
             Text = "UsersScreen";
+            toolTip1.SetToolTip(this, "Buscar usuarios basado en criterios.");
             Load += UsersScreen_Load;
             LoginPNLUsername.ResumeLayout(false);
             LoginPNLUsername.PerformLayout();

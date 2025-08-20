@@ -134,6 +134,7 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(169, 41);
             panel2.TabIndex = 56;
+            toolTip1.SetToolTip(panel2, "Generar reporte de condominios.");
             panel2.Click += GenerateCondominiumReportFromFilteredData_Click;
             // 
             // label2
@@ -146,6 +147,7 @@
             label2.Size = new Size(125, 21);
             label2.TabIndex = 1;
             label2.Text = "Generar Reporte";
+            toolTip1.SetToolTip(label2, "Generar reporte de condominios.");
             label2.Click += GenerateCondominiumReportFromFilteredData_Click;
             // 
             // pictureBox1
@@ -157,6 +159,7 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Generar reporte de condominios.");
             pictureBox1.Click += GenerateCondominiumReportFromFilteredData_Click;
             // 
             // BlockPNLID
@@ -167,6 +170,7 @@
             BlockPNLID.Name = "BlockPNLID";
             BlockPNLID.Size = new Size(236, 24);
             BlockPNLID.TabIndex = 58;
+            toolTip1.SetToolTip(BlockPNLID, "Buscar condominios basado en criterios.");
             // 
             // CondominiumTIId
             // 
@@ -176,6 +180,7 @@
             CondominiumTIId.Name = "CondominiumTIId";
             CondominiumTIId.Size = new Size(225, 16);
             CondominiumTIId.TabIndex = 2;
+            toolTip1.SetToolTip(CondominiumTIId, "Buscar condominios basado en criterios.");
             CondominiumTIId.TextChanged += CondominiumTIId_TextChanged;
             // 
             // CondominiumScreen

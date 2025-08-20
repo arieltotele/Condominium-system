@@ -36,18 +36,18 @@
             pictureBox3 = new PictureBox();
             IncidenceDTGData = new DataGridView();
             toolTip1 = new ToolTip(components);
-            statusStrip1 = new StatusStrip();
-            statusLabel = new ToolStripStatusLabel();
             panel2 = new Panel();
             label2 = new Label();
             pictureBox1 = new PictureBox();
+            statusStrip1 = new StatusStrip();
+            statusLabel = new ToolStripStatusLabel();
             LoginPNLUsername.SuspendLayout();
             CondominiumPNLBTNCreate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)IncidenceDTGData).BeginInit();
-            statusStrip1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // LoginPNLUsername
@@ -58,6 +58,7 @@
             LoginPNLUsername.Name = "LoginPNLUsername";
             LoginPNLUsername.Size = new Size(235, 24);
             LoginPNLUsername.TabIndex = 38;
+            toolTip1.SetToolTip(LoginPNLUsername, "Buscar incidentes basado en criterios.");
             // 
             // IncidenceTBID
             // 
@@ -66,6 +67,7 @@
             IncidenceTBID.Name = "IncidenceTBID";
             IncidenceTBID.Size = new Size(228, 16);
             IncidenceTBID.TabIndex = 2;
+            toolTip1.SetToolTip(IncidenceTBID, "Buscar incidentes basado en criterios.");
             IncidenceTBID.TextChanged += IncidenceTBID_TextChanged;
             // 
             // CondominiumPNLBTNCreate
@@ -77,7 +79,7 @@
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 40;
-            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Guardar incidencia.");
+            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Crear una nueva incidencia.");
             CondominiumPNLBTNCreate.Click += IncidentPNLBTNCreate_Click;
             // 
             // label8
@@ -90,7 +92,7 @@
             label8.Size = new Size(56, 21);
             label8.TabIndex = 1;
             label8.Text = "Nuevo";
-            toolTip1.SetToolTip(label8, "Guardar incidencia.");
+            toolTip1.SetToolTip(label8, "Crear una nueva incidencia.");
             label8.Click += IncidentPNLBTNCreate_Click;
             // 
             // pictureBox3
@@ -102,7 +104,7 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
-            toolTip1.SetToolTip(pictureBox3, "Guardar incidencia.");
+            toolTip1.SetToolTip(pictureBox3, "Crear una nueva incidencia.");
             pictureBox3.Click += IncidentPNLBTNCreate_Click;
             // 
             // IncidenceDTGData
@@ -114,6 +116,44 @@
             IncidenceDTGData.Size = new Size(1017, 443);
             IncidenceDTGData.TabIndex = 39;
             toolTip1.SetToolTip(IncidenceDTGData, "Condominios almacenados en la Base de Datos.");
+            // 
+            // panel2
+            // 
+            panel2.BackColor = Color.DarkGreen;
+            panel2.Controls.Add(label2);
+            panel2.Controls.Add(pictureBox1);
+            panel2.ForeColor = SystemColors.ControlText;
+            panel2.Location = new Point(668, 82);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(169, 41);
+            panel2.TabIndex = 57;
+            toolTip1.SetToolTip(panel2, "Generar reporte de incidentes.");
+            panel2.Click += GenerateIncidenceReportFromFilteredData_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(39, 12);
+            label2.Name = "label2";
+            label2.Size = new Size(125, 21);
+            label2.TabIndex = 1;
+            label2.Text = "Generar Reporte";
+            toolTip1.SetToolTip(label2, "Generar reporte de incidentes.");
+            label2.Click += GenerateIncidenceReportFromFilteredData_Click;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.export_white;
+            pictureBox1.Location = new Point(3, 12);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(30, 19);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Generar reporte de incidentes.");
+            pictureBox1.Click += GenerateIncidenceReportFromFilteredData_Click;
             // 
             // statusStrip1
             // 
@@ -133,41 +173,6 @@
             statusLabel.Spring = true;
             statusLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // panel2
-            // 
-            panel2.BackColor = Color.DarkGreen;
-            panel2.Controls.Add(label2);
-            panel2.Controls.Add(pictureBox1);
-            panel2.ForeColor = SystemColors.ControlText;
-            panel2.Location = new Point(668, 82);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(169, 41);
-            panel2.TabIndex = 57;
-            panel2.Click += GenerateIncidenceReportFromFilteredData_Click;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.ForeColor = Color.White;
-            label2.Location = new Point(39, 12);
-            label2.Name = "label2";
-            label2.Size = new Size(125, 21);
-            label2.TabIndex = 1;
-            label2.Text = "Generar Reporte";
-            label2.Click += GenerateIncidenceReportFromFilteredData_Click;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = Properties.Resources.export_white;
-            pictureBox1.Location = new Point(3, 12);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(30, 19);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
-            pictureBox1.Click += GenerateIncidenceReportFromFilteredData_Click;
-            // 
             // IncidenceScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -180,6 +185,7 @@
             Controls.Add(IncidenceDTGData);
             Name = "IncidenceScreen";
             Text = "IncidenceScreen";
+            toolTip1.SetToolTip(this, "Generar reporte de incidentes.");
             Load += IncidenceScreen_Load;
             LoginPNLUsername.ResumeLayout(false);
             LoginPNLUsername.PerformLayout();
@@ -187,11 +193,11 @@
             CondominiumPNLBTNCreate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)IncidenceDTGData).EndInit();
-            statusStrip1.ResumeLayout(false);
-            statusStrip1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }

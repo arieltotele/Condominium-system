@@ -59,7 +59,7 @@
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 45;
-            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Agregar inquilino.");
+            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Crear un nuevo inquilino.");
             CondominiumPNLBTNCreate.Click += TenantPNLBTNCreate_Click;
             // 
             // label8
@@ -72,7 +72,7 @@
             label8.Size = new Size(56, 21);
             label8.TabIndex = 1;
             label8.Text = "Nuevo";
-            toolTip1.SetToolTip(label8, "Agregar inquilino.");
+            toolTip1.SetToolTip(label8, "Crear un nuevo inquilino.");
             label8.Click += TenantPNLBTNCreate_Click;
             // 
             // pictureBox3
@@ -84,7 +84,7 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
-            toolTip1.SetToolTip(pictureBox3, "Agregar inquilino.");
+            toolTip1.SetToolTip(pictureBox3, "Crear un nuevo inquilino.");
             pictureBox3.Click += TenantPNLBTNCreate_Click;
             // 
             // TenantDTGData
@@ -104,6 +104,7 @@
             BlockPNLID.Name = "BlockPNLID";
             BlockPNLID.Size = new Size(236, 24);
             BlockPNLID.TabIndex = 43;
+            toolTip1.SetToolTip(BlockPNLID, "Buscar inquilinos basado en criterios.");
             // 
             // TenantTBID
             // 
@@ -112,6 +113,7 @@
             TenantTBID.Name = "TenantTBID";
             TenantTBID.Size = new Size(229, 16);
             TenantTBID.TabIndex = 2;
+            toolTip1.SetToolTip(TenantTBID, "Buscar inquilinos basado en criterios.");
             TenantTBID.TextChanged += TenantTBID_TextChanged;
             // 
             // statusStrip1
@@ -141,6 +143,7 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(169, 41);
             panel2.TabIndex = 57;
+            toolTip1.SetToolTip(panel2, "Generar reporte de inquilinos.");
             panel2.Click += GenerateTenantReportFromFilteredData_Click;
             // 
             // label2
@@ -153,6 +156,7 @@
             label2.Size = new Size(125, 21);
             label2.TabIndex = 1;
             label2.Text = "Generar Reporte";
+            toolTip1.SetToolTip(label2, "Generar reporte de inquilinos.");
             label2.Click += GenerateTenantReportFromFilteredData_Click;
             // 
             // pictureBox1
@@ -164,6 +168,7 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Generar reporte de inquilinos.");
             pictureBox1.Click += GenerateTenantReportFromFilteredData_Click;
             // 
             // TenantScreen
@@ -178,7 +183,7 @@
             Controls.Add(BlockPNLID);
             Name = "TenantScreen";
             Text = "TenantScreen";
-            toolTip1.SetToolTip(this, "Agregar inquilino.");
+            toolTip1.SetToolTip(this, "Generar reporte de inquilinos.");
             Load += TenantScreen_Load;
             CondominiumPNLBTNCreate.ResumeLayout(false);
             CondominiumPNLBTNCreate.PerformLayout();

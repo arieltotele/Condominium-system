@@ -59,7 +59,7 @@
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 40;
-            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Agregar bloque.");
+            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Crear un nuevo bloque.");
             CondominiumPNLBTNCreate.Click += BlockPNLBTNCreate_Click;
             // 
             // label8
@@ -72,7 +72,7 @@
             label8.Size = new Size(56, 21);
             label8.TabIndex = 1;
             label8.Text = "Nuevo";
-            toolTip1.SetToolTip(label8, "Agregar bloque.");
+            toolTip1.SetToolTip(label8, "Crear un nuevo bloque.");
             label8.Click += BlockPNLBTNCreate_Click;
             // 
             // pictureBox3
@@ -84,7 +84,7 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
-            toolTip1.SetToolTip(pictureBox3, "Agregar bloque.");
+            toolTip1.SetToolTip(pictureBox3, "Crear un nuevo bloque.");
             pictureBox3.Click += BlockPNLBTNCreate_Click;
             // 
             // BlockDTGData
@@ -104,6 +104,7 @@
             BlockPNLID.Name = "BlockPNLID";
             BlockPNLID.Size = new Size(235, 24);
             BlockPNLID.TabIndex = 38;
+            toolTip1.SetToolTip(BlockPNLID, "Buscar bloques basado en criterios.");
             // 
             // BlockTBID
             // 
@@ -112,6 +113,7 @@
             BlockTBID.Name = "BlockTBID";
             BlockTBID.Size = new Size(225, 16);
             BlockTBID.TabIndex = 2;
+            toolTip1.SetToolTip(BlockTBID, "Buscar bloques basado en criterios.");
             BlockTBID.TextChanged += BlockTBID_TextChanged;
             // 
             // statusStrip1
@@ -142,6 +144,7 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(169, 41);
             panel2.TabIndex = 57;
+            toolTip1.SetToolTip(panel2, "Generar reporte de bloques.");
             panel2.Click += GenerateBlockReportFromFilteredData_Click;
             // 
             // label2
@@ -154,6 +157,7 @@
             label2.Size = new Size(125, 21);
             label2.TabIndex = 1;
             label2.Text = "Generar Reporte";
+            toolTip1.SetToolTip(label2, "Generar reporte de bloques.");
             label2.Click += GenerateBlockReportFromFilteredData_Click;
             // 
             // pictureBox1
@@ -165,6 +169,7 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Generar reporte de bloques.");
             pictureBox1.Click += GenerateBlockReportFromFilteredData_Click;
             // 
             // HousingBlocksScreen
@@ -179,7 +184,6 @@
             Controls.Add(BlockPNLID);
             Name = "HousingBlocksScreen";
             Text = "HousingBlocksScreen";
-            toolTip1.SetToolTip(this, "Agregar bloque.");
             Load += HousingBlocksScreen_Load;
             CondominiumPNLBTNCreate.ResumeLayout(false);
             CondominiumPNLBTNCreate.PerformLayout();

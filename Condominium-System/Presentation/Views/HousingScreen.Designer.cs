@@ -55,11 +55,11 @@
             CondominiumPNLBTNCreate.BackColor = Color.MidnightBlue;
             CondominiumPNLBTNCreate.Controls.Add(label8);
             CondominiumPNLBTNCreate.Controls.Add(pictureBox3);
-            CondominiumPNLBTNCreate.Location = new Point(858, 69);
+            CondominiumPNLBTNCreate.Location = new Point(860, 69);
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(109, 41);
             CondominiumPNLBTNCreate.TabIndex = 45;
-            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Crear casa.");
+            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Crear una nueva vivienda.");
             CondominiumPNLBTNCreate.Click += HousingPNLBTNCreate_Click;
             // 
             // label8
@@ -72,7 +72,7 @@
             label8.Size = new Size(56, 21);
             label8.TabIndex = 1;
             label8.Text = "Nuevo";
-            toolTip1.SetToolTip(label8, "Crear casa.");
+            toolTip1.SetToolTip(label8, "Crear una nueva vivienda.");
             label8.Click += HousingPNLBTNCreate_Click;
             // 
             // pictureBox3
@@ -84,7 +84,7 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
-            toolTip1.SetToolTip(pictureBox3, "Crear casa.");
+            toolTip1.SetToolTip(pictureBox3, "Crear una nueva vivienda.");
             pictureBox3.Click += HousingPNLBTNCreate_Click;
             // 
             // HousingDTGData
@@ -104,14 +104,16 @@
             BlockPNLID.Name = "BlockPNLID";
             BlockPNLID.Size = new Size(235, 24);
             BlockPNLID.TabIndex = 43;
+            toolTip1.SetToolTip(BlockPNLID, "Buscar viviendas basado en criterios.");
             // 
             // HousingTBID
             // 
             HousingTBID.BorderStyle = BorderStyle.None;
             HousingTBID.Location = new Point(4, 3);
             HousingTBID.Name = "HousingTBID";
-            HousingTBID.Size = new Size(225, 16);
+            HousingTBID.Size = new Size(228, 16);
             HousingTBID.TabIndex = 2;
+            toolTip1.SetToolTip(HousingTBID, "Buscar viviendas basado en criterios.");
             HousingTBID.TextChanged += HousingTBID_TextChanged;
             // 
             // statusStrip1
@@ -138,10 +140,11 @@
             panel2.Controls.Add(label2);
             panel2.Controls.Add(pictureBox1);
             panel2.ForeColor = SystemColors.ControlText;
-            panel2.Location = new Point(669, 69);
+            panel2.Location = new Point(671, 69);
             panel2.Name = "panel2";
             panel2.Size = new Size(169, 41);
             panel2.TabIndex = 57;
+            toolTip1.SetToolTip(panel2, "Generar reporte para viviendas.");
             panel2.Click += GenerateHousingReportFromFilteredData_Click;
             // 
             // label2
@@ -154,6 +157,7 @@
             label2.Size = new Size(125, 21);
             label2.TabIndex = 1;
             label2.Text = "Generar Reporte";
+            toolTip1.SetToolTip(label2, "Generar reporte para viviendas.");
             label2.Click += GenerateHousingReportFromFilteredData_Click;
             // 
             // pictureBox1
@@ -165,6 +169,7 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Generar reporte para viviendas.");
             pictureBox1.Click += GenerateHousingReportFromFilteredData_Click;
             // 
             // HousingScreen
