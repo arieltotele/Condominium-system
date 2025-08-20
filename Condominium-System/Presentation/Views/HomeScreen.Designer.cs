@@ -34,6 +34,9 @@
             HomeScreenLBLTitleName = new Label();
             label1 = new Label();
             HomeScreenPNLMenu = new Panel();
+            HomeScreenPNLReport = new Panel();
+            HomeScreenLBLReport = new Label();
+            pictureBox1 = new PictureBox();
             HomeScreenPNLUsers = new Panel();
             HomeScreenLBLUsers = new Label();
             pictureBox10 = new PictureBox();
@@ -65,12 +68,11 @@
             HomeScreenLBLTitle = new Label();
             HomeScreenPNLMain = new Panel();
             toolTip1 = new ToolTip(components);
-            HomeScreenPNLReport = new Panel();
-            HomeScreenLBLReport = new Label();
-            pictureBox1 = new PictureBox();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)HomeScreenBTNLogOut).BeginInit();
             HomeScreenPNLMenu.SuspendLayout();
+            HomeScreenPNLReport.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             HomeScreenPNLUsers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
             HomeScreenPNLMaintenance.SuspendLayout();
@@ -90,8 +92,6 @@
             HomeScreenPNLCondominium.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panel3.SuspendLayout();
-            HomeScreenPNLReport.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -157,6 +157,39 @@
             HomeScreenPNLMenu.Name = "HomeScreenPNLMenu";
             HomeScreenPNLMenu.Size = new Size(170, 713);
             HomeScreenPNLMenu.TabIndex = 1;
+            // 
+            // HomeScreenPNLReport
+            // 
+            HomeScreenPNLReport.Controls.Add(HomeScreenLBLReport);
+            HomeScreenPNLReport.Controls.Add(pictureBox1);
+            HomeScreenPNLReport.Location = new Point(0, 596);
+            HomeScreenPNLReport.Name = "HomeScreenPNLReport";
+            HomeScreenPNLReport.Size = new Size(164, 44);
+            HomeScreenPNLReport.TabIndex = 10;
+            toolTip1.SetToolTip(HomeScreenPNLReport, "Ir al módulo de Servicio");
+            // 
+            // HomeScreenLBLReport
+            // 
+            HomeScreenLBLReport.AutoSize = true;
+            HomeScreenLBLReport.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            HomeScreenLBLReport.ForeColor = Color.White;
+            HomeScreenLBLReport.Location = new Point(45, 14);
+            HomeScreenLBLReport.Name = "HomeScreenLBLReport";
+            HomeScreenLBLReport.Size = new Size(65, 21);
+            HomeScreenLBLReport.TabIndex = 1;
+            HomeScreenLBLReport.Text = "Reporte";
+            toolTip1.SetToolTip(HomeScreenLBLReport, "Ir al módulo de Reporte");
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.report_white;
+            pictureBox1.Location = new Point(9, 10);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(30, 25);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Ir al módulo de Servicio");
             // 
             // HomeScreenPNLUsers
             // 
@@ -476,44 +509,12 @@
             // 
             // HomeScreenPNLMain
             // 
+            HomeScreenPNLMain.AutoSize = true;
             HomeScreenPNLMain.BackColor = Color.White;
-            HomeScreenPNLMain.Location = new Point(170, 128);
+            HomeScreenPNLMain.Location = new Point(173, 128);
             HomeScreenPNLMain.Name = "HomeScreenPNLMain";
-            HomeScreenPNLMain.Size = new Size(1032, 654);
+            HomeScreenPNLMain.Size = new Size(1029, 654);
             HomeScreenPNLMain.TabIndex = 3;
-            // 
-            // HomeScreenPNLReport
-            // 
-            HomeScreenPNLReport.Controls.Add(HomeScreenLBLReport);
-            HomeScreenPNLReport.Controls.Add(pictureBox1);
-            HomeScreenPNLReport.Location = new Point(0, 596);
-            HomeScreenPNLReport.Name = "HomeScreenPNLReport";
-            HomeScreenPNLReport.Size = new Size(164, 44);
-            HomeScreenPNLReport.TabIndex = 10;
-            toolTip1.SetToolTip(HomeScreenPNLReport, "Ir al módulo de Servicio");
-            // 
-            // HomeScreenLBLReport
-            // 
-            HomeScreenLBLReport.AutoSize = true;
-            HomeScreenLBLReport.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            HomeScreenLBLReport.ForeColor = Color.White;
-            HomeScreenLBLReport.Location = new Point(45, 14);
-            HomeScreenLBLReport.Name = "HomeScreenLBLReport";
-            HomeScreenLBLReport.Size = new Size(65, 21);
-            HomeScreenLBLReport.TabIndex = 1;
-            HomeScreenLBLReport.Text = "Reporte";
-            toolTip1.SetToolTip(HomeScreenLBLReport, "Ir al módulo de Reporte");
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = Properties.Resources.report_white;
-            pictureBox1.Location = new Point(9, 10);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(30, 25);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
-            toolTip1.SetToolTip(pictureBox1, "Ir al módulo de Servicio");
             // 
             // HomeScreen
             // 
@@ -532,6 +533,9 @@
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)HomeScreenBTNLogOut).EndInit();
             HomeScreenPNLMenu.ResumeLayout(false);
+            HomeScreenPNLReport.ResumeLayout(false);
+            HomeScreenPNLReport.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             HomeScreenPNLUsers.ResumeLayout(false);
             HomeScreenPNLUsers.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
@@ -561,10 +565,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
-            HomeScreenPNLReport.ResumeLayout(false);
-            HomeScreenPNLReport.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

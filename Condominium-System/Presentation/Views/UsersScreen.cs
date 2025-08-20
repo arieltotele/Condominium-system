@@ -304,6 +304,7 @@ namespace Condominium_System.Presentation.Views
         private async void UserTxtBxPId_TextChanged(object sender, EventArgs e)
         {
             if (!this.IsHandleCreated || this.IsDisposed) return;
+            if (UserTxtBxPId.Text == "Criterio de busqueda") return;
 
             _searchCts?.Cancel();
             _searchCts = new CancellationTokenSource();

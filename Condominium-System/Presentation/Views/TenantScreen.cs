@@ -325,6 +325,7 @@ namespace Condominium_System.Presentation.Views
         {
             if (!_isLoaded) return;
             if (!this.IsHandleCreated || this.IsDisposed) return;
+            if (TenantTBID.Text == "Criterio de busqueda") return;
 
             _searchCts?.Cancel();
             _searchCts = new CancellationTokenSource();

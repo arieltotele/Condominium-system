@@ -216,7 +216,7 @@ namespace Condominium_System.Presentation.Views
 
                     MessageBox.Show("El inquilino ha sido creado con exito.", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     CleanForm();
-                    ((TenantScreen)this.Owner).LoadDataToDataGrid();
+                    await ((TenantScreen)this.Owner).LoadDataToDataGrid();
                     this.Hide();
                 }
                 catch (Exception ex)

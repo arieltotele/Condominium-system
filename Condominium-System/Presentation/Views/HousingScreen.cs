@@ -290,6 +290,7 @@ namespace Condominium_System.Presentation.Views
         {
             if (!_isLoaded) return;
             if (!this.IsHandleCreated) return;
+            if (HousingTBID.Text == "Criterio de busqueda") return;
 
             _searchCts?.Cancel();
             _searchCts = new CancellationTokenSource();
