@@ -33,6 +33,7 @@ namespace Condominium_System.Helpers
             dataGrid.MultiSelect = false;
             dataGrid.ScrollBars = ScrollBars.Both;
             dataGrid.AutoGenerateColumns = false;
+            dataGrid.RowHeadersVisible = false;
 
             dataGrid.Columns.Clear();
 

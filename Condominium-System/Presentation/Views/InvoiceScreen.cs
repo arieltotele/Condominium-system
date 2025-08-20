@@ -195,7 +195,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "Detail",
                 HeaderText = "Detalle",
                 Name = "DetailColumn",
-                Width = 229
+                Width = 270
             });
 
             InvoiceDTGData.Columns.Add(new DataGridViewTextBoxColumn

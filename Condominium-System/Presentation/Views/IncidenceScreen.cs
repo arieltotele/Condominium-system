@@ -203,13 +203,13 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "Description",
                 HeaderText = "Descripción",
                 Name = "DescriptionColumn",
-                Width = 310
+                Width = 350
             });
 
             IncidenceDTGData.Columns.Add(new DataGridViewTextBoxColumn
             {
                 DataPropertyName = "TenantId",
-                HeaderText = "Documentacion del inquilino",
+                HeaderText = "Identificacion del inquilino",
                 Name = "TenantIdColumn",
                 Width = 250
             });

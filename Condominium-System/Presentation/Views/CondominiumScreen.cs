@@ -116,7 +116,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "Address",
                 HeaderText = "Direccion",
                 Name = "AddressColumn",
-                Width = 200
+                Width = 230
             });
 
             CondominiumDTGData.Columns.Add(new DataGridViewTextBoxColumn

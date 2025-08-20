@@ -36,18 +36,18 @@
             BlockPNLID = new Panel();
             TenantTBID = new TextBox();
             toolTip1 = new ToolTip(components);
-            statusStrip1 = new StatusStrip();
-            statusLabel = new ToolStripStatusLabel();
             panel2 = new Panel();
             label2 = new Label();
             pictureBox1 = new PictureBox();
+            statusStrip1 = new StatusStrip();
+            statusLabel = new ToolStripStatusLabel();
             CondominiumPNLBTNCreate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)TenantDTGData).BeginInit();
             BlockPNLID.SuspendLayout();
-            statusStrip1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // CondominiumPNLBTNCreate
@@ -116,23 +116,6 @@
             toolTip1.SetToolTip(TenantTBID, "Buscar inquilinos basado en criterios.");
             TenantTBID.TextChanged += TenantTBID_TextChanged;
             // 
-            // statusStrip1
-            // 
-            statusStrip1.Items.AddRange(new ToolStripItem[] { statusLabel });
-            statusStrip1.Location = new Point(0, 126);
-            statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(1017, 22);
-            statusStrip1.TabIndex = 47;
-            statusStrip1.Text = "statusStrip1";
-            // 
-            // statusLabel
-            // 
-            statusLabel.AutoSize = false;
-            statusLabel.Name = "statusLabel";
-            statusLabel.Size = new Size(1002, 17);
-            statusLabel.Spring = true;
-            statusLabel.TextAlign = ContentAlignment.MiddleLeft;
-            // 
             // panel2
             // 
             panel2.BackColor = Color.DarkGreen;
@@ -171,6 +154,23 @@
             toolTip1.SetToolTip(pictureBox1, "Generar reporte de inquilinos.");
             pictureBox1.Click += GenerateTenantReportFromFilteredData_Click;
             // 
+            // statusStrip1
+            // 
+            statusStrip1.Items.AddRange(new ToolStripItem[] { statusLabel });
+            statusStrip1.Location = new Point(0, 126);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(1017, 22);
+            statusStrip1.TabIndex = 47;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // statusLabel
+            // 
+            statusLabel.AutoSize = false;
+            statusLabel.Name = "statusLabel";
+            statusLabel.Size = new Size(1002, 17);
+            statusLabel.Spring = true;
+            statusLabel.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // TenantScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -183,7 +183,6 @@
             Controls.Add(BlockPNLID);
             Name = "TenantScreen";
             Text = "TenantScreen";
-            toolTip1.SetToolTip(this, "Generar reporte de inquilinos.");
             Load += TenantScreen_Load;
             CondominiumPNLBTNCreate.ResumeLayout(false);
             CondominiumPNLBTNCreate.PerformLayout();
@@ -191,11 +190,11 @@
             ((System.ComponentModel.ISupportInitialize)TenantDTGData).EndInit();
             BlockPNLID.ResumeLayout(false);
             BlockPNLID.PerformLayout();
-            statusStrip1.ResumeLayout(false);
-            statusStrip1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }

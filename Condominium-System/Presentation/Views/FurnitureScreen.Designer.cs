@@ -36,18 +36,18 @@
             pictureBox3 = new PictureBox();
             FurnitureDTGData = new DataGridView();
             toolTip1 = new ToolTip(components);
-            statusStrip1 = new StatusStrip();
-            statusLabel = new ToolStripStatusLabel();
             panel2 = new Panel();
             label2 = new Label();
             pictureBox1 = new PictureBox();
+            statusStrip1 = new StatusStrip();
+            statusLabel = new ToolStripStatusLabel();
             LoginPNLUsername.SuspendLayout();
             CondominiumPNLBTNCreate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)FurnitureDTGData).BeginInit();
-            statusStrip1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // LoginPNLUsername
@@ -117,24 +117,6 @@
             FurnitureDTGData.TabIndex = 39;
             toolTip1.SetToolTip(FurnitureDTGData, "Condominios almacenados en la Base de Datos.");
             // 
-            // statusStrip1
-            // 
-            statusStrip1.Items.AddRange(new ToolStripItem[] { statusLabel });
-            statusStrip1.Location = new Point(0, 126);
-            statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(1017, 22);
-            statusStrip1.TabIndex = 42;
-            statusStrip1.Text = "statusStrip1";
-            // 
-            // statusLabel
-            // 
-            statusLabel.AutoSize = false;
-            statusLabel.ForeColor = Color.FromArgb(238, 210, 2);
-            statusLabel.Name = "statusLabel";
-            statusLabel.Size = new Size(1002, 17);
-            statusLabel.Spring = true;
-            statusLabel.TextAlign = ContentAlignment.MiddleLeft;
-            // 
             // panel2
             // 
             panel2.BackColor = Color.DarkGreen;
@@ -173,6 +155,24 @@
             toolTip1.SetToolTip(pictureBox1, "Generar reportes de los mobiliarios.");
             pictureBox1.Click += GenerateFurnitureReportFromFilteredData_Click;
             // 
+            // statusStrip1
+            // 
+            statusStrip1.Items.AddRange(new ToolStripItem[] { statusLabel });
+            statusStrip1.Location = new Point(0, 126);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(1017, 22);
+            statusStrip1.TabIndex = 42;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // statusLabel
+            // 
+            statusLabel.AutoSize = false;
+            statusLabel.ForeColor = Color.FromArgb(238, 210, 2);
+            statusLabel.Name = "statusLabel";
+            statusLabel.Size = new Size(1002, 17);
+            statusLabel.Spring = true;
+            statusLabel.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // FurnitureScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -185,7 +185,6 @@
             Controls.Add(FurnitureDTGData);
             Name = "FurnitureScreen";
             Text = "FurnitureScreen";
-            toolTip1.SetToolTip(this, "Generar reportes de los mobiliarios.");
             Load += FurnitureScreen_Load;
             LoginPNLUsername.ResumeLayout(false);
             LoginPNLUsername.PerformLayout();
@@ -193,11 +192,11 @@
             CondominiumPNLBTNCreate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)FurnitureDTGData).EndInit();
-            statusStrip1.ResumeLayout(false);
-            statusStrip1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }

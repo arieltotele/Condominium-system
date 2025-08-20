@@ -163,7 +163,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "Name",
                 HeaderText = "Nombre",
                 Name = "NameColumn",
-                Width = 170
+                Width = 200
             });
 
             ServiceDTGData.Columns.Add(new DataGridViewTextBoxColumn

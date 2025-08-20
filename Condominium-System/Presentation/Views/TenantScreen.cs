@@ -195,7 +195,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "FirstName",
                 HeaderText = "Nombre",
                 Name = "FirstNameColumn",
-                Width = 120
+                Width = 140
             });
 
             TenantDTGData.Columns.Add(new DataGridViewTextBoxColumn
@@ -203,7 +203,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "LastName",
                 HeaderText = "Apellido",
                 Name = "LastNameColumn",
-                Width = 130
+                Width = 150
             });
 
             TenantDTGData.Columns.Add(new DataGridViewTextBoxColumn

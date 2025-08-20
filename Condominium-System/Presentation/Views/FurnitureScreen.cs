@@ -179,7 +179,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "Detail",
                 HeaderText = "Detalle",
                 Name = "DetailColumn",
-                Width = 335
+                Width = 370
             });
 
             FurnitureDTGData.Columns.Add(new DataGridViewTextBoxColumn

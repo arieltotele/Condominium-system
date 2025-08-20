@@ -193,7 +193,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "Code",
                 HeaderText = "Codigo",
                 Name = "CodeColumn",
-                Width = 130
+                Width = 170
             });
 
             HousingDTGData.Columns.Add(new DataGridViewTextBoxColumn
