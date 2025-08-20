@@ -36,6 +36,28 @@ namespace Condominium_System.Presentation.Views
             SetDataGridStyle();
             ConfigureInvoiceColumns();
             await LoadDataToDataGrid();
+
+            SetSearchTextBoxStyleAndBehavior();
+        }
+
+        private void SetSearchTextBoxStyleAndBehavior()
+        {
+            InvoiceTBID.Text = "Criterio de busqueda";
+            InvoiceTBID.ForeColor = SystemColors.GrayText;
+            InvoiceTBID.Enter += (s, e) => {
+                if (InvoiceTBID.Text == "Criterio de busqueda")
+                {
+                    InvoiceTBID.Text = "";
+                    InvoiceTBID.ForeColor = SystemColors.WindowText;
+                }
+            };
+            InvoiceTBID.Leave += (s, e) => {
+                if (string.IsNullOrWhiteSpace(InvoiceTBID.Text))
+                {
+                    InvoiceTBID.Text = "Criterio de busqueda";
+                    InvoiceTBID.ForeColor = SystemColors.GrayText;
+                }
+            };
         }
 
         private void InvoiceDTGData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
@@ -261,6 +283,7 @@ namespace Condominium_System.Presentation.Views
         private async void InvoiceTBID_TextChanged(object sender, EventArgs e)
         {
             if (!this.IsHandleCreated || this.IsDisposed) return;
+            if (InvoiceTBID.Text == "Criterio de busqueda") return;
 
             _searchCts?.Cancel();
             _searchCts = new CancellationTokenSource();
@@ -271,7 +294,7 @@ namespace Condominium_System.Presentation.Views
 
                 if (string.IsNullOrEmpty(searchTerm))
                 {
-                    LoadDataToDataGrid();
+                    await LoadDataToDataGrid();
                     return;
                 }
 
@@ -362,8 +385,8 @@ namespace Condominium_System.Presentation.Views
                     }
                 });
             }
-            catch (ObjectDisposedException) { }
-            catch (InvalidOperationException) { }
+            catch (ObjectDisposedException) {}
+            catch (InvalidOperationException) {}
         }
 
         private void GenerateInvoiceReportFromFilteredData_Click(object sender, EventArgs e)
