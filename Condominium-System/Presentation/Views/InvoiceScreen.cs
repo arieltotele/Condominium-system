@@ -260,6 +260,8 @@ namespace Condominium_System.Presentation.Views
 
         private async void InvoiceTBID_TextChanged(object sender, EventArgs e)
         {
+            if (!this.IsHandleCreated || this.IsDisposed) return;
+
             _searchCts?.Cancel();
             _searchCts = new CancellationTokenSource();
 
@@ -267,11 +269,17 @@ namespace Condominium_System.Presentation.Views
             {
                 string searchTerm = InvoiceTBID.Text.Trim();
 
+                if (string.IsNullOrEmpty(searchTerm))
+                {
+                    LoadDataToDataGrid();
+                    return;
+                }
+
                 await Task.Delay(500, _searchCts.Token);
 
                 bool shouldSearch = string.IsNullOrEmpty(searchTerm) || searchTerm.Length >= 2;
 
-                if (shouldSearch)
+                if (shouldSearch && !_searchCts.IsCancellationRequested)
                 {
                     var filteredInvoices = await _invoiceService.SearchInvoicesAsync(searchTerm);
 
@@ -279,47 +287,83 @@ namespace Condominium_System.Presentation.Views
                     {
                         _lastSearchTime = DateTime.Now;
 
-                        this.Invoke((MethodInvoker)delegate
+                        if (this.IsHandleCreated && !this.IsDisposed && !_searchCts.IsCancellationRequested)
                         {
-                            InvoiceDTGData.DataSource = filteredInvoices.ToList();
+                            this.BeginInvoke((MethodInvoker)delegate
+                            {
+                                if (this.IsHandleCreated && !this.IsDisposed && InvoiceDTGData != null && !InvoiceDTGData.IsDisposed)
+                                {
+                                    try
+                                    {
+                                        InvoiceDTGData.DataSource = filteredInvoices?.ToList() ?? new List<Invoice>();
 
-                            if (!filteredInvoices.Any() && !string.IsNullOrEmpty(searchTerm))
-                            {
-                                ShowStatusMessage("No se encontraron facturas", 3000);
-                            }
-                            else
-                            {
-                                statusLabel.Visible = false;
-                            }
-                        });
+                                        if (filteredInvoices != null && !filteredInvoices.Any() && !string.IsNullOrEmpty(searchTerm))
+                                        {
+                                            ShowStatusMessage("No se encontraron facturas", 3000);
+                                        }
+                                        else if (statusLabel != null)
+                                        {
+                                            statusLabel.Visible = false;
+                                        }
+                                    }
+                                    catch (ObjectDisposedException) { }
+                                }
+                            });
+                        }
                     }
                 }
             }
             catch (TaskCanceledException) { }
+            catch (OperationCanceledException) { }
             catch (Exception ex)
             {
-                this.Invoke((MethodInvoker)delegate
+                if (this.IsHandleCreated && !this.IsDisposed && !_searchCts.IsCancellationRequested)
                 {
-                    if (!_searchCts.IsCancellationRequested)
+                    this.BeginInvoke((MethodInvoker)delegate
                     {
-                        ShowStatusMessage($"Error: {ex.Message}", 3000);
-                    }
-                });
+                        if (this.IsHandleCreated && !this.IsDisposed && statusLabel != null)
+                        {
+                            try
+                            {
+                                ShowStatusMessage($"Error: {ex.Message}", 3000);
+                            }
+                            catch (ObjectDisposedException) { }
+                        }
+                    });
+                }
             }
         }
 
         private void ShowStatusMessage(string message, int durationMs)
         {
-            statusLabel.Text = message;
-            statusLabel.Visible = true;
+            if (statusLabel == null || this.IsDisposed || !this.IsHandleCreated)
+                return;
 
-            var timer = new Timer { Interval = durationMs };
-            timer.Tick += (s, e) =>
+            try
             {
-                statusLabel.Visible = false;
-                timer.Stop();
-            };
-            timer.Start();
+                this.BeginInvoke((MethodInvoker)delegate
+                {
+                    if (this.IsHandleCreated && !this.IsDisposed && statusLabel != null)
+                    {
+                        statusLabel.Text = message;
+                        statusLabel.Visible = true;
+
+                        var timer = new Timer { Interval = durationMs };
+                        timer.Tick += (s, e) =>
+                        {
+                            if (statusLabel != null && this.IsHandleCreated && !this.IsDisposed)
+                            {
+                                statusLabel.Visible = false;
+                            }
+                            timer.Stop();
+                            timer.Dispose();
+                        };
+                        timer.Start();
+                    }
+                });
+            }
+            catch (ObjectDisposedException) { }
+            catch (InvalidOperationException) { }
         }
 
         private void GenerateInvoiceReportFromFilteredData_Click(object sender, EventArgs e)

@@ -287,6 +287,7 @@ namespace Condominium_System.Presentation.Views
         private async void CondominiumTIId_TextChanged(object sender, EventArgs e)
         {
             if (!_isLoaded) return;
+            if (!this.IsHandleCreated || this.IsDisposed) return;
 
             _searchCts?.Cancel();
             _searchCts = new CancellationTokenSource();
@@ -295,59 +296,102 @@ namespace Condominium_System.Presentation.Views
             {
                 string searchTerm = CondominiumTIId.Text.Trim();
 
+                if (string.IsNullOrEmpty(searchTerm))
+                {
+                    LoadDataToDataGrid();
+                    return;
+                }
+
                 await Task.Delay(500, _searchCts.Token);
 
                 bool shouldSearch = string.IsNullOrEmpty(searchTerm) ||
                                   searchTerm.All(char.IsDigit) ||
                                   searchTerm.Length >= 2;
 
-                if (shouldSearch)
+                if (shouldSearch && !_searchCts.IsCancellationRequested)
                 {
                     var results = await _condominiumService.SearchCondominiumsAsync(searchTerm);
 
                     if (!_searchCts.IsCancellationRequested)
                     {
-                        this.Invoke((MethodInvoker)delegate
+                        if (this.IsHandleCreated && !this.IsDisposed && !_searchCts.IsCancellationRequested)
                         {
-                            CondominiumDTGData.DataSource = results.ToList();
+                            this.BeginInvoke((MethodInvoker)delegate
+                            {
+                                if (this.IsHandleCreated && !this.IsDisposed && CondominiumDTGData != null && !CondominiumDTGData.IsDisposed)
+                                {
+                                    try
+                                    {
+                                        CondominiumDTGData.DataSource = results?.ToList() ?? new List<Condominium>();
 
-                            if (!results.Any() && !string.IsNullOrEmpty(searchTerm))
-                            {
-                                ShowStatusMessage("No se encontraron condominios", 3000);                              
-                            }
-                            else
-                            {
-                                statusLabel.Visible = false;
-                            }
-                        });
+                                        if (results != null && !results.Any() && !string.IsNullOrEmpty(searchTerm))
+                                        {
+                                            ShowStatusMessage("No se encontraron condominios", 3000);
+                                        }
+                                        else if (statusLabel != null)
+                                        {
+                                            statusLabel.Visible = false;
+                                        }
+                                    }
+                                    catch (ObjectDisposedException) {}
+                                }
+                            });
+                        }
                     }
                 }
             }
-            catch (TaskCanceledException) { }
+            catch (TaskCanceledException) {}
+            catch (OperationCanceledException) {}
             catch (Exception ex)
             {
-                this.Invoke((MethodInvoker)delegate
+                // Manejo seguro de errores con verificación de estado del formulario
+                if (this.IsHandleCreated && !this.IsDisposed && !_searchCts.IsCancellationRequested)
                 {
-                    if (!_searchCts.IsCancellationRequested)
+                    this.BeginInvoke((MethodInvoker)delegate
                     {
-                        ShowStatusMessage($"Error: {ex.Message}", 3000);
-                    }
-                });
+                        if (this.IsHandleCreated && !this.IsDisposed && statusLabel != null)
+                        {
+                            try
+                            {
+                                ShowStatusMessage($"Error: {ex.Message}", 3000);
+                            }
+                            catch (ObjectDisposedException) {}
+                        }
+                    });
+                }
             }
         }
 
         private void ShowStatusMessage(string message, int durationMs)
         {
-            statusLabel.Text = message;
-            statusLabel.Visible = true;
+            if (statusLabel == null || this.IsDisposed || !this.IsHandleCreated)
+                return;
 
-            var timer = new Timer { Interval = durationMs };
-            timer.Tick += (s, e) =>
+            try
             {
-                statusLabel.Visible = false;
-                timer.Stop();
-            };
-            timer.Start();
+                this.BeginInvoke((MethodInvoker)delegate
+                {
+                    if (this.IsHandleCreated && !this.IsDisposed && statusLabel != null)
+                    {
+                        statusLabel.Text = message;
+                        statusLabel.Visible = true;
+
+                        var timer = new Timer { Interval = durationMs };
+                        timer.Tick += (s, e) =>
+                        {
+                            if (statusLabel != null && this.IsHandleCreated && !this.IsDisposed)
+                            {
+                                statusLabel.Visible = false;
+                            }
+                            timer.Stop();
+                            timer.Dispose();
+                        };
+                        timer.Start();
+                    }
+                });
+            }
+            catch (ObjectDisposedException) {}
+            catch (InvalidOperationException) {}
         }
 
         private void GenerateCondominiumReportFromFilteredData_Click(object sender, EventArgs e)

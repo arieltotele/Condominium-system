@@ -273,6 +273,8 @@ namespace Condominium_System.Presentation.Views
 
         private async void IncidenceTBID_TextChanged(object sender, EventArgs e)
         {
+            if (!this.IsHandleCreated || this.IsDisposed) return;
+
             _searchCts?.Cancel();
             _searchCts = new CancellationTokenSource();
 
@@ -280,46 +282,103 @@ namespace Condominium_System.Presentation.Views
             {
                 string searchTerm = IncidenceTBID.Text.Trim();
 
+                if (string.IsNullOrEmpty(searchTerm))
+                {
+                    LoadDataToDataGrid();
+                    return;
+                }
+
                 await Task.Delay(500, _searchCts.Token);
 
                 bool shouldSearch = string.IsNullOrEmpty(searchTerm) ||
                                   (searchTerm.All(char.IsDigit)) ||
                                   (searchTerm.Length > 1);
 
-                if (shouldSearch)
+                if (shouldSearch && !_searchCts.IsCancellationRequested)
                 {
                     var filteredIncidents = await _incidentService.SearchIncidentsAsync(searchTerm);
 
                     if (!_searchCts.IsCancellationRequested)
                     {
                         _lastSearchTime = DateTime.Now;
-                        IncidenceDTGData.DataSource = filteredIncidents.ToList();
 
-                        if (!filteredIncidents.Any() && !string.IsNullOrEmpty(searchTerm))
+                        if (this.IsHandleCreated && !this.IsDisposed && !_searchCts.IsCancellationRequested)
                         {
-                            statusLabel.Text = "No se encontraron incidentes";
-                            statusLabel.Visible = true;
-
-                            var hideTimer = new Timer { Interval = 3000 };
-                            hideTimer.Tick += (s, ev) =>
+                            this.BeginInvoke((MethodInvoker)delegate
                             {
-                                statusLabel.Visible = false;
-                                hideTimer.Stop();
-                            };
-                            hideTimer.Start();
+                                if (this.IsHandleCreated && !this.IsDisposed && IncidenceDTGData != null && !IncidenceDTGData.IsDisposed)
+                                {
+                                    try
+                                    {
+                                        IncidenceDTGData.DataSource = filteredIncidents?.ToList() ?? new List<Incident>();
+
+                                        if (filteredIncidents != null && !filteredIncidents.Any() && !string.IsNullOrEmpty(searchTerm))
+                                        {
+                                            ShowStatusMessage("No se encontraron incidentes", 3000);
+                                        }
+                                        else if (statusLabel != null)
+                                        {
+                                            statusLabel.Visible = false;
+                                        }
+                                    }
+                                    catch (ObjectDisposedException) { }
+                                }
+                            });
                         }
                     }
                 }
             }
             catch (TaskCanceledException) { }
+            catch (OperationCanceledException) { }
             catch (Exception ex)
             {
-                if (!_searchCts.IsCancellationRequested)
+                if (this.IsHandleCreated && !this.IsDisposed && !_searchCts.IsCancellationRequested)
                 {
-                    statusLabel.Text = $"Error: {ex.Message}";
-                    statusLabel.Visible = true;
+                    this.BeginInvoke((MethodInvoker)delegate
+                    {
+                        if (this.IsHandleCreated && !this.IsDisposed && statusLabel != null)
+                        {
+                            try
+                            {
+                                ShowStatusMessage($"Error: {ex.Message}", 3000);
+                            }
+                            catch (ObjectDisposedException) { }
+                        }
+                    });
                 }
             }
+        }
+
+        private void ShowStatusMessage(string message, int durationMs)
+        {
+            if (statusLabel == null || this.IsDisposed || !this.IsHandleCreated)
+                return;
+
+            try
+            {
+                this.BeginInvoke((MethodInvoker)delegate
+                {
+                    if (this.IsHandleCreated && !this.IsDisposed && statusLabel != null)
+                    {
+                        statusLabel.Text = message;
+                        statusLabel.Visible = true;
+
+                        var timer = new Timer { Interval = durationMs };
+                        timer.Tick += (s, e) =>
+                        {
+                            if (statusLabel != null && this.IsHandleCreated && !this.IsDisposed)
+                            {
+                                statusLabel.Visible = false;
+                            }
+                            timer.Stop();
+                            timer.Dispose();
+                        };
+                        timer.Start();
+                    }
+                });
+            }
+            catch (ObjectDisposedException) { }
+            catch (InvalidOperationException) { }
         }
 
         private void GenerateIncidenceReportFromFilteredData_Click(object sender, EventArgs e)

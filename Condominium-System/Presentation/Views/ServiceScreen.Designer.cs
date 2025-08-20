@@ -143,6 +143,7 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(169, 41);
             panel2.TabIndex = 57;
+            toolTip1.SetToolTip(panel2, "Generar reporte.");
             panel2.Click += GenerateServiceReportFromFilteredData_Click;
             // 
             // label2
@@ -155,6 +156,7 @@
             label2.Size = new Size(125, 21);
             label2.TabIndex = 1;
             label2.Text = "Generar Reporte";
+            toolTip1.SetToolTip(label2, "Generar reporte.");
             label2.Click += GenerateServiceReportFromFilteredData_Click;
             // 
             // pictureBox1
@@ -166,6 +168,7 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Generar reporte.");
             pictureBox1.Click += GenerateServiceReportFromFilteredData_Click;
             // 
             // ServiceScreen
@@ -180,8 +183,8 @@
             Controls.Add(ServiceDTGData);
             Name = "ServiceScreen";
             Text = "ServiceScreen";
+            toolTip1.SetToolTip(this, "Generar reporte.");
             Load += ServiceScreen_Load;
-            Click += GenerateServiceReportFromFilteredData_Click;
             LoginPNLUsername.ResumeLayout(false);
             LoginPNLUsername.PerformLayout();
             CondominiumPNLBTNCreate.ResumeLayout(false);

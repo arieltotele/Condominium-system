@@ -155,7 +155,6 @@ namespace Condominium_System.Presentation.Views
                     oldForm.Hide();
                     oldForm.Dispose();
                 }
-
                 HomeScreenPNLMain.Controls.Clear();
             }
 
@@ -164,6 +163,13 @@ namespace Condominium_System.Presentation.Views
             childForm.Dock = DockStyle.Fill;
             HomeScreenPNLMain.Controls.Add(childForm);
             HomeScreenPNLMain.Tag = childForm;
+
+            // Forzar la creación del handle antes de mostrar
+            if (!childForm.IsHandleCreated)
+            {
+                var handle = childForm.Handle; // Esto fuerza la creación del handle
+            }
+
             childForm.Show();
         }
 

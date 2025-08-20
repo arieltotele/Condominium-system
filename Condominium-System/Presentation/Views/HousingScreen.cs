@@ -289,6 +289,7 @@ namespace Condominium_System.Presentation.Views
         private async void HousingTBID_TextChanged(object sender, EventArgs e)
         {
             if (!_isLoaded) return;
+            if (!this.IsHandleCreated) return;
 
             _searchCts?.Cancel();
             _searchCts = new CancellationTokenSource();
@@ -311,19 +312,27 @@ namespace Condominium_System.Presentation.Views
                     {
                         _lastSearchTime = DateTime.Now;
 
-                        this.Invoke((MethodInvoker)delegate
+                        // Verificar si el control todavía está disponible
+                        if (this.IsHandleCreated && !this.IsDisposed)
                         {
-                            HousingDTGData.DataSource = filteredHousings.ToList();
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                // Verificar nuevamente por si acaso
+                                if (this.IsHandleCreated && !this.IsDisposed)
+                                {
+                                    HousingDTGData.DataSource = filteredHousings.ToList();
 
-                            if (!filteredHousings.Any() && !string.IsNullOrEmpty(searchTerm))
-                            {
-                                ShowStatusMessage("No se encontraron viviendas", 3000);
-                            }
-                            else
-                            {
-                                statusLabel.Visible = false;
-                            }
-                        });
+                                    if (!filteredHousings.Any() && !string.IsNullOrEmpty(searchTerm))
+                                    {
+                                        ShowStatusMessage("No se encontró vivienda", 3000);
+                                    }
+                                    else
+                                    {
+                                        statusLabel.Visible = false;
+                                    }
+                                }
+                            });
+                        }
                     }
                 }
             }
@@ -342,16 +351,34 @@ namespace Condominium_System.Presentation.Views
 
         private void ShowStatusMessage(string message, int durationMs)
         {
-            statusLabel.Text = message;
-            statusLabel.Visible = true;
+            if (statusLabel == null || this.IsDisposed || !this.IsHandleCreated)
+                return;
 
-            var timer = new Timer { Interval = durationMs };
-            timer.Tick += (s, e) =>
+            try
             {
-                statusLabel.Visible = false;
-                timer.Stop();
-            };
-            timer.Start();
+                this.BeginInvoke((MethodInvoker)delegate
+                {
+                    if (this.IsHandleCreated && !this.IsDisposed && statusLabel != null)
+                    {
+                        statusLabel.Text = message;
+                        statusLabel.Visible = true;
+
+                        var timer = new Timer { Interval = durationMs };
+                        timer.Tick += (s, e) =>
+                        {
+                            if (statusLabel != null && this.IsHandleCreated && !this.IsDisposed)
+                            {
+                                statusLabel.Visible = false;
+                            }
+                            timer.Stop();
+                            timer.Dispose();
+                        };
+                        timer.Start();
+                    }
+                });
+            }
+            catch (ObjectDisposedException) {}
+            catch (InvalidOperationException) {}
         }
 
         private void GenerateHousingReportFromFilteredData_Click(object sender, EventArgs e)

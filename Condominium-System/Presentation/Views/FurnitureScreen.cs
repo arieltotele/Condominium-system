@@ -279,6 +279,8 @@ namespace Condominium_System.Presentation.Views
         private async void FurnitureTBID_TextChanged(object sender, EventArgs e)
         {
             if (!_isLoaded) return;
+            if (!this.IsHandleCreated || this.IsDisposed) return;
+            if (FurnitureTBID.Text == "Criterio de busqueda") return;
 
             _searchCts?.Cancel();
             _searchCts = new CancellationTokenSource();
@@ -287,11 +289,17 @@ namespace Condominium_System.Presentation.Views
             {
                 string searchTerm = FurnitureTBID.Text.Trim();
 
+                if (string.IsNullOrEmpty(searchTerm))
+                {
+                    await LoadDataToDataGrid();
+                    return;
+                }
+
                 await Task.Delay(500, _searchCts.Token);
 
-                bool shouldSearch = string.IsNullOrEmpty(searchTerm) || searchTerm.Length >= 2;
+                bool shouldSearch = searchTerm.Length >= 2;
 
-                if (shouldSearch)
+                if (shouldSearch && !_searchCts.IsCancellationRequested)
                 {
                     var filteredFurniture = await _furnitureService.SearchFurnitureAsync(searchTerm);
 
@@ -299,47 +307,82 @@ namespace Condominium_System.Presentation.Views
                     {
                         _lastSearchTime = DateTime.Now;
 
-                        this.Invoke((MethodInvoker)delegate
+                        if (this.IsHandleCreated && !this.IsDisposed && !_searchCts.IsCancellationRequested)
                         {
-                            FurnitureDTGData.DataSource = filteredFurniture.ToList();
+                            this.BeginInvoke((MethodInvoker)delegate
+                            {
+                                if (this.IsHandleCreated && !this.IsDisposed && FurnitureDTGData != null && !FurnitureDTGData.IsDisposed)
+                                {
+                                    try
+                                    {
+                                        FurnitureDTGData.DataSource = filteredFurniture?.ToList() ?? new List<Furniture>();
 
-                            if (!filteredFurniture.Any() && !string.IsNullOrEmpty(searchTerm))
-                            {
-                                ShowStatusMessage("No se encontró mobiliario", 3000);
-                            }
-                            else
-                            {
-                                statusLabel.Visible = false;
-                            }
-                        });
+                                        if (filteredFurniture != null && !filteredFurniture.Any() && !string.IsNullOrEmpty(searchTerm))
+                                        {
+                                            ShowStatusMessage("No se encontró mobiliario", 3000);
+                                        }
+                                        else if (statusLabel != null)
+                                        {
+                                            statusLabel.Visible = false;
+                                        }
+                                    }
+                                    catch (ObjectDisposedException) {}
+                                }
+                            });
+                        }
                     }
                 }
             }
-            catch (TaskCanceledException) { }
+            catch (TaskCanceledException) {}
+            catch (OperationCanceledException) {}
             catch (Exception ex)
             {
-                this.Invoke((MethodInvoker)delegate
+                if (this.IsHandleCreated && !this.IsDisposed && !_searchCts.IsCancellationRequested)
                 {
-                    if (!_searchCts.IsCancellationRequested)
+                    this.BeginInvoke((MethodInvoker)delegate
                     {
-                        ShowStatusMessage($"Error: {ex.Message}", 3000);
-                    }
-                });
+                        if (this.IsHandleCreated && !this.IsDisposed && statusLabel != null)
+                        {
+                            try
+                            {
+                                ShowStatusMessage($"Error: {ex.Message}", 3000);
+                            }
+                            catch (ObjectDisposedException) {}
+                        }
+                    });
+                }
             }
         }
 
         private void ShowStatusMessage(string message, int durationMs)
         {
-            statusLabel.Text = message;
-            statusLabel.Visible = true;
+            if (statusLabel == null || this.IsDisposed || !this.IsHandleCreated)
+                return;
 
-            var timer = new Timer { Interval = durationMs };
-            timer.Tick += (s, e) =>
+            try
             {
-                statusLabel.Visible = false;
-                timer.Stop();
-            };
-            timer.Start();
+                if (statusLabel.GetCurrentParent() is StatusStrip parentStrip &&
+                    !parentStrip.IsDisposed && parentStrip.IsHandleCreated)
+                {
+                    statusLabel.Text = message;
+                    statusLabel.Visible = true;
+
+                    var timer = new Timer { Interval = durationMs };
+                    timer.Tick += (s, e) =>
+                    {
+                        if (statusLabel != null && statusLabel.GetCurrentParent() is StatusStrip currentStrip &&
+                            !currentStrip.IsDisposed && currentStrip.IsHandleCreated)
+                        {
+                            statusLabel.Visible = false;
+                        }
+                        timer.Stop();
+                        timer.Dispose();
+                    };
+                    timer.Start();
+                }
+            }
+            catch (ObjectDisposedException) {}
+            catch (InvalidOperationException) {}
         }
 
         private void GenerateFurnitureReportFromFilteredData_Click(object sender, EventArgs e)
