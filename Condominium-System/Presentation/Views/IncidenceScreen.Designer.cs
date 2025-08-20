@@ -180,9 +180,7 @@
             Controls.Add(IncidenceDTGData);
             Name = "IncidenceScreen";
             Text = "IncidenceScreen";
-            toolTip1.SetToolTip(this, "Guardar incidencia.");
             Load += IncidenceScreen_Load;
-            Click += IncidentPNLBTNCreate_Click;
             LoginPNLUsername.ResumeLayout(false);
             LoginPNLUsername.PerformLayout();
             CondominiumPNLBTNCreate.ResumeLayout(false);

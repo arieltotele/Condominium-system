@@ -274,6 +274,7 @@ namespace Condominium_System.Presentation.Views
         private async void IncidenceTBID_TextChanged(object sender, EventArgs e)
         {
             if (!this.IsHandleCreated || this.IsDisposed) return;
+            if (IncidenceTBID.Text == "Criterio de busqueda") return;
 
             _searchCts?.Cancel();
             _searchCts = new CancellationTokenSource();
@@ -284,7 +285,7 @@ namespace Condominium_System.Presentation.Views
 
                 if (string.IsNullOrEmpty(searchTerm))
                 {
-                    LoadDataToDataGrid();
+                    await LoadDataToDataGrid();
                     return;
                 }
 
