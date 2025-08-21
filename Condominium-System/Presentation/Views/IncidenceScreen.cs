@@ -209,7 +209,7 @@ namespace Condominium_System.Presentation.Views
             IncidenceDTGData.Columns.Add(new DataGridViewTextBoxColumn
             {
                 DataPropertyName = "TenantId",
-                HeaderText = "Identificacion del inquilino",
+                HeaderText = "Identificacion del propietario",
                 Name = "TenantIdColumn",
                 Width = 250
             });

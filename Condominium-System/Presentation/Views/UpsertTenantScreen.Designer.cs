@@ -317,7 +317,6 @@
             Name = "UpsertTenantScreen";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "UpsertTenant";
-            toolTip1.SetToolTip(this, "Guardar/Actualizar inquilino.");
             Load += UpsertTenantScreen_Load;
             panel8.ResumeLayout(false);
             panel7.ResumeLayout(false);

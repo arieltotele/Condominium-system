@@ -373,10 +373,10 @@
             HomeScreenLBLTenant.ForeColor = Color.White;
             HomeScreenLBLTenant.Location = new Point(45, 14);
             HomeScreenLBLTenant.Name = "HomeScreenLBLTenant";
-            HomeScreenLBLTenant.Size = new Size(71, 21);
+            HomeScreenLBLTenant.Size = new Size(87, 21);
             HomeScreenLBLTenant.TabIndex = 1;
-            HomeScreenLBLTenant.Text = "Inquilino";
-            toolTip1.SetToolTip(HomeScreenLBLTenant, "Ir al módulo de Inquilino");
+            HomeScreenLBLTenant.Text = "Propietario";
+            toolTip1.SetToolTip(HomeScreenLBLTenant, "Ir al módulo de Propietario");
             // 
             // pictureBox5
             // 

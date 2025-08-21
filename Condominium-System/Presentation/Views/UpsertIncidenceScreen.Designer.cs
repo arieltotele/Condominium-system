@@ -79,9 +79,9 @@
             label6.Font = new Font("Segoe UI", 12F);
             label6.Location = new Point(63, 112);
             label6.Name = "label6";
-            label6.Size = new Size(192, 21);
+            label6.Size = new Size(208, 21);
             label6.TabIndex = 103;
-            label6.Text = "Identificación del inquilino";
+            label6.Text = "Identificación del propietario";
             // 
             // panel6
             // 

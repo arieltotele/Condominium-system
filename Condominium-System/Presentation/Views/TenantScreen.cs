@@ -103,7 +103,7 @@ namespace Condominium_System.Presentation.Views
 
                 if (selectedTenant == null)
                 {
-                    MessageBox.Show("No se pudo identificar el inqulino.");
+                    MessageBox.Show("No se pudo identificar el propietario.");
                     return;
                 }
 
@@ -114,7 +114,7 @@ namespace Condominium_System.Presentation.Views
                 }
                 else if (relativeX >= 26 && relativeX < 52)
                 {
-                    var confirm = MessageBox.Show($"¿Deseas eliminar el inquilino '{selectedTenant.FirstName}'?",
+                    var confirm = MessageBox.Show($"¿Deseas eliminar el propietario '{selectedTenant.FirstName}'?",
                                                   "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                     if (confirm == DialogResult.Yes)
@@ -122,12 +122,12 @@ namespace Condominium_System.Presentation.Views
                         try
                         {
                             await _tenantService.DeleteAsync(selectedTenant.Id);
-                            MessageBox.Show("Inquilino eliminado correctamente.");
+                            MessageBox.Show("Propietario eliminado correctamente.");
                             await LoadDataToDataGrid();
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show($"Error al eliminar inquilino: {ex.Message}");
+                            MessageBox.Show($"Error al eliminar propietario: {ex.Message}");
                         }
                     }
                 }
@@ -140,14 +140,14 @@ namespace Condominium_System.Presentation.Views
             {
                 if (TenantDTGData.CurrentRow == null)
                 {
-                    MessageBox.Show("Por favor, selecciona un inquilino para editar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Por favor, selecciona un propietario para editar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 var selectedTenant = TenantDTGData.CurrentRow.DataBoundItem as Tenant;
                 if (selectedTenant == null)
                 {
-                    MessageBox.Show("Error al obtener el inquilino seleccionado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Error al obtener el propietario seleccionado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -175,7 +175,7 @@ namespace Condominium_System.Presentation.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error cargando inquilinos: {ex.Message}");
+                MessageBox.Show($"Error cargando propietarios: {ex.Message}");
             }
         }
 
@@ -277,13 +277,13 @@ namespace Condominium_System.Presentation.Views
                     }
                     else
                     {
-                        MessageBox.Show("Inquilino no encontrado.", "Búsqueda", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Propietario no encontrado.", "Búsqueda", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         CleanForm();
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error buscando inquilino: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Error buscando propietario: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     CleanForm();
                 }
             }
@@ -305,14 +305,14 @@ namespace Condominium_System.Presentation.Views
                     TenantToDelete.DeletedAt = DateTime.Now;
 
                     await _tenantService.DeleteAsync(Int32.Parse(TenantTBID.Text));
-                    MessageBox.Show("El inquilino ha sido borrado con exitosamente.");
+                    MessageBox.Show("El propietario ha sido borrado con exitosamente.");
 
                     await LoadDataToDataGrid();
                     CleanForm();
                 }
                 else
                 {
-                    MessageBox.Show("Inquilino no encontrado.");
+                    MessageBox.Show("Propietario no encontrado.");
                 }
             }
             else
@@ -446,7 +446,7 @@ namespace Condominium_System.Presentation.Views
 
                 if (tenants == null || !tenants.Any())
                 {
-                    MessageBox.Show("No se encontraron inquilinos para el informe.",
+                    MessageBox.Show("No se encontraron propietarios para el informe.",
                                     "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }

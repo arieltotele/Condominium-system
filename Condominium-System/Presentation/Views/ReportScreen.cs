@@ -39,7 +39,7 @@ namespace Condominium_System.Presentation.Views
         private void SetComboBoxForTypes()
         {
             var serviceTypes = new List<string> { "-- Seleccione una entidad --",
-                "Condominio", "Bloque", "Vivienda", "Inquilino", "Incidencia",
+                "Condominio", "Bloque", "Vivienda", "Propietario", "Incidencia",
                 "Factura", "Mobiliario", "Servicios", "Usuarios"};
             ReportComboBxEntities.DataSource = serviceTypes;
             ReportComboBxEntities.DropDownStyle = ComboBoxStyle.DropDownList;

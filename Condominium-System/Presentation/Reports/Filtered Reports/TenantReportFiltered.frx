@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="08/14/2025 08:35:45" ReportInfo.Modified="08/19/2025 11:38:26" ReportInfo.CreatorVersion="2025.2.0.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="08/14/2025 08:35:45" ReportInfo.Modified="08/21/2025 08:37:05" ReportInfo.CreatorVersion="2025.2.0.0">
   <ScriptText>using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -41,8 +41,8 @@ namespace FastReport
   </Dictionary>
   <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
     <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="179.55">
-      <ShapeObject Name="Shape1" Left="189" Top="18.9" Width="359.1" Height="75.6"/>
-      <TextObject Name="Text13" Left="217.35" Top="37.8" Width="302.4" Height="37.8" Text="Informe de Inquilinos" Font="Arial, 22pt"/>
+      <ShapeObject Name="Shape1" Left="160.65" Top="18.9" Width="387.45" Height="75.6"/>
+      <TextObject Name="Text13" Left="189" Top="37.8" Width="330.75" Height="37.8" Text="Informe de Propietarios" Font="Arial, 22pt"/>
       <TextObject Name="Text14" Left="567" Top="122.85" Width="94.5" Height="18.9" Text="[Date]" Font="Arial, 10pt"/>
       <TextObject Name="Text16" Left="567" Top="151.2" Width="141.75" Height="18.9" Text="Santo Domingo, D.N" Font="Arial, 10pt"/>
       <LineObject Name="Line2" Left="236.25" Top="122.85" Diagonal="true"/>

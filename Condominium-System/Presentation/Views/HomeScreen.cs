@@ -94,7 +94,7 @@ namespace Condominium_System.Presentation.Views
                     break;
 
                 case "HomeScreenPNLTenant":
-                    HomeScreenLBLTitle.Text = "Inquilino";
+                    HomeScreenLBLTitle.Text = "Propietario";
                     var tenantScreen = _serviceProvider.GetRequiredService<TenantScreen>();
                     LoadFormInPanel(tenantScreen);
                     break;

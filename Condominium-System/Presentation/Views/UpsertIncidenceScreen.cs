@@ -77,10 +77,10 @@ namespace Condominium_System.Presentation.Views
                 {
                     IncidenceCBTenants.DataSource = null;
                     IncidenceCBTenants.Items.Clear();
-                    IncidenceCBTenants.Text = "No hay inquilinos registrados";
+                    IncidenceCBTenants.Text = "No hay propietarios registrados";
                     IncidenceCBTenants.Enabled = false;
 
-                    MessageBox.Show("No se encontraron inquilinos registrados. Por favor, registre al menos un inquilino.",
+                    MessageBox.Show("No se encontraron propietarios registrados. Por favor, registre al menos un propietario.",
                                   "Información",
                                   MessageBoxButtons.OK,
                                   MessageBoxIcon.Information);
@@ -93,7 +93,7 @@ namespace Condominium_System.Presentation.Views
                     return;
                 }
 
-                var placeholder = new { Id = 0, Display = "-- Seleccione un inquilino --" };
+                var placeholder = new { Id = 0, Display = "-- Seleccione un propietario --" };
 
                 var tenantDisplayList = tenants.Select(t => new
                 {
@@ -113,10 +113,10 @@ namespace Condominium_System.Presentation.Views
             {
                 IncidenceCBTenants.DataSource = null;
                 IncidenceCBTenants.Items.Clear();
-                IncidenceCBTenants.Text = "Error al cargar inquilinos";
+                IncidenceCBTenants.Text = "Error al cargar propietarios";
                 IncidenceCBTenants.Enabled = false;
 
-                MessageBox.Show($"Error cargando inquilinos: {ex.Message}",
+                MessageBox.Show($"Error cargando propietarios: {ex.Message}",
                               "Error",
                               MessageBoxButtons.OK,
                               MessageBoxIcon.Error);
