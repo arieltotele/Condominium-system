@@ -155,10 +155,9 @@ namespace Condominium_System.Data.Context
     {
         public AppDbContext CreateDbContext(string[] args)
         {
-            // Cargar configuración desde appsettings.json
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json") // Asegúrate que el archivo exista en la ruta
+                .AddJsonFile("appsettings.json")
                 .Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
@@ -166,7 +165,7 @@ namespace Condominium_System.Data.Context
 
             optionsBuilder
                 .UseSqlServer(connectionString)
-                .UseLazyLoadingProxies(); // si usas proxies
+                .UseLazyLoadingProxies();
 
             return new AppDbContext(optionsBuilder.Options);
         }

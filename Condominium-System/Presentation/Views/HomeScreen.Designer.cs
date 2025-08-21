@@ -307,9 +307,9 @@
             HomeScreenLBLInvoice.ForeColor = Color.White;
             HomeScreenLBLInvoice.Location = new Point(45, 14);
             HomeScreenLBLInvoice.Name = "HomeScreenLBLInvoice";
-            HomeScreenLBLInvoice.Size = new Size(60, 21);
+            HomeScreenLBLInvoice.Size = new Size(89, 21);
             HomeScreenLBLInvoice.TabIndex = 1;
-            HomeScreenLBLInvoice.Text = "Factura";
+            HomeScreenLBLInvoice.Text = "Facturacion";
             toolTip1.SetToolTip(HomeScreenLBLInvoice, "Ir al módulo de Factura");
             // 
             // pictureBox7
