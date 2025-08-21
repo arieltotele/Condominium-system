@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="08/14/2025 08:10:29" ReportInfo.Modified="08/14/2025 11:47:44" ReportInfo.CreatorVersion="2025.2.0.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFyVMFQFgloOWr5TX5FL1ZFJR271AOOetRIvM3i7KrbUVrMfFjj7YnJgsFKiVsWMPFnraJusK+kxm9GxDcrOaJoj0cxWx2sBQO918wvcoPmcVo1+MloAx3+JEfRSsgCVhr">
+      <TableDataSource Name="Housings" DataType="System.Int32" Enabled="true" TableName="Housings">
+        <Column Name="Id" DataType="System.Int32"/>
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="PeopleCount" DataType="System.Int32"/>
+        <Column Name="RoomCount" DataType="System.Int32"/>
+        <Column Name="BathroomCount" DataType="System.Int32"/>
+        <Column Name="BlockId" DataType="System.Int32"/>
+        <Column Name="Author" DataType="System.String"/>
+        <Column Name="CreatedAt" DataType="System.DateTime"/>
+        <Column Name="DeletedAt" DataType="System.DateTime"/>
+        <Column Name="IsActive" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="UpdatedAt" DataType="System.DateTime"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="141.75">
+      <TextObject Name="Text14" Left="198.45" Top="28.35" Width="321.3" Height="28.35" Border.Color="White" Text="Informe de viviendas" Font="Arial, 22pt, style=Bold"/>
+      <ShapeObject Name="Shape2" Left="170.1" Top="18.9" Width="368.55" Height="56.7"/>
+      <TextObject Name="Text15" Left="567" Top="85.05" Width="94.5" Height="18.9" Border.Color="White" Text="[Date]" Font="Arial, 10pt"/>
+      <TextObject Name="Text16" Left="567" Top="113.4" Width="141.75" Height="18.9" Border.Color="White" Text="Santo Domingo, D.N" Font="Arial, 10pt"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="144.04" Width="718.2" Height="37.8" Guides="9.45">
+      <ShapeObject Name="Shape1" Left="-9.45" Width="737.1" Height="37.8" Fill.Color="Black"/>
+      <TextObject Name="Text2" Top="9.45" Width="103.95" Height="18.9" Text="Identificación" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text4" Left="103.95" Top="9.45" Width="94.5" Height="18.9" Text="Código" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text6" Left="198.45" Top="9.45" Width="141.75" Height="18.9" Text="Cantidad Personas" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text8" Left="330.75" Top="9.45" Width="160.65" Height="18.9" Text="Cantidad Habitaciones" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text10" Left="491.4" Top="9.45" Width="113.4" Height="18.9" Text="Cantidad Baños" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text12" Left="623.7" Top="9.45" Width="94.5" Height="18.9" Text="Autor" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="184.12" Width="718.2" Height="37.8" DataSource="Housings">
+      <TextObject Name="Text1" Left="9.45" Top="18.9" Width="85.05" Height="18.9" Text="[Housings.Id]" Font="Arial, 10pt"/>
+      <TextObject Name="Text3" Left="103.95" Top="18.9" Width="94.5" Height="18.9" Text="[Housings.Code]" Font="Arial, 10pt"/>
+      <TextObject Name="Text5" Left="207.9" Top="18.9" Width="94.5" Height="18.9" Text="[Housings.PeopleCount]" Font="Arial, 10pt"/>
+      <TextObject Name="Text7" Left="330.75" Top="18.9" Width="103.95" Height="18.9" Text="[Housings.RoomCount]" Font="Arial, 10pt"/>
+      <TextObject Name="Text9" Left="500.85" Top="18.9" Width="103.95" Height="18.9" Text="[Housings.BathroomCount]" Font="Arial, 10pt"/>
+      <TextObject Name="Text11" Left="623.7" Top="18.9" Width="94.5" Height="18.9" Text="[Housings.Author]" Font="Arial, 10pt"/>
+      <LineObject Name="Line1" Top="9.45" Width="718.2" Diagonal="true"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="224.21" Width="718.2" Height="28.35">
+      <TextObject Name="Text17" Left="652.05" Top="9.45" Width="56.7" Height="18.9" Text="[Page]" Font="Arial, 10pt"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="08/14/2025 08:35:45" ReportInfo.Modified="08/21/2025 08:37:05" ReportInfo.CreatorVersion="2025.2.0.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <BusinessObjectDataSource Name="Tenants" ReferenceName="Tenants" DataType="System.Int32" Enabled="true">
+      <Column Name="Id" DataType="System.Int32"/>
+      <Column Name="FirstName" DataType="System.String"/>
+      <Column Name="LastName" DataType="System.String"/>
+      <Column Name="DocumentNumber" DataType="System.String"/>
+      <Column Name="PhoneNumber" DataType="System.String"/>
+      <Column Name="BirthDate" DataType="System.DateTime"/>
+      <Column Name="Gender" DataType="System.String"/>
+      <Column Name="EntryDate" DataType="System.DateTime"/>
+      <Column Name="HousingId" DataType="System.Int32"/>
+      <Column Name="Author" DataType="System.String"/>
+      <Column Name="CreatedAt" DataType="System.DateTime"/>
+      <Column Name="DeletedAt" DataType="System.DateTime"/>
+      <Column Name="IsActive" DataType="System.Boolean" BindableControl="CheckBox"/>
+      <Column Name="UpdatedAt" DataType="System.DateTime"/>
+    </BusinessObjectDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="179.55">
+      <ShapeObject Name="Shape1" Left="160.65" Top="18.9" Width="387.45" Height="75.6"/>
+      <TextObject Name="Text13" Left="189" Top="37.8" Width="330.75" Height="37.8" Text="Informe de Propietarios" Font="Arial, 22pt"/>
+      <TextObject Name="Text14" Left="567" Top="122.85" Width="94.5" Height="18.9" Text="[Date]" Font="Arial, 10pt"/>
+      <TextObject Name="Text16" Left="567" Top="151.2" Width="141.75" Height="18.9" Text="Santo Domingo, D.N" Font="Arial, 10pt"/>
+      <LineObject Name="Line2" Left="236.25" Top="122.85" Diagonal="true"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="182.22" Width="718.2" Height="47.25" Guides="28.35">
+      <ShapeObject Name="Shape2" Top="9.45" Width="727.65" Height="37.8" Fill.Color="Black"/>
+      <TextObject Name="Text1" Left="9.45" Top="18.9" Width="103.95" Height="18.9" Border.Color="White" Text="Identificación" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text2" Left="122.85" Top="18.9" Width="198.45" Height="18.9" Border.Color="White" Text="Nombre completo" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text4" Left="340.2" Top="18.9" Width="160.65" Height="18.9" Border.Color="White" Text="Número de Documento" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text5" Left="510.3" Top="18.9" Width="94.5" Height="18.9" Border.Color="White" Text="Contacto" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text6" Left="614.25" Top="18.9" Width="94.5" Height="18.9" Border.Color="White" Text="Sexo" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="232.13" Width="718.2" Height="37.8" DataSource="Tenants">
+      <TextObject Name="Text17" Left="9.45" Top="9.45" Width="94.5" Height="18.9" Border.Color="White" Text="[Tenants.Id]" Font="Arial, 10pt"/>
+      <TextObject Name="Text18" Left="122.85" Top="9.45" Width="198.45" Height="18.9" Border.Color="White" Text="[Tenants.FirstName] [Tenants.LastName]" Font="Arial, 10pt"/>
+      <TextObject Name="Text20" Left="340.2" Top="9.45" Width="94.5" Height="18.9" Border.Color="White" Text="[Tenants.DocumentNumber]" Font="Arial, 10pt"/>
+      <TextObject Name="Text21" Left="510.3" Top="9.45" Width="94.5" Height="18.9" Border.Color="White" Text="[Tenants.PhoneNumber]" Font="Arial, 10pt"/>
+      <TextObject Name="Text22" Left="614.25" Top="9.45" Width="94.5" Height="18.9" Border.Color="White" Text="[Tenants.Gender]" Font="Arial, 10pt"/>
+      <LineObject Name="Line1" Width="718.2" Diagonal="true"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="272.6" Width="718.2" Height="37.8">
+      <TextObject Name="Text23" Left="652.05" Top="18.9" Width="56.7" Height="18.9" Text="[Page]" Font="Arial, 10pt"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

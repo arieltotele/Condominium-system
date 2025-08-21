@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="08/14/2025 11:20:48" ReportInfo.Modified="08/14/2025 12:00:46" ReportInfo.CreatorVersion="2025.2.0.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFyVMFQFgloOWr5TX5FL1ZFJR271AOOetRIvM3i7KrbUVrMfFjj7YnJgsFKiVsWMPFnraJusK+kxm9GxDcrOaJoj0cxWx2sBQO918wvcoPmcW3IKMiY36vTEaovXl5yDr7">
+      <TableDataSource Name="Users" DataType="System.Int32" Enabled="true" TableName="Users">
+        <Column Name="Id" DataType="System.Int32"/>
+        <Column Name="FirstName" DataType="System.String"/>
+        <Column Name="LastName" DataType="System.String"/>
+        <Column Name="DocumentNumber" DataType="System.String"/>
+        <Column Name="PhoneNumber" DataType="System.String"/>
+        <Column Name="Username" DataType="System.String"/>
+        <Column Name="Password" DataType="System.String"/>
+        <Column Name="Type" DataType="System.String"/>
+        <Column Name="CondominiumId" DataType="System.Int32"/>
+        <Column Name="Author" DataType="System.String"/>
+        <Column Name="CreatedAt" DataType="System.DateTime"/>
+        <Column Name="DeletedAt" DataType="System.DateTime"/>
+        <Column Name="IsActive" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="UpdatedAt" DataType="System.DateTime"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="189">
+      <ShapeObject Name="Shape1" Left="170.1" Top="28.35" Width="378" Height="75.6"/>
+      <TextObject Name="Text13" Left="207.9" Top="47.25" Width="302.4" Height="37.8" Text="Informe de Usuarios" Font="Arial, 22pt"/>
+      <TextObject Name="Text14" Left="567" Top="132.3" Width="94.5" Height="18.9" Text="[Date]" Font="Arial, 10pt"/>
+      <TextObject Name="Text16" Left="567" Top="160.65" Width="141.75" Height="18.9" Text="Santo Domingo, D.N" Font="Arial, 10pt"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="191.29" Width="718.2" Height="37.8">
+      <ShapeObject Name="Shape2" Left="-37.8" Width="784.35" Height="37.8" Fill.Color="Black"/>
+      <TextObject Name="Text1" Left="9.45" Top="9.45" Width="103.95" Height="18.9" Text="Identificación" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text2" Left="113.4" Top="9.45" Width="122.85" Height="18.9" Text="Nombre completo" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text3" Left="245.7" Top="9.45" Width="122.85" Height="18.9" Text="Documento" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text4" Left="368.55" Top="9.45" Width="94.5" Height="18.9" Text="Contacto" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text5" Left="472.5" Top="9.45" Width="141.75" Height="18.9" Text="Nombre de Usuario" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text6" Left="614.25" Top="9.45" Width="94.5" Height="18.9" Text="Tipo" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="231.37" Width="718.2" Height="37.8" DataSource="Users">
+      <TextObject Name="Text18" Left="9.45" Top="9.45" Width="94.5" Height="18.9" Text="[Users.Id]" Font="Arial, 10pt"/>
+      <TextObject Name="Text19" Left="113.4" Top="9.45" Width="122.85" Height="18.9" Text="[Users.FirstName] [Users.LastName]" Font="Arial, 10pt"/>
+      <TextObject Name="Text20" Left="245.7" Top="9.45" Width="122.85" Height="18.9" Text="[Users.DocumentNumber]" Font="Arial, 10pt"/>
+      <TextObject Name="Text21" Left="368.55" Top="9.45" Width="94.5" Height="18.9" Text="[Users.PhoneNumber]" Font="Arial, 10pt"/>
+      <TextObject Name="Text22" Left="472.5" Top="9.45" Width="122.85" Height="18.9" Text="[Users.Username]" Font="Arial, 10pt"/>
+      <TextObject Name="Text23" Left="614.25" Top="9.45" Width="94.5" Height="18.9" Text="[Users.Type]" Font="Arial, 10pt"/>
+      <LineObject Name="Line1" Left="-37.8" Width="784.35" Diagonal="true"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="271.46" Width="718.2" Height="28.35">
+      <TextObject Name="Text17" Left="652.05" Top="9.45" Width="56.7" Height="18.9" Text="[Page]" Font="Arial, 10pt"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="08/14/2025 10:09:34" ReportInfo.Modified="08/14/2025 10:24:39" ReportInfo.CreatorVersion="2025.2.0.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFyVMFQFgloOWr5TX5FL1ZFJR271AOOetRIvM3i7KrbUVrMfFjj7YnJgsFKiVsWMPFnraJusK+kxm9GxDcrOaJoj0cxWx2sBQO918wvcoPmcWmjYtwfhWupWdOFBulXosJ">
+      <TableDataSource Name="Furnitures" DataType="System.Int32" Enabled="true" TableName="Furnitures">
+        <Column Name="Id" DataType="System.Int32"/>
+        <Column Name="Name" DataType="System.String"/>
+        <Column Name="Detail" DataType="System.String"/>
+        <Column Name="Type" DataType="System.String"/>
+        <Column Name="Author" DataType="System.String"/>
+        <Column Name="CreatedAt" DataType="System.DateTime"/>
+        <Column Name="DeletedAt" DataType="System.DateTime"/>
+        <Column Name="IsActive" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="UpdatedAt" DataType="System.DateTime"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="189">
+      <ShapeObject Name="Shape1" Left="179.55" Top="28.35" Width="359.1" Height="75.6"/>
+      <TextObject Name="Text13" Left="207.9" Top="47.25" Width="302.4" Height="37.8" Text="Informe de Mobiliario" Font="Arial, 22pt"/>
+      <TextObject Name="Text14" Left="567" Top="132.3" Width="94.5" Height="18.9" Text="[Date]" Font="Arial, 10pt"/>
+      <TextObject Name="Text16" Left="567" Top="160.65" Width="141.75" Height="18.9" Text="Santo Domingo, D.N" Font="Arial, 10pt"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="191.29" Width="718.2" Height="37.8">
+      <ShapeObject Name="Shape2" Width="727.65" Height="37.8" Fill.Color="Black"/>
+      <TextObject Name="Text3" Left="255.15" Top="9.45" Width="94.5" Height="18.9" Text="Detalle" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text1" Left="9.45" Top="9.45" Width="103.95" Height="18.9" Text="Identificación" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text2" Left="122.85" Top="9.45" Width="94.5" Height="18.9" Text="Nombre" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text4" Left="481.95" Top="9.45" Width="94.5" Height="18.9" Text="Tipo" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text5" Left="595.35" Top="9.45" Width="94.5" Height="18.9" Text="Creado por" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <LineObject Name="Line1" Left="-9.45" Top="18.9" Diagonal="true"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="231.37" Width="718.2" Height="37.8" DataSource="Furnitures">
+      <TextObject Name="Text17" Left="9.45" Top="9.45" Width="94.5" Height="18.9" Text="[Furnitures.Id]" Font="Arial, 10pt"/>
+      <TextObject Name="Text18" Left="122.85" Top="9.45" Width="122.85" Height="18.9" Text="[Furnitures.Name]" Font="Arial, 10pt"/>
+      <TextObject Name="Text19" Left="255.15" Top="9.45" Width="207.9" Height="18.9" Text="[Furnitures.Detail]" Font="Arial, 10pt"/>
+      <TextObject Name="Text20" Left="481.95" Top="9.45" Width="94.5" Height="18.9" Text="[Furnitures.Type]" Font="Arial, 10pt"/>
+      <TextObject Name="Text21" Left="595.35" Top="9.45" Width="132.3" Height="18.9" Text="[Furnitures.Author]" Font="Arial, 10pt"/>
+      <LineObject Name="Line2" Width="727.65" Diagonal="true"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="271.46" Width="718.2" Height="28.35">
+      <TextObject Name="Text22" Left="652.05" Top="9.45" Width="56.7" Height="18.9" Text="[Page]" Font="Arial, 10pt"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="08/13/2025 15:35:28" ReportInfo.Modified="08/19/2025 10:43:34" ReportInfo.CreatorVersion="2025.2.0.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <BusinessObjectDataSource Name="Blocks" ReferenceName="Blocks" DataType="System.Int32" Enabled="true">
+        <Column Name="Id" DataType="System.Int32"/>
+        <Column Name="Name" DataType="System.String"/>
+        <Column Name="Feature" DataType="System.String"/>
+        <Column Name="HousingType" DataType="System.String"/>
+        <Column Name="HousingCount" DataType="System.Int32"/>
+        <Column Name="Address" DataType="System.String"/>
+        <Column Name="CondominiumId" DataType="System.Int32"/>
+        <Column Name="Author" DataType="System.String"/>
+        <Column Name="CreatedAt" DataType="System.DateTime"/>
+        <Column Name="DeletedAt" DataType="System.DateTime"/>
+        <Column Name="IsActive" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="UpdatedAt" DataType="System.DateTime"/>
+      </BusinessObjectDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1" Guides="708.75" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="189">
+      <ShapeObject Name="Shape1" Left="189" Top="28.35" Width="359.1" Height="75.6"/>
+      <TextObject Name="Text13" Left="217.35" Top="47.25" Width="283.5" Height="37.8" Text="Informe de Bloques" Font="Arial, 22pt"/>
+      <TextObject Name="Text14" Left="567" Top="132.3" Width="94.5" Height="18.9" Text="[Date]" Font="Arial, 10pt"/>
+      <TextObject Name="Text16" Left="567" Top="160.65" Width="141.75" Height="18.9" Text="Santo Domingo, D.N" Font="Arial, 10pt"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="191.67" Width="718.2" Height="37.8">
+      <ShapeObject Name="Shape2" Width="727.65" Height="37.8" Border.ShadowColor="0, 0, 128" Border.Color="0, 0, 128" Fill.Color="0, 0, 128"/>
+      <TextObject Name="Text2" Left="9.45" Top="9.45" Width="103.95" Height="18.9" Border.Color="White" Text="Identificación" Font="Arial, 10pt" TextFill.Color="White"/>
+      <TextObject Name="Text4" Left="113.4" Top="9.45" Width="94.5" Height="18.9" Text="Nombre" Font="Arial, 10pt" TextFill.Color="White"/>
+      <TextObject Name="Text6" Left="207.9" Top="9.45" Width="103.95" Height="18.9" Text="Carácteristicas" Font="Arial, 10pt" TextFill.Color="White"/>
+      <TextObject Name="Text8" Left="340.2" Top="9.45" Width="94.5" Height="18.9" Text="Tipos de casa" Font="Arial, 10pt" TextFill.Color="White"/>
+      <TextObject Name="Text10" Left="444.15" Top="9.45" Width="103.95" Height="18.9" Text="Cant. de Casas&#13;&#10;" Font="Arial, 10pt" TextFill.Color="White"/>
+      <TextObject Name="Text12" Left="567" Top="9.45" Width="94.5" Height="18.9" Text="Dirección" Font="Arial, 10pt" TextFill.Color="White"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="232.13" Width="718.2" Height="37.8" DataSource="Blocks">
+      <TextObject Name="Text1" Left="9.45" Top="9.45" Width="75.6" Height="18.9" Text="[Blocks.Id]" Font="Arial, 10pt"/>
+      <TextObject Name="Text3" Left="113.4" Top="9.45" Width="94.5" Height="18.9" Text="[Blocks.Name]" Font="Arial, 10pt"/>
+      <TextObject Name="Text5" Left="207.9" Top="9.45" Width="122.85" Height="18.9" Text="[Blocks.Feature]" Font="Arial, 10pt"/>
+      <TextObject Name="Text7" Left="340.2" Top="9.45" Width="94.5" Height="18.9" Text="[Blocks.HousingType]" Font="Arial, 10pt"/>
+      <TextObject Name="Text9" Left="444.15" Top="9.45" Width="94.5" Height="18.9" Text="[Blocks.HousingCount]" Font="Arial, 10pt"/>
+      <TextObject Name="Text11" Left="567" Top="9.45" Width="113.4" Height="18.9" Text="[Blocks.Address]" Font="Arial, 10pt"/>
+      <LineObject Name="Line1" Width="727.65" Diagonal="true"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="272.6" Width="718.2" Height="28.35">
+      <TextObject Name="Text17" Left="652.05" Top="9.45" Width="56.7" Height="18.9" Text="[Page]" Font="Arial, 10pt"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

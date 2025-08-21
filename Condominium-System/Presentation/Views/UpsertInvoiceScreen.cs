@@ -1,0 +1,295 @@
+﻿using Condominium_System.Business.Services;
+using Condominium_System.Data.Entities;
+using Condominium_System.Data.Repositories;
+using Condominium_System.Helpers;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Condominium_System.Presentation.Views
+{
+    public partial class UpsertInvoiceScreen : Form
+    {
+        private readonly IInvoiceService _invoiceService;
+        private readonly ITenantService _tenantService;
+        private readonly IServiceProvider _serviceProvider;
+        private readonly IRepositoryNoId<HousingService> _housingServiceRepository;
+
+        private readonly User currentUser;
+
+        public bool IsEditMode { get; set; } = false;
+
+        public UpsertInvoiceScreen(IInvoiceService invoiceService, ITenantService tenantService,
+            IServiceProvider serviceProvider, IRepositoryNoId<HousingService> housingServiceRepository)
+        {
+            InitializeComponent();
+            _invoiceService = invoiceService;
+            _tenantService = tenantService;
+            _serviceProvider = serviceProvider;
+            currentUser = Session.CurrentUser;
+            _housingServiceRepository = housingServiceRepository;
+        }
+
+        private async void UpsertInvoiceScreen_Load(object sender, EventArgs e)
+        {
+            await SetComboBoxForTenants();
+
+            if (IsEditMode)
+            {
+                LoadDataIfIsToUpdate();
+            }
+        }
+
+        private async Task SetComboBoxForTenants()
+        {
+            try
+            {
+                var tenants = (await _tenantService.GetAllAsync()).ToList();
+
+                if (!tenants.Any())
+                {
+                    UpsertInvoiceComboBxTenants.DataSource = null;
+                    UpsertInvoiceComboBxTenants.Items.Clear();
+                    UpsertInvoiceComboBxTenants.Text = "No hay inquilinos registrados";
+                    UpsertInvoiceComboBxTenants.Enabled = false;
+
+                    MessageBox.Show("No se encontraron inquilinos registrados. Por favor, registre al menos un inquilino.",
+                                  "Información",
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Information);
+
+                    // Cierra el modal si no hay inquilinos
+                    if (this.Owner is InvoiceScreen owner) // Ajusta el tipo según tu formulario padre
+                    {
+                        await owner.LoadDataToDataGrid();
+                    }
+                    this.Hide();
+                    return;
+                }
+                var placeholder = new Tenant
+                {
+                    Id = 0,
+                    FirstName = "-- Seleccione un inquilino --",
+                    LastName = string.Empty,
+                    DocumentNumber = string.Empty
+                };
+
+                var tenantList = new List<Tenant> { placeholder };
+                tenantList.AddRange(tenants);
+
+                UpsertInvoiceComboBxTenants.DataSource = tenantList;
+                UpsertInvoiceComboBxTenants.DisplayMember = "FirstName";
+                UpsertInvoiceComboBxTenants.ValueMember = "Id";
+                UpsertInvoiceComboBxTenants.SelectedIndex = 0;
+                UpsertInvoiceComboBxTenants.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                UpsertInvoiceComboBxTenants.DataSource = null;
+                UpsertInvoiceComboBxTenants.Items.Clear();
+                UpsertInvoiceComboBxTenants.Text = "Error al cargar inquilinos";
+                UpsertInvoiceComboBxTenants.Enabled = false;
+
+                MessageBox.Show($"Error cargando inquilinos: {ex.Message}",
+                              "Error",
+                              MessageBoxButtons.OK,
+                              MessageBoxIcon.Error);
+
+                if (this.Owner is InvoiceScreen owner)
+                {
+                    await owner.LoadDataToDataGrid();
+                }
+                this.Hide();
+            }
+            finally
+            {
+                UpsertInvoiceComboBxTenants.Refresh();
+            }
+        }
+
+        private async void LoadDataIfIsToUpdate()
+        {
+            if (IsEditMode && Session.InvoiceToUpsert != null)
+            {
+                var InvoiceToUpdate = Session.InvoiceToUpsert;
+
+                UpsertInvoiceTBDescription.Text = InvoiceToUpdate.Detail;
+                UpsertInvoiceTBTotalAmount.Text = InvoiceToUpdate.TotalAmount.ToString();
+
+                await SetComboBoxForTenants();
+                UpsertInvoiceComboBxTenants.SelectedValue = InvoiceToUpdate.TenantId;
+
+            }
+        }
+
+        private void UpsertLBLBTN_Click(object sender, EventArgs e)
+        {
+            if (IsEditMode) { EditIncidence(); }
+            else { SaveIncidence(); }
+        }
+
+        private async void EditIncidence()
+        {
+            if (FormIsCorrect())
+            {
+                try
+                {
+                    if (!TryGetRawDecimal(UpsertInvoiceTBTotalAmount.Text, out string totalAmount))
+                    {
+                        MessageBox.Show("Formato de monto inválido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    var InvoiceToUpdate = Session.InvoiceToUpsert;
+
+                    if (InvoiceToUpdate != null)
+                    {
+                        InvoiceToUpdate.Detail = UpsertInvoiceTBDescription.Text;
+                        InvoiceToUpdate.TotalAmount = UpsertInvoiceTBTotalAmount.Text;
+                        InvoiceToUpdate.TenantId = (int)UpsertInvoiceComboBxTenants.SelectedValue;
+                        InvoiceToUpdate.UpdatedAt = DateTime.Now;
+
+                        await _invoiceService.UpdateAsync(InvoiceToUpdate);
+
+                        MessageBox.Show("La factura ha sido actualizado con exito");
+                        CleanForm();
+                        await ((InvoiceScreen)this.Owner).LoadDataToDataGrid();
+                        this.Hide();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Factura no encontrada.");
+                        CleanForm();
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error guardando factura: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    CleanForm();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Todos los campos deben ser completados correctamente.");
+            }
+        }
+
+        private async void SaveIncidence()
+        {
+            if (FormIsCorrect())
+            {
+                try
+                {
+                    if (!TryGetRawDecimal(UpsertInvoiceTBTotalAmount.Text, out string totalAmount))
+                    {
+                        MessageBox.Show("El monto total debe ser un valor numérico positivo",
+                                      "Error",
+                                      MessageBoxButtons.OK,
+                                      MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    var newInvoice = new Invoice()
+                    {
+                        Detail = UpsertInvoiceTBDescription.Text,
+                        TotalAmount = totalAmount.ToString(CultureInfo.InvariantCulture), // Guardar sin formato
+                        TenantId = (int)UpsertInvoiceComboBxTenants.SelectedValue,
+                        Author = currentUser.Username,
+                        IssueDate = DateTime.Now
+                    };
+
+                    await _invoiceService.CreateAsync(newInvoice);
+
+                    MessageBox.Show("Factura creada exitosamente");
+                    CleanForm();
+                    await ((InvoiceScreen)this.Owner).LoadDataToDataGrid();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al guardar la factura: {ex.Message}",
+                                  "Error",
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Todos los campos deben ser completados correctamente.");
+            }
+        }
+
+        public bool FormIsCorrect()
+        {
+            bool isInvoiceValid = int.TryParse(UpsertInvoiceComboBxTenants.SelectedValue?.ToString(), out int invoiceId) && invoiceId != 0;
+
+            return !(
+               string.IsNullOrEmpty(UpsertInvoiceTBDescription.Text) ||
+               string.IsNullOrEmpty(UpsertInvoiceTBTotalAmount.Text) ||
+               !isInvoiceValid
+           );
+        }
+
+        private async void CleanForm()
+        {
+            UpsertInvoiceTBDescription.Clear();
+            UpsertInvoiceTBTotalAmount.Clear();
+
+            if (UpsertInvoiceComboBxTenants.Items.Count > 0)
+                UpsertInvoiceComboBxTenants.SelectedIndex = 0;
+        }
+
+        private async void UpsertInvoiceComboBxTenants_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (UpsertInvoiceComboBxTenants.SelectedValue is int tenantId && tenantId > 0)
+            {
+                try
+                {
+                    decimal totalServices = await _tenantService.CalculateTotalServicesByTenantAsync(tenantId);
+                    UpsertInvoiceTBTotalAmount.Text = totalServices.ToString("N2");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error calculando servicios: {ex.Message}");
+                    UpsertInvoiceTBTotalAmount.Text = "0.00";
+                }
+            }
+            else
+            {
+                UpsertInvoiceTBTotalAmount.Text = "0.00";
+            }
+        }
+
+        public static bool TryGetRawDecimal(string formattedValue, out string rawValue)
+        {
+            string cleanValue = formattedValue
+                .Replace("$", "")
+                .Replace(",", "")
+                .Replace(" ", "")
+                .Trim();
+
+            if (decimal.TryParse(cleanValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal decimalValue))
+            {
+                if (decimalValue == Math.Floor(decimalValue))
+                {
+                    rawValue = ((int)decimalValue).ToString(CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    rawValue = decimalValue.ToString(CultureInfo.InvariantCulture);
+                }
+                return true;
+            }
+
+            rawValue = null;
+            return false;
+        }
+    }
+}

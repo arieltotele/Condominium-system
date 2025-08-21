@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="08/14/2025 08:57:17" ReportInfo.Modified="08/14/2025 11:54:38" ReportInfo.CreatorVersion="2025.2.0.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFyVMFQFgloOWr5TX5FL1ZFJR271AOOetRIvM3i7KrbUVrMfFjj7YnJgsFKiVsWMPFnraJusK+kxm9GxDcrOaJoj0cxWx2sBQO918wvcoPmcWF1+RX2r/MdPDIyYHKBGjb">
+      <TableDataSource Name="Incidents" DataType="System.Int32" Enabled="true" TableName="Incidents">
+        <Column Name="Id" DataType="System.Int32"/>
+        <Column Name="Description" DataType="System.String"/>
+        <Column Name="Date" DataType="System.DateTime"/>
+        <Column Name="TenantId" DataType="System.Int32"/>
+        <Column Name="Author" DataType="System.String"/>
+        <Column Name="CreatedAt" DataType="System.DateTime"/>
+        <Column Name="DeletedAt" DataType="System.DateTime"/>
+        <Column Name="IsActive" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="UpdatedAt" DataType="System.DateTime"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="179.55">
+      <ShapeObject Name="Shape1" Left="179.55" Top="18.9" Width="359.1" Height="75.6"/>
+      <TextObject Name="Text13" Left="198.45" Top="37.8" Width="321.3" Height="37.8" Text="Informe de Incidencias" Font="Arial, 22pt"/>
+      <TextObject Name="Text14" Left="576.45" Top="122.85" Width="94.5" Height="18.9" Text="[Date]" Font="Arial, 10pt"/>
+      <TextObject Name="Text16" Left="576.45" Top="151.2" Width="141.75" Height="18.9" Text="Santo Domingo, D.N" Font="Arial, 10pt"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="181.84" Width="718.2" Height="37.8">
+      <ShapeObject Name="Shape2" Width="727.65" Height="37.8" Fill.Color="Black"/>
+      <TextObject Name="Text1" Left="9.45" Top="9.45" Width="103.95" Height="18.9" Text="Identificación" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text2" Left="132.3" Top="9.45" Width="94.5" Height="18.9" Text="Descripción" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text3" Left="378" Top="9.45" Width="94.5" Height="18.9" Text="Fecha" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text4" Left="567" Top="9.45" Width="94.5" Height="18.9" Text="Creado por" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="221.92" Width="718.2" Height="37.8" DataSource="Incidents">
+      <TextObject Name="Text17" Left="9.45" Top="9.45" Width="94.5" Height="18.9" Text="[Incidents.Id]" Font="Arial, 10pt"/>
+      <TextObject Name="Text18" Left="132.3" Top="9.45" Width="94.5" Height="18.9" Text="[Incidents.Description]" Font="Arial, 10pt"/>
+      <TextObject Name="Text19" Left="378" Top="9.45" Width="94.5" Height="18.9" Text="[Incidents.Date]" Format="Date" Format.Format="d" Font="Arial, 10pt"/>
+      <TextObject Name="Text20" Left="567" Top="9.45" Width="113.4" Height="18.9" Text="[Incidents.Author]" Font="Arial, 10pt"/>
+      <LineObject Name="Line1" Width="727.65" Diagonal="true"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="262.01" Width="718.2" Height="37.8">
+      <TextObject Name="Text21" Left="661.5" Top="18.9" Width="56.7" Height="18.9" Text="[Page]" Font="Arial, 10pt"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>
