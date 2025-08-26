@@ -93,6 +93,8 @@ namespace Condominium_System
             services.AddTransient<UpsertInvoiceScreen>();
             services.AddTransient<UpsertHousingScreen>();
             services.AddTransient<ReportScreen>();
+            services.AddTransient<PaymentScreen>();
+            services.AddTransient<ReceiptScreen>();
 
             var serviceProvider = services.BuildServiceProvider();
 
