@@ -105,9 +105,9 @@ namespace Condominium_System.Presentation.Views
                     LoadFormInPanel(incidenceScreen);
                     break;
 
-                case "HomeScreenPNLInvoice":
-                    HomeScreenLBLTitle.Text = "Factura";
-                    var invoiceScreen = _serviceProvider.GetRequiredService<InvoiceScreen>();
+                case "HomeScreenPNLReceipt":
+                    HomeScreenLBLTitle.Text = "Recibo";
+                    var invoiceScreen = _serviceProvider.GetRequiredService<ReceiptScreen>();
                     LoadFormInPanel(invoiceScreen);
                     break;
 
@@ -117,9 +117,9 @@ namespace Condominium_System.Presentation.Views
                     LoadFormInPanel(furnitureScreen);
                     break;
 
-                case "HomeScreenPNLMaintenance":
-                    HomeScreenLBLTitle.Text = "Servicios";
-                    OpenServiceScreen();
+                case "HomeScreenPNLPayment":
+                    HomeScreenLBLTitle.Text = "Pago";
+                    OpenPaymentScreen();
                     break;
 
                 case "HomeScreenPNLReport":
@@ -139,9 +139,9 @@ namespace Condominium_System.Presentation.Views
             }
         }
 
-        private void OpenServiceScreen()
+        private void OpenPaymentScreen()
         {
-            var screen = _serviceProvider.GetRequiredService<ServiceScreen>();
+            var screen = _serviceProvider.GetRequiredService<PaymentScreen>();
             LoadFormInPanel(screen);
         }
 
