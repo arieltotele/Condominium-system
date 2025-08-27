@@ -70,10 +70,6 @@ namespace Condominium_System.Presentation.Views
                 if (result != DialogResult.Yes)
                     return;
 
-                // Deshabilitar el panel durante el proceso
-                GenerateReceiptsPanel.Enabled = false;
-                GenerateReceiptsPanel.BackColor = Color.LightGray; // Cambiar color para indicar deshabilitado
-
                 // Cambiar el texto del label si tienes uno
                 var label = GenerateReceiptsPanel.Controls.OfType<Label>().FirstOrDefault();
                 if (label != null)
@@ -113,39 +109,33 @@ namespace Condominium_System.Presentation.Views
         {
             try
             {
-                using (var scope = _serviceProvider.CreateScope())
+                var condominiums = (await _condominiumService.GetAllCondominiumsAsync()).ToList();
+
+                if (!condominiums.Any())
                 {
-                    var condoService = scope.ServiceProvider.GetRequiredService<ICondominiumService>();
-                    var condominiums = (await condoService.GetAllCondominiumsAsync()).ToList();
+                    ReceiptCBCondominium.DataSource = null;
+                    ReceiptCBCondominium.Items.Clear();
+                    ReceiptCBCondominium.Text = "No hay condominios registrados";
+                    ReceiptCBCondominium.Enabled = false;
 
-                    if (!condominiums.Any())
-                    {
-                        ReceiptCBCondominium.DataSource = null;
-                        ReceiptCBCondominium.Items.Clear();
-                        ReceiptCBCondominium.Text = "No hay condominios registrados";
-                        ReceiptCBCondominium.Enabled = false;
+                    MessageBox.Show("No se encontraron condominios registrados. Por favor, registre al menos un condominio.",
+                                  "Información",
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Information);
 
-                        MessageBox.Show("No se encontraron condominios registrados. Por favor, registre al menos un condominio.",
-                                      "Información",
-                                      MessageBoxButtons.OK,
-                                      MessageBoxIcon.Information);
-
-                        ((HousingBlocksScreen)this.Owner).LoadDataToDataGrid();
-                        this.Hide();
-
-                        return;
-                    }
-
-                    ReceiptCBCondominium.DataSource = condominiums;
-                    ReceiptCBCondominium.DisplayMember = "Name";
-                    ReceiptCBCondominium.ValueMember = "Id";
-                    ReceiptCBCondominium.Enabled = true;
-
-                    if (ReceiptCBCondominium.Items.Count > 0)
-                    {
-                        ReceiptCBCondominium.SelectedIndex = 0;
-                    }
+                    
+                    return;
                 }
+
+                var placeholder = new Condominium { Id = 0, Name = "-- Seleccione una condominio --" };
+                var listWithPlaceholder = new List<Condominium> { placeholder };
+                listWithPlaceholder.AddRange(condominiums);
+
+                ReceiptCBCondominium.DisplayMember = "Code";
+                ReceiptCBCondominium.ValueMember = "Id";
+                ReceiptCBCondominium.DataSource = listWithPlaceholder;
+                ReceiptCBCondominium.SelectedIndex = 0;
+                ReceiptCBCondominium.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -155,11 +145,14 @@ namespace Condominium_System.Presentation.Views
                 ReceiptCBCondominium.Enabled = false;
 
                 MessageBox.Show($"Error cargando condominios: {ex.Message}",
-                                "Error",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
+                              "Error",
+                              MessageBoxButtons.OK,
+                              MessageBoxIcon.Error);
 
-                ((HousingBlocksScreen)this.Owner).LoadDataToDataGrid();
+                if (this.Owner is TenantScreen owner)
+                {
+                    await owner.LoadDataToDataGrid();
+                }
                 this.Hide();
             }
             finally
