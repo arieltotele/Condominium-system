@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 
 namespace Condominium_System.Business.Services
 {
-
-
     public class HousingServiceRelationService : IHousingServiceRelationService
     {
         private readonly IRepositoryNoId<HousingService> _repository;

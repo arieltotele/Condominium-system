@@ -21,7 +21,7 @@ namespace Condominium_System.Presentation.Views
         private readonly IBlockService _blockService;
         private readonly ICondominiumService _condominiumService;
         private readonly IServiceProvider _serviceProvider;
-        User currentUser;
+        User? currentUser;
 
         public bool IsEditMode { get; set; } = false;
         public UpsertHousingBlocks(IBlockService blockService, ICondominiumService condominiumService, IServiceProvider serviceProvider)

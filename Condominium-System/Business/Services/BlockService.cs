@@ -27,6 +27,12 @@ namespace Condominium_System.Business.Services
             return await _blockRepository.GetByIdWithIncludesAsync(id, b => b.Condominium, b => b.Housings);
         }
 
+        public async Task<IEnumerable<Block>> GetBlocksByCondominiumIdAsync(int condominiumId)
+        {
+            var allBlocks = await GetAllBlocksAsync();
+            return allBlocks.Where(b => b.CondominiumId == condominiumId);
+        }
+
         public async Task<IEnumerable<Block>> SearchBlocksAsync(string searchTerm)
         {
             if (string.IsNullOrWhiteSpace(searchTerm))

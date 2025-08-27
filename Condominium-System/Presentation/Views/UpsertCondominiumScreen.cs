@@ -3,16 +3,6 @@ using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Condominium_System.Presentation.Views
 {
@@ -48,6 +38,7 @@ namespace Condominium_System.Presentation.Views
                 UpsertTIAddress.Text = condo.Address;
                 UpsertMskTBContactNumber.Text = condo.ReceptionContactNumber;
                 UpsertTIBlocksQuantity.Text = condo.BlockCount.ToString();
+                UpsertTIBlocksQuota.Text = condo.Quota.ToString();
             }
         }
 
@@ -93,6 +84,7 @@ namespace Condominium_System.Presentation.Views
                         CondominiumToUpdate.Address = UpsertTIAddress.Text.Trim().ToUpper();
                         CondominiumToUpdate.ReceptionContactNumber = UpsertMskTBContactNumber.Text;
                         CondominiumToUpdate.BlockCount = Int32.Parse(UpsertTIBlocksQuantity.Text);
+                        CondominiumToUpdate.Quota = Int32.Parse(UpsertTIBlocksQuota.Text);
                         CondominiumToUpdate.UpdatedAt = DateTime.Now;
 
                         await _condominiumService.UpdateCondominiumAsync(CondominiumToUpdate);
@@ -132,12 +124,13 @@ namespace Condominium_System.Presentation.Views
             {
                 try
                 {
-                    var NewCondominium = new Data.Entities.Condominium()
+                    var NewCondominium = new Condominium()
                     {
                         Name = UpsertTIName.Text.Trim().ToUpper(),
                         Address = UpsertTIAddress.Text.Trim().ToUpper(),
                         ReceptionContactNumber = UpsertMskTBContactNumber.Text,
                         BlockCount = Int32.Parse(UpsertTIBlocksQuantity.Text),
+                        Quota = Int32.Parse(UpsertTIBlocksQuota.Text),
 
                         Author = currentUser.Username
                     };

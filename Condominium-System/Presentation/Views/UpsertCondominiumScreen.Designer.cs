@@ -44,17 +44,22 @@
             UpsertLBLBTN = new Label();
             UpsertPCTBXBTN = new PictureBox();
             panel4 = new Panel();
+            panel5 = new Panel();
+            UpsertTIBlocksQuota = new TextBox();
+            label1 = new Label();
             toolTip1 = new ToolTip(components);
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             panel1.SuspendLayout();
             UpsertPNLBTN.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)UpsertPCTBXBTN).BeginInit();
+            panel4.SuspendLayout();
+            panel5.SuspendLayout();
             SuspendLayout();
             // 
             // UpsertMskTBContactNumber
             // 
-            UpsertMskTBContactNumber.Location = new Point(33, 313);
+            UpsertMskTBContactNumber.Location = new Point(33, 370);
             UpsertMskTBContactNumber.Mask = "(999)000-0000";
             UpsertMskTBContactNumber.Name = "UpsertMskTBContactNumber";
             UpsertMskTBContactNumber.Size = new Size(334, 23);
@@ -65,7 +70,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(33, 276);
+            label5.Location = new Point(33, 333);
             label5.Name = "label5";
             label5.Size = new Size(152, 21);
             label5.TabIndex = 43;
@@ -75,7 +80,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(33, 184);
+            label3.Location = new Point(33, 177);
             label3.Name = "label3";
             label3.Size = new Size(152, 21);
             label3.TabIndex = 41;
@@ -85,7 +90,7 @@
             // 
             panel2.BackColor = SystemColors.Window;
             panel2.Controls.Add(UpsertTIBlocksQuantity);
-            panel2.Location = new Point(33, 217);
+            panel2.Location = new Point(33, 210);
             panel2.Name = "panel2";
             panel2.Size = new Size(334, 24);
             panel2.TabIndex = 42;
@@ -158,7 +163,7 @@
             UpsertPNLBTN.BackColor = Color.MidnightBlue;
             UpsertPNLBTN.Controls.Add(UpsertLBLBTN);
             UpsertPNLBTN.Controls.Add(UpsertPCTBXBTN);
-            UpsertPNLBTN.Location = new Point(135, 403);
+            UpsertPNLBTN.Location = new Point(135, 460);
             UpsertPNLBTN.Name = "UpsertPNLBTN";
             UpsertPNLBTN.Size = new Size(109, 41);
             UpsertPNLBTN.TabIndex = 45;
@@ -192,22 +197,51 @@
             // 
             // panel4
             // 
+            panel4.Controls.Add(label3);
+            panel4.Controls.Add(panel2);
+            panel4.Controls.Add(panel5);
+            panel4.Controls.Add(label1);
+            panel4.Controls.Add(UpsertPNLBTN);
+            panel4.Controls.Add(label5);
+            panel4.Controls.Add(UpsertMskTBContactNumber);
             panel4.Dock = DockStyle.Fill;
             panel4.Location = new Point(0, 0);
             panel4.Name = "panel4";
-            panel4.Size = new Size(411, 491);
+            panel4.Size = new Size(411, 536);
             panel4.TabIndex = 46;
+            // 
+            // panel5
+            // 
+            panel5.BackColor = SystemColors.Window;
+            panel5.Controls.Add(UpsertTIBlocksQuota);
+            panel5.Location = new Point(33, 292);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(334, 24);
+            panel5.TabIndex = 47;
+            // 
+            // UpsertTIBlocksQuota
+            // 
+            UpsertTIBlocksQuota.BorderStyle = BorderStyle.None;
+            UpsertTIBlocksQuota.Location = new Point(4, 3);
+            UpsertTIBlocksQuota.Name = "UpsertTIBlocksQuota";
+            UpsertTIBlocksQuota.Size = new Size(327, 16);
+            UpsertTIBlocksQuota.TabIndex = 2;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 12F);
+            label1.Location = new Point(33, 259);
+            label1.Name = "label1";
+            label1.Size = new Size(114, 21);
+            label1.TabIndex = 46;
+            label1.Text = "Cuota mensual";
             // 
             // UpsertCondominiumScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(411, 491);
-            Controls.Add(UpsertPNLBTN);
-            Controls.Add(UpsertMskTBContactNumber);
-            Controls.Add(label5);
-            Controls.Add(label3);
-            Controls.Add(panel2);
+            ClientSize = new Size(411, 536);
             Controls.Add(label4);
             Controls.Add(panel3);
             Controls.Add(label2);
@@ -226,6 +260,10 @@
             UpsertPNLBTN.ResumeLayout(false);
             UpsertPNLBTN.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)UpsertPCTBXBTN).EndInit();
+            panel4.ResumeLayout(false);
+            panel4.PerformLayout();
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -248,5 +286,8 @@
         private PictureBox UpsertPCTBXBTN;
         private Panel panel4;
         private ToolTip toolTip1;
+        private Panel panel5;
+        private TextBox UpsertTIBlocksQuota;
+        private Label label1;
     }
 }
