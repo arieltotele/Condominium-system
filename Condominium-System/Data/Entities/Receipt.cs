@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Condominium_System.Data.Entities
 {
-    internal class Receipt: BaseModel
+    public class Receipt: BaseModel
     {
         public DateTime Date { get; set; }
         public DateTime DueDate { get; set; }
@@ -19,5 +19,8 @@ namespace Condominium_System.Data.Entities
 
         public int HousingId { get; set; }
         public virtual Housing Housing { get; set; }
+
+        public virtual ICollection<Payment> Payments { get; set; }
+
     }
 }

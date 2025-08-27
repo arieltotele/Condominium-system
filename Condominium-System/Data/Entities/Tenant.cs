@@ -21,5 +21,7 @@ namespace Condominium_System.Data.Entities
 
         public virtual ICollection<Incident> Incidents { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
+        public virtual ICollection<Receipt> Receipts { get; set; }
+
     }
 }

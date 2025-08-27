@@ -14,7 +14,7 @@ namespace Condominium_System.Data.Context
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<Data.Entities.Condominium> Condominiums { get; set; }
+        public DbSet<Condominium> Condominiums { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Block> Blocks { get; set; }
         public DbSet<Housing> Housings { get; set; }
@@ -25,6 +25,8 @@ namespace Condominium_System.Data.Context
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<Incident> Incidents { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<Receipt> Receipts { get; set; }  
+        public DbSet<Payment> Payments { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -36,8 +38,7 @@ namespace Condominium_System.Data.Context
             base.OnModelCreating(modelBuilder);
 
             // ========= Uniques =========
-
-            modelBuilder.Entity<Entities.Condominium>()
+            modelBuilder.Entity<Condominium>()
                 .HasIndex(c => c.Name)
                 .IsUnique();
 
@@ -93,8 +94,27 @@ namespace Condominium_System.Data.Context
                 .HasForeignKey(f => f.TenantId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // ========= HousingService (many-to-many with composite key) =========
+            // ========= Receipt =========
+            modelBuilder.Entity<Receipt>()
+                .HasOne(r => r.Tenant)
+                .WithMany(r => r.Receipts)
+                .HasForeignKey(r => r.TenantId)
+                .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<Receipt>()
+                .HasOne(r => r.Housing)
+                .WithMany(r => r.Receipts)
+                .HasForeignKey(r => r.HousingId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // ========= Payment =========
+            modelBuilder.Entity<Payment>()
+                .HasOne(p => p.Receipt)
+                .WithMany(p => p.Payments)
+                .HasForeignKey(p => p.ReceiptId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // ========= HousingService (many-to-many with composite key) =========
             modelBuilder.Entity<HousingService>()
                 .HasKey(hs => new { hs.HousingId, hs.ServiceId });
 
@@ -111,7 +131,6 @@ namespace Condominium_System.Data.Context
                 .OnDelete(DeleteBehavior.Cascade);
 
             // ========= HousingFurniture (many-to-many with composite key) =========
-
             modelBuilder.Entity<HousingFurniture>()
                 .HasKey(hf => new { hf.HousingId, hf.FurnitureId });
 
@@ -127,6 +146,7 @@ namespace Condominium_System.Data.Context
                 .HasForeignKey(hf => hf.FurnitureId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
+
 
         public void SeedInitialSuperUser()
         {

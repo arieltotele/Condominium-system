@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Condominium_System.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250702135050_Is-Active-Property-Modified")]
-    partial class IsActivePropertyModified
+    [Migration("20250827135949_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -112,6 +112,9 @@ namespace Condominium_System.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Quota")
+                        .HasColumnType("int");
 
                     b.Property<string>("ReceptionContactNumber")
                         .IsRequired()
@@ -362,6 +365,106 @@ namespace Condominium_System.Migrations
                     b.HasIndex("TenantId");
 
                     b.ToTable("Invoices");
+                });
+
+            modelBuilder.Entity("Condominium_System.Data.Entities.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AmountPaid")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Detail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PaymentMethod")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ReceiptId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReceiptId");
+
+                    b.ToTable("Payments");
+                });
+
+            modelBuilder.Entity("Condominium_System.Data.Entities.Receipt", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AmountPaid")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Detail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("HousingId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HousingId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Receipts");
                 });
 
             modelBuilder.Entity("Condominium_System.Data.Entities.Service", b =>
@@ -618,6 +721,36 @@ namespace Condominium_System.Migrations
                     b.Navigation("Tenant");
                 });
 
+            modelBuilder.Entity("Condominium_System.Data.Entities.Payment", b =>
+                {
+                    b.HasOne("Condominium_System.Data.Entities.Receipt", "Receipt")
+                        .WithMany("Payments")
+                        .HasForeignKey("ReceiptId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Receipt");
+                });
+
+            modelBuilder.Entity("Condominium_System.Data.Entities.Receipt", b =>
+                {
+                    b.HasOne("Condominium_System.Data.Entities.Housing", "Housing")
+                        .WithMany("Receipts")
+                        .HasForeignKey("HousingId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Condominium_System.Data.Entities.Tenant", "Tenant")
+                        .WithMany("Receipts")
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Housing");
+
+                    b.Navigation("Tenant");
+                });
+
             modelBuilder.Entity("Condominium_System.Data.Entities.Tenant", b =>
                 {
                     b.HasOne("Condominium_System.Data.Entities.Housing", "Housing")
@@ -660,9 +793,16 @@ namespace Condominium_System.Migrations
                 {
                     b.Navigation("Furnitures");
 
+                    b.Navigation("Receipts");
+
                     b.Navigation("Services");
 
                     b.Navigation("Tenants");
+                });
+
+            modelBuilder.Entity("Condominium_System.Data.Entities.Receipt", b =>
+                {
+                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("Condominium_System.Data.Entities.Service", b =>
@@ -675,6 +815,8 @@ namespace Condominium_System.Migrations
                     b.Navigation("Incidents");
 
                     b.Navigation("Invoices");
+
+                    b.Navigation("Receipts");
                 });
 #pragma warning restore 612, 618
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Condominium_System.Data.Entities
 {
-    internal class Payment
+    public class Payment: BaseModel
     {
         public DateTime Date { get; set; }
         public int AmountPaid { get; set; }
