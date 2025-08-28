@@ -69,6 +69,27 @@ namespace Condominium_System.Business.Services
                 r.Status == status && r.IsActive);
         }
 
+        public async Task<IEnumerable<Receipt>> GetReceiptsByStatusAndHousingAsync(int housingId, params string[] statuses)
+        {
+            if (housingId <= 0)
+                throw new ArgumentException("ID de vivienda inválido");
+
+            if (statuses == null || statuses.Length == 0)
+                return Enumerable.Empty<Receipt>();
+
+            // Obtener todos los recibos y filtrar
+            var allReceipts = await _receiptRepository.GetAllWithIncludesAsync(
+                r => r.Tenant,
+                r => r.Housing,
+                r => r.Payments
+            );
+
+            return allReceipts.Where(r =>
+                r.HousingId == housingId &&
+                statuses.Contains(r.Status) &&
+                r.IsActive);
+        }
+
         public async Task<int> GenerateBulkReceiptsAsync(int condominiumId, int year, string author)
         {
             if (year < DateTime.Now.Year)

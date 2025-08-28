@@ -35,9 +35,9 @@
             panel5 = new Panel();
             PaymentTBPropietaryDocument = new TextBox();
             CondominiumPNLBTNCreate = new Panel();
-            label8 = new Label();
-            pictureBox3 = new PictureBox();
-            dataGridView1 = new DataGridView();
+            SearchPendingReceiptsBTNLBL = new Label();
+            SearchPendingReceiptsBTNPCTB = new PictureBox();
+            PaymentDTGData = new DataGridView();
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             panel2 = new Panel();
@@ -45,8 +45,8 @@
             panel1.SuspendLayout();
             panel5.SuspendLayout();
             CondominiumPNLBTNCreate.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)SearchPendingReceiptsBTNPCTB).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PaymentDTGData).BeginInit();
             statusStrip1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
@@ -109,47 +109,47 @@
             // CondominiumPNLBTNCreate
             // 
             CondominiumPNLBTNCreate.BackColor = Color.MidnightBlue;
-            CondominiumPNLBTNCreate.Controls.Add(label8);
-            CondominiumPNLBTNCreate.Controls.Add(pictureBox3);
+            CondominiumPNLBTNCreate.Controls.Add(SearchPendingReceiptsBTNLBL);
+            CondominiumPNLBTNCreate.Controls.Add(SearchPendingReceiptsBTNPCTB);
             CondominiumPNLBTNCreate.Location = new Point(773, 71);
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
-            CondominiumPNLBTNCreate.Size = new Size(152, 41);
+            CondominiumPNLBTNCreate.Size = new Size(155, 41);
             CondominiumPNLBTNCreate.TabIndex = 41;
             CondominiumPNLBTNCreate.Click += SearchPendingReceiptsBTN_Click;
             // 
-            // label8
+            // SearchPendingReceiptsBTNLBL
             // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label8.ForeColor = Color.White;
-            label8.Location = new Point(39, 12);
-            label8.Name = "label8";
-            label8.Size = new Size(107, 21);
-            label8.TabIndex = 1;
-            label8.Text = "Buscar Recibo";
-            label8.Click += SearchPendingReceiptsBTN_Click;
+            SearchPendingReceiptsBTNLBL.AutoSize = true;
+            SearchPendingReceiptsBTNLBL.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            SearchPendingReceiptsBTNLBL.ForeColor = Color.White;
+            SearchPendingReceiptsBTNLBL.Location = new Point(39, 12);
+            SearchPendingReceiptsBTNLBL.Name = "SearchPendingReceiptsBTNLBL";
+            SearchPendingReceiptsBTNLBL.Size = new Size(107, 21);
+            SearchPendingReceiptsBTNLBL.TabIndex = 1;
+            SearchPendingReceiptsBTNLBL.Text = "Buscar Recibo";
+            SearchPendingReceiptsBTNLBL.Click += SearchPendingReceiptsBTN_Click;
             // 
-            // pictureBox3
+            // SearchPendingReceiptsBTNPCTB
             // 
-            pictureBox3.Image = Properties.Resources.search_white;
-            pictureBox3.Location = new Point(3, 12);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(30, 19);
-            pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox3.TabIndex = 0;
-            pictureBox3.TabStop = false;
-            pictureBox3.Click += SearchPendingReceiptsBTN_Click;
+            SearchPendingReceiptsBTNPCTB.Image = Properties.Resources.search_white;
+            SearchPendingReceiptsBTNPCTB.Location = new Point(3, 12);
+            SearchPendingReceiptsBTNPCTB.Name = "SearchPendingReceiptsBTNPCTB";
+            SearchPendingReceiptsBTNPCTB.Size = new Size(30, 19);
+            SearchPendingReceiptsBTNPCTB.SizeMode = PictureBoxSizeMode.Zoom;
+            SearchPendingReceiptsBTNPCTB.TabIndex = 0;
+            SearchPendingReceiptsBTNPCTB.TabStop = false;
+            SearchPendingReceiptsBTNPCTB.Click += SearchPendingReceiptsBTN_Click;
             // 
-            // dataGridView1
+            // PaymentDTGData
             // 
-            dataGridView1.AllowUserToResizeColumns = false;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Dock = DockStyle.Bottom;
-            dataGridView1.Location = new Point(0, 201);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.ReadOnly = true;
-            dataGridView1.Size = new Size(1017, 390);
-            dataGridView1.TabIndex = 70;
+            PaymentDTGData.AllowUserToResizeColumns = false;
+            PaymentDTGData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            PaymentDTGData.Dock = DockStyle.Bottom;
+            PaymentDTGData.Location = new Point(0, 201);
+            PaymentDTGData.Name = "PaymentDTGData";
+            PaymentDTGData.ReadOnly = true;
+            PaymentDTGData.Size = new Size(1017, 390);
+            PaymentDTGData.TabIndex = 70;
             // 
             // statusStrip1
             // 
@@ -197,7 +197,7 @@
             ClientSize = new Size(1017, 591);
             Controls.Add(panel2);
             Controls.Add(statusStrip1);
-            Controls.Add(dataGridView1);
+            Controls.Add(PaymentDTGData);
             Controls.Add(CondominiumPNLBTNCreate);
             Controls.Add(panel1);
             Controls.Add(label1);
@@ -211,8 +211,8 @@
             panel5.PerformLayout();
             CondominiumPNLBTNCreate.ResumeLayout(false);
             CondominiumPNLBTNCreate.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)SearchPendingReceiptsBTNPCTB).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PaymentDTGData).EndInit();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             panel2.ResumeLayout(false);
@@ -229,9 +229,9 @@
         private Panel panel5;
         private TextBox PaymentTBPropietaryDocument;
         private Panel CondominiumPNLBTNCreate;
-        private Label label8;
-        private PictureBox pictureBox3;
-        private DataGridView dataGridView1;
+        private Label SearchPendingReceiptsBTNLBL;
+        private PictureBox SearchPendingReceiptsBTNPCTB;
+        private DataGridView PaymentDTGData;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel toolStripStatusLabel1;
         private Panel panel2;
