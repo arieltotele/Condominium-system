@@ -2,6 +2,7 @@
 using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
 using Condominium_System.Helpers.Status;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -38,7 +39,6 @@ namespace Condominium_System.Presentation.Views
 
         private void PaymentScreen_Load(object sender, EventArgs e)
         {
-
             PaymentDTGData.CellPainting += PaymentDTGData_CellPainting;
             PaymentDTGData.CellClick += PaymentDTGData_CellClick;
 
@@ -68,10 +68,7 @@ namespace Condominium_System.Presentation.Views
                 int x = e.CellBounds.Left + padding;
                 int y = e.CellBounds.Top + (e.CellBounds.Height - iconHeight) / 2;
 
-                e.Graphics.DrawImage(Properties.Resources.pencil_blue, new Rectangle(x, y, iconWidth, iconHeight));
-
-                x += iconWidth + padding;
-                e.Graphics.DrawImage(Properties.Resources.trash_red, new Rectangle(x, y, iconWidth, iconHeight));
+                e.Graphics.DrawImage(Properties.Resources.pay, new Rectangle(x, y, iconWidth, iconHeight));
 
                 e.Handled = true;
             }
@@ -96,29 +93,33 @@ namespace Condominium_System.Presentation.Views
 
                 if (relativeX < 26)
                 {
-                    Session.ReceiptToUpsert = selectedReceipt;
-                    //GoToUpsertScreen(true);
-                }
-                else if (relativeX >= 26 && relativeX < 52)
-                {
-                    var confirm = MessageBox.Show($"¿Deseas eliminar el recibo '{selectedReceipt.Id}'?",
-                                                  "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-                    if (confirm == DialogResult.Yes)
-                    {
-                        try
-                        {
-                            await _receiptService.DeleteReceiptAsync(selectedReceipt.Id);
-                            MessageBox.Show("REcibo eliminado correctamente.");
-                            //LoadDataToDataGrid();
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"Error al eliminar Recibo: {ex.Message}");
-                        }
-                    }
+                    Session.CurrentReceipt = selectedReceipt;
+                    GoToUpsertScreen();
                 }
             }
+        }
+
+        private void GoToUpsertScreen()
+        {           
+            if (PaymentDTGData.CurrentRow == null)
+            {
+                MessageBox.Show("Por favor, selecciona un recibo para editar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var selectedReceipt = PaymentDTGData.CurrentRow.DataBoundItem as Receipt;
+
+            if (selectedReceipt == null)
+            {
+                MessageBox.Show("Error al obtener el recibo seleccionado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            Session.CurrentReceipt = selectedReceipt;        
+
+            var addPaymentScreen = _serviceProvider.GetRequiredService<AddPaymentScreen>();
+            addPaymentScreen.Owner = this;
+            addPaymentScreen.Show();
         }
 
         private void ConfigureCondominiumColumns()

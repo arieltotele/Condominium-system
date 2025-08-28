@@ -1,5 +1,6 @@
 ﻿using Condominium_System.Data.Entities;
 using Condominium_System.Data.Repositories;
+using Condominium_System.Helpers.Status;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,11 +51,15 @@ namespace Condominium_System.Business.Services
 
         public async Task<Payment> CreatePaymentAsync(Payment payment)
         {
-            // Actualizar el monto pagado en el recibo
+            // Actualizar el monto pagado y estatus en el recibo
             var receipt = await _receiptRepository.GetByIdAsync(payment.ReceiptId);
             if (receipt != null)
             {
                 receipt.AmountPaid += payment.AmountPaid;
+
+                // Actualizar el estatus basado en el monto pagado
+                receipt.Status = ReceiptStatusHelper.CalculateStatus(receipt.Amount, receipt.AmountPaid);
+
                 _receiptRepository.Update(receipt);
             }
 
