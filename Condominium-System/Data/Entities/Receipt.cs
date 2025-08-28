@@ -15,6 +15,10 @@ namespace Condominium_System.Data.Entities
         public string? Detail { get; set; }
         public string? Status { get; set; }
 
+        public int LateFee { get; set; } = 0; // Monto de mora
+        public bool LateFeeApplied { get; set; } = false; // Si ya se aplicó la mora
+        public DateTime? LateFeeAppliedDate { get; set; } // Cuando se aplicó la mora
+
         public int TenantId { get; set; }
         public virtual Tenant Tenant { get; set; }
 

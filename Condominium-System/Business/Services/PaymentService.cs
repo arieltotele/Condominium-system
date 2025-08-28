@@ -13,13 +13,16 @@ namespace Condominium_System.Business.Services
     {
         private readonly IRepositoryWithId<Payment> _paymentRepository;
         private readonly IRepositoryWithId<Receipt> _receiptRepository;
+        private readonly ILateFeeService _lateFeeService;
 
         public PaymentService(
             IRepositoryWithId<Payment> paymentRepository,
-            IRepositoryWithId<Receipt> receiptRepository)
+            IRepositoryWithId<Receipt> receiptRepository,
+            ILateFeeService lateFeeService)
         {
             _paymentRepository = paymentRepository;
             _receiptRepository = receiptRepository;
+            _lateFeeService = lateFeeService;
         }
 
         public async Task<IEnumerable<Payment>> GetAllPaymentsAsync()
@@ -51,10 +54,18 @@ namespace Condominium_System.Business.Services
 
         public async Task<Payment> CreatePaymentAsync(Payment payment)
         {
+
+            bool lateFeeApplied = await _lateFeeService.ApplyLateFeeIfNeededAsync(payment.ReceiptId);
+
             // Actualizar el monto pagado y estatus en el recibo
             var receipt = await _receiptRepository.GetByIdAsync(payment.ReceiptId);
             if (receipt != null)
             {
+                if (lateFeeApplied)
+                {
+                    payment.Detail += $"\n[Mora aplicada: ${receipt.LateFee}]";
+                }
+
                 receipt.AmountPaid += payment.AmountPaid;
 
                 // Actualizar el estatus basado en el monto pagado

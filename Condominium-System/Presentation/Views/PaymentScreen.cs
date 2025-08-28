@@ -204,7 +204,7 @@ namespace Condominium_System.Presentation.Views
             await LoadHousingsByTenantDocumentAsync(PaymentTBPropietaryDocument.Text);
         }
 
-        private async Task LoadHousingsByTenantDocumentAsync(string documentNumber)
+        public async Task LoadHousingsByTenantDocumentAsync(string documentNumber)
         {
             try
             {
@@ -220,11 +220,12 @@ namespace Condominium_System.Presentation.Views
 
                 PaymentCBHouse.Text = "Buscando...";
 
-                // ✅ USAR SearchTenantsAsync que ya existe
                 var tenants = await _tenantService.SearchTenantsAsync(documentNumber.Trim());
 
                 // Filtrar tenants activos y agrupar por vivienda
                 var activeTenants = tenants.Where(t => t.IsActive).ToList();
+
+                Session.TenantToUpsert = activeTenants.First();
 
                 if (!activeTenants.Any())
                 {
@@ -281,6 +282,25 @@ namespace Condominium_System.Presentation.Views
             }
         }
 
+        private void PaymentTBPropietaryDocument_TextChanged(object sender, EventArgs e)
+        {
+            if (PaymentTBPropietaryDocument.Text != "Ingrese el documento del propietario")
+            {
+                string document = PaymentTBPropietaryDocument.Text.Trim();
+
+                if (document.Length > 11)
+                {
+                    // Cortar el texto a 11 caracteres
+                    PaymentTBPropietaryDocument.Text = document.Substring(0, 11);
+                    PaymentTBPropietaryDocument.SelectionStart = 11;
+                }
+
+                // Cambiar color para indicar validación
+                PaymentTBPropietaryDocument.ForeColor = document.Length == 11 ?
+                    SystemColors.WindowText : Color.Red;
+            }
+        }
+
         private async void SearchPendingReceiptsBTN_Click(object sender, EventArgs e)
         {
             if (!FormIsCorrect())
@@ -292,7 +312,6 @@ namespace Condominium_System.Presentation.Views
             try
             {
                 // Mostrar loading
-                //SearchPendingReceiptsBTNLBL.Enabled = false;
                 SearchPendingReceiptsBTNLBL.Text = "Buscando...";
                 PaymentDTGData.DataSource = null;
 
@@ -327,7 +346,6 @@ namespace Condominium_System.Presentation.Views
             }
             finally
             {
-                //SearchPendingReceiptsBTNLBL.Enabled = true;
                 SearchPendingReceiptsBTNLBL.Text = "Buscar Recibos";
             }
         }
@@ -383,9 +401,18 @@ namespace Condominium_System.Presentation.Views
 
         public bool FormIsCorrect()
         {
+            // Validar que el texto no sea el placeholder y no esté vacío
             bool isDocumentValid = PaymentTBPropietaryDocument.Text != "Ingrese el documento del propietario" &&
                                   !string.IsNullOrWhiteSpace(PaymentTBPropietaryDocument.Text);
 
+            // Validar longitud exacta del documento (11 caracteres)
+            if (isDocumentValid)
+            {
+                string document = PaymentTBPropietaryDocument.Text.Trim();
+                isDocumentValid = document.Length == 11;
+            }
+
+            // Validar que se haya seleccionado una vivienda válida
             bool isHouseValid = PaymentCBHouse.SelectedValue != null &&
                                int.TryParse(PaymentCBHouse.SelectedValue.ToString(), out int houseId) &&
                                houseId > 0;

@@ -21,6 +21,7 @@ namespace Condominium_System.Presentation.Views
 
         Receipt? currentReceipt;
         User? currentUser;
+        Tenant? currentTenant;
         public AddPaymentScreen(IPaymentService paymentService, IReceiptService receiptService, IServiceProvider serviceProvider)
         {
             InitializeComponent();
@@ -30,6 +31,7 @@ namespace Condominium_System.Presentation.Views
 
             currentUser = Session.CurrentUser;
             currentReceipt = Session.CurrentReceipt;
+            currentTenant = Session.TenantToUpsert;
         }
 
         private async void AddPaymentScreen_Load(object sender, EventArgs e)
@@ -90,14 +92,12 @@ namespace Condominium_System.Presentation.Views
                     return;
                 }
 
-                // Obtener el método de pago seleccionado
                 string paymentMethod = GetPaymentMethodText(PaymentCBPayMethod.SelectedValue);
 
-                // Crear el objeto Payment
                 var payment = new Payment
                 {
                     Date = DateTime.Now,
-                    AmountPaid = (int)amountToPay, // Convertir a int si es necesario
+                    AmountPaid = (int)amountToPay,
                     PaymentMethod = paymentMethod,
                     Detail = PaymentCBDetail.Text,
                     ReceiptId = currentReceipt.Id,
@@ -106,17 +106,14 @@ namespace Condominium_System.Presentation.Views
                     IsActive = true
                 };
 
-                // Guardar el pago (esto actualizará automáticamente el recibo)
                 await _paymentService.CreatePaymentAsync(payment);
 
                 MessageBox.Show("Pago registrado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Limpiar campos
                 ClearFields();
-
-                // Cerrar la pantalla o regresar
                 this.DialogResult = DialogResult.OK;
-                this.Close();
+              
+                await ((PaymentScreen)this.Owner).LoadHousingsByTenantDocumentAsync(currentTenant!.DocumentNumber);
+                this.Hide();
             }
             catch (Exception ex)
             {
@@ -124,20 +121,17 @@ namespace Condominium_System.Presentation.Views
             }
             finally
             {
-                //PaymentSaveBTN.Enabled = true;
                 PaymentSaveBTNLBL.Text = "Guardar";
             }
         }
 
         private void PaymentTBAmount_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Permitir solo números, punto decimal y tecla de control
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
             {
                 e.Handled = true;
             }
 
-            // Permitir solo un punto decimal
             if (e.KeyChar == '.' && (sender as TextBox).Text.IndexOf('.') > -1)
             {
                 e.Handled = true;
@@ -146,14 +140,12 @@ namespace Condominium_System.Presentation.Views
 
         private void PaymentTBAmount_TextChanged(object sender, EventArgs e)
         {
-            // Validar en tiempo real que el monto no exceda el saldo pendiente
             if (currentReceipt != null && decimal.TryParse(PaymentTBAmount.Text, out decimal amount))
             {
                 decimal remainingAmount = currentReceipt.Amount - currentReceipt.AmountPaid;
 
                 if (amount > remainingAmount)
                 {
-                    // Mostrar advertencia visual
                     PaymentTBAmount.ForeColor = Color.Red;
                     ToolTip toolTip = new ToolTip();
                     toolTip.Show($"Máximo permitido: ${remainingAmount}", PaymentTBAmount, 0, -20, 2000);
@@ -186,15 +178,12 @@ namespace Condominium_System.Presentation.Views
 
         private bool IsFormCorrect()
         {
-            // Validar que se haya seleccionado un método de pago válido
             bool isMethodValid = PaymentCBPayMethod.SelectedValue != null &&
                                 int.TryParse(PaymentCBPayMethod.SelectedValue.ToString(), out int methodId) &&
                                 methodId != 0;
 
-            // Validar que el monto sea un número válido y mayor a cero
             bool isAmountValid = decimal.TryParse(PaymentTBAmount.Text, out decimal amount) && amount > 0;
 
-            // Validar que el detalle no esté vacío
             bool isDetailValid = !string.IsNullOrWhiteSpace(PaymentCBDetail.Text);
 
             return isMethodValid && isAmountValid && isDetailValid;

@@ -52,9 +52,9 @@
             UpsertPNLBTN.BackColor = Color.MidnightBlue;
             UpsertPNLBTN.Controls.Add(PaymentSaveBTNLBL);
             UpsertPNLBTN.Controls.Add(UpsertPCTBXBTN);
-            UpsertPNLBTN.Location = new Point(89, 388);
+            UpsertPNLBTN.Location = new Point(80, 388);
             UpsertPNLBTN.Name = "UpsertPNLBTN";
-            UpsertPNLBTN.Size = new Size(132, 41);
+            UpsertPNLBTN.Size = new Size(137, 41);
             UpsertPNLBTN.TabIndex = 139;
             UpsertPNLBTN.Click += PaymentSaveBTN_Click;
             // 
@@ -170,7 +170,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(340, 475);
+            ClientSize = new Size(328, 475);
             Controls.Add(label6);
             Controls.Add(panel5);
             Controls.Add(UpsertPNLBTN);
