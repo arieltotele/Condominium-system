@@ -13,6 +13,7 @@ namespace Condominium_System.Data.Entities
         public int Amount { get; set; }
         public int AmountPaid { get; set; } = 0;
         public string? Detail { get; set; }
+        public string? Status { get; set; }
 
         public int TenantId { get; set; }
         public virtual Tenant Tenant { get; set; }
@@ -21,6 +22,5 @@ namespace Condominium_System.Data.Entities
         public virtual Housing Housing { get; set; }
 
         public virtual ICollection<Payment> Payments { get; set; }
-
     }
 }

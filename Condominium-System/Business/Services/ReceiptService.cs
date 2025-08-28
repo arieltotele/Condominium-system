@@ -1,5 +1,6 @@
 ﻿using Condominium_System.Data.Entities;
 using Condominium_System.Data.Repositories;
+using Condominium_System.Helpers.Status;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -59,8 +60,28 @@ namespace Condominium_System.Business.Services
                 r.DueDate < currentDate && r.AmountPaid < r.Amount);
         }
 
+        public async Task<IEnumerable<Receipt>> GetReceiptsByStatusAsync(string status)
+        {
+            if (!ReceiptStatusHelper.IsValidStatus(status))
+                throw new ArgumentException("Estatus no válido");
+
+            return await _receiptRepository.FindAsync(r =>
+                r.Status == status && r.IsActive);
+        }
+
         public async Task<int> GenerateBulkReceiptsAsync(int condominiumId, int year, string author)
         {
+            if (year < DateTime.Now.Year)
+            {
+                throw new ArgumentException("No se pueden generar recibos para años anteriores");
+            }
+
+            // Validar que el autor no esté vacío
+            if (string.IsNullOrWhiteSpace(author))
+            {
+                throw new ArgumentException("Se requiere un autor para generar recibos");
+            }
+
             using (var scope = _serviceProvider.CreateScope())
             {
                 var condominiumService = scope.ServiceProvider.GetRequiredService<ICondominiumService>();
@@ -103,21 +124,21 @@ namespace Condominium_System.Business.Services
 
                         var tenant = tenants.First();
 
-                        // ✅ USAR LA QUOTA DEL CONDOMINIO EN LUGAR DE CALCULAR POR SERVICIOS
                         var monthlyAmount = condominium.Quota;
 
                         // Generar recibos desde el mes actual hasta diciembre
                         for (int month = startMonth; month <= 12; month++)
                         {
-                            var dueDate = new DateTime(year, month, 1).AddMonths(1).AddDays(-1); // Último día del mes
+                            var dueDate = new DateTime(year, month, 1).AddMonths(1).AddDays(-1);
 
                             var receipt = new Receipt
                             {
                                 Date = DateTime.Now,
                                 DueDate = dueDate,
-                                Amount = monthlyAmount, // ✅ Usar la quota del condominio
+                                Amount = monthlyAmount,
                                 AmountPaid = 0,
                                 Detail = $"Recibo de mantenimiento - {CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month)} {year}",
+                                Status = ReceiptStatusHelper.Pending,
                                 TenantId = tenant.Id,
                                 HousingId = housing.Id,
                                 Author = author,
