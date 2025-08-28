@@ -1,5 +1,6 @@
 ﻿using Condominium_System.Business.Services;
 using Condominium_System.Data.Entities;
+using Condominium_System.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,7 @@ namespace Condominium_System.Presentation.Views
             _tenantService = tenantService;
             _housingService = housingService;
             _serviceProvider = serviceProvider;
+            currentUser = Session.CurrentUser;
         }
 
         private async void ReceiptScreen_Load(object sender, EventArgs e)
@@ -43,23 +45,15 @@ namespace Condominium_System.Presentation.Views
         {
             try
             {
-                // Validar selecciones
-                if (ReceiptCBCondominium.SelectedItem == null)
+                if(!FormIsCorrect())
                 {
-                    MessageBox.Show("Por favor seleccione un condominio.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                if (ReceiptCBYear.SelectedItem == null || ((KeyValuePair<int, string>)ReceiptCBYear.SelectedItem).Key == 0)
-                {
-                    MessageBox.Show("Por favor seleccione un año válido.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Por favor complete todos los campos correctamente.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 var selectedCondominium = (Condominium)ReceiptCBCondominium.SelectedItem;
                 var selectedYear = ((KeyValuePair<int, string>)ReceiptCBYear.SelectedItem).Key;
 
-                // Confirmar con el usuario
                 var result = MessageBox.Show(
                     $"¿Está seguro que desea generar recibos para el condominio '{selectedCondominium.Name}' " +
                     $"para el año {selectedYear}? Esta acción creará recibos para todas las viviendas activas.",
@@ -70,19 +64,22 @@ namespace Condominium_System.Presentation.Views
                 if (result != DialogResult.Yes)
                     return;
 
-                // Cambiar el texto del label si tienes uno
                 var label = GenerateReceiptsPanel.Controls.OfType<Label>().FirstOrDefault();
                 if (label != null)
                     label.Text = "Generando...";
 
-                // Ejecutar la generación
-                var receiptsCreated = await _receiptService.GenerateBulkReceiptsAsync(selectedCondominium.Id, selectedYear);
+                var receiptsCreated = await _receiptService.GenerateBulkReceiptsAsync(selectedCondominium.Id, selectedYear, currentUser.Username);
 
                 MessageBox.Show(
                     $"Se generaron {receiptsCreated} recibos exitosamente para el condominio '{selectedCondominium.Name}'.",
                     "Generación completada",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
+
+                if (label != null)
+                    label.Text = "Generar Reporte";
+
+                CleanForm();
             }
             catch (Exception ex)
             {
@@ -94,14 +91,7 @@ namespace Condominium_System.Presentation.Views
             }
             finally
             {
-                // Restaurar el panel
-                GenerateReceiptsPanel.Enabled = true;
-                GenerateReceiptsPanel.BackColor = SystemColors.Control; // Volver al color original
-
-                // Restaurar el texto del label
-                var label = GenerateReceiptsPanel.Controls.OfType<Label>().FirstOrDefault();
-                if (label != null)
-                    label.Text = "Generar Recibos Masivos"; // O el texto original
+                CleanForm();
             }
         }
 
@@ -109,51 +99,50 @@ namespace Condominium_System.Presentation.Views
         {
             try
             {
-                var condominiums = (await _condominiumService.GetAllCondominiumsAsync()).ToList();
-
-                if (!condominiums.Any())
+                using (var scope = _serviceProvider.CreateScope())
                 {
-                    ReceiptCBCondominium.DataSource = null;
-                    ReceiptCBCondominium.Items.Clear();
-                    ReceiptCBCondominium.Text = "No hay condominios registrados";
-                    ReceiptCBCondominium.Enabled = false;
+                    var condominiumService = scope.ServiceProvider.GetRequiredService<ICondominiumService>();
+                    var condominiums = (await condominiumService.GetAllCondominiumsAsync()).ToList();
 
-                    MessageBox.Show("No se encontraron condominios registrados. Por favor, registre al menos un condominio.",
-                                  "Información",
-                                  MessageBoxButtons.OK,
-                                  MessageBoxIcon.Information);
+                    if (!condominiums.Any())
+                    {
+                        ReceiptCBCondominium.DataSource = null;
+                        ReceiptCBCondominium.Items.Clear();
+                        ReceiptCBCondominium.Text = "No hay condominios registrados";
+                        ReceiptCBCondominium.Enabled = false;
 
-                    
-                    return;
+                        MessageBox.Show("No se encontraron condominios registrados. Por favor, registre al menos un condominio.",
+                                      "Información",
+                                      MessageBoxButtons.OK,
+                                      MessageBoxIcon.Information);
+
+                        return;
+                    }
+
+                    ReceiptCBCondominium.DataSource = condominiums;
+                    ReceiptCBCondominium.DisplayMember = "Name";
+                    ReceiptCBCondominium.ValueMember = "Id";
+                    ReceiptCBCondominium.Enabled = true;
+
+                    if (ReceiptCBCondominium.Items.Count > 0)
+                    {
+                        ReceiptCBCondominium.SelectedIndex = 0;
+                    }
                 }
-
-                var placeholder = new Condominium { Id = 0, Name = "-- Seleccione una condominio --" };
-                var listWithPlaceholder = new List<Condominium> { placeholder };
-                listWithPlaceholder.AddRange(condominiums);
-
-                ReceiptCBCondominium.DisplayMember = "Code";
-                ReceiptCBCondominium.ValueMember = "Id";
-                ReceiptCBCondominium.DataSource = listWithPlaceholder;
-                ReceiptCBCondominium.SelectedIndex = 0;
-                ReceiptCBCondominium.Enabled = true;
             }
             catch (Exception ex)
             {
-                ReceiptCBCondominium.DataSource = null;
+                ReceiptCBCondominium = null;
                 ReceiptCBCondominium.Items.Clear();
                 ReceiptCBCondominium.Text = "Error al cargar condominios";
                 ReceiptCBCondominium.Enabled = false;
 
                 MessageBox.Show($"Error cargando condominios: {ex.Message}",
-                              "Error",
-                              MessageBoxButtons.OK,
-                              MessageBoxIcon.Error);
+                                "Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
 
-                if (this.Owner is TenantScreen owner)
-                {
-                    await owner.LoadDataToDataGrid();
-                }
-                this.Hide();
+                return;
             }
             finally
             {
@@ -180,6 +169,26 @@ namespace Condominium_System.Presentation.Views
             ReceiptCBYear.ValueMember = "Key";
             ReceiptCBYear.DropDownStyle = ComboBoxStyle.DropDownList;
             ReceiptCBYear.SelectedIndex = 0;
+        }
+
+        private async void CleanForm()
+        {
+            if (ReceiptCBCondominium.Items.Count > 0)
+                ReceiptCBCondominium.SelectedIndex = 0;
+
+            if (ReceiptCBYear.Items.Count > 0)
+                ReceiptCBYear.SelectedIndex = 0;
+        }
+
+        public bool FormIsCorrect()
+        {
+            bool isYearValid = int.TryParse(ReceiptCBYear.SelectedValue?.ToString(), out int yearId) && yearId != 0;
+            bool isCondominiumValid = int.TryParse(ReceiptCBCondominium.SelectedValue?.ToString(), out int condominiumId) && condominiumId != 0;
+
+            return !(
+               !isYearValid ||
+               !isCondominiumValid
+           );
         }
     }
 }

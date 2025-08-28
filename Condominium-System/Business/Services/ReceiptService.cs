@@ -63,11 +63,17 @@ namespace Condominium_System.Business.Services
         {
             using (var scope = _serviceProvider.CreateScope())
             {
+                var condominiumService = scope.ServiceProvider.GetRequiredService<ICondominiumService>();
                 var housingService = scope.ServiceProvider.GetRequiredService<IHousingEntityService>();
                 var blockService = scope.ServiceProvider.GetRequiredService<IBlockService>();
                 var tenantService = scope.ServiceProvider.GetRequiredService<ITenantService>();
-                var serviceRelationService = scope.ServiceProvider.GetRequiredService<IHousingServiceRelationService>();
-                var serviceService = scope.ServiceProvider.GetRequiredService<IServiceService>();
+
+                // Obtener el condominio para sacar la quota
+                var condominium = await condominiumService.GetCondominiumByIdAsync(condominiumId);
+                if (condominium == null)
+                {
+                    throw new Exception("Condominio no encontrado");
+                }
 
                 // Obtener todos los bloques filtrados por condominio
                 var blocks = (await blockService.GetBlocksByCondominiumIdAsync(condominiumId)).ToList();
@@ -97,8 +103,8 @@ namespace Condominium_System.Business.Services
 
                         var tenant = tenants.First();
 
-                        // Calcular el monto mensual basado en servicios
-                        var monthlyAmount = await CalculateMonthlyAmountAsync(housing.Id, serviceRelationService, serviceService);
+                        // ✅ USAR LA QUOTA DEL CONDOMINIO EN LUGAR DE CALCULAR POR SERVICIOS
+                        var monthlyAmount = condominium.Quota;
 
                         // Generar recibos desde el mes actual hasta diciembre
                         for (int month = startMonth; month <= 12; month++)
@@ -109,12 +115,12 @@ namespace Condominium_System.Business.Services
                             {
                                 Date = DateTime.Now,
                                 DueDate = dueDate,
-                                Amount = monthlyAmount,
+                                Amount = monthlyAmount, // ✅ Usar la quota del condominio
                                 AmountPaid = 0,
                                 Detail = $"Recibo de mantenimiento - {CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month)} {year}",
                                 TenantId = tenant.Id,
                                 HousingId = housing.Id,
-                                Author = "System",
+                                Author = author,
                                 CreatedAt = DateTime.Now,
                                 IsActive = true
                             };
@@ -126,39 +132,6 @@ namespace Condominium_System.Business.Services
                 }
 
                 return receiptsCreated;
-            }
-        }
-
-        private async Task<int> CalculateMonthlyAmountAsync(int housingId,
-            IHousingServiceRelationService housingServiceRelationService,
-            IServiceService serviceService)
-        {
-            try
-            {
-                // Obtener servicios activos de la vivienda
-                var housingServices = await housingServiceRelationService.GetAllAsync();
-                var activeServices = housingServices
-                    .Where(hs => hs.HousingId == housingId && hs.IsActive)
-                    .ToList();
-
-                int totalAmount = 0;
-
-                foreach (var housingService in activeServices)
-                {
-                    // Obtener el servicio para obtener el costo
-                    var service = await serviceService.GetByIdAsync(housingService.ServiceId);
-                    if (service != null && service.IsActive)
-                    {
-                        totalAmount += service.Cost;
-                    }
-                }
-
-                return totalAmount;
-            }
-            catch
-            {
-                // En caso de error, retornar un monto base o 0
-                return 0;
             }
         }
 
