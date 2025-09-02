@@ -146,7 +146,6 @@
             Name = "ReceiptScreen";
             Text = "ReceiptScreen";
             Load += ReceiptScreen_Load;
-            Click += GenerateReceiptsBTN_Click;
             panel5.ResumeLayout(false);
             panel1.ResumeLayout(false);
             GenerateReceiptsPanel.ResumeLayout(false);
