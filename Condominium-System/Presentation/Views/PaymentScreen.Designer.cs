@@ -105,7 +105,6 @@
             PaymentTBPropietaryDocument.Name = "PaymentTBPropietaryDocument";
             PaymentTBPropietaryDocument.Size = new Size(226, 23);
             PaymentTBPropietaryDocument.TabIndex = 0;
-            PaymentTBPropietaryDocument.TextChanged += PaymentTBPropietaryDocument_TextChanged;
             // 
             // CondominiumPNLBTNCreate
             // 

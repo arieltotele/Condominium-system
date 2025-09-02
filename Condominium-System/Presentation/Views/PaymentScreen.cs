@@ -3,6 +3,7 @@ using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
 using Condominium_System.Helpers.Status;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -35,7 +36,6 @@ namespace Condominium_System.Presentation.Views
             _currentUser = Session.CurrentUser;
             _serviceProvider = serviceProvider;
         }
-
 
         private void PaymentScreen_Load(object sender, EventArgs e)
         {
@@ -137,7 +137,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "Amount",
                 HeaderText = "Monto",
                 Name = "AmountColumn",
-                Width = 100
+                Width = 90
             });
 
             PaymentDTGData.Columns.Add(new DataGridViewTextBoxColumn
@@ -145,7 +145,15 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "AmountPaid",
                 HeaderText = "Monto abonado",
                 Name = "AmountPaidColumn",
-                Width = 170
+                Width = 145
+            });
+
+            PaymentDTGData.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "DueDate",
+                HeaderText = "Fecha de Vencimieto",
+                Name = "DueDateColumn",
+                Width = 185
             });
 
             PaymentDTGData.Columns.Add(new DataGridViewTextBoxColumn
@@ -153,7 +161,7 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "Detail",
                 HeaderText = "Detalle",
                 Name = "DetailColumn",
-                Width = 320
+                Width = 260
             });
 
             PaymentDTGData.Columns.Add(new DataGridViewTextBoxColumn
@@ -161,14 +169,14 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "Status",
                 HeaderText = "Estado",
                 Name = "StatusColumn",
-                Width = 220
+                Width = 150
             });
 
             PaymentDTGData.Columns.Add(new DataGridViewTextBoxColumn
             {
                 HeaderText = "Acciones",
                 Name = "ActionsColumn",
-                Width = 100
+                Width = 80
             });
         }
 
@@ -212,9 +220,11 @@ namespace Condominium_System.Presentation.Views
                 PaymentCBHouse.Items.Clear();
                 PaymentCBHouse.Enabled = false;
 
-                if (string.IsNullOrWhiteSpace(documentNumber))
+                if (String.IsNullOrEmpty(PaymentTBPropietaryDocument.Text) || PaymentTBPropietaryDocument.Text.Length != 11)
                 {
-                    PaymentCBHouse.Text = "Ingrese número de documento";
+                    MessageBox.Show("Por favor, complete correctamente el campo de documento.", "Error", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    ClearForm();
                     return;
                 }
 
@@ -280,26 +290,7 @@ namespace Condominium_System.Presentation.Views
                 PaymentCBHouse.Text = "Error en la búsqueda";
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void PaymentTBPropietaryDocument_TextChanged(object sender, EventArgs e)
-        {
-            if (PaymentTBPropietaryDocument.Text != "Ingrese el documento del propietario")
-            {
-                string document = PaymentTBPropietaryDocument.Text.Trim();
-
-                if (document.Length > 11)
-                {
-                    // Cortar el texto a 11 caracteres
-                    PaymentTBPropietaryDocument.Text = document.Substring(0, 11);
-                    PaymentTBPropietaryDocument.SelectionStart = 11;
-                }
-
-                // Cambiar color para indicar validación
-                PaymentTBPropietaryDocument.ForeColor = document.Length == 11 ?
-                    SystemColors.WindowText : Color.Red;
-            }
-        }        
+        }       
 
         private async void SearchPendingReceiptsBTN_Click(object sender, EventArgs e)
         {
@@ -308,9 +299,10 @@ namespace Condominium_System.Presentation.Views
 
         public async void SearchPendingReceipts(bool showMessage)
         {
-            if (!FormIsCorrect())
+            if (FormIsCorrect())
             {
-                MessageBox.Show("Por favor, complete correctamente el formulario.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Por favor, complete correctamente el formulario.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -338,7 +330,6 @@ namespace Condominium_System.Presentation.Views
 
                 if (showMessage)
                 {
-                    // Mostrar resultados
                     MessageBox.Show($"Se encontraron {pendingReceipts.Count()} recibos pendientes/parciales.",
                                    "Búsqueda completada",
                                    MessageBoxButtons.OK,
@@ -427,5 +418,14 @@ namespace Condominium_System.Presentation.Views
 
             return isDocumentValid && isHouseValid;
         }
+
+        private void ClearForm()
+        {
+            PaymentTBPropietaryDocument.Clear();
+
+            if (PaymentCBHouse.Items.Count > 0)
+                PaymentCBHouse.SelectedIndex = 0;
+        }
+        
     }
 }

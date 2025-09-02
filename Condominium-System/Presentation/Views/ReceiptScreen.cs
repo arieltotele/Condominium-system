@@ -119,20 +119,30 @@ namespace Condominium_System.Presentation.Views
                         return;
                     }
 
-                    ReceiptCBCondominium.DataSource = condominiums;
-                    ReceiptCBCondominium.DisplayMember = "Name";
-                    ReceiptCBCondominium.ValueMember = "Id";
-                    ReceiptCBCondominium.Enabled = true;
-
-                    if (ReceiptCBCondominium.Items.Count > 0)
+                    // Crear una lista con el elemento de selección inicial
+                    var condominiumList = new List<KeyValuePair<int, string>>
                     {
-                        ReceiptCBCondominium.SelectedIndex = 0;
+                        new KeyValuePair<int, string>(0, "-- Seleccione un condominio --")
+                    };
+
+                    // Agregar los condominios reales
+                    foreach (var condo in condominiums)
+                    {
+                        condominiumList.Add(new KeyValuePair<int, string>(condo.Id, condo.Name));
                     }
+
+                    // Asignar la lista al ComboBox
+                    ReceiptCBCondominium.DataSource = condominiumList;
+                    ReceiptCBCondominium.DisplayMember = "Value";
+                    ReceiptCBCondominium.ValueMember = "Key";
+                    ReceiptCBCondominium.DropDownStyle = ComboBoxStyle.DropDownList;
+                    ReceiptCBCondominium.Enabled = true;
+                    ReceiptCBCondominium.SelectedIndex = 0;
                 }
             }
             catch (Exception ex)
             {
-                ReceiptCBCondominium = null;
+                ReceiptCBCondominium.DataSource = null;
                 ReceiptCBCondominium.Items.Clear();
                 ReceiptCBCondominium.Text = "Error al cargar condominios";
                 ReceiptCBCondominium.Enabled = false;
@@ -141,8 +151,6 @@ namespace Condominium_System.Presentation.Views
                                 "Error",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Error);
-
-                return;
             }
             finally
             {
@@ -171,7 +179,7 @@ namespace Condominium_System.Presentation.Views
             ReceiptCBYear.SelectedIndex = 0;
         }
 
-        private async void CleanForm()
+        private void CleanForm()
         {
             if (ReceiptCBCondominium.Items.Count > 0)
                 ReceiptCBCondominium.SelectedIndex = 0;
