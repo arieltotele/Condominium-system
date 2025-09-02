@@ -1,6 +1,7 @@
 ﻿using Condominium_System.Business.Services;
 using Condominium_System.Data.Entities;
 using Condominium_System.Helpers;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -37,6 +38,66 @@ namespace Condominium_System.Presentation.Views
         private async void AddPaymentScreen_Load(object sender, EventArgs e)
         {
             SetComboBoxForTypeOfUsers();
+            await CheckAndDisplayLateFee();
+            //ForceLateFeeForTesting();
+        }
+
+        private async Task CheckAndDisplayLateFee()
+        {
+            if (currentReceipt == null) return;
+
+            try
+            {
+                using (var scope = _serviceProvider.CreateScope())
+                {
+                    var lateFeeService = scope.ServiceProvider.GetRequiredService<ILateFeeService>();
+
+                    // Verificar si aplica mora
+                    var lateFeeAmount = await lateFeeService.CalculateLateFeeAsync(currentReceipt.Id);
+
+                    if (lateFeeAmount > 0)
+                    {
+                        // Mostrar advertencia de mora
+                        MessageBox.Show($"⚠️ Este recibo tiene una mora pendiente de ${lateFeeAmount}\n" +
+                                       $"La mora se aplicará automáticamente al registrar el pago.",
+                                       "Mora Pendiente",
+                                       MessageBoxButtons.OK,
+                                       MessageBoxIcon.Warning);
+
+                        // Actualizar UI para mostrar la mora
+                        UpdateUIShowingLateFee(lateFeeAmount);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al verificar mora: {ex.Message}");
+            }
+        }
+
+        private void UpdateUIShowingLateFee(int lateFeeAmount)
+        {
+            // Crear o mostrar un label para la mora
+            var lateFeeLabel = new Label()
+            {
+                Text = $"Mora pendiente: ${lateFeeAmount}",
+                ForeColor = Color.Red,
+                Font = new Font(this.Font, FontStyle.Bold),
+                Location = new Point(20, 100), // Ajusta la posición según tu layout
+                AutoSize = true
+            };
+
+            this.Controls.Add(lateFeeLabel);
+
+            // También puedes actualizar el monto máximo permitido
+            if (currentReceipt != null)
+            {
+                decimal totalAmount = currentReceipt.Amount + lateFeeAmount;
+                decimal remainingAmount = totalAmount - currentReceipt.AmountPaid;
+
+                // Actualizar tooltip o mensaje
+                PaymentTBAmount.Text = remainingAmount.ToString();
+            }
         }
 
         private void SetComboBoxForTypeOfUsers()
@@ -72,11 +133,9 @@ namespace Condominium_System.Presentation.Views
 
             try
             {
-                // Deshabilitar botón durante el proceso
-                //PaymentSaveBTN.Enabled = false;
                 PaymentSaveBTNLBL.Text = "Guardando...";
 
-                // Validar que el monto no exceda el saldo pendiente
+                // Validar monto
                 decimal amountToPay;
                 if (!decimal.TryParse(PaymentTBAmount.Text, out amountToPay) || amountToPay <= 0)
                 {
@@ -84,6 +143,25 @@ namespace Condominium_System.Presentation.Views
                     return;
                 }
 
+                // ✅ CALCULAR MORA ANTES DE VALIDAR MONTO
+                using (var scope = _serviceProvider.CreateScope())
+                {
+                    var lateFeeService = scope.ServiceProvider.GetRequiredService<ILateFeeService>();
+                    bool lateFeeApplied = await lateFeeService.ApplyLateFeeIfNeededAsync(currentReceipt.Id);
+
+                    if (lateFeeApplied)
+                    {
+                        // Recargar el recibo con la mora aplicada
+                        currentReceipt = await _receiptService.GetReceiptByIdAsync(currentReceipt.Id);
+
+                        MessageBox.Show($"✅ Se aplicó mora de ${currentReceipt.LateFee} al recibo",
+                                       "Mora Aplicada",
+                                       MessageBoxButtons.OK,
+                                       MessageBoxIcon.Information);
+                    }
+                }
+
+                // Ahora validar con el monto actualizado (incluyendo mora)
                 decimal remainingAmount = currentReceipt.Amount - currentReceipt.AmountPaid;
                 if (amountToPay > remainingAmount)
                 {
@@ -111,7 +189,7 @@ namespace Condominium_System.Presentation.Views
                 MessageBox.Show("Pago registrado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 ClearFields();
                 this.DialogResult = DialogResult.OK;
-              
+
                 await ((PaymentScreen)this.Owner).LoadHousingsByTenantDocumentAsync(currentTenant!.DocumentNumber);
                 this.Hide();
             }
@@ -142,13 +220,27 @@ namespace Condominium_System.Presentation.Views
         {
             if (currentReceipt != null && decimal.TryParse(PaymentTBAmount.Text, out decimal amount))
             {
-                decimal remainingAmount = currentReceipt.Amount - currentReceipt.AmountPaid;
+                // Considerar mora pendiente aunque no se haya aplicado todavía
+                decimal potentialLateFee = 0;
+
+                // Calcular mora potencial si el recibo está vencido
+                if (DateTime.Now > currentReceipt.DueDate && !currentReceipt.LateFeeApplied)
+                {
+                    int daysLate = (DateTime.Now - currentReceipt.DueDate).Days;
+                    decimal monthlyFee = currentReceipt.Amount * 0.05m;
+                    int monthsLate = (int)Math.Ceiling(daysLate / 30.0);
+                    potentialLateFee = (int)(monthlyFee * monthsLate);
+                }
+
+                decimal totalAmount = currentReceipt.Amount + potentialLateFee;
+                decimal remainingAmount = totalAmount - currentReceipt.AmountPaid;
 
                 if (amount > remainingAmount)
                 {
                     PaymentTBAmount.ForeColor = Color.Red;
                     ToolTip toolTip = new ToolTip();
-                    toolTip.Show($"Máximo permitido: ${remainingAmount}", PaymentTBAmount, 0, -20, 2000);
+                    toolTip.Show($"Máximo permitido: ${remainingAmount} (incluye mora potencial: ${potentialLateFee})",
+                               PaymentTBAmount, 0, -20, 2000);
                 }
                 else
                 {
@@ -195,5 +287,25 @@ namespace Condominium_System.Presentation.Views
             PaymentCBDetail.Text = string.Empty;
             PaymentCBPayMethod.SelectedIndex = 0;
         }
+        private void ForceLateFeeForTesting()
+        {
+            if (currentReceipt != null)
+            {
+                // Forzar fecha de vencimiento pasada para testing
+                currentReceipt.DueDate = DateTime.Now.AddDays(-45);
+
+                MessageBox.Show($"✅ Fecha forzada para testing: {currentReceipt.DueDate.ToShortDateString()}\n" +
+                               $"El recibo ahora está vencido hace 45 días.",
+                               "Testing - Mora Forzada",
+                               MessageBoxButtons.OK,
+                               MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("No hay recibo seleccionado para forzar mora", "Error",
+                               MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }

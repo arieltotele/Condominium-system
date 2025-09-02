@@ -75,6 +75,11 @@ namespace Condominium_System
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IRepositoryWithId<Payment>, RepositoryWithId<Payment>>();
 
+            services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IRepositoryWithId<Payment>, RepositoryWithId<Payment>>();
+
+            services.AddScoped<ILateFeeService, LateFeeService>();
+
             // Registration for formularies
             services.AddTransient<HomeScreen>();
             services.AddTransient<Login>();

@@ -54,16 +54,23 @@ namespace Condominium_System.Presentation.Views
                 BlockTBHouseQuantity.Text = block.HousingCount.ToString();
                 BlockTBFeature.Text = block.Feature;
 
+                // Cargar condominios y esperar a que termine
                 await LoadCondominiumsIntoComboBox();
 
-                BlockCBCondominium.SelectedValue = block.CondominiumId;
+                // Usar BeginInvoke para asegurar que el UI esté actualizado
+                this.BeginInvoke(new Action(() =>
+                {
+                    // Asignar el condominio usando SelectedValue
+                    BlockCBCondominium.SelectedValue = block.CondominiumId;
 
-                if (block.HousingType == "Casa")
-                    BlockCBTypeHousing.SelectedValue = 1;
-                else if (block.HousingType == "Apartamento")
-                    BlockCBTypeHousing.SelectedValue = 2;
-                else
-                    BlockCBTypeHousing.SelectedValue = 0;
+                    // Asignar el tipo de vivienda
+                    if (block.HousingType == "Casa")
+                        BlockCBTypeHousing.SelectedValue = 1;
+                    else if (block.HousingType == "Apartamento")
+                        BlockCBTypeHousing.SelectedValue = 2;
+                    else
+                        BlockCBTypeHousing.SelectedValue = 0;
+                }));
             }
         }
 

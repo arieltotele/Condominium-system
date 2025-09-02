@@ -22,12 +22,12 @@ namespace Condominium_System.Business.Services
             var receipt = await _receiptRepository.GetByIdAsync(receiptId);
             if (receipt == null) return 0;
 
-            // Solo calcular mora si ya pasó la fecha límite y no se ha aplicado
+            // Here we calculate whether the deadline has passed and whether it has been applied.
             if (DateTime.Now > receipt.DueDate && !receipt.LateFeeApplied)
             {
                 int daysLate = (DateTime.Now - receipt.DueDate).Days;
 
-                // Calcular mora: 5% del monto total por cada mes de retraso (o fracción)
+                // Here we apply a 5% late payment fee.
                 decimal monthlyFee = receipt.Amount * 0.05m;
                 int monthsLate = (int)Math.Ceiling(daysLate / 30.0);
 
@@ -42,14 +42,12 @@ namespace Condominium_System.Business.Services
             var receipt = await _receiptRepository.GetByIdAsync(receiptId);
             if (receipt == null) return false;
 
-            // Verificar si necesita aplicar mora
             if (DateTime.Now > receipt.DueDate && !receipt.LateFeeApplied)
             {
                 receipt.LateFee = await CalculateLateFeeAsync(receiptId);
                 receipt.LateFeeApplied = true;
                 receipt.LateFeeAppliedDate = DateTime.Now;
 
-                // Actualizar el monto total (monto original + mora)
                 receipt.Amount += receipt.LateFee;
 
                 _receiptRepository.Update(receipt);
