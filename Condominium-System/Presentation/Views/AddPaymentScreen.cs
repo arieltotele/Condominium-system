@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,8 @@ namespace Condominium_System.Presentation.Views
         Receipt? currentReceipt;
         User? currentUser;
         Tenant? currentTenant;
+        private bool _isFormatting = false;
+
         public AddPaymentScreen(IPaymentService paymentService, IReceiptService receiptService, IServiceProvider serviceProvider)
         {
             InitializeComponent();
@@ -39,7 +42,37 @@ namespace Condominium_System.Presentation.Views
         {
             SetComboBoxForTypeOfUsers();
             await CheckAndDisplayLateFee();
+            LoadPendingAmount(); // Cargar monto pendiente automáticamente
             //ForceLateFeeForTesting();
+        }
+
+        private void LoadPendingAmount()
+        {
+            if (currentReceipt != null)
+            {
+                decimal remainingAmount = currentReceipt.Amount - currentReceipt.AmountPaid;
+                PaymentTBAmount.Text = FormatCurrency(remainingAmount);
+            }
+        }
+
+        private string FormatCurrency(decimal amount)
+        {
+            return amount.ToString("C0", CultureInfo.CurrentCulture);
+        }
+
+        private decimal ParseCurrency(string currencyText)
+        {
+            if (string.IsNullOrWhiteSpace(currencyText))
+                return 0;
+
+            // Remover símbolos de moneda y separadores de miles
+            string cleanText = currencyText.Replace("$", "").Replace(",", "").Trim();
+
+            if (decimal.TryParse(cleanText, out decimal result))
+            {
+                return result;
+            }
+            return 0;
         }
 
         private async Task CheckAndDisplayLateFee()
@@ -52,19 +85,16 @@ namespace Condominium_System.Presentation.Views
                 {
                     var lateFeeService = scope.ServiceProvider.GetRequiredService<ILateFeeService>();
 
-                    // Verificar si aplica mora
                     var lateFeeAmount = await lateFeeService.CalculateLateFeeAsync(currentReceipt.Id);
 
                     if (lateFeeAmount > 0)
                     {
-                        // Mostrar advertencia de mora
                         MessageBox.Show($"⚠️ Este recibo tiene una mora pendiente de ${lateFeeAmount}\n" +
                                        $"La mora se aplicará automáticamente al registrar el pago.",
                                        "Mora Pendiente",
                                        MessageBoxButtons.OK,
                                        MessageBoxIcon.Warning);
 
-                        // Actualizar UI para mostrar la mora
                         UpdateUIShowingLateFee(lateFeeAmount);
                     }
                 }
@@ -77,26 +107,23 @@ namespace Condominium_System.Presentation.Views
 
         private void UpdateUIShowingLateFee(int lateFeeAmount)
         {
-            // Crear o mostrar un label para la mora
             var lateFeeLabel = new Label()
             {
-                Text = $"Mora pendiente: ${lateFeeAmount}",
+                Text = $"Mora pendiente: ${lateFeeAmount:N0}",
                 ForeColor = Color.Red,
                 Font = new Font(this.Font, FontStyle.Bold),
-                Location = new Point(20, 100), // Ajusta la posición según tu layout
+                Location = new Point(20, 100),
                 AutoSize = true
             };
 
             this.Controls.Add(lateFeeLabel);
 
-            // También puedes actualizar el monto máximo permitido
             if (currentReceipt != null)
             {
                 decimal totalAmount = currentReceipt.Amount + lateFeeAmount;
                 decimal remainingAmount = totalAmount - currentReceipt.AmountPaid;
 
-                // Actualizar tooltip o mensaje
-                PaymentTBAmount.Text = remainingAmount.ToString();
+                PaymentTBAmount.Text = FormatCurrency(remainingAmount);
             }
         }
 
@@ -135,15 +162,15 @@ namespace Condominium_System.Presentation.Views
             {
                 PaymentSaveBTNLBL.Text = "Guardando...";
 
-                // Validar monto
-                decimal amountToPay;
-                if (!decimal.TryParse(PaymentTBAmount.Text, out amountToPay) || amountToPay <= 0)
+                // Parsear el monto formateado a decimal
+                decimal amountToPay = ParseCurrency(PaymentTBAmount.Text);
+
+                if (amountToPay <= 0)
                 {
                     MessageBox.Show("Ingrese un monto válido mayor a cero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                // ✅ CALCULAR MORA ANTES DE VALIDAR MONTO
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var lateFeeService = scope.ServiceProvider.GetRequiredService<ILateFeeService>();
@@ -151,21 +178,19 @@ namespace Condominium_System.Presentation.Views
 
                     if (lateFeeApplied)
                     {
-                        // Recargar el recibo con la mora aplicada
                         currentReceipt = await _receiptService.GetReceiptByIdAsync(currentReceipt.Id);
 
-                        MessageBox.Show($"✅ Se aplicó mora de ${currentReceipt.LateFee} al recibo",
+                        MessageBox.Show($"✅ Se aplicó mora de ${currentReceipt.LateFee:N0} al recibo",
                                        "Mora Aplicada",
                                        MessageBoxButtons.OK,
                                        MessageBoxIcon.Information);
                     }
                 }
 
-                // Ahora validar con el monto actualizado (incluyendo mora)
                 decimal remainingAmount = currentReceipt.Amount - currentReceipt.AmountPaid;
                 if (amountToPay > remainingAmount)
                 {
-                    MessageBox.Show($"El monto a pagar (${amountToPay}) excede el saldo pendiente (${remainingAmount}).",
+                    MessageBox.Show($"El monto a pagar (${amountToPay:N0}) excede el saldo pendiente (${remainingAmount:N0}).",
                                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
@@ -190,7 +215,7 @@ namespace Condominium_System.Presentation.Views
                 ClearFields();
                 this.DialogResult = DialogResult.OK;
 
-                await ((PaymentScreen)this.Owner).LoadHousingsByTenantDocumentAsync(currentTenant!.DocumentNumber);
+                ((PaymentScreen)this.Owner).SearchPendingReceipts(false);
                 this.Hide();
             }
             catch (Exception ex)
@@ -205,11 +230,13 @@ namespace Condominium_System.Presentation.Views
 
         private void PaymentTBAmount_KeyPress(object sender, KeyPressEventArgs e)
         {
+            // Permitir solo números, punto decimal y teclas de control
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
             {
                 e.Handled = true;
             }
 
+            // Permitir solo un punto decimal
             if (e.KeyChar == '.' && (sender as TextBox).Text.IndexOf('.') > -1)
             {
                 e.Handled = true;
@@ -218,34 +245,80 @@ namespace Condominium_System.Presentation.Views
 
         private void PaymentTBAmount_TextChanged(object sender, EventArgs e)
         {
-            if (currentReceipt != null && decimal.TryParse(PaymentTBAmount.Text, out decimal amount))
+            if (_isFormatting) return;
+
+            try
             {
-                // Considerar mora pendiente aunque no se haya aplicado todavía
-                decimal potentialLateFee = 0;
+                _isFormatting = true;
 
-                // Calcular mora potencial si el recibo está vencido
-                if (DateTime.Now > currentReceipt.DueDate && !currentReceipt.LateFeeApplied)
-                {
-                    int daysLate = (DateTime.Now - currentReceipt.DueDate).Days;
-                    decimal monthlyFee = currentReceipt.Amount * 0.05m;
-                    int monthsLate = (int)Math.Ceiling(daysLate / 30.0);
-                    potentialLateFee = (int)(monthlyFee * monthsLate);
-                }
+                // Si el texto está vacío, no hacer nada
+                if (string.IsNullOrWhiteSpace(PaymentTBAmount.Text))
+                    return;
 
-                decimal totalAmount = currentReceipt.Amount + potentialLateFee;
-                decimal remainingAmount = totalAmount - currentReceipt.AmountPaid;
+                // Guardar la posición del cursor
+                int cursorPosition = PaymentTBAmount.SelectionStart;
 
-                if (amount > remainingAmount)
+                // Parsear el valor actual
+                decimal currentValue = ParseCurrency(PaymentTBAmount.Text);
+
+                // Aplicar formato de moneda
+                PaymentTBAmount.Text = FormatCurrency(currentValue);
+
+                // Restaurar la posición del cursor (ajustada por el formato)
+                PaymentTBAmount.SelectionStart = cursorPosition + (PaymentTBAmount.Text.Length - PaymentTBAmount.Text.Replace(",", "").Length);
+
+                // Validar monto contra el saldo pendiente
+                if (currentReceipt != null)
                 {
-                    PaymentTBAmount.ForeColor = Color.Red;
-                    ToolTip toolTip = new ToolTip();
-                    toolTip.Show($"Máximo permitido: ${remainingAmount} (incluye mora potencial: ${potentialLateFee})",
-                               PaymentTBAmount, 0, -20, 2000);
+                    decimal potentialLateFee = 0;
+
+                    if (DateTime.Now > currentReceipt.DueDate && !currentReceipt.LateFeeApplied)
+                    {
+                        int daysLate = (DateTime.Now - currentReceipt.DueDate).Days;
+                        decimal monthlyFee = currentReceipt.Amount * 0.05m;
+                        int monthsLate = (int)Math.Ceiling(daysLate / 30.0);
+                        potentialLateFee = (int)(monthlyFee * monthsLate);
+                    }
+
+                    decimal totalAmount = currentReceipt.Amount + potentialLateFee;
+                    decimal remainingAmount = totalAmount - currentReceipt.AmountPaid;
+
+                    if (currentValue > remainingAmount)
+                    {
+                        PaymentTBAmount.ForeColor = Color.Red;
+                        ToolTip toolTip = new ToolTip();
+                        toolTip.Show($"Máximo permitido: {FormatCurrency(remainingAmount)} (incluye mora potencial: {FormatCurrency(potentialLateFee)})",
+                                   PaymentTBAmount, 0, -20, 2000);
+                    }
+                    else
+                    {
+                        PaymentTBAmount.ForeColor = SystemColors.WindowText;
+                    }
                 }
-                else
-                {
-                    PaymentTBAmount.ForeColor = SystemColors.WindowText;
-                }
+            }
+            finally
+            {
+                _isFormatting = false;
+            }
+        }
+
+        private void PaymentTBAmount_Enter(object sender, EventArgs e)
+        {
+            // Cuando el usuario hace clic en el TextBox, quitar el formato temporalmente
+            if (!_isFormatting)
+            {
+                decimal currentValue = ParseCurrency(PaymentTBAmount.Text);
+                PaymentTBAmount.Text = currentValue.ToString("N0"); // Formato sin símbolo de moneda
+            }
+        }
+
+        private void PaymentTBAmount_Leave(object sender, EventArgs e)
+        {
+            // Cuando el usuario sale del TextBox, aplicar formato de moneda
+            if (!_isFormatting)
+            {
+                decimal currentValue = ParseCurrency(PaymentTBAmount.Text);
+                PaymentTBAmount.Text = FormatCurrency(currentValue);
             }
         }
 
@@ -274,7 +347,9 @@ namespace Condominium_System.Presentation.Views
                                 int.TryParse(PaymentCBPayMethod.SelectedValue.ToString(), out int methodId) &&
                                 methodId != 0;
 
-            bool isAmountValid = decimal.TryParse(PaymentTBAmount.Text, out decimal amount) && amount > 0;
+            // Parsear el monto formateado para validación
+            decimal amount = ParseCurrency(PaymentTBAmount.Text);
+            bool isAmountValid = amount > 0;
 
             bool isDetailValid = !string.IsNullOrWhiteSpace(PaymentCBDetail.Text);
 
@@ -287,11 +362,11 @@ namespace Condominium_System.Presentation.Views
             PaymentCBDetail.Text = string.Empty;
             PaymentCBPayMethod.SelectedIndex = 0;
         }
+
         private void ForceLateFeeForTesting()
         {
             if (currentReceipt != null)
             {
-                // Forzar fecha de vencimiento pasada para testing
                 currentReceipt.DueDate = DateTime.Now.AddDays(-45);
 
                 MessageBox.Show($"✅ Fecha forzada para testing: {currentReceipt.DueDate.ToShortDateString()}\n" +
@@ -306,6 +381,5 @@ namespace Condominium_System.Presentation.Views
                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
     }
 }

@@ -299,9 +299,14 @@ namespace Condominium_System.Presentation.Views
                 PaymentTBPropietaryDocument.ForeColor = document.Length == 11 ?
                     SystemColors.WindowText : Color.Red;
             }
-        }
+        }        
 
         private async void SearchPendingReceiptsBTN_Click(object sender, EventArgs e)
+        {
+            SearchPendingReceipts(true);
+        }
+
+        public async void SearchPendingReceipts(bool showMessage)
         {
             if (!FormIsCorrect())
             {
@@ -320,8 +325,8 @@ namespace Condominium_System.Presentation.Views
 
                 // Buscar recibos pendientes y parcialmente pagados
                 var pendingReceipts = await _receiptService.GetReceiptsByStatusAndHousingAsync(
-                    housingId, 
-                    "Pending", 
+                    housingId,
+                    "Pending",
                     "PartiallyPaid"
                 );
 
@@ -331,17 +336,20 @@ namespace Condominium_System.Presentation.Views
                 // Aplicar formato a las columnas
                 FormatDataGridColumns();
 
-                // Mostrar resultados
-                MessageBox.Show($"Se encontraron {pendingReceipts.Count()} recibos pendientes/parciales.", 
-                               "Búsqueda completada", 
-                               MessageBoxButtons.OK, 
-                               MessageBoxIcon.Information);
+                if (showMessage)
+                {
+                    // Mostrar resultados
+                    MessageBox.Show($"Se encontraron {pendingReceipts.Count()} recibos pendientes/parciales.",
+                                   "Búsqueda completada",
+                                   MessageBoxButtons.OK,
+                                   MessageBoxIcon.Information);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al buscar recibos: {ex.Message}", 
-                               "Error", 
-                               MessageBoxButtons.OK, 
+                MessageBox.Show($"Error al buscar recibos: {ex.Message}",
+                               "Error",
+                               MessageBoxButtons.OK,
                                MessageBoxIcon.Error);
             }
             finally
