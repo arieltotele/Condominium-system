@@ -119,19 +119,17 @@ namespace Condominium_System.Presentation.Views
                         return;
                     }
 
-                    // Crear una lista con el elemento de selección inicial
                     var condominiumList = new List<KeyValuePair<int, string>>
                     {
+
                         new KeyValuePair<int, string>(0, "-- Seleccione un condominio --")
                     };
 
-                    // Agregar los condominios reales
-                    foreach (var condo in condominiums)
+                    foreach (var condominium in condominiums)
                     {
-                        condominiumList.Add(new KeyValuePair<int, string>(condo.Id, condo.Name));
+                        condominiumList.Add(new KeyValuePair<int, string>(condominium.Id, condominium.Name));
                     }
 
-                    // Asignar la lista al ComboBox
                     ReceiptCBCondominium.DataSource = condominiumList;
                     ReceiptCBCondominium.DisplayMember = "Value";
                     ReceiptCBCondominium.ValueMember = "Key";

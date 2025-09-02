@@ -51,7 +51,22 @@ namespace Condominium_System.Presentation.Views
                 }
             }
 
+            ConfigureFormSize();
+
         }
+
+        private void ConfigureFormSize()
+        {
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false; // Opcional: también quitar el botón de minimizar
+            this.SizeGripStyle = SizeGripStyle.Hide;
+
+            // Opcional: establecer tamaño fijo
+            //this.MaximumSize = this.Size;
+            //this.MinimumSize = this.Size;
+        }
+
         private void SelectPanel(object sender, EventArgs e)
         {
             Control control = sender as Control;
