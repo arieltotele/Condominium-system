@@ -41,6 +41,8 @@
             PaymentDTGData = new DataGridView();
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
+            toolStripProgressBar1 = new ToolStripProgressBar();
+            toolStripStatusLabel2 = new ToolStripStatusLabel();
             panel2 = new Panel();
             pictureBox5 = new PictureBox();
             toolTip1 = new ToolTip(components);
@@ -162,7 +164,7 @@
             // 
             // statusStrip1
             // 
-            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
+            statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1, toolStripProgressBar1, toolStripStatusLabel2 });
             statusStrip1.Location = new Point(0, 179);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(1017, 22);
@@ -173,10 +175,21 @@
             // 
             toolStripStatusLabel1.ForeColor = Color.FromArgb(238, 210, 2);
             toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            toolStripStatusLabel1.Size = new Size(1002, 17);
+            toolStripStatusLabel1.Size = new Size(782, 17);
             toolStripStatusLabel1.Spring = true;
             toolStripStatusLabel1.TextAlign = ContentAlignment.MiddleLeft;
             toolStripStatusLabel1.TextDirection = ToolStripTextDirection.Horizontal;
+            // 
+            // toolStripProgressBar1
+            // 
+            toolStripProgressBar1.Name = "toolStripProgressBar1";
+            toolStripProgressBar1.Size = new Size(100, 16);
+            // 
+            // toolStripStatusLabel2
+            // 
+            toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            toolStripStatusLabel2.Size = new Size(118, 17);
+            toolStripStatusLabel2.Text = "toolStripStatusLabel2";
             // 
             // panel2
             // 
@@ -248,5 +261,7 @@
         private Panel panel2;
         private PictureBox pictureBox5;
         private ToolTip toolTip1;
+        private ToolStripProgressBar toolStripProgressBar1;
+        private ToolStripStatusLabel toolStripStatusLabel2;
     }
 }

@@ -16,6 +16,7 @@ namespace Condominium_System.Business.Services
         Task<IEnumerable<Receipt>> GetOverdueReceiptsAsync();
         Task<IEnumerable<Receipt>> GetReceiptsByStatusAndHousingAsync(int housingId, params string[] statuses);
         Task<IEnumerable<Receipt>> GetReceiptsByStatusAsync(string status);
+        Task<double> GetCompletionPercentageAsync(int housingId);
         Task<int> GenerateBulkReceiptsAsync(int condominiumId, int year, string author);
         Task<Receipt> CreateReceiptAsync(Receipt receipt);
         Task UpdateReceiptAsync(Receipt receipt);

@@ -35,9 +35,10 @@ namespace Condominium_System.Presentation.Views
             _paymentService = paymentService;
             _currentUser = Session.CurrentUser;
             _serviceProvider = serviceProvider;
+            
         }
 
-        private void PaymentScreen_Load(object sender, EventArgs e)
+        private async void PaymentScreen_Load(object sender, EventArgs e)
         {
             PaymentDTGData.CellPainting += PaymentDTGData_CellPainting;
             PaymentDTGData.CellClick += PaymentDTGData_CellClick;
@@ -47,12 +48,110 @@ namespace Condominium_System.Presentation.Views
 
             SetSearchTextBoxStyleAndBehavior();
             ManageInitialBehaviorInCondominiumCB();
+
+            InitializeProgressBar();
+        }
+
+        private void InitializeProgressBar()
+        {
+            // ✅ Configurar progress bar existente
+            toolStripProgressBar1.Visible = false;
+            toolStripProgressBar1.Style = ProgressBarStyle.Continuous;
+            toolStripProgressBar1.Minimum = 0;
+            toolStripProgressBar1.Maximum = 100;
+
+            toolStripStatusLabel2.Visible = false;
+            toolStripStatusLabel2.TextAlign = ContentAlignment.MiddleRight;
+        }
+
+        private async Task UpdateProgressBar(int housingId)
+        {
+            try
+            {
+                double percentage = await _receiptService.GetCompletionPercentageAsync(housingId);
+
+                // ✅ Obtener estadísticas detalladas
+                var allReceipts = await _receiptService.GetReceiptsByHousingIdAsync(housingId);
+                var completed = allReceipts.Count(r =>
+                    r.Status == ReceiptStatusHelper.Completed ||
+                    r.Status == "Paid");
+                var total = allReceipts.Count();
+
+                // ✅ Actualizar UI de manera segura
+                if (this.InvokeRequired)
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        toolStripProgressBar1.Value = (int)percentage;
+                        toolStripStatusLabel2.Text = $"{percentage}% ({completed}/{total})";
+                        toolStripProgressBar1.Visible = true;
+                        toolStripStatusLabel2.Visible = true;
+
+                        // ✅ Cambiar color según el porcentaje
+                        if (percentage >= 75)
+                            toolStripProgressBar1.ForeColor = Color.Green;
+                        else if (percentage >= 50)
+                            toolStripProgressBar1.ForeColor = Color.Orange;
+                        else
+                            toolStripProgressBar1.ForeColor = Color.Red;
+                    }));
+                }
+                else
+                {
+                    toolStripProgressBar1.Value = (int)percentage;
+                    toolStripStatusLabel2.Text = $"{percentage}% ({completed}/{total})";
+                    toolStripProgressBar1.Visible = true;
+                    toolStripStatusLabel2.Visible = true;
+
+                    if (percentage >= 75)
+                        toolStripProgressBar1.ForeColor = Color.Green;
+                    else if (percentage >= 50)
+                        toolStripProgressBar1.ForeColor = Color.Orange;
+                    else
+                        toolStripProgressBar1.ForeColor = Color.Red;
+                }
+            }
+            catch (Exception ex)
+            {
+                // ✅ Ocultar progress bar en caso de error
+                if (this.InvokeRequired)
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        toolStripProgressBar1.Visible = false;
+                        toolStripStatusLabel2.Visible = false;
+                    }));
+                }
+                else
+                {
+                    toolStripProgressBar1.Visible = false;
+                    toolStripStatusLabel2.Visible = false;
+                }
+                Console.WriteLine($"Error actualizando progress bar: {ex.Message}");
+            }
+        }
+
+        private async void PaymentCBHouse_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (PaymentCBHouse.SelectedValue != null &&
+                int.TryParse(PaymentCBHouse.SelectedValue.ToString(), out int housingId) &&
+                housingId > 0)
+            {
+                await UpdateProgressBar(housingId);
+            }
+            else
+            {
+                // ✅ Ocultar progress bar si no hay vivienda válida
+                toolStripProgressBar1.Visible = false;
+                toolStripStatusLabel2.Visible = false;
+            }
         }
 
         private void SetDataGridStyle()
         {
             UIUtils.SetDataGridStyle(PaymentDTGData);
         }
+
 
         private void PaymentDTGData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
@@ -299,7 +398,7 @@ namespace Condominium_System.Presentation.Views
 
         public async void SearchPendingReceipts(bool showMessage)
         {
-            if (FormIsCorrect())
+            if (!FormIsCorrect())
             {
                 MessageBox.Show("Por favor, complete correctamente el formulario.", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -308,24 +407,21 @@ namespace Condominium_System.Presentation.Views
 
             try
             {
-                // Mostrar loading
                 SearchPendingReceiptsBTNLBL.Text = "Buscando...";
                 PaymentDTGData.DataSource = null;
 
-                // Obtener el ID de la vivienda seleccionada
                 int housingId = (int)PaymentCBHouse.SelectedValue;
 
-                // Buscar recibos pendientes y parcialmente pagados
+                // ✅ Actualizar progress bar
+                await UpdateProgressBar(housingId);
+
                 var pendingReceipts = await _receiptService.GetReceiptsByStatusAndHousingAsync(
                     housingId,
                     "Pending",
                     "PartiallyPaid"
                 );
 
-                // Configurar el DataGridView
                 PaymentDTGData.DataSource = pendingReceipts.ToList();
-
-                // Aplicar formato a las columnas
                 FormatDataGridColumns();
 
                 if (showMessage)

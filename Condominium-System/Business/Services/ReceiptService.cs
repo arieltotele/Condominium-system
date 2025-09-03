@@ -90,6 +90,26 @@ namespace Condominium_System.Business.Services
                 r.IsActive);
         }
 
+        public async Task<double> GetCompletionPercentageAsync(int housingId)
+        {
+            if (housingId <= 0)
+                return 0;
+
+            var allReceipts = await _receiptRepository.FindAsync(r =>
+                r.HousingId == housingId && r.IsActive);
+
+            if (!allReceipts.Any())
+                return 0;
+
+            int completedReceipts = allReceipts.Count(r =>
+                r.Status == ReceiptStatusHelper.Completed ||
+                r.Status == "Paid");
+
+            double percentage = (double)completedReceipts / allReceipts.Count() * 100;
+
+            return Math.Round(percentage, 2);
+        }
+
         public async Task<int> GenerateBulkReceiptsAsync(int condominiumId, int year, string author)
         {
             if (year < DateTime.Now.Year)
@@ -97,7 +117,6 @@ namespace Condominium_System.Business.Services
                 throw new ArgumentException("No se pueden generar recibos para años anteriores");
             }
 
-            // Validar que el autor no esté vacío
             if (string.IsNullOrWhiteSpace(author))
             {
                 throw new ArgumentException("Se requiere un autor para generar recibos");
@@ -110,14 +129,12 @@ namespace Condominium_System.Business.Services
                 var blockService = scope.ServiceProvider.GetRequiredService<IBlockService>();
                 var tenantService = scope.ServiceProvider.GetRequiredService<ITenantService>();
 
-                // Obtener el condominio para sacar la quota
                 var condominium = await condominiumService.GetCondominiumByIdAsync(condominiumId);
                 if (condominium == null)
                 {
                     throw new Exception("Condominio no encontrado");
                 }
 
-                // Obtener todos los bloques filtrados por condominio
                 var blocks = (await blockService.GetBlocksByCondominiumIdAsync(condominiumId)).ToList();
 
                 if (!blocks.Any())
@@ -127,27 +144,23 @@ namespace Condominium_System.Business.Services
                 var currentMonth = DateTime.Now.Month;
                 var startMonth = (year == DateTime.Now.Year) ? currentMonth : 1;
 
-                // Para cada bloque, obtener sus viviendas
                 foreach (var block in blocks)
                 {
-                    // Obtener todas las viviendas y filtrar por bloque
                     var allHousings = (await housingService.GetAllHousingsAsync()).ToList();
                     var housings = allHousings.Where(h => h.BlockId == block.Id).ToList();
 
                     foreach (var housing in housings)
                     {
-                        // Obtener todos los inquilinos y filtrar por vivienda
                         var allTenants = (await tenantService.GetAllAsync()).ToList();
                         var tenants = allTenants.Where(t => t.HousingId == housing.Id && t.IsActive).ToList();
 
                         if (!tenants.Any())
-                            continue; // No generar recibos para viviendas sin inquilinos
+                            continue;
 
                         var tenant = tenants.First();
 
                         var monthlyAmount = condominium.Quota;
 
-                        // Generar recibos desde el mes actual hasta diciembre
                         for (int month = startMonth; month <= 12; month++)
                         {
                             var dueDate = new DateTime(year, month, 1).AddMonths(1).AddDays(-1);
