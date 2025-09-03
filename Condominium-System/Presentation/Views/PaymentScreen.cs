@@ -153,16 +153,37 @@ namespace Condominium_System.Presentation.Views
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && PaymentDTGData.Columns[e.ColumnIndex].Name == "ActionsColumn")
             {
                 e.PaintBackground(e.CellBounds, true);
-                e.PaintContent(e.CellBounds);
 
-                int iconWidth = 16;
-                int iconHeight = 16;
-                int padding = 5;
+                int padding = 4;
+                Rectangle buttonRect = new Rectangle(
+                    e.CellBounds.Left + padding,
+                    e.CellBounds.Top + padding,
+                    e.CellBounds.Width - (padding * 2),
+                    e.CellBounds.Height - (padding * 2)
+                );
 
-                int x = e.CellBounds.Left + padding;
-                int y = e.CellBounds.Top + (e.CellBounds.Height - iconHeight) / 2;
+                using (Brush brush = new SolidBrush(Color.FromArgb(0, 123, 255))) // Color azul
+                {
+                    e.Graphics.FillRectangle(brush, buttonRect);
 
-                e.Graphics.DrawImage(Properties.Resources.pay, new Rectangle(x, y, iconWidth, iconHeight));
+                }
+
+                using (StringFormat format = new StringFormat())
+                {
+                    format.Alignment = StringAlignment.Center;
+                    format.LineAlignment = StringAlignment.Center;
+
+                    using (Font font = new Font("Segoe UI", 8, FontStyle.Bold)) // Font size reducido
+                    using (Brush textBrush = new SolidBrush(Color.White))
+                    {
+                        e.Graphics.DrawString("PAGAR", font, textBrush, buttonRect, format);
+                    }
+                }
+
+                using (Pen pen = new Pen(Color.FromArgb(0, 86, 179), 1)) // Borde azul oscuro
+                {
+                    e.Graphics.DrawRectangle(pen, buttonRect);
+                }
 
                 e.Handled = true;
             }
@@ -172,10 +193,6 @@ namespace Condominium_System.Presentation.Views
         {
             if (e.RowIndex >= 0 && PaymentDTGData.Columns[e.ColumnIndex].Name == "ActionsColumn")
             {
-                var cellBounds = PaymentDTGData.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
-                var clickPosition = PaymentDTGData.PointToClient(Cursor.Position);
-                int relativeX = clickPosition.X - cellBounds.Left;
-
                 var selectedRow = PaymentDTGData.Rows[e.RowIndex];
                 var selectedReceipt = selectedRow.DataBoundItem as Receipt;
 
@@ -185,11 +202,19 @@ namespace Condominium_System.Presentation.Views
                     return;
                 }
 
-                if (relativeX < 26)
+                if (selectedReceipt.AmountPaid >= selectedReceipt.Amount)
                 {
-                    Session.CurrentReceipt = selectedReceipt;
-                    GoToUpsertScreen();
+                    MessageBox.Show("Este recibo ya está completamente pagado.",
+                                  "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
                 }
+
+                PaymentDTGData.InvalidateCell(e.ColumnIndex, e.RowIndex);
+                await Task.Delay(100);
+                PaymentDTGData.InvalidateCell(e.ColumnIndex, e.RowIndex);
+
+                Session.CurrentReceipt = selectedReceipt;
+                GoToUpsertScreen();
             }
         }
 
