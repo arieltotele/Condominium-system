@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -315,7 +316,7 @@ namespace Condominium_System.Presentation.Views
 
                 if (String.IsNullOrEmpty(PaymentTBPropietaryDocument.Text) || PaymentTBPropietaryDocument.Text.Length != 11)
                 {
-                    MessageBox.Show("Por favor, complete correctamente el campo de documento.", "Error", 
+                    MessageBox.Show("Por favor, complete correctamente el campo de documento.", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     ClearForm();
                     return;
@@ -325,15 +326,25 @@ namespace Condominium_System.Presentation.Views
 
                 var tenants = await _tenantService.SearchTenantsAsync(documentNumber.Trim());
 
-                var activeTenants = tenants.Where(t => t.IsActive).ToList();
+                if (tenants == null || !tenants.Any())
+                {
+                    PaymentCBHouse.Text = "No se encontraron inquilinos";
+                    MessageBox.Show("No se encontraron inquilinos con el documento proporcionado.",
+                                  "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
-                Session.TenantToUpsert = activeTenants.First();
+                var activeTenants = tenants.Where(t => t.IsActive).ToList();
 
                 if (!activeTenants.Any())
                 {
                     PaymentCBHouse.Text = "No se encontraron inquilinos activos";
+                    MessageBox.Show("El inquilino existe pero no está activo en el sistema.",
+                                  "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
+
+                Session.TenantToUpsert = activeTenants.First();
 
                 var housingIds = activeTenants
                     .Where(t => t.HousingId > 0)
@@ -343,23 +354,40 @@ namespace Condominium_System.Presentation.Views
 
                 if (!housingIds.Any())
                 {
-                    PaymentCBHouse.Text = "No se encontraron viviendas";
+                    PaymentCBHouse.Text = "No tiene viviendas asignadas";
+                    MessageBox.Show("El inquilino no tiene viviendas asignadas en el sistema.",
+                                  "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
                 var housings = new List<Housing>();
                 foreach (var housingId in housingIds)
                 {
-                    var housing = await _housingService.GetHousingByIdAsync(housingId);
-                    if (housing != null)
+                    try
                     {
-                        housings.Add(housing);
+                        var housing = await _housingService.GetHousingByIdAsync(housingId);
+                        if (housing != null)
+                        {
+                            housings.Add(housing);
+                        }
+                    }
+                    catch (KeyNotFoundException ex)
+                    {
+                        Console.WriteLine($"Vivienda {housingId} no encontrada: {ex.Message}");
+                        continue;
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        Console.WriteLine($"Error al cargar vivienda {housingId}: {ex.Message}");
+                        continue;
                     }
                 }
 
                 if (!housings.Any())
                 {
-                    PaymentCBHouse.Text = "No se encontraron viviendas";
+                    PaymentCBHouse.Text = "Error al cargar viviendas";
+                    MessageBox.Show("No se pudieron cargar las viviendas asignadas al inquilino.",
+                                  "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -373,13 +401,58 @@ namespace Condominium_System.Presentation.Views
                 PaymentCBHouse.DisplayMember = "DisplayText";
                 PaymentCBHouse.ValueMember = "Id";
                 PaymentCBHouse.Enabled = true;
+
+            }
+            catch (KeyNotFoundException ex)
+            {
+                PaymentCBHouse.Text = "No se encontraron registros";
+                MessageBox.Show("No se encontraron registros que coincidan con la búsqueda.",
+                              "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Console.WriteLine($"KeyNotFoundException: {ex.Message}");
+            }
+            catch (InvalidOperationException ex)
+            {
+                PaymentCBHouse.Text = "Error en la operación";
+                MessageBox.Show("Ocurrió un error al procesar la información. Por favor, intente nuevamente.",
+                              "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Console.WriteLine($"InvalidOperationException: {ex.Message}");
+            }
+            catch (ArgumentException ex)
+            {
+                PaymentCBHouse.Text = "Datos inválidos";
+                MessageBox.Show("Los datos proporcionados no son válidos para la búsqueda.",
+                              "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Console.WriteLine($"ArgumentException: {ex.Message}");
+            }
+            catch (HttpRequestException ex)
+            {
+                PaymentCBHouse.Text = "Error de conexión";
+                MessageBox.Show("Error de conexión con el servidor. Verifique su conexión a internet.",
+                              "Error de conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Console.WriteLine($"HttpRequestException: {ex.Message}");
+            }
+            catch (TimeoutException ex)
+            {
+                PaymentCBHouse.Text = "Tiempo agotado";
+                MessageBox.Show("La operación tardó demasiado tiempo. Intente nuevamente.",
+                              "Timeout", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Console.WriteLine($"TimeoutException: {ex.Message}");
+            }
+            catch (SqlException ex)
+            {
+                PaymentCBHouse.Text = "Error de base de datos";
+                MessageBox.Show("Error al acceder a la base de datos. Contacte al administrador.",
+                              "Error de BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Console.WriteLine($"SqlException: {ex.Message}");
             }
             catch (Exception ex)
             {
-                PaymentCBHouse.Text = "Error en la búsqueda";
-                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                PaymentCBHouse.Text = "Error inesperado";
+                MessageBox.Show($"Error inesperado: {ex.Message}",
+                              "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Console.WriteLine($"Exception: {ex.Message}");
             }
-        }       
+        }
 
         private async void SearchPendingReceiptsBTN_Click(object sender, EventArgs e)
         {
@@ -462,7 +535,6 @@ namespace Condominium_System.Presentation.Views
 
             }
 
-            // Formatear columnas monetarias
             if (PaymentDTGData.Columns[e.ColumnIndex].Name == "AmountColumn" && e.Value != null)
             {
                 if (decimal.TryParse(e.Value.ToString(), out decimal amount))
