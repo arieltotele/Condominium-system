@@ -54,7 +54,6 @@ namespace Condominium_System.Presentation.Views
 
         private void InitializeProgressBar()
         {
-            // ✅ Configurar progress bar existente
             toolStripProgressBar1.Visible = false;
             toolStripProgressBar1.Style = ProgressBarStyle.Continuous;
             toolStripProgressBar1.Minimum = 0;
@@ -70,14 +69,12 @@ namespace Condominium_System.Presentation.Views
             {
                 double percentage = await _receiptService.GetCompletionPercentageAsync(housingId);
 
-                // ✅ Obtener estadísticas detalladas
                 var allReceipts = await _receiptService.GetReceiptsByHousingIdAsync(housingId);
                 var completed = allReceipts.Count(r =>
                     r.Status == ReceiptStatusHelper.Completed ||
                     r.Status == "Paid");
                 var total = allReceipts.Count();
 
-                // ✅ Actualizar UI de manera segura
                 if (this.InvokeRequired)
                 {
                     this.Invoke(new Action(() =>
@@ -87,7 +84,6 @@ namespace Condominium_System.Presentation.Views
                         toolStripProgressBar1.Visible = true;
                         toolStripStatusLabel2.Visible = true;
 
-                        // ✅ Cambiar color según el porcentaje
                         if (percentage >= 75)
                             toolStripProgressBar1.ForeColor = Color.Green;
                         else if (percentage >= 50)
@@ -113,7 +109,6 @@ namespace Condominium_System.Presentation.Views
             }
             catch (Exception ex)
             {
-                // ✅ Ocultar progress bar en caso de error
                 if (this.InvokeRequired)
                 {
                     this.Invoke(new Action(() =>
@@ -141,7 +136,6 @@ namespace Condominium_System.Presentation.Views
             }
             else
             {
-                // ✅ Ocultar progress bar si no hay vivienda válida
                 toolStripProgressBar1.Visible = false;
                 toolStripStatusLabel2.Visible = false;
             }
@@ -331,7 +325,6 @@ namespace Condominium_System.Presentation.Views
 
                 var tenants = await _tenantService.SearchTenantsAsync(documentNumber.Trim());
 
-                // Filtrar tenants activos y agrupar por vivienda
                 var activeTenants = tenants.Where(t => t.IsActive).ToList();
 
                 Session.TenantToUpsert = activeTenants.First();
@@ -342,7 +335,6 @@ namespace Condominium_System.Presentation.Views
                     return;
                 }
 
-                // Obtener viviendas únicas de los tenants encontrados
                 var housingIds = activeTenants
                     .Where(t => t.HousingId > 0)
                     .Select(t => t.HousingId)
@@ -355,7 +347,6 @@ namespace Condominium_System.Presentation.Views
                     return;
                 }
 
-                // Cargar información completa de las viviendas
                 var housings = new List<Housing>();
                 foreach (var housingId in housingIds)
                 {
@@ -372,7 +363,6 @@ namespace Condominium_System.Presentation.Views
                     return;
                 }
 
-                // Configurar combobox
                 var housingList = housings.Select(h => new
                 {
                     h.Id,
@@ -412,7 +402,6 @@ namespace Condominium_System.Presentation.Views
 
                 int housingId = (int)PaymentCBHouse.SelectedValue;
 
-                // ✅ Actualizar progress bar
                 await UpdateProgressBar(housingId);
 
                 var pendingReceipts = await _receiptService.GetReceiptsByStatusAndHousingAsync(
@@ -466,7 +455,6 @@ namespace Condominium_System.Presentation.Views
         {
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
 
-            // Traducir la columna de Status
             if (PaymentDTGData.Columns[e.ColumnIndex].Name == "StatusColumn" && e.Value != null)
             {
                 var status = e.Value.ToString();
@@ -496,18 +484,15 @@ namespace Condominium_System.Presentation.Views
 
         public bool FormIsCorrect()
         {
-            // Validar que el texto no sea el placeholder y no esté vacío
             bool isDocumentValid = PaymentTBPropietaryDocument.Text != "Ingrese el documento del propietario" &&
                                   !string.IsNullOrWhiteSpace(PaymentTBPropietaryDocument.Text);
 
-            // Validar longitud exacta del documento (11 caracteres)
             if (isDocumentValid)
             {
                 string document = PaymentTBPropietaryDocument.Text.Trim();
                 isDocumentValid = document.Length == 11;
             }
 
-            // Validar que se haya seleccionado una vivienda válida
             bool isHouseValid = PaymentCBHouse.SelectedValue != null &&
                                int.TryParse(PaymentCBHouse.SelectedValue.ToString(), out int houseId) &&
                                houseId > 0;
