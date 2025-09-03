@@ -424,20 +424,6 @@ namespace Condominium_System.Presentation.Views
                               "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Console.WriteLine($"ArgumentException: {ex.Message}");
             }
-            catch (HttpRequestException ex)
-            {
-                PaymentCBHouse.Text = "Error de conexión";
-                MessageBox.Show("Error de conexión con el servidor. Verifique su conexión a internet.",
-                              "Error de conexión", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Console.WriteLine($"HttpRequestException: {ex.Message}");
-            }
-            catch (TimeoutException ex)
-            {
-                PaymentCBHouse.Text = "Tiempo agotado";
-                MessageBox.Show("La operación tardó demasiado tiempo. Intente nuevamente.",
-                              "Timeout", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                Console.WriteLine($"TimeoutException: {ex.Message}");
-            }
             catch (SqlException ex)
             {
                 PaymentCBHouse.Text = "Error de base de datos";
