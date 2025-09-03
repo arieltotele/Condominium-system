@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             label6 = new Label();
             panel5 = new Panel();
             ReceiptCBCondominium = new ComboBox();
@@ -37,6 +38,7 @@
             GenerateReceiptsPanel = new Panel();
             label2 = new Label();
             pictureBox1 = new PictureBox();
+            toolTip1 = new ToolTip(components);
             panel5.SuspendLayout();
             panel1.SuspendLayout();
             GenerateReceiptsPanel.SuspendLayout();
@@ -61,6 +63,7 @@
             panel5.Name = "panel5";
             panel5.Size = new Size(232, 30);
             panel5.TabIndex = 62;
+            toolTip1.SetToolTip(panel5, "Seleccione un condominio.");
             // 
             // ReceiptCBCondominium
             // 
@@ -70,6 +73,8 @@
             ReceiptCBCondominium.Name = "ReceiptCBCondominium";
             ReceiptCBCondominium.Size = new Size(226, 23);
             ReceiptCBCondominium.TabIndex = 0;
+            toolTip1.SetToolTip(ReceiptCBCondominium, "Seleccione un condominio.");
+            ReceiptCBCondominium.SelectedIndexChanged += ReceiptCBCondominium_SelectedIndexChanged;
             // 
             // label1
             // 
@@ -97,6 +102,7 @@
             ReceiptCBYear.Name = "ReceiptCBYear";
             ReceiptCBYear.Size = new Size(226, 23);
             ReceiptCBYear.TabIndex = 0;
+            toolTip1.SetToolTip(ReceiptCBYear, "Seleccione un año.");
             // 
             // GenerateReceiptsPanel
             // 
@@ -108,6 +114,7 @@
             GenerateReceiptsPanel.Name = "GenerateReceiptsPanel";
             GenerateReceiptsPanel.Size = new Size(169, 41);
             GenerateReceiptsPanel.TabIndex = 65;
+            toolTip1.SetToolTip(GenerateReceiptsPanel, "Generar recibos para las viviendas.");
             GenerateReceiptsPanel.Click += GenerateReceiptsBTN_Click;
             // 
             // label2
@@ -120,6 +127,7 @@
             label2.Size = new Size(120, 21);
             label2.TabIndex = 1;
             label2.Text = "Generar recibos";
+            toolTip1.SetToolTip(label2, "Generar recibos para las viviendas.");
             label2.Click += GenerateReceiptsBTN_Click;
             // 
             // pictureBox1
@@ -131,6 +139,7 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Generar recibos para las viviendas.");
             pictureBox1.Click += GenerateReceiptsBTN_Click;
             // 
             // ReceiptScreen
@@ -166,5 +175,6 @@
         private Panel GenerateReceiptsPanel;
         private Label label2;
         private PictureBox pictureBox1;
+        private ToolTip toolTip1;
     }
 }

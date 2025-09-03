@@ -42,7 +42,8 @@ namespace Condominium_System.Presentation.Views
         {
             SetComboBoxForTypeOfUsers();
             await CheckAndDisplayLateFee();
-            LoadPendingAmount(); // Cargar monto pendiente automáticamente
+            LoadPendingAmount();
+            UIUtils.ConfigureFormSize(this, true);
             //ForceLateFeeForTesting();
         }
 
@@ -65,7 +66,6 @@ namespace Condominium_System.Presentation.Views
             if (string.IsNullOrWhiteSpace(currencyText))
                 return 0;
 
-            // Remover símbolos de moneda y separadores de miles
             string cleanText = currencyText.Replace("$", "").Replace(",", "").Trim();
 
             if (decimal.TryParse(cleanText, out decimal result))
@@ -162,7 +162,6 @@ namespace Condominium_System.Presentation.Views
             {
                 PaymentSaveBTNLBL.Text = "Guardando...";
 
-                // Parsear el monto formateado a decimal
                 decimal amountToPay = ParseCurrency(PaymentTBAmount.Text);
 
                 if (amountToPay <= 0)
@@ -230,13 +229,11 @@ namespace Condominium_System.Presentation.Views
 
         private void PaymentTBAmount_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Permitir solo números, punto decimal y teclas de control
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
             {
                 e.Handled = true;
             }
 
-            // Permitir solo un punto decimal
             if (e.KeyChar == '.' && (sender as TextBox).Text.IndexOf('.') > -1)
             {
                 e.Handled = true;
@@ -251,23 +248,17 @@ namespace Condominium_System.Presentation.Views
             {
                 _isFormatting = true;
 
-                // Si el texto está vacío, no hacer nada
                 if (string.IsNullOrWhiteSpace(PaymentTBAmount.Text))
                     return;
 
-                // Guardar la posición del cursor
                 int cursorPosition = PaymentTBAmount.SelectionStart;
 
-                // Parsear el valor actual
                 decimal currentValue = ParseCurrency(PaymentTBAmount.Text);
 
-                // Aplicar formato de moneda
                 PaymentTBAmount.Text = FormatCurrency(currentValue);
 
-                // Restaurar la posición del cursor (ajustada por el formato)
                 PaymentTBAmount.SelectionStart = cursorPosition + (PaymentTBAmount.Text.Length - PaymentTBAmount.Text.Replace(",", "").Length);
 
-                // Validar monto contra el saldo pendiente
                 if (currentReceipt != null)
                 {
                     decimal potentialLateFee = 0;
@@ -304,17 +295,15 @@ namespace Condominium_System.Presentation.Views
 
         private void PaymentTBAmount_Enter(object sender, EventArgs e)
         {
-            // Cuando el usuario hace clic en el TextBox, quitar el formato temporalmente
             if (!_isFormatting)
             {
                 decimal currentValue = ParseCurrency(PaymentTBAmount.Text);
-                PaymentTBAmount.Text = currentValue.ToString("N0"); // Formato sin símbolo de moneda
+                PaymentTBAmount.Text = currentValue.ToString("N0");
             }
         }
 
         private void PaymentTBAmount_Leave(object sender, EventArgs e)
         {
-            // Cuando el usuario sale del TextBox, aplicar formato de moneda
             if (!_isFormatting)
             {
                 decimal currentValue = ParseCurrency(PaymentTBAmount.Text);
@@ -347,7 +336,6 @@ namespace Condominium_System.Presentation.Views
                                 int.TryParse(PaymentCBPayMethod.SelectedValue.ToString(), out int methodId) &&
                                 methodId != 0;
 
-            // Parsear el monto formateado para validación
             decimal amount = ParseCurrency(PaymentTBAmount.Text);
             bool isAmountValid = amount > 0;
 

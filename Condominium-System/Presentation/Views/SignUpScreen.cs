@@ -50,6 +50,8 @@ namespace Condominium_System.Presentation.Views
                 SignUpTitleLBL.Text = "Modificar Usuario";
                 await LoadDataIfIsToUpdate();
             }
+
+            UIUtils.ConfigureFormSize(this, true);
         }
 
         private async Task LoadDataIfIsToUpdate()

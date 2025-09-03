@@ -23,7 +23,7 @@ namespace Condominium_System.Presentation.Views
         private readonly IServiceProvider _serviceProvider;
         User currentUser;
 
-        public ReceiptScreen(IReceiptService receiptService, ICondominiumService condominiumService, 
+        public ReceiptScreen(IReceiptService receiptService, ICondominiumService condominiumService,
             ITenantService tenantService, IHousingEntityService housingService, IServiceProvider serviceProvider)
         {
             InitializeComponent();
@@ -220,6 +220,11 @@ namespace Condominium_System.Presentation.Views
             bool isCondominiumValid = condominiumPair.Key != 0;
 
             return isYearValid && isCondominiumValid;
+        }
+
+        private void ReceiptCBCondominium_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

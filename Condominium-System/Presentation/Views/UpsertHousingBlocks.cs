@@ -42,6 +42,8 @@ namespace Condominium_System.Presentation.Views
 
             SetComboBoxForTypeOfHousing();
             await LoadCondominiumsIntoComboBox();
+
+            UIUtils.ConfigureFormSize(this, true);
         }
 
         private async void LoadDataIfIsToUpdate()

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             panel1 = new Panel();
             PaymentCBHouse = new ComboBox();
             label1 = new Label();
@@ -42,6 +43,7 @@
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             panel2 = new Panel();
             pictureBox5 = new PictureBox();
+            toolTip1 = new ToolTip(components);
             panel1.SuspendLayout();
             panel5.SuspendLayout();
             CondominiumPNLBTNCreate.SuspendLayout();
@@ -60,6 +62,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(232, 30);
             panel1.TabIndex = 69;
+            toolTip1.SetToolTip(panel1, "Seleccione una casa perteneciente al propietario.");
             // 
             // PaymentCBHouse
             // 
@@ -69,6 +72,7 @@
             PaymentCBHouse.Name = "PaymentCBHouse";
             PaymentCBHouse.Size = new Size(226, 23);
             PaymentCBHouse.TabIndex = 0;
+            toolTip1.SetToolTip(PaymentCBHouse, "Seleccione una casa perteneciente al propietario.");
             // 
             // label1
             // 
@@ -98,6 +102,7 @@
             panel5.Name = "panel5";
             panel5.Size = new Size(232, 30);
             panel5.TabIndex = 67;
+            toolTip1.SetToolTip(panel5, "Ingrese el documento del propietario.");
             // 
             // PaymentTBPropietaryDocument
             // 
@@ -105,6 +110,7 @@
             PaymentTBPropietaryDocument.Name = "PaymentTBPropietaryDocument";
             PaymentTBPropietaryDocument.Size = new Size(226, 23);
             PaymentTBPropietaryDocument.TabIndex = 0;
+            toolTip1.SetToolTip(PaymentTBPropietaryDocument, "Ingrese el documento del propietario.");
             // 
             // CondominiumPNLBTNCreate
             // 
@@ -115,6 +121,7 @@
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(155, 41);
             CondominiumPNLBTNCreate.TabIndex = 41;
+            toolTip1.SetToolTip(CondominiumPNLBTNCreate, "Buscar los recibos pendientes.");
             CondominiumPNLBTNCreate.Click += SearchPendingReceiptsBTN_Click;
             // 
             // SearchPendingReceiptsBTNLBL
@@ -127,6 +134,7 @@
             SearchPendingReceiptsBTNLBL.Size = new Size(107, 21);
             SearchPendingReceiptsBTNLBL.TabIndex = 1;
             SearchPendingReceiptsBTNLBL.Text = "Buscar Recibo";
+            toolTip1.SetToolTip(SearchPendingReceiptsBTNLBL, "Buscar los recibos pendientes.");
             SearchPendingReceiptsBTNLBL.Click += SearchPendingReceiptsBTN_Click;
             // 
             // SearchPendingReceiptsBTNPCTB
@@ -138,6 +146,7 @@
             SearchPendingReceiptsBTNPCTB.SizeMode = PictureBoxSizeMode.Zoom;
             SearchPendingReceiptsBTNPCTB.TabIndex = 0;
             SearchPendingReceiptsBTNPCTB.TabStop = false;
+            toolTip1.SetToolTip(SearchPendingReceiptsBTNPCTB, "Buscar los recibos pendientes.");
             SearchPendingReceiptsBTNPCTB.Click += SearchPendingReceiptsBTN_Click;
             // 
             // PaymentDTGData
@@ -188,6 +197,7 @@
             pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox5.TabIndex = 0;
             pictureBox5.TabStop = false;
+            toolTip1.SetToolTip(pictureBox5, "Buscar las viviendas del propietario.");
             pictureBox5.Click += SearchByDocumentBTN_Click;
             // 
             // PaymentScreen
@@ -205,6 +215,7 @@
             Controls.Add(panel5);
             Name = "PaymentScreen";
             Text = "PaymentScreen";
+            toolTip1.SetToolTip(this, "Buscar los recibos pendientes.");
             Load += PaymentScreen_Load;
             panel1.ResumeLayout(false);
             panel5.ResumeLayout(false);
@@ -236,5 +247,6 @@
         private ToolStripStatusLabel toolStripStatusLabel1;
         private Panel panel2;
         private PictureBox pictureBox5;
+        private ToolTip toolTip1;
     }
 }
