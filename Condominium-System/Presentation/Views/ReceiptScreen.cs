@@ -45,17 +45,27 @@ namespace Condominium_System.Presentation.Views
         {
             try
             {
-                if(!FormIsCorrect())
+                if (!FormIsCorrect())
                 {
                     MessageBox.Show("Por favor complete todos los campos correctamente.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+                var selectedCondominiumPair = (KeyValuePair<int, string>)ReceiptCBCondominium.SelectedItem;
+                var selectedYearPair = (KeyValuePair<int, string>)ReceiptCBYear.SelectedItem;
 
-                var selectedCondominium = (Condominium)ReceiptCBCondominium.SelectedItem;
-                var selectedYear = ((KeyValuePair<int, string>)ReceiptCBYear.SelectedItem).Key;
+                // Validar que no sea el elemento de selección
+                if (selectedCondominiumPair.Key == 0 || selectedYearPair.Key == 0)
+                {
+                    MessageBox.Show("Por favor seleccione un condominio y un año válidos.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                int condominiumId = selectedCondominiumPair.Key;
+                string condominiumName = selectedCondominiumPair.Value;
+                int selectedYear = selectedYearPair.Key;
 
                 var result = MessageBox.Show(
-                    $"¿Está seguro que desea generar recibos para el condominio '{selectedCondominium.Name}' " +
+                    $"¿Está seguro que desea generar recibos para el condominio '{condominiumName}' " +
                     $"para el año {selectedYear}? Esta acción creará recibos para todas las viviendas activas.",
                     "Confirmar generación masiva",
                     MessageBoxButtons.YesNo,
@@ -68,10 +78,10 @@ namespace Condominium_System.Presentation.Views
                 if (label != null)
                     label.Text = "Generando...";
 
-                var receiptsCreated = await _receiptService.GenerateBulkReceiptsAsync(selectedCondominium.Id, selectedYear, currentUser.Username);
+                var receiptsCreated = await _receiptService.GenerateBulkReceiptsAsync(condominiumId, selectedYear, currentUser.Username);
 
                 MessageBox.Show(
-                    $"Se generaron {receiptsCreated} recibos exitosamente para el condominio '{selectedCondominium.Name}'.",
+                    $"Se generaron {receiptsCreated} recibos exitosamente para el condominio '{condominiumName}'.",
                     "Generación completada",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
@@ -121,7 +131,6 @@ namespace Condominium_System.Presentation.Views
 
                     var condominiumList = new List<KeyValuePair<int, string>>
                     {
-
                         new KeyValuePair<int, string>(0, "-- Seleccione un condominio --")
                     };
 
@@ -188,13 +197,16 @@ namespace Condominium_System.Presentation.Views
 
         public bool FormIsCorrect()
         {
-            bool isYearValid = int.TryParse(ReceiptCBYear.SelectedValue?.ToString(), out int yearId) && yearId != 0;
-            bool isCondominiumValid = int.TryParse(ReceiptCBCondominium.SelectedValue?.ToString(), out int condominiumId) && condominiumId != 0;
+            if (ReceiptCBCondominium.SelectedItem == null || ReceiptCBYear.SelectedItem == null)
+                return false;
 
-            return !(
-               !isYearValid ||
-               !isCondominiumValid
-           );
+            var condominiumPair = (KeyValuePair<int, string>)ReceiptCBCondominium.SelectedItem;
+            var yearPair = (KeyValuePair<int, string>)ReceiptCBYear.SelectedItem;
+
+            bool isYearValid = yearPair.Key != 0;
+            bool isCondominiumValid = condominiumPair.Key != 0;
+
+            return isYearValid && isCondominiumValid;
         }
     }
 }
