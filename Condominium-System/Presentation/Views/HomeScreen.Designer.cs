@@ -298,7 +298,7 @@
             HomeScreenPNLReceipt.Name = "HomeScreenPNLReceipt";
             HomeScreenPNLReceipt.Size = new Size(164, 44);
             HomeScreenPNLReceipt.TabIndex = 6;
-            toolTip1.SetToolTip(HomeScreenPNLReceipt, "Ir al módulo de Factura");
+            toolTip1.SetToolTip(HomeScreenPNLReceipt, "Ir al módulo de Recibo");
             // 
             // HomeScreenLBLInvoice
             // 
@@ -310,7 +310,7 @@
             HomeScreenLBLInvoice.Size = new Size(64, 21);
             HomeScreenLBLInvoice.TabIndex = 1;
             HomeScreenLBLInvoice.Text = "Recibos";
-            toolTip1.SetToolTip(HomeScreenLBLInvoice, "Ir al módulo de Factura");
+            toolTip1.SetToolTip(HomeScreenLBLInvoice, "Ir al módulo de Recibo");
             // 
             // pictureBox7
             // 
@@ -321,7 +321,7 @@
             pictureBox7.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox7.TabIndex = 0;
             pictureBox7.TabStop = false;
-            toolTip1.SetToolTip(pictureBox7, "Ir al módulo de Factura");
+            toolTip1.SetToolTip(pictureBox7, "Ir al módulo de Recibo");
             // 
             // HomeScreenPNLIncidence
             // 
@@ -511,9 +511,9 @@
             // 
             HomeScreenPNLMain.AutoSize = true;
             HomeScreenPNLMain.BackColor = Color.White;
-            HomeScreenPNLMain.Location = new Point(173, 128);
+            HomeScreenPNLMain.Location = new Point(170, 126);
             HomeScreenPNLMain.Name = "HomeScreenPNLMain";
-            HomeScreenPNLMain.Size = new Size(1029, 654);
+            HomeScreenPNLMain.Size = new Size(1032, 656);
             HomeScreenPNLMain.TabIndex = 3;
             // 
             // HomeScreen
