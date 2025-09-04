@@ -52,6 +52,7 @@
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(169, 41);
             CondominiumPNLBTNCreate.TabIndex = 58;
+            CondominiumPNLBTNCreate.Click += GeneratePaymentReportBTN_Click;
             // 
             // label8
             // 
@@ -63,6 +64,7 @@
             label8.Size = new Size(125, 21);
             label8.TabIndex = 1;
             label8.Text = "Generar Reporte";
+            label8.Click += GeneratePaymentReportBTN_Click;
             // 
             // pictureBox3
             // 
@@ -73,6 +75,7 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 0;
             pictureBox3.TabStop = false;
+            pictureBox3.Click += GeneratePaymentReportBTN_Click;
             // 
             // label6
             // 
@@ -125,7 +128,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1017, 591);
+            ClientSize = new Size(1021, 592);
             Controls.Add(panel2);
             Controls.Add(CondominiumPNLBTNCreate);
             Controls.Add(panel5);

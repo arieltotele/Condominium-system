@@ -1,5 +1,7 @@
 ﻿using Condominium_System.Business.Services;
 using Condominium_System.Data.Entities;
+using FastReport;
+using FastReport.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,9 +22,10 @@ namespace Condominium_System.Presentation.Views
         IPaymentService _paymentService;
         IServiceProvider _serviceProvider;
         User? _currentUser;
-        
 
-        Tenant tenanToGenerateReport = null;
+
+        IEnumerable<Tenant> tenanToGenerateReport = null;
+        IEnumerable<Receipt> receiptsToGenerateReport = null;
 
         public PaymentReportScreen(ITenantService tenantService, IHousingEntityService housingService,
             IReceiptService receiptService, IPaymentService paymentService, IServiceProvider serviceProvider)
@@ -73,23 +76,18 @@ namespace Condominium_System.Presentation.Views
                     return;
                 }
 
-                // ✅ MOSTRAR LOADING
-                //.Enabled = false;
-                //SearchPropietaryBTN.Text = "Buscando...";
-
                 string documentNumber = PaymentReportTBPropietaryDocument.Text.Trim();
 
-                // ✅ BUSCAR RECIBOS PAGADOS
                 var paidReceipts = await _receiptService.GetPaidReceiptsByTenantDocumentAsync(documentNumber);
 
-                // ✅ MOSTRAR RESULTADOS
                 if (paidReceipts.Any())
                 {
                     decimal totalPaid = paidReceipts.Sum(r => r.AmountPaid);
                     int receiptCount = paidReceipts.Count();
 
-                    //receipstFound = true;
-                    tenanToGenerateReport = (await _tenantService.SearchTenantsAsync(documentNumber)).FirstOrDefault();
+                    receiptsToGenerateReport = paidReceipts;
+
+                    tenanToGenerateReport = await _tenantService.SearchTenantsAsync(documentNumber);
 
                     MessageBox.Show(
                         $"✅ El propietario tiene {receiptCount} recibos pagados.\n" +
@@ -99,8 +97,6 @@ namespace Condominium_System.Presentation.Views
                         MessageBoxIcon.Information
                     );
 
-                    // ✅ OPCIONAL: MOSTRAR EN UN DATA GRID
-                    //LoadPaidReceiptsToGrid(paidReceipts);
                 }
                 else
                 {
@@ -112,7 +108,6 @@ namespace Condominium_System.Presentation.Views
                     );
 
                     ClearForm();
-                    receipstFound = false;
                     tenanToGenerateReport = null;
                 }
             }
@@ -121,11 +116,50 @@ namespace Condominium_System.Presentation.Views
                 MessageBox.Show($"Error al buscar recibos pagados: {ex.Message}",
                               "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            finally
+        }
+
+        private void GeneratePaymentReportBTN_Click(object sender, EventArgs e)
+        {
+            try
             {
-                // ✅ RESTAURAR BOTÓN
-                //SearchPropietaryBTN.Enabled = true;
-                //SearchPropietaryBTN.Text = "Buscar Propietario";
+
+                if (!FormIsCorrect())
+                {
+                    MessageBox.Show("Por favor ingrese un documento válido de 11 dígitos.",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                IEnumerable<Receipt> receipts = receiptsToGenerateReport;
+
+                if (receipts == null || !receipts.Any())
+                {
+                    MessageBox.Show("No se encontraron los recibos para el informe. Asegúrese de haber buscado primero.",
+                                    "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                decimal totalPaid = receipts.Sum(r => r.AmountPaid);
+
+                var report = new Report();
+                report.Load("Presentation/Reports/Filtered Reports/PaymentsCompletedReport.frx");
+
+                report.RegisterData(receipts.ToList(), "Receipts");
+                report.GetDataSource("Receipts").Enabled = true;
+
+                report.RegisterData(tenanToGenerateReport.ToList(), "Tenants");
+                report.GetDataSource("Tenants").Enabled = true;
+
+                report.SetParameterValue("Total", totalPaid);
+
+
+                var viewer = new ReportViewerForm(report);
+                viewer.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error generando reporte: {ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -143,6 +177,11 @@ namespace Condominium_System.Presentation.Views
         private void ClearForm()
         {
             PaymentReportTBPropietaryDocument.Clear();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
