@@ -218,5 +218,28 @@ namespace Condominium_System.Business.Services
             var receipts = await GetReceiptsByTenantIdAsync(tenantId);
             return receipts.Sum(r => r.Amount - r.AmountPaid);
         }
+
+        public async Task<IEnumerable<Receipt>> GetPaidReceiptsByTenantDocumentAsync(string documentNumber)
+        {
+            if (string.IsNullOrWhiteSpace(documentNumber))
+                throw new ArgumentException("El número de documento no puede estar vacío");
+
+            var allReceipts = await _receiptRepository.GetAllWithIncludesAsync(
+                r => r.Tenant,
+                r => r.Housing,
+                r => r.Payments
+            );
+
+            var paidReceipts = allReceipts.Where(r =>
+                r.Tenant != null &&
+                r.Tenant.DocumentNumber == documentNumber &&
+                r.IsActive &&
+                (r.Status == ReceiptStatusHelper.Completed ||
+                 r.Status == "Completed" ||
+                 r.AmountPaid >= r.Amount)
+            );
+
+            return paidReceipts;
+        }
     }
 }

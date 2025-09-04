@@ -567,7 +567,6 @@ namespace Condominium_System.Presentation.Views
 
             if (PaymentDTGData.Columns[e.ColumnIndex].Name == "AmountColumn")
             {
-                // obtenemos el Receipt completo de la fila
                 var receipt = PaymentDTGData.Rows[e.RowIndex].DataBoundItem as Receipt;
                 if (receipt != null)
                 {

@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="09/04/2025 11:19:32" ReportInfo.Modified="09/04/2025 12:04:54" ReportInfo.CreatorVersion="2025.2.0.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFyVMFQFgloOWr5TX5FL1ZFJR271AOOetRIvM3i7KrbUVrMfFjj7YnJgsFKiVsWMPFnraJusK+kxm9GxDcrOaJoj0cxWx2sBQO918wvcoPmcVRk07flBUgT1yThS90JV8/">
+      <TableDataSource Name="Receipts" DataType="System.Int32" Enabled="true" TableName="Receipts">
+        <Column Name="Id" DataType="System.Int32"/>
+        <Column Name="Date" DataType="System.DateTime"/>
+        <Column Name="DueDate" DataType="System.DateTime"/>
+        <Column Name="Amount" DataType="System.Int32"/>
+        <Column Name="AmountPaid" DataType="System.Int32"/>
+        <Column Name="Detail" DataType="System.String"/>
+        <Column Name="TenantId" DataType="System.Int32"/>
+        <Column Name="HousingId" DataType="System.Int32"/>
+        <Column Name="Author" DataType="System.String"/>
+        <Column Name="IsActive" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="CreatedAt" DataType="System.DateTime"/>
+        <Column Name="UpdatedAt" DataType="System.DateTime"/>
+        <Column Name="DeletedAt" DataType="System.DateTime"/>
+        <Column Name="Status" DataType="System.String"/>
+        <Column Name="LateFee" DataType="System.Int32"/>
+        <Column Name="LateFeeApplied" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="LateFeeAppliedDate" DataType="System.DateTime"/>
+      </TableDataSource>
+      <TableDataSource Name="Tenants" DataType="System.Int32" Enabled="true" TableName="Tenants">
+        <Column Name="Id" DataType="System.Int32"/>
+        <Column Name="FirstName" DataType="System.String"/>
+        <Column Name="LastName" DataType="System.String"/>
+        <Column Name="DocumentNumber" DataType="System.String"/>
+        <Column Name="PhoneNumber" DataType="System.String"/>
+        <Column Name="BirthDate" DataType="System.DateTime"/>
+        <Column Name="Gender" DataType="System.String"/>
+        <Column Name="EntryDate" DataType="System.DateTime"/>
+        <Column Name="HousingId" DataType="System.Int32"/>
+        <Column Name="Author" DataType="System.String"/>
+        <Column Name="IsActive" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="CreatedAt" DataType="System.DateTime"/>
+        <Column Name="UpdatedAt" DataType="System.DateTime"/>
+        <Column Name="DeletedAt" DataType="System.DateTime"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="274.05">
+      <ShapeObject Name="Shape1" Left="170.1" Top="18.9" Width="387.45" Height="75.6"/>
+      <TextObject Name="Text13" Left="198.45" Top="37.8" Width="330.75" Height="37.8" Text="Informe de Propietario" Font="Arial, 22pt"/>
+      <TextObject Name="Text14" Left="538.65" Top="113.4" Width="94.5" Height="18.9" Text="[Date]" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text16" Left="538.65" Top="141.75" Width="141.75" Height="18.9" Text="Santo Domingo, D.N" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text17" Left="255.15" Top="189" Width="217.35" Height="37.8" Text="Balance de pagos" Font="Arial, 18pt"/>
+      <TextObject Name="Text18" Left="283.5" Top="236.25" Width="160.65" Height="28.35" Text="Recibos pagados" Font="Arial, 14pt"/>
+      <TextObject Name="Text26" Left="538.65" Top="170.1" Width="179.55" Height="18.9" Text="[Tenants.FirstName] [Tenants.LastName]" Font="Arial, 10pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="276.72" Width="718.2" Height="37.8">
+      <ShapeObject Name="Shape2" Width="727.65" Height="37.8" Fill.Color="Black"/>
+      <TextObject Name="Text1" Left="9.45" Top="9.45" Width="94.5" Height="18.9" Border.Color="White" Text="Fecha" Font="Arial, 14pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text3" Left="122.85" Top="9.45" Width="415.8" Height="18.9" Text="Detalle" Font="Arial, 14pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text2" Left="548.1" Top="9.45" Width="94.5" Height="18.9" Text="Monto" Font="Arial, 14pt, style=Bold" TextFill.Color="White"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="317.18" Width="718.2" Height="37.8" DataSource="Receipts">
+      <TextObject Name="Text19" Left="9.45" Top="9.45" Width="94.5" Height="18.9" Text="[Receipts.Date]" Format="Date" Format.Format="d" Font="Arial, 14pt"/>
+      <TextObject Name="Text21" Left="122.85" Top="9.45" Width="415.8" Height="18.9" Text="[Receipts.Detail]" Font="Arial, 14pt"/>
+      <TextObject Name="Text22" Left="548.1" Top="9.45" Width="170.1" Height="18.9" Text="[Receipts.Amount]" Font="Arial, 14pt"/>
+    </DataBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="357.65" Width="718.2" Height="37.8">
+      <TextObject Name="Text25" Left="548.1" Top="9.45" Width="66.15" Height="18.9" Text="Total:" Font="Arial, 14pt, style=Bold"/>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="398.12" Width="718.2" Height="47.25">
+      <TextObject Name="Text23" Left="604.8" Top="9.45" Width="103.95" Height="28.35" Text="[Page]" Font="Arial, 14pt, style=Bold"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

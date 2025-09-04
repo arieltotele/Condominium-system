@@ -124,10 +124,10 @@ namespace Condominium_System.Presentation.Views
                     OpenPaymentScreen();
                     break;
 
-                case "HomeScreenPNLReport":
+                case "HomeScreenPNLPaymentReport":
                     HomeScreenLBLTitle.Text = "Reporte";
-                    var reportScreen = _serviceProvider.GetRequiredService<ReportScreen>();
-                    LoadFormInPanel(reportScreen);
+                    var paymentReportScreen = _serviceProvider.GetRequiredService<PaymentReportScreen>();
+                    LoadFormInPanel(paymentReportScreen);
                     break;
 
                 case "HomeScreenPNLUsers":

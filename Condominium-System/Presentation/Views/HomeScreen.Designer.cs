@@ -37,7 +37,7 @@
             HomeScreenPNLFurniture = new Panel();
             HomeScreenLBLFurniture = new Label();
             pictureBox8 = new PictureBox();
-            HomeScreenPNLReport = new Panel();
+            HomeScreenPNLPaymentReport = new Panel();
             HomeScreenLBLReport = new Label();
             pictureBox1 = new PictureBox();
             HomeScreenPNLUsers = new Panel();
@@ -73,7 +73,7 @@
             HomeScreenPNLMenu.SuspendLayout();
             HomeScreenPNLFurniture.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
-            HomeScreenPNLReport.SuspendLayout();
+            HomeScreenPNLPaymentReport.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             HomeScreenPNLUsers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
@@ -144,7 +144,7 @@
             // 
             HomeScreenPNLMenu.BackColor = Color.FromArgb(8, 33, 85);
             HomeScreenPNLMenu.Controls.Add(HomeScreenPNLFurniture);
-            HomeScreenPNLMenu.Controls.Add(HomeScreenPNLReport);
+            HomeScreenPNLMenu.Controls.Add(HomeScreenPNLPaymentReport);
             HomeScreenPNLMenu.Controls.Add(HomeScreenPNLUsers);
             HomeScreenPNLMenu.Controls.Add(HomeScreenPNLPayment);
             HomeScreenPNLMenu.Controls.Add(HomeScreenPNLReceipt);
@@ -191,15 +191,15 @@
             pictureBox8.TabStop = false;
             toolTip1.SetToolTip(pictureBox8, "Ir al módulo de Mobiliario");
             // 
-            // HomeScreenPNLReport
+            // HomeScreenPNLPaymentReport
             // 
-            HomeScreenPNLReport.Controls.Add(HomeScreenLBLReport);
-            HomeScreenPNLReport.Controls.Add(pictureBox1);
-            HomeScreenPNLReport.Location = new Point(3, 594);
-            HomeScreenPNLReport.Name = "HomeScreenPNLReport";
-            HomeScreenPNLReport.Size = new Size(164, 44);
-            HomeScreenPNLReport.TabIndex = 10;
-            toolTip1.SetToolTip(HomeScreenPNLReport, "Ir al módulo de Servicio");
+            HomeScreenPNLPaymentReport.Controls.Add(HomeScreenLBLReport);
+            HomeScreenPNLPaymentReport.Controls.Add(pictureBox1);
+            HomeScreenPNLPaymentReport.Location = new Point(3, 594);
+            HomeScreenPNLPaymentReport.Name = "HomeScreenPNLPaymentReport";
+            HomeScreenPNLPaymentReport.Size = new Size(164, 44);
+            HomeScreenPNLPaymentReport.TabIndex = 10;
+            toolTip1.SetToolTip(HomeScreenPNLPaymentReport, "Ir al módulo de Servicio");
             // 
             // HomeScreenLBLReport
             // 
@@ -536,8 +536,8 @@
             HomeScreenPNLFurniture.ResumeLayout(false);
             HomeScreenPNLFurniture.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
-            HomeScreenPNLReport.ResumeLayout(false);
-            HomeScreenPNLReport.PerformLayout();
+            HomeScreenPNLPaymentReport.ResumeLayout(false);
+            HomeScreenPNLPaymentReport.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             HomeScreenPNLUsers.ResumeLayout(false);
             HomeScreenPNLUsers.PerformLayout();
@@ -604,7 +604,7 @@
         private PictureBox pictureBox10;
         private Panel HomeScreenPNLMain;
         private ToolTip toolTip1;
-        private Panel HomeScreenPNLReport;
+        private Panel HomeScreenPNLPaymentReport;
         private Label HomeScreenLBLReport;
         private PictureBox pictureBox1;
         private Panel HomeScreenPNLFurniture;
