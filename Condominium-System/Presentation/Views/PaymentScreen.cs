@@ -41,8 +41,8 @@ namespace Condominium_System.Presentation.Views
 
         private async void PaymentScreen_Load(object sender, EventArgs e)
         {
-            //PaymentDTGData.CellPainting += PaymentDTGData_CellPainting;
-            //PaymentDTGData.CellClick += PaymentDTGData_CellClick;
+            PaymentDTGData.CellPainting += PaymentDTGData_CellPainting;
+            PaymentDTGData.CellClick += PaymentDTGData_CellClick;
 
             SetDataGridStyle();
             ConfigureCondominiumColumns();

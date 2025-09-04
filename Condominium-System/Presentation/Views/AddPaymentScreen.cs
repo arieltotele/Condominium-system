@@ -24,6 +24,7 @@ namespace Condominium_System.Presentation.Views
         Receipt? currentReceipt;
         User? currentUser;
         Tenant? currentTenant;
+        IEnumerable<Receipt> receiptsToPaid;
         private bool _isFormatting = false;
 
         public AddPaymentScreen(IPaymentService paymentService, IReceiptService receiptService, IServiceProvider serviceProvider)
@@ -36,6 +37,7 @@ namespace Condominium_System.Presentation.Views
             currentUser = Session.CurrentUser;
             currentReceipt = Session.CurrentReceipt;
             currentTenant = Session.TenantToUpsert;
+            receiptsToPaid = Session.ReceiptsToPaid!;
         }
 
         private async void AddPaymentScreen_Load(object sender, EventArgs e)
