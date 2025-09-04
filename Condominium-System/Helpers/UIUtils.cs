@@ -22,15 +22,15 @@ namespace Condominium_System.Helpers
             panel.Region = new Region(path);
         }
 
-        public static void SetDataGridStyle(DataGridView dataGrid)
+        public static void SetDataGridStyle(DataGridView dataGrid, bool allowEditing = false, bool allowMultiSelect = false)
         {
-            dataGrid.ReadOnly = true;
+            dataGrid.ReadOnly = !allowEditing;
+            dataGrid.MultiSelect = allowMultiSelect;
             dataGrid.AllowUserToAddRows = false;
             dataGrid.AllowUserToDeleteRows = false;
             dataGrid.AllowUserToResizeColumns = false;
             dataGrid.AllowUserToResizeRows = false;
             dataGrid.AllowUserToOrderColumns = false;
-            dataGrid.MultiSelect = false;
             dataGrid.ScrollBars = ScrollBars.Both;
             dataGrid.AutoGenerateColumns = false;
             dataGrid.RowHeadersVisible = false;

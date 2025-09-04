@@ -36,13 +36,13 @@ namespace Condominium_System.Presentation.Views
             _paymentService = paymentService;
             _currentUser = Session.CurrentUser;
             _serviceProvider = serviceProvider;
-            
+
         }
 
         private async void PaymentScreen_Load(object sender, EventArgs e)
         {
-            PaymentDTGData.CellPainting += PaymentDTGData_CellPainting;
-            PaymentDTGData.CellClick += PaymentDTGData_CellClick;
+            //PaymentDTGData.CellPainting += PaymentDTGData_CellPainting;
+            //PaymentDTGData.CellClick += PaymentDTGData_CellClick;
 
             SetDataGridStyle();
             ConfigureCondominiumColumns();
@@ -144,9 +144,8 @@ namespace Condominium_System.Presentation.Views
 
         private void SetDataGridStyle()
         {
-            UIUtils.SetDataGridStyle(PaymentDTGData);
+            UIUtils.SetDataGridStyle(PaymentDTGData, allowEditing: true, allowMultiSelect: true);
         }
-
 
         private void PaymentDTGData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
@@ -186,7 +185,7 @@ namespace Condominium_System.Presentation.Views
                 }
 
                 e.Handled = true;
-            }          
+            }
         }
 
         private async void PaymentDTGData_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -219,7 +218,7 @@ namespace Condominium_System.Presentation.Views
         }
 
         private void GoToUpsertScreen()
-        {           
+        {
             if (PaymentDTGData.CurrentRow == null)
             {
                 MessageBox.Show("Por favor, selecciona un recibo para editar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -234,7 +233,7 @@ namespace Condominium_System.Presentation.Views
                 return;
             }
 
-            Session.CurrentReceipt = selectedReceipt;        
+            Session.CurrentReceipt = selectedReceipt;
 
             var addPaymentScreen = _serviceProvider.GetRequiredService<AddPaymentScreen>();
             addPaymentScreen.Owner = this;
@@ -288,14 +287,15 @@ namespace Condominium_System.Presentation.Views
                 DataPropertyName = "Status",
                 HeaderText = "Estado",
                 Name = "StatusColumn",
-                Width = 150
+                Width = 120
             });
 
-            PaymentDTGData.Columns.Add(new DataGridViewTextBoxColumn
+            PaymentDTGData.Columns.Add(new DataGridViewCheckBoxColumn
             {
-                HeaderText = "Acciones",
-                Name = "ActionsColumn",
-                Width = 80
+                HeaderText = "Seleccionar",
+                Name = "SelectColumn",
+                Width = 100,
+                ReadOnly = false
             });
         }
 
@@ -553,7 +553,7 @@ namespace Condominium_System.Presentation.Views
                     e.Value = amount.ToString("C0");
                     e.FormattingApplied = true;
                 }
-                
+
             }
 
             if (PaymentDTGData.Columns[e.ColumnIndex].Name == "AmountPaidColumn" && e.Value != null)
@@ -570,9 +570,9 @@ namespace Condominium_System.Presentation.Views
                 var receipt = PaymentDTGData.Rows[e.RowIndex].DataBoundItem as Receipt;
                 if (receipt != null)
                 {
-                    bool estaEnMora = receipt.DueDate < DateTime.Now && receipt.AmountPaid < receipt.Amount;
+                    bool isFeeApplied = receipt.DueDate < DateTime.Now && receipt.AmountPaid < receipt.Amount;
 
-                    if (estaEnMora)
+                    if (isFeeApplied)
                     {
                         e.CellStyle.BackColor = Color.FromArgb(237, 69, 69);
                         e.CellStyle.ForeColor = Color.Black;
@@ -611,6 +611,58 @@ namespace Condominium_System.Presentation.Views
             if (PaymentCBHouse.Items.Count > 0)
                 PaymentCBHouse.SelectedIndex = 0;
         }
-        
+
+        private async void BtnPagarSeleccionados_Click(object sender, EventArgs e)
+        {
+            var selectedReceipts = GetSelectedReceipts();
+
+            if (!selectedReceipts.Any())
+            {
+                MessageBox.Show("Seleccione al menos un recibo para pagar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // ✅ ABRIR PANTALLA DE PAGO CON LOS RECIBOS SELECCIONADOS
+            //var bulkPaymentScreen = new AddPaymentScreen(
+            //    _paymentService,
+            //    _receiptService,
+            //    _serviceProvider,
+            //    selectedReceipts
+            //);
+
+            //bulkPaymentScreen.Owner = this;
+            //bulkPaymentScreen.PaymentCompleted += (s, args) =>
+            //{
+            //    // ✅ ACTUALIZAR LA GRILLA DESPUÉS DEL PAGO
+            //    SearchPendingReceipts(false);
+            //};
+
+            //bulkPaymentScreen.Show();
+
+            Session.ReceiptsToPaid = selectedReceipts;
+
+            var addPaymentScreen = _serviceProvider.GetRequiredService<AddPaymentScreen>();
+            addPaymentScreen.Owner = this;
+            addPaymentScreen.Show();
+        }
+
+        private List<Receipt> GetSelectedReceipts()
+        {
+            var selectedReceipts = new List<Receipt>();
+
+            foreach (DataGridViewRow row in PaymentDTGData.Rows)
+            {
+                if (row.Cells["SelectColumn"] is DataGridViewCheckBoxCell checkCell)
+                {
+                    var isSelected = checkCell.Value as bool? ?? false;
+                    if (isSelected && row.DataBoundItem is Receipt receipt)
+                    {
+                        selectedReceipts.Add(receipt);
+                    }
+                }
+            }
+
+            return selectedReceipts;
+        }
     }
 }

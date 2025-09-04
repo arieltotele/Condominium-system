@@ -20,5 +20,6 @@ namespace Condominium_System.Helpers
         public static User? UserToUpsert { get; set; }
         public static Invoice? InvoiceToUpsert { get; set; }
         public static Receipt? CurrentReceipt { get; set; }
+        public static IEnumerable<Receipt>? ReceiptsToPaid { get; set; }
     }
 }

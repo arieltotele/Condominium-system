@@ -46,6 +46,7 @@
             panel2 = new Panel();
             pictureBox5 = new PictureBox();
             toolTip1 = new ToolTip(components);
+            btnPagarSeleccionados = new Button();
             panel1.SuspendLayout();
             panel5.SuspendLayout();
             CondominiumPNLBTNCreate.SuspendLayout();
@@ -60,7 +61,7 @@
             // 
             panel1.BackColor = SystemColors.Window;
             panel1.Controls.Add(PaymentCBHouse);
-            panel1.Location = new Point(393, 82);
+            panel1.Location = new Point(393, 54);
             panel1.Name = "panel1";
             panel1.Size = new Size(232, 30);
             panel1.TabIndex = 69;
@@ -80,7 +81,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(393, 49);
+            label1.Location = new Point(393, 21);
             label1.Name = "label1";
             label1.Size = new Size(43, 21);
             label1.TabIndex = 68;
@@ -90,7 +91,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F);
-            label6.Location = new Point(12, 49);
+            label6.Location = new Point(12, 21);
             label6.Name = "label6";
             label6.Size = new Size(87, 21);
             label6.TabIndex = 66;
@@ -100,7 +101,7 @@
             // 
             panel5.BackColor = SystemColors.Window;
             panel5.Controls.Add(PaymentTBPropietaryDocument);
-            panel5.Location = new Point(12, 82);
+            panel5.Location = new Point(12, 54);
             panel5.Name = "panel5";
             panel5.Size = new Size(232, 30);
             panel5.TabIndex = 67;
@@ -119,7 +120,7 @@
             CondominiumPNLBTNCreate.BackColor = Color.MidnightBlue;
             CondominiumPNLBTNCreate.Controls.Add(SearchPendingReceiptsBTNLBL);
             CondominiumPNLBTNCreate.Controls.Add(SearchPendingReceiptsBTNPCTB);
-            CondominiumPNLBTNCreate.Location = new Point(773, 71);
+            CondominiumPNLBTNCreate.Location = new Point(773, 43);
             CondominiumPNLBTNCreate.Name = "CondominiumPNLBTNCreate";
             CondominiumPNLBTNCreate.Size = new Size(155, 41);
             CondominiumPNLBTNCreate.TabIndex = 41;
@@ -195,7 +196,7 @@
             // 
             panel2.BackColor = Color.MidnightBlue;
             panel2.Controls.Add(pictureBox5);
-            panel2.Location = new Point(247, 83);
+            panel2.Location = new Point(247, 55);
             panel2.Name = "panel2";
             panel2.Size = new Size(32, 29);
             panel2.TabIndex = 73;
@@ -213,11 +214,22 @@
             toolTip1.SetToolTip(pictureBox5, "Buscar las viviendas del propietario.");
             pictureBox5.Click += SearchByDocumentBTN_Click;
             // 
+            // btnPagarSeleccionados
+            // 
+            btnPagarSeleccionados.Location = new Point(899, 138);
+            btnPagarSeleccionados.Name = "btnPagarSeleccionados";
+            btnPagarSeleccionados.Size = new Size(75, 23);
+            btnPagarSeleccionados.TabIndex = 74;
+            btnPagarSeleccionados.Text = "PAGAR";
+            btnPagarSeleccionados.UseVisualStyleBackColor = true;
+            btnPagarSeleccionados.Click += BtnPagarSeleccionados_Click;
+            // 
             // PaymentScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1017, 591);
+            Controls.Add(btnPagarSeleccionados);
             Controls.Add(panel2);
             Controls.Add(statusStrip1);
             Controls.Add(PaymentDTGData);
@@ -263,5 +275,6 @@
         private ToolTip toolTip1;
         private ToolStripProgressBar toolStripProgressBar1;
         private ToolStripStatusLabel toolStripStatusLabel2;
+        private Button btnPagarSeleccionados;
     }
 }
