@@ -186,7 +186,7 @@ namespace Condominium_System.Presentation.Views
                 }
 
                 e.Handled = true;
-            }
+            }          
         }
 
         private async void PaymentDTGData_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -553,6 +553,7 @@ namespace Condominium_System.Presentation.Views
                     e.Value = amount.ToString("C0");
                     e.FormattingApplied = true;
                 }
+                
             }
 
             if (PaymentDTGData.Columns[e.ColumnIndex].Name == "AmountPaidColumn" && e.Value != null)
@@ -561,6 +562,27 @@ namespace Condominium_System.Presentation.Views
                 {
                     e.Value = amountPaid.ToString("C0");
                     e.FormattingApplied = true;
+                }
+            }
+
+            if (PaymentDTGData.Columns[e.ColumnIndex].Name == "AmountColumn")
+            {
+                // obtenemos el Receipt completo de la fila
+                var receipt = PaymentDTGData.Rows[e.RowIndex].DataBoundItem as Receipt;
+                if (receipt != null)
+                {
+                    bool estaEnMora = receipt.DueDate < DateTime.Now && receipt.AmountPaid < receipt.Amount;
+
+                    if (estaEnMora)
+                    {
+                        e.CellStyle.BackColor = Color.FromArgb(237, 69, 69);
+                        e.CellStyle.ForeColor = Color.Black;
+                    }
+                    else
+                    {
+                        e.CellStyle.BackColor = Color.White;
+                        e.CellStyle.ForeColor = Color.Black;
+                    }
                 }
             }
         }
