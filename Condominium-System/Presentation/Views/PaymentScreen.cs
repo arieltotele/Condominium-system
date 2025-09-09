@@ -42,7 +42,7 @@ namespace Condominium_System.Presentation.Views
         private async void PaymentScreen_Load(object sender, EventArgs e)
         {
             PaymentDTGData.CellPainting += PaymentDTGData_CellPainting;
-            PaymentDTGData.CellClick += PaymentDTGData_CellClick;
+            //PaymentDTGData.CellClick += PaymentDTGData_CellClick;
 
             SetDataGridStyle();
             ConfigureCondominiumColumns();
@@ -188,57 +188,57 @@ namespace Condominium_System.Presentation.Views
             }
         }
 
-        private async void PaymentDTGData_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0 && PaymentDTGData.Columns[e.ColumnIndex].Name == "ActionsColumn")
-            {
-                var selectedRow = PaymentDTGData.Rows[e.RowIndex];
-                var selectedReceipt = selectedRow.DataBoundItem as Receipt;
+        //private async void PaymentDTGData_CellClick(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    if (e.RowIndex >= 0 && PaymentDTGData.Columns[e.ColumnIndex].Name == "ActionsColumn")
+        //    {
+        //        var selectedRow = PaymentDTGData.Rows[e.RowIndex];
+        //        var selectedReceipt = selectedRow.DataBoundItem as Receipt;
 
-                if (selectedReceipt == null)
-                {
-                    MessageBox.Show("No se pudo identificar el recibo.");
-                    return;
-                }
+        //        if (selectedReceipt == null)
+        //        {
+        //            MessageBox.Show("No se pudo identificar el recibo.");
+        //            return;
+        //        }
 
-                if (selectedReceipt.AmountPaid >= selectedReceipt.Amount)
-                {
-                    MessageBox.Show("Este recibo ya está completamente pagado.",
-                                  "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
+        //        if (selectedReceipt.AmountPaid >= selectedReceipt.Amount)
+        //        {
+        //            MessageBox.Show("Este recibo ya está completamente pagado.",
+        //                          "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //            return;
+        //        }
 
-                PaymentDTGData.InvalidateCell(e.ColumnIndex, e.RowIndex);
-                await Task.Delay(100);
-                PaymentDTGData.InvalidateCell(e.ColumnIndex, e.RowIndex);
+        //        PaymentDTGData.InvalidateCell(e.ColumnIndex, e.RowIndex);
+        //        await Task.Delay(100);
+        //        PaymentDTGData.InvalidateCell(e.ColumnIndex, e.RowIndex);
 
-                Session.CurrentReceipt = selectedReceipt;
-                GoToUpsertScreen();
-            }
-        }
+        //        Session.CurrentReceipt = selectedReceipt;
+        //        GoToUpsertScreen();
+        //    }
+        //}
 
-        private void GoToUpsertScreen()
-        {
-            if (PaymentDTGData.CurrentRow == null)
-            {
-                MessageBox.Show("Por favor, selecciona un recibo para editar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+        //private void GoToUpsertScreen()
+        //{
+        //    if (PaymentDTGData.CurrentRow == null)
+        //    {
+        //        MessageBox.Show("Por favor, selecciona un recibo para editar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        return;
+        //    }
 
-            var selectedReceipt = PaymentDTGData.CurrentRow.DataBoundItem as Receipt;
+        //    var selectedReceipt = PaymentDTGData.CurrentRow.DataBoundItem as Receipt;
 
-            if (selectedReceipt == null)
-            {
-                MessageBox.Show("Error al obtener el recibo seleccionado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+        //    if (selectedReceipt == null)
+        //    {
+        //        MessageBox.Show("Error al obtener el recibo seleccionado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        return;
+        //    }
 
-            Session.CurrentReceipt = selectedReceipt;
+        //    Session.CurrentReceipt = selectedReceipt;
 
-            var addPaymentScreen = _serviceProvider.GetRequiredService<AddPaymentScreen>();
-            addPaymentScreen.Owner = this;
-            addPaymentScreen.Show();
-        }
+        //    var addPaymentScreen = _serviceProvider.GetRequiredService<AddPaymentScreen>();
+        //    addPaymentScreen.Owner = this;
+        //    addPaymentScreen.Show();
+        //}
 
         private void ConfigureCondominiumColumns()
         {
@@ -604,16 +604,11 @@ namespace Condominium_System.Presentation.Views
             return isDocumentValid && isHouseValid;
         }
 
-        private void ClearForm()
+        private void PaySelectedReceiptsBTN_Click(object sender, EventArgs e)
         {
-            PaymentTBPropietaryDocument.Clear();
+            PaymentDTGData.EndEdit();
+            PaymentDTGData.CommitEdit(DataGridViewDataErrorContexts.Commit);
 
-            if (PaymentCBHouse.Items.Count > 0)
-                PaymentCBHouse.SelectedIndex = 0;
-        }
-
-        private async void BtnPagarSeleccionados_Click(object sender, EventArgs e)
-        {
             var selectedReceipts = GetSelectedReceipts();
 
             if (!selectedReceipts.Any())
@@ -621,23 +616,6 @@ namespace Condominium_System.Presentation.Views
                 MessageBox.Show("Seleccione al menos un recibo para pagar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-
-            // ✅ ABRIR PANTALLA DE PAGO CON LOS RECIBOS SELECCIONADOS
-            //var bulkPaymentScreen = new AddPaymentScreen(
-            //    _paymentService,
-            //    _receiptService,
-            //    _serviceProvider,
-            //    selectedReceipts
-            //);
-
-            //bulkPaymentScreen.Owner = this;
-            //bulkPaymentScreen.PaymentCompleted += (s, args) =>
-            //{
-            //    // ✅ ACTUALIZAR LA GRILLA DESPUÉS DEL PAGO
-            //    SearchPendingReceipts(false);
-            //};
-
-            //bulkPaymentScreen.Show();
 
             Session.ReceiptsToPaid = selectedReceipts;
 
@@ -663,6 +641,14 @@ namespace Condominium_System.Presentation.Views
             }
 
             return selectedReceipts;
+        }
+
+        private void ClearForm()
+        {
+            PaymentTBPropietaryDocument.Clear();
+
+            if (PaymentCBHouse.Items.Count > 0)
+                PaymentCBHouse.SelectedIndex = 0;
         }
     }
 }

@@ -52,7 +52,7 @@
             UpsertPNLBTN.BackColor = Color.MidnightBlue;
             UpsertPNLBTN.Controls.Add(PaymentSaveBTNLBL);
             UpsertPNLBTN.Controls.Add(UpsertPCTBXBTN);
-            UpsertPNLBTN.Location = new Point(80, 388);
+            UpsertPNLBTN.Location = new Point(102, 465);
             UpsertPNLBTN.Name = "UpsertPNLBTN";
             UpsertPNLBTN.Size = new Size(137, 41);
             UpsertPNLBTN.TabIndex = 139;
@@ -85,7 +85,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(41, 209);
+            label4.Location = new Point(58, 207);
             label4.Name = "label4";
             label4.Size = new Size(65, 21);
             label4.TabIndex = 133;
@@ -95,9 +95,9 @@
             // 
             panel3.BackColor = SystemColors.Window;
             panel3.Controls.Add(PaymentCBDetail);
-            panel3.Location = new Point(41, 242);
+            panel3.Location = new Point(58, 240);
             panel3.Name = "panel3";
-            panel3.Size = new Size(232, 99);
+            panel3.Size = new Size(232, 193);
             panel3.TabIndex = 134;
             // 
             // PaymentCBDetail
@@ -106,14 +106,14 @@
             PaymentCBDetail.Location = new Point(4, 4);
             PaymentCBDetail.Multiline = true;
             PaymentCBDetail.Name = "PaymentCBDetail";
-            PaymentCBDetail.Size = new Size(225, 92);
+            PaymentCBDetail.Size = new Size(225, 186);
             PaymentCBDetail.TabIndex = 2;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(41, 20);
+            label2.Location = new Point(58, 18);
             label2.Name = "label2";
             label2.Size = new Size(56, 21);
             label2.TabIndex = 129;
@@ -123,7 +123,7 @@
             // 
             panel1.BackColor = SystemColors.Window;
             panel1.Controls.Add(PaymentTBAmount);
-            panel1.Location = new Point(41, 53);
+            panel1.Location = new Point(58, 51);
             panel1.Name = "panel1";
             panel1.Size = new Size(232, 24);
             panel1.TabIndex = 130;
@@ -142,7 +142,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F);
-            label6.Location = new Point(41, 115);
+            label6.Location = new Point(58, 113);
             label6.Name = "label6";
             label6.Size = new Size(124, 21);
             label6.TabIndex = 140;
@@ -152,7 +152,7 @@
             // 
             panel5.BackColor = SystemColors.Window;
             panel5.Controls.Add(PaymentCBPayMethod);
-            panel5.Location = new Point(41, 148);
+            panel5.Location = new Point(58, 146);
             panel5.Name = "panel5";
             panel5.Size = new Size(232, 30);
             panel5.TabIndex = 141;
@@ -170,7 +170,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(328, 475);
+            ClientSize = new Size(355, 577);
             Controls.Add(label6);
             Controls.Add(panel5);
             Controls.Add(UpsertPNLBTN);

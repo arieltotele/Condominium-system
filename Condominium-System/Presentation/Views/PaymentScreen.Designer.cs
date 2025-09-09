@@ -46,7 +46,9 @@
             panel2 = new Panel();
             pictureBox5 = new PictureBox();
             toolTip1 = new ToolTip(components);
-            btnPagarSeleccionados = new Button();
+            panel3 = new Panel();
+            label2 = new Label();
+            pictureBox1 = new PictureBox();
             panel1.SuspendLayout();
             panel5.SuspendLayout();
             CondominiumPNLBTNCreate.SuspendLayout();
@@ -55,6 +57,8 @@
             statusStrip1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
+            panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -214,22 +218,49 @@
             toolTip1.SetToolTip(pictureBox5, "Buscar las viviendas del propietario.");
             pictureBox5.Click += SearchByDocumentBTN_Click;
             // 
-            // btnPagarSeleccionados
+            // panel3
             // 
-            btnPagarSeleccionados.Location = new Point(899, 138);
-            btnPagarSeleccionados.Name = "btnPagarSeleccionados";
-            btnPagarSeleccionados.Size = new Size(75, 23);
-            btnPagarSeleccionados.TabIndex = 74;
-            btnPagarSeleccionados.Text = "PAGAR";
-            btnPagarSeleccionados.UseVisualStyleBackColor = true;
-            btnPagarSeleccionados.Click += BtnPagarSeleccionados_Click;
+            panel3.BackColor = Color.MidnightBlue;
+            panel3.Controls.Add(label2);
+            panel3.Controls.Add(pictureBox1);
+            panel3.Location = new Point(916, 135);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(101, 41);
+            panel3.TabIndex = 75;
+            toolTip1.SetToolTip(panel3, "Buscar los recibos pendientes.");
+            panel3.Click += PaySelectedReceiptsBTN_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(39, 12);
+            label2.Name = "label2";
+            label2.Size = new Size(49, 21);
+            label2.TabIndex = 1;
+            label2.Text = "Pagar";
+            toolTip1.SetToolTip(label2, "Buscar los recibos pendientes.");
+            label2.Click += PaySelectedReceiptsBTN_Click;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.pay_white;
+            pictureBox1.Location = new Point(3, 12);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(30, 19);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
+            toolTip1.SetToolTip(pictureBox1, "Buscar los recibos pendientes.");
+            pictureBox1.Click += PaySelectedReceiptsBTN_Click;
             // 
             // PaymentScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1017, 591);
-            Controls.Add(btnPagarSeleccionados);
+            Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(statusStrip1);
             Controls.Add(PaymentDTGData);
@@ -253,6 +284,9 @@
             statusStrip1.PerformLayout();
             panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -275,6 +309,8 @@
         private ToolTip toolTip1;
         private ToolStripProgressBar toolStripProgressBar1;
         private ToolStripStatusLabel toolStripStatusLabel2;
-        private Button btnPagarSeleccionados;
+        private Panel panel3;
+        private Label label2;
+        private PictureBox pictureBox1;
     }
 }

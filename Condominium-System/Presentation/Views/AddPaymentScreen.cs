@@ -24,8 +24,9 @@ namespace Condominium_System.Presentation.Views
         Receipt? currentReceipt;
         User? currentUser;
         Tenant? currentTenant;
-        IEnumerable<Receipt> receiptsToPaid;
+        List<Receipt> receiptsToPaid;
         private bool _isFormatting = false;
+        private bool _isBulkPayment = false;
 
         public AddPaymentScreen(IPaymentService paymentService, IReceiptService receiptService, IServiceProvider serviceProvider)
         {
@@ -38,15 +39,75 @@ namespace Condominium_System.Presentation.Views
             currentReceipt = Session.CurrentReceipt;
             currentTenant = Session.TenantToUpsert;
             receiptsToPaid = Session.ReceiptsToPaid!;
+
+            _isBulkPayment = receiptsToPaid.Any();
         }
 
         private async void AddPaymentScreen_Load(object sender, EventArgs e)
         {
             SetComboBoxForTypeOfUsers();
-            await CheckAndDisplayLateFee();
-            LoadPendingAmount();
             UIUtils.ConfigureFormSize(this, true);
+                             
             //ForceLateFeeForTesting();
+            if (_isBulkPayment) { await LoadBulkPaymentData(); }
+
+            else
+            {
+                await CheckAndDisplayLateFee();
+                LoadPendingAmount();
+            }
+            
+        }
+
+        private async Task LoadBulkPaymentData()
+        {
+            try
+            {
+                decimal totalAmount = receiptsToPaid.Sum(r => r.Amount - r.AmountPaid);
+                PaymentTBAmount.Text = FormatCurrency(totalAmount);
+
+                var details = new StringBuilder();
+                foreach (var receipt in receiptsToPaid)
+                {
+                    details.AppendLine($"• {receipt.Detail} (Monto pendiente: {FormatCurrency(receipt.Amount - receipt.AmountPaid)})");
+                }
+
+                var allDetailsText = new StringBuilder();
+                allDetailsText.Append($"Pago múltiple de {receiptsToPaid.Count} recibos:\n");
+                allDetailsText.AppendLine();
+                allDetailsText.AppendLine(details.ToString());
+                PaymentCBDetail.Text = allDetailsText.ToString().TrimEnd();
+
+                using (var scope = _serviceProvider.CreateScope())
+                {
+                    var lateFeeService = scope.ServiceProvider.GetRequiredService<ILateFeeService>();
+                    bool anyLateFeeApplied = false;
+
+                    foreach (var receipt in receiptsToPaid)
+                    {
+                        var lateFeeAmount = await lateFeeService.CalculateLateFeeAsync(receipt.Id);
+                        if (lateFeeAmount > 0)
+                        {
+                            anyLateFeeApplied = true;
+                            break;
+                        }
+                    }
+
+                    if (anyLateFeeApplied)
+                    {
+                        MessageBox.Show($"⚠️ Algunos recibos seleccionados tienen mora pendiente.\n" +
+                                       $"La mora se aplicará automáticamente al registrar los pagos.",
+                                       "Mora Pendiente",
+                                       MessageBoxButtons.OK,
+                                       MessageBoxIcon.Warning);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar datos de pago múltiple: {ex.Message}",
+                              "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void LoadPendingAmount()
@@ -154,12 +215,6 @@ namespace Condominium_System.Presentation.Views
                 return;
             }
 
-            if (currentReceipt == null)
-            {
-                MessageBox.Show("No se ha seleccionado un recibo válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             try
             {
                 PaymentSaveBTNLBL.Text = "Guardando...";
@@ -172,52 +227,17 @@ namespace Condominium_System.Presentation.Views
                     return;
                 }
 
-                using (var scope = _serviceProvider.CreateScope())
-                {
-                    var lateFeeService = scope.ServiceProvider.GetRequiredService<ILateFeeService>();
-                    bool lateFeeApplied = await lateFeeService.ApplyLateFeeIfNeededAsync(currentReceipt.Id);
-
-                    if (lateFeeApplied)
-                    {
-                        currentReceipt = await _receiptService.GetReceiptByIdAsync(currentReceipt.Id);
-
-                        MessageBox.Show($"✅ Se aplicó mora de ${currentReceipt.LateFee:N0} al recibo",
-                                       "Mora Aplicada",
-                                       MessageBoxButtons.OK,
-                                       MessageBoxIcon.Information);
-                    }
-                }
-
-                decimal remainingAmount = currentReceipt.Amount - currentReceipt.AmountPaid;
-                if (amountToPay > remainingAmount)
-                {
-                    MessageBox.Show($"El monto a pagar (${amountToPay:N0}) excede el saldo pendiente (${remainingAmount:N0}).",
-                                   "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
                 string paymentMethod = GetPaymentMethodText(PaymentCBPayMethod.SelectedValue);
+                string paymentDetail = PaymentCBDetail.Text;
 
-                var payment = new Payment
+                if (_isBulkPayment)
                 {
-                    Date = DateTime.Now,
-                    AmountPaid = (int)amountToPay,
-                    PaymentMethod = paymentMethod,
-                    Detail = PaymentCBDetail.Text,
-                    ReceiptId = currentReceipt.Id,
-                    Author = currentUser?.Username ?? "System",
-                    CreatedAt = DateTime.Now,
-                    IsActive = true
-                };
-
-                await _paymentService.CreatePaymentAsync(payment);
-
-                MessageBox.Show("Pago registrado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ClearFields();
-                this.DialogResult = DialogResult.OK;
-
-                ((PaymentScreen)this.Owner).SearchPendingReceipts(false);
-                this.Hide();
+                    await ProcessBulkPayment(amountToPay, paymentMethod, paymentDetail);
+                }
+                else
+                {
+                    await ProcessSinglePayment(amountToPay, paymentMethod, paymentDetail);
+                }
             }
             catch (Exception ex)
             {
@@ -227,6 +247,137 @@ namespace Condominium_System.Presentation.Views
             {
                 PaymentSaveBTNLBL.Text = "Guardar";
             }
+        }
+
+        private async Task ProcessBulkPayment(decimal totalAmount, string paymentMethod, string paymentDetail)
+        {
+            try
+            {
+                decimal expectedTotal = receiptsToPaid.Sum(r => r.Amount - r.AmountPaid);
+                if (totalAmount != expectedTotal)
+                {
+                    MessageBox.Show($"El monto ingresado ({FormatCurrency(totalAmount)}) no coincide con la suma de los recibos seleccionados ({FormatCurrency(expectedTotal)}).",
+                                  "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                using (var scope = _serviceProvider.CreateScope())
+                {
+                    var lateFeeService = scope.ServiceProvider.GetRequiredService<ILateFeeService>();
+                    int successfulPayments = 0;
+
+                    foreach (var receipt in receiptsToPaid)
+                    {
+                        try
+                        {
+                            bool lateFeeApplied = await lateFeeService.ApplyLateFeeIfNeededAsync(receipt.Id);
+
+                            if (lateFeeApplied)
+                            {
+                                receipt.Amount += receipt.LateFee;
+                            }
+
+                            decimal receiptAmount = receipt.Amount - receipt.AmountPaid;
+
+                            var payment = new Payment
+                            {
+                                Date = DateTime.Now,
+                                AmountPaid = (int)receiptAmount,
+                                PaymentMethod = paymentMethod,
+                                Detail = $"{paymentDetail}\nRecibo ID: {receipt.Id}",
+                                ReceiptId = receipt.Id,
+                                Author = currentUser?.Username ?? "System",
+                                CreatedAt = DateTime.Now,
+                                IsActive = true
+                            };
+
+                            await _paymentService.CreatePaymentAsync(payment);
+                            successfulPayments++;
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error procesando recibo {receipt.Id}: {ex.Message}");
+                        }
+                    }
+
+                    MessageBox.Show($"Pago múltiple procesado exitosamente.\n" +
+                                  $"Recibos pagados: {successfulPayments}/{receiptsToPaid.Count}",
+                                  "Pago Completado",
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Information);
+
+                    ClearFields();
+                    this.DialogResult = DialogResult.OK;
+
+                    if (this.Owner is PaymentScreen paymentScreen)
+                    {
+                        paymentScreen.SearchPendingReceipts(false);
+                    }
+
+                    this.Hide();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error en pago múltiple: {ex.Message}", ex);
+            }
+        }
+
+        private async Task ProcessSinglePayment(decimal amountToPay, string paymentMethod, string paymentDetail)
+        {
+            if (currentReceipt == null)
+            {
+                MessageBox.Show("No se ha seleccionado un recibo válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            using (var scope = _serviceProvider.CreateScope())
+            {
+                var lateFeeService = scope.ServiceProvider.GetRequiredService<ILateFeeService>();
+                bool lateFeeApplied = await lateFeeService.ApplyLateFeeIfNeededAsync(currentReceipt.Id);
+
+                if (lateFeeApplied)
+                {
+                    currentReceipt = await _receiptService.GetReceiptByIdAsync(currentReceipt.Id);
+                    MessageBox.Show($"✅ Se aplicó mora de ${currentReceipt.LateFee:N0} al recibo",
+                                   "Mora Aplicada",
+                                   MessageBoxButtons.OK,
+                                   MessageBoxIcon.Information);
+                }
+            }
+
+            decimal remainingAmount = currentReceipt.Amount - currentReceipt.AmountPaid;
+            if (amountToPay > remainingAmount)
+            {
+                MessageBox.Show($"El monto a pagar (${amountToPay:N0}) excede el saldo pendiente (${remainingAmount:N0}).",
+                               "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var payment = new Payment
+            {
+                Date = DateTime.Now,
+                AmountPaid = (int)amountToPay,
+                PaymentMethod = paymentMethod,
+                Detail = paymentDetail,
+                ReceiptId = currentReceipt.Id,
+                Author = currentUser?.Username ?? "System",
+                CreatedAt = DateTime.Now,
+                IsActive = true
+            };
+
+            await _paymentService.CreatePaymentAsync(payment);
+
+            MessageBox.Show("Pago registrado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            ClearFields();
+            this.DialogResult = DialogResult.OK;
+
+            if (this.Owner is PaymentScreen paymentScreen)
+            {
+                paymentScreen.SearchPendingReceipts(false);
+            }
+
+            this.Hide();
         }
 
         private void PaymentTBAmount_KeyPress(object sender, KeyPressEventArgs e)
@@ -342,6 +493,12 @@ namespace Condominium_System.Presentation.Views
             bool isAmountValid = amount > 0;
 
             bool isDetailValid = !string.IsNullOrWhiteSpace(PaymentCBDetail.Text);
+
+            if (_isBulkPayment)
+            {
+                decimal expectedTotal = receiptsToPaid.Sum(r => r.Amount - r.AmountPaid);
+                isAmountValid = isAmountValid && amount == expectedTotal;
+            }
 
             return isMethodValid && isAmountValid && isDetailValid;
         }
