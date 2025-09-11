@@ -3,12 +3,7 @@ using Condominium_System.Data.Entities;
 using Condominium_System.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace Condominium_System.Tests.Services
 {

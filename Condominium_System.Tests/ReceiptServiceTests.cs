@@ -2,11 +2,6 @@ using Condominium_System.Business.Services;
 using Condominium_System.Data.Entities;
 using Condominium_System.Data.Repositories;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace Condominium_System.Tests.Services
 {
