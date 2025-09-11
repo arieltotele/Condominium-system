@@ -65,7 +65,6 @@ namespace Condominium_System.Presentation.Views
             };
         }
 
-
         private void ServiceDTGData_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0 && ServiceDTGData.Columns[e.ColumnIndex].Name == "ActionsColumn")

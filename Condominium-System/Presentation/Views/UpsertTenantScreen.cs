@@ -40,7 +40,9 @@ namespace Condominium_System.Presentation.Views
             if (IsEditMode)
             {
                 LoadDataIfIsToUpdate();
-            }            
+            }
+
+            UIUtils.ConfigureFormSize(this, true);
         }
 
         private async void LoadDataIfIsToUpdate()

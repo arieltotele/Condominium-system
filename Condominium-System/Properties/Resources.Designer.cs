@@ -93,6 +93,16 @@ namespace Condominium_System.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap check_green {
+            get {
+                object obj = ResourceManager.GetObject("check_green", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap clean_white {
             get {
                 object obj = ResourceManager.GetObject("clean_white", resourceCulture);
@@ -203,6 +213,36 @@ namespace Condominium_System.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap pay {
+            get {
+                object obj = ResourceManager.GetObject("pay", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pay_white {
+            get {
+                object obj = ResourceManager.GetObject("pay_white", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap payment_white {
+            get {
+                object obj = ResourceManager.GetObject("payment_white", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap pencil_blue {
             get {
                 object obj = ResourceManager.GetObject("pencil_blue", resourceCulture);
@@ -226,6 +266,16 @@ namespace Condominium_System.Properties {
         internal static System.Drawing.Bitmap power_off_white {
             get {
                 object obj = ResourceManager.GetObject("power_off_white", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap receipt_white {
+            get {
+                object obj = ResourceManager.GetObject("receipt_white", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -43,6 +43,7 @@ namespace Condominium_System.Presentation.Views
             await LoadServiceCheckboxesForHousing("Convivencia", housingId, AddServiceFlowLayoutConvivence);
 
             ChangeLabelIfInEditMode(IsEditMode);
+            UIUtils.ConfigureFormSize(this, true);
         }
 
         private void ChangeLabelIfInEditMode(bool isEditMode) =>

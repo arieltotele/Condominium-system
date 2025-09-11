@@ -48,6 +48,7 @@ namespace Condominium_System.Presentation.Views
             await LoadFurnitureCheckboxesForHousing("Exterior", housingId, AddFurnitrureFlowLayoutOutside);
 
             ChangeLabelIfInEditMode(IsEditMode);
+            UIUtils.ConfigureFormSize(this, true);
         }
 
         private void ChangeLabelIfInEditMode(bool isEditMode) =>

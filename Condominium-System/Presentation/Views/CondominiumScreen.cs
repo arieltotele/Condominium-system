@@ -129,9 +129,9 @@ namespace Condominium_System.Presentation.Views
 
             CondominiumDTGData.Columns.Add(new DataGridViewTextBoxColumn
             {
-                DataPropertyName = "BlockCount",
-                HeaderText = "Numero de bloques",
-                Name = "BlockCountColumn",
+                DataPropertyName = "Quota",
+                HeaderText = "Servicio mensual",
+                Name = "QuotaColumn",
                 Width = 180
             });
 

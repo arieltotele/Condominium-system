@@ -51,7 +51,9 @@ namespace Condominium_System.Presentation.Views
                 }
             }
 
+            UIUtils.ConfigureFormSize(this, true);        
         }
+
         private void SelectPanel(object sender, EventArgs e)
         {
             Control control = sender as Control;
@@ -105,9 +107,9 @@ namespace Condominium_System.Presentation.Views
                     LoadFormInPanel(incidenceScreen);
                     break;
 
-                case "HomeScreenPNLInvoice":
-                    HomeScreenLBLTitle.Text = "Factura";
-                    var invoiceScreen = _serviceProvider.GetRequiredService<InvoiceScreen>();
+                case "HomeScreenPNLReceipt":
+                    HomeScreenLBLTitle.Text = "Recibo";
+                    var invoiceScreen = _serviceProvider.GetRequiredService<ReceiptScreen>();
                     LoadFormInPanel(invoiceScreen);
                     break;
 
@@ -117,15 +119,15 @@ namespace Condominium_System.Presentation.Views
                     LoadFormInPanel(furnitureScreen);
                     break;
 
-                case "HomeScreenPNLMaintenance":
-                    HomeScreenLBLTitle.Text = "Servicios";
-                    OpenServiceScreen();
+                case "HomeScreenPNLPayment":
+                    HomeScreenLBLTitle.Text = "Pago";
+                    OpenPaymentScreen();
                     break;
 
-                case "HomeScreenPNLReport":
+                case "HomeScreenPNLPaymentReport":
                     HomeScreenLBLTitle.Text = "Reporte";
-                    var reportScreen = _serviceProvider.GetRequiredService<ReportScreen>();
-                    LoadFormInPanel(reportScreen);
+                    var paymentReportScreen = _serviceProvider.GetRequiredService<PaymentReportScreen>();
+                    LoadFormInPanel(paymentReportScreen);
                     break;
 
                 case "HomeScreenPNLUsers":
@@ -139,9 +141,9 @@ namespace Condominium_System.Presentation.Views
             }
         }
 
-        private void OpenServiceScreen()
+        private void OpenPaymentScreen()
         {
-            var screen = _serviceProvider.GetRequiredService<ServiceScreen>();
+            var screen = _serviceProvider.GetRequiredService<PaymentScreen>();
             LoadFormInPanel(screen);
         }
 

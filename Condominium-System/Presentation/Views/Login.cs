@@ -35,6 +35,8 @@ namespace Condominium_System.Presentation.Views
             UIUtils.RoundPanelCorners(LoginPNLUsername, 10);
             UIUtils.RoundPanelCorners(LoginPNLPassword, 10);
             //CleanForm();
+
+            UIUtils.ConfigureFormSize(this, true);
         }
 
         private async void LoginBTNLogIn_Click(object sender, EventArgs e)

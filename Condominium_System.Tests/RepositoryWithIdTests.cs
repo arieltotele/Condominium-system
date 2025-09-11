@@ -2,12 +2,6 @@
 using Condominium_System.Data.Entities;
 using Condominium_System.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 
 namespace Condominium_System.Tests
 {

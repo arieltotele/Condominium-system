@@ -11,7 +11,7 @@ namespace Condominium_System.Helpers
     {
         public static User? CurrentUser { get; set; }
         public static Housing? CurrentHouse { get; set; }
-        public static Data.Entities.Condominium? CondominiumToUpsert {  get; set; }
+        public static Condominium? CondominiumToUpsert {  get; set; }
         public static Block? BlockToUpsert { get; set; }
         public static Tenant? TenantToUpsert { get; set; }
         public static Incident? IncidenceToUpsert { get; set; }
@@ -19,5 +19,7 @@ namespace Condominium_System.Helpers
         public static Service? ServiceToUpsert { get; set; }
         public static User? UserToUpsert { get; set; }
         public static Invoice? InvoiceToUpsert { get; set; }
+        public static Receipt? CurrentReceipt { get; set; }
+        public static List<Receipt>? ReceiptsToPaid { get; set; }
     }
 }

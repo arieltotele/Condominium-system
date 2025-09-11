@@ -19,5 +19,7 @@ namespace Condominium_System.Data.Entities
         public virtual ICollection<HousingService> Services { get; set; }
         public virtual ICollection<HousingFurniture> Furnitures { get; set; }
         public virtual ICollection<Tenant> Tenants { get; set; }
+        public virtual ICollection<Receipt> Receipts { get; set; }
+
     }
 }

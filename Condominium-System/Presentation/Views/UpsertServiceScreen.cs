@@ -39,6 +39,8 @@ namespace Condominium_System.Presentation.Views
             {
                 LoadDataIfIsToUpdate();
             }
+
+            UIUtils.ConfigureFormSize(this, true);
         }
 
         private void LoadDataIfIsToUpdate()

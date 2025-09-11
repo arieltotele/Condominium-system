@@ -57,7 +57,7 @@
             panel5.Controls.Add(ReportComboBxEntities);
             panel5.Location = new Point(12, 170);
             panel5.Name = "panel5";
-            panel5.Size = new Size(394, 30);
+            panel5.Size = new Size(392, 30);
             panel5.TabIndex = 54;
             toolTip1.SetToolTip(panel5, "Seleccionar una entidad para el reporte.");
             // 

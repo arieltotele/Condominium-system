@@ -41,6 +41,8 @@ namespace Condominium_System.Presentation.Views
             {
                 LoadDataIfIsToUpdate();
             }
+
+            UIUtils.ConfigureFormSize(this, true);
         }
 
         private void LoadDataIfIsToUpdate()
@@ -193,8 +195,8 @@ namespace Condominium_System.Presentation.Views
                     CleanForm();
 
                     await ((HousingScreen)this.Owner).LoadDataToDataGrid();
-
-                    GoToAddFurnitureScreen(false);
+                    this.Hide();
+                    //GoToAddFurnitureScreen(false);
                 }
                 catch (Exception ex)
                 {

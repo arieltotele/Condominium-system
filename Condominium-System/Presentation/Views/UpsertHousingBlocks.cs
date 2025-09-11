@@ -21,7 +21,7 @@ namespace Condominium_System.Presentation.Views
         private readonly IBlockService _blockService;
         private readonly ICondominiumService _condominiumService;
         private readonly IServiceProvider _serviceProvider;
-        User currentUser;
+        User? currentUser;
 
         public bool IsEditMode { get; set; } = false;
         public UpsertHousingBlocks(IBlockService blockService, ICondominiumService condominiumService, IServiceProvider serviceProvider)
@@ -42,6 +42,8 @@ namespace Condominium_System.Presentation.Views
 
             SetComboBoxForTypeOfHousing();
             await LoadCondominiumsIntoComboBox();
+
+            UIUtils.ConfigureFormSize(this, true);
         }
 
         private async void LoadDataIfIsToUpdate()
@@ -54,16 +56,23 @@ namespace Condominium_System.Presentation.Views
                 BlockTBHouseQuantity.Text = block.HousingCount.ToString();
                 BlockTBFeature.Text = block.Feature;
 
+                // Cargar condominios y esperar a que termine
                 await LoadCondominiumsIntoComboBox();
 
-                BlockCBCondominium.SelectedValue = block.CondominiumId;
+                // Usar BeginInvoke para asegurar que el UI esté actualizado
+                this.BeginInvoke(new Action(() =>
+                {
+                    // Asignar el condominio usando SelectedValue
+                    BlockCBCondominium.SelectedValue = block.CondominiumId;
 
-                if (block.HousingType == "Casa")
-                    BlockCBTypeHousing.SelectedValue = 1;
-                else if (block.HousingType == "Apartamento")
-                    BlockCBTypeHousing.SelectedValue = 2;
-                else
-                    BlockCBTypeHousing.SelectedValue = 0;
+                    // Asignar el tipo de vivienda
+                    if (block.HousingType == "Casa")
+                        BlockCBTypeHousing.SelectedValue = 1;
+                    else if (block.HousingType == "Apartamento")
+                        BlockCBTypeHousing.SelectedValue = 2;
+                    else
+                        BlockCBTypeHousing.SelectedValue = 0;
+                }));
             }
         }
 

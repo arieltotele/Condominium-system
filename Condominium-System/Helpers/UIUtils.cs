@@ -22,15 +22,15 @@ namespace Condominium_System.Helpers
             panel.Region = new Region(path);
         }
 
-        public static void SetDataGridStyle(DataGridView dataGrid)
+        public static void SetDataGridStyle(DataGridView dataGrid, bool allowEditing = false, bool allowMultiSelect = false)
         {
-            dataGrid.ReadOnly = true;
+            dataGrid.ReadOnly = !allowEditing;
+            dataGrid.MultiSelect = allowMultiSelect;
             dataGrid.AllowUserToAddRows = false;
             dataGrid.AllowUserToDeleteRows = false;
             dataGrid.AllowUserToResizeColumns = false;
             dataGrid.AllowUserToResizeRows = false;
             dataGrid.AllowUserToOrderColumns = false;
-            dataGrid.MultiSelect = false;
             dataGrid.ScrollBars = ScrollBars.Both;
             dataGrid.AutoGenerateColumns = false;
             dataGrid.RowHeadersVisible = false;
@@ -41,6 +41,31 @@ namespace Condominium_System.Helpers
             dataGrid.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(0, 65, 194);
             dataGrid.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             dataGrid.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+        }
+        public static void ConfigureFormSize(Form form)
+        {
+            form.FormBorderStyle = FormBorderStyle.FixedSingle;
+            form.MaximizeBox = false;
+            form.MinimizeBox = false; // Opcional: también quitar el botón de minimizar
+            form.SizeGripStyle = SizeGripStyle.Hide;
+
+            // Opcional: establecer tamaño fijo
+            form.MaximumSize = form.Size;
+            form.MinimumSize = form.Size;
+        }
+
+        public static void ConfigureFormSize(Form form, bool keepMinimizeButton = false, bool fixedSize = true)
+        {
+            form.FormBorderStyle = FormBorderStyle.FixedSingle;
+            form.MaximizeBox = false;
+            form.MinimizeBox = keepMinimizeButton;
+            form.SizeGripStyle = SizeGripStyle.Hide;
+
+            if (fixedSize)
+            {
+                form.MaximumSize = form.Size;
+                form.MinimumSize = form.Size;
+            }
         }
     }
 }

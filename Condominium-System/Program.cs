@@ -37,7 +37,7 @@ namespace Condominium_System
             services.AddScoped<IRepositoryWithId<User>, RepositoryWithId<User>>();
 
             services.AddScoped<ICondominiumService, CondominiumService>();
-            services.AddScoped<IRepositoryWithId<Data.Entities.Condominium>, RepositoryWithId<Data.Entities.Condominium>>();
+            services.AddScoped<IRepositoryWithId<Condominium>, RepositoryWithId<Data.Entities.Condominium>>();
 
             services.AddScoped<IBlockService, BlockService>();
             services.AddScoped<IRepositoryWithId<Block>, RepositoryWithId<Block>>();
@@ -69,6 +69,17 @@ namespace Condominium_System
             services.AddScoped<IRepositoryNoId<HousingService>>(provider => 
                 new RepositoryNoId<HousingService>(provider.GetRequiredService<AppDbContext>()));
 
+            services.AddScoped<IReceiptService, ReceiptService>();
+            services.AddScoped<IRepositoryWithId<Receipt>, RepositoryWithId<Receipt>>();
+
+            services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IRepositoryWithId<Payment>, RepositoryWithId<Payment>>();
+
+            services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IRepositoryWithId<Payment>, RepositoryWithId<Payment>>();
+
+            services.AddScoped<ILateFeeService, LateFeeService>();
+
             // Registration for formularies
             services.AddTransient<HomeScreen>();
             services.AddTransient<Login>();
@@ -93,6 +104,10 @@ namespace Condominium_System
             services.AddTransient<UpsertInvoiceScreen>();
             services.AddTransient<UpsertHousingScreen>();
             services.AddTransient<ReportScreen>();
+            services.AddTransient<PaymentScreen>();
+            services.AddTransient<ReceiptScreen>();
+            services.AddTransient<AddPaymentScreen>();
+            services.AddTransient<PaymentReportScreen>();
 
             var serviceProvider = services.BuildServiceProvider();
 
